@@ -16,56 +16,54 @@ import org.beetl.json.action.ValueIgnoreAction;
 public class JavaObjectNode extends OutputNode {
 
 
-	Class c;
-	
+    Class c;
 
 
-	public JavaObjectNode(Class c) {
-		this.c = c;
-	}
+    public JavaObjectNode(Class c) {
+        this.c = c;
+    }
 
-	@Override
-	public void render(OutputNodeKey field,Object obj, JsonWriter w) throws IOException {
-		
-		
-		if (this.valueActions != null) {
-			for (IValueAction valueAction : this.valueActions) {
-				ActionReturn ar = valueAction.doit(field,obj, this,w);
-				obj = ar.value;
-				if (ar.process == ActionReturn.BREAK) {
-					break;
-				} else if (ar.process == ActionReturn.RETURN) {
-					return;
-				}
-			}
+    @Override
+    public void render(OutputNodeKey field, Object obj, JsonWriter w) throws IOException {
 
-		}
-		w.writeKey(field);
-		w.writeValue(obj);
 
-	}
+        if (this.valueActions != null) {
+            for (IValueAction valueAction : this.valueActions) {
+                ActionReturn ar = valueAction.doit(field, obj, this, w);
+                obj = ar.value;
+                if (ar.process == ActionReturn.BREAK) {
+                    break;
+                } else if (ar.process == ActionReturn.RETURN) {
+                    return;
+                }
+            }
 
-	@Override
-	public void addActionIfMatchLocations(List<Location> list,JsonTool tool) {
-		for (Location l : list) {
-			LocationAction action = l.getAction();
-			if (action instanceof IValueAction) {
-				if(action instanceof ValueIgnoreAction){
-					this.ignore = true;
-				}else if (isMatch(l,tool)) {
-					this.addValueAction((IValueAction) action);
-				}
-			}
-			
-			
-		}
+        }
+        w.writeKey(field);
+        w.writeValue(obj);
 
-	}
+    }
 
-	protected boolean isMatch(Location location,JsonTool tool) {
-		return location.match(this,this.c, null,tool);
-	}
-	
-	
+    @Override
+    public void addActionIfMatchLocations(List<Location> list, JsonTool tool) {
+        for (Location l : list) {
+            LocationAction action = l.getAction();
+            if (action instanceof IValueAction) {
+                if (action instanceof ValueIgnoreAction) {
+                    this.ignore = true;
+                } else if (isMatch(l, tool)) {
+                    this.addValueAction((IValueAction) action);
+                }
+            }
+
+
+        }
+
+    }
+
+    protected boolean isMatch(Location location, JsonTool tool) {
+        return location.match(this, this.c, null, tool);
+    }
+
 
 }

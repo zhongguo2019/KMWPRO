@@ -371,8 +371,8 @@ public class EntityHelper {
      * @param fieldList
      * @return
      */
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-	private static List<Field> getAllField(Class<?> entityClass, List<Field> fieldList) {
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private static List<Field> getAllField(Class<?> entityClass, List<Field> fieldList) {
         if (fieldList == null) {
             fieldList = new ArrayList<Field>();
         }

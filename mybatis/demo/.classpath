@@ -119,6 +119,6 @@
 	<classpathentry kind="lib" path="G:/GITBRANCH_LOCAL/mybatis/demo/WebContent/WEB-INF/lib/tomcat-juli-8.5.14.jar"/>
 	<classpathentry kind="lib" path="G:/GITBRANCH_LOCAL/mybatis/demo/WebContent/WEB-INF/lib/unoil-3.0.1.jar"/>
 	<classpathentry kind="lib" path="G:/GITBRANCH_LOCAL/mybatis/demo/WebContent/WEB-INF/lib/xmlbeans-2.6.0.jar"/>
-	<classpathentry kind="lib" path="G:/GITBRANCH_LOCAL/mybatis/demo/WebContent/WEB-INF/lib/bonc-sso-client-2.2.1.jar"/>
-	<classpathentry kind="output" path="build/classes"/>
+	<classpathentry kind="lib" path="G:/GITBRANCH_LOCAL/mybatis/demo/WebContent/WEB-INF/lib/quartz-2.2.1.jar"/>
+	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

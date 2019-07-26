@@ -41,7 +41,7 @@ var offscreen = function () {
                 if (offscreenLeft.find(".slimScrollDiv").length !== 0) {
                     offscreenLeft.find(".main-navigation, .slimscroll").slimScroll({height: "auto"})
                 }
-                
+
             }
             if (canvasDirection === "rtl") {
                 if (offscreenRight.find(".slimScrollDiv").length !== 0) {
@@ -82,7 +82,8 @@ var ns = function () {
         maxHeight = 0;
 
     function events() {
-        $(".offscreen-left, .main-navigation").ontouchstart = function () {};
+        $(".offscreen-left, .main-navigation").ontouchstart = function () {
+        };
         $(".accordion > dd").hide();
         $(window).on("resize", function () {
             equalHeightWidgets();
@@ -488,11 +489,11 @@ var ns = function () {
                 c = $(this).parents(".box").first(),
                 d = c.find("> .box-body, > .box-footer, > form  >.box-body, > form > .box-footer");
             c.hasClass("collapsed-box") ? (a.children(":first").removeClass("fa-plus").addClass("fa-minus"), d
-                    .slideDown(500, function () {
-                        c.removeClass("collapsed-box")
-                    })) : (a.children(":first").removeClass("fa-minus").addClass("fa-plus"), d.slideUp(500, function () {
-                    c.addClass("collapsed-box")
-                }))
+                .slideDown(500, function () {
+                    c.removeClass("collapsed-box")
+                })) : (a.children(":first").removeClass("fa-minus").addClass("fa-plus"), d.slideUp(500, function () {
+                c.addClass("collapsed-box")
+            }))
         });
         $("[data-box-trigger='remove']").on("click", function () {
             $(this).parents(".box").remove();
@@ -538,7 +539,7 @@ var ns = function () {
             if (ns.form.initCheckbox) ns.form.initCheckbox();
         },
         initPreLoad: function () { //预加载
-            if (typeof(top.swal) != "function") {//位置问题，页面加载完成后，预加载
+            if (typeof (top.swal) != "function") {//位置问题，页面加载完成后，预加载
                 top.ns.requireCSS("/framework/plugins/sweetalert/sweetalert.css");
                 top.ns.requireJS("/framework/plugins/sweetalert/sweetalert.min.js");
             }
@@ -684,7 +685,7 @@ var ns = function () {
                 if (dialog.ok && typeof (ok) == "function") {
                     ok();
                 }
-                if (dialog.cancel && typeof(cancel) == "function")
+                if (dialog.cancel && typeof (cancel) == "function")
                     cancel();
             }
             var modal = new top.ns.view.Dialog(options);
@@ -721,7 +722,7 @@ var ns = function () {
                     dialog.modal("hide");
                     dialog.ok = true;
                 });
-                if (typeof(cancel) == "function") {
+                if (typeof (cancel) == "function") {
                     dialog.find("#cancel").click(function () {
                         dialog.modal("hide");
                         dialog.cancel = true;
@@ -729,16 +730,16 @@ var ns = function () {
                 }
             }
             options.onHidden = function (dialog, target) {
-                if (dialog.ok && typeof(ok) == "function")
+                if (dialog.ok && typeof (ok) == "function")
                     ok(dialog.find("textarea,input").val());
-                if (dialog.cancel && typeof(cancel) == "function")
+                if (dialog.cancel && typeof (cancel) == "function")
                     cancel();
             }
             var modal = new top.ns.view.Dialog(options);
             return modal.show();
         },
         success: function (title, msg, fun) {
-            if (typeof(top.swal) != "function") {
+            if (typeof (top.swal) != "function") {
                 top.ns.requireCSS("/framework/plugins/sweetalert/sweetalert.css");
                 top.ns.requireJS("/framework/plugins/sweetalert/sweetalert.min.js");
             }
@@ -753,7 +754,7 @@ var ns = function () {
             }, fun)
         },
         error: function (title, msg, fun) {
-            if (typeof(top.swal) != "function") {
+            if (typeof (top.swal) != "function") {
                 top.ns.requireCSS("/framework/plugins/sweetalert/sweetalert.css");
                 top.ns.requireJS("/framework/plugins/sweetalert/sweetalert.min.js");
             }
@@ -770,7 +771,7 @@ var ns = function () {
         __showImage: function (images) {
             top.ns.requireJS("/framework/js/view/dialog.js");
             var imgs = [];
-            if (typeof(images) == "string") {
+            if (typeof (images) == "string") {
                 imgs.push(images);
             } else {
                 imgs = images;
@@ -809,7 +810,7 @@ var ns = function () {
                 size: "",
                 border: false,
                 theme: "",
-                cache : false,
+                cache: false,
                 onShown: function () {
                 },
                 onHidden: function () {
@@ -831,7 +832,7 @@ var ns = function () {
                 type: "GET",
                 url: url,
                 success: function (data) {
-                    if (typeof(callback) != "function") return;
+                    if (typeof (callback) != "function") return;
                     var success = true;
                     if (data.success == false) {
                         success = false;
@@ -839,7 +840,7 @@ var ns = function () {
                     callback(success, data);
                 },
                 error: function (xhr, msg, e) {
-                    if (typeof(callback) != "function") return;
+                    if (typeof (callback) != "function") return;
                     var data = {success: false, error: "请求异常:" + xhr.status + " " + e};
                     callback(false, data);
                 }
@@ -858,7 +859,7 @@ var ns = function () {
                 url: url,
                 data: param,
                 success: function (data) {
-                    if (typeof(callback) != "function") return;
+                    if (typeof (callback) != "function") return;
                     var success = true;
                     if (data.success == false) {
                         success = false;
@@ -866,7 +867,7 @@ var ns = function () {
                     callback(success, data);
                 },
                 error: function (xhr, msg, e) {
-                    if (typeof(callback) != "function") return;
+                    if (typeof (callback) != "function") return;
                     var data = {success: false, error: "请求异常:" + xhr.status + " " + e};
                     callback(false, data);
                 }
@@ -880,7 +881,7 @@ var ns = function () {
                 cache: false,
                 async: false,
                 success: function (data) {
-                    if (typeof(callback) != "function") return;
+                    if (typeof (callback) != "function") return;
                     var success = true;
                     if (data.success == false) {
                         success = false;
@@ -888,7 +889,7 @@ var ns = function () {
                     callback(success, data);
                 },
                 error: function (xhr, msg, e) {
-                    if (typeof(callback) != "function") return;
+                    if (typeof (callback) != "function") return;
                     var data = {success: false, error: "请求异常:" + xhr.status + " " + e};
                     callback(false, data);
                 }
@@ -903,7 +904,7 @@ var ns = function () {
                 cache: false,
                 async: false,
                 success: function (data) {
-                    if (typeof(callback) != "function") return;
+                    if (typeof (callback) != "function") return;
                     var success = true;
                     if (data.success == false) {
                         success = false;
@@ -911,7 +912,7 @@ var ns = function () {
                     callback(success, data);
                 },
                 error: function (xhr, msg, e) {
-                    if (typeof(callback) != "function") return;
+                    if (typeof (callback) != "function") return;
                     var data = {success: false, error: "请求异常:" + xhr.status + " " + e};
                     callback(false, data);
                 }
@@ -922,10 +923,10 @@ var ns = function () {
             var timer = setTimeout(function () {
                 $(elementId).html(ns.tip.progress.wave());
             }, 100);//延迟显示，提高网速顺畅时的浏览体验
-            $(elementId).load(url, param, function (response,status,xhr) {
+            $(elementId).load(url, param, function (response, status, xhr) {
                 clearTimeout(timer);
-                if($.isFunction(callback))
-                    callback(response,status,xhr);
+                if ($.isFunction(callback))
+                    callback(response, status, xhr);
                 ns.closeLoadingbar(".main-content");
             });
         },
@@ -944,7 +945,7 @@ var ns = function () {
             }, 100);//延迟显示，提高网速顺畅时的浏览体验
             jQuery.post(url, param, function (data) {
                 clearTimeout(timer);
-                if (typeof(data) == "string") {
+                if (typeof (data) == "string") {
                     var idx = data.indexOf("<HTML".toLowerCase());
                     if (idx >= 0)
                         data = data.substring(data.indexOf("<HTML".toLowerCase()));
@@ -981,7 +982,7 @@ var ns = function () {
         },
         requireJS: function (url) {//导入js
             var urls = [];
-            if (typeof(url) == "string")
+            if (typeof (url) == "string")
                 urls.push(url);
             else
                 urls = url;
@@ -1002,7 +1003,7 @@ var ns = function () {
         },
         requireCSS: function (url) {//导入css
             var urls = [];
-            if (typeof(url) == "string")
+            if (typeof (url) == "string")
                 urls.push(url);
             else
                 urls = url;
@@ -1029,7 +1030,7 @@ var ns = function () {
             }
         },
         ready: function (fun) {
-            if (typeof(fun) == "function") {
+            if (typeof (fun) == "function") {
                 top.ns.readyEvents.push(fun);
                 // console.log("readyEvents:"+top.ns.readyEvents.length);
             }
@@ -1173,23 +1174,23 @@ ns.ready(function () {
         asyncRequest: ns.asyncRequest,
         serialize: function (form) {//表单参数序列化为json
             var attrs = {};
-            if (typeof(form) == "string")
+            if (typeof (form) == "string")
                 form = $(form);
             var elements = form.serializeArray();
-            $.each(elements, function() {
+            $.each(elements, function () {
                 attrs[this.name] = this.value;
             });
             return attrs;
         },
-        load : function(form, data){//加载JSON数据到form表单中
-            if (typeof(form) == "string")
+        load: function (form, data) {//加载JSON数据到form表单中
+            if (typeof (form) == "string")
                 form = $(form);
-            $.each(data, function(i,n){
-                var element = form.find("[name='"+i+"']");
-                if(element[0]){
-                    if(element.is(":checkbox") || element.is(":radio")){
-                        form.find("[name='"+i+"'][value='"+n+"']").prop("checked", "checked");
-                    }else{
+            $.each(data, function (i, n) {
+                var element = form.find("[name='" + i + "']");
+                if (element[0]) {
+                    if (element.is(":checkbox") || element.is(":radio")) {
+                        form.find("[name='" + i + "'][value='" + n + "']").prop("checked", "checked");
+                    } else {
                         element.val(n);
                     }
                 }
@@ -1253,7 +1254,7 @@ ns.ready(function () {
         },
         cookie: {
             _init: function () {
-                if (typeof(setCookie) != "function") {
+                if (typeof (setCookie) != "function") {
                     ns.requireJS("/framework/js/plugins/zframe.cookie.js")
                 }
             },

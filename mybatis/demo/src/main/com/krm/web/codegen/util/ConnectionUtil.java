@@ -9,8 +9,8 @@ import com.krm.web.codegen.GenCoreConstant;
 
 /**
  * 数据库连接工具类 主要是创建连接
- * @author Parker
  *
+ * @author Parker
  */
 public class ConnectionUtil {
 
@@ -30,9 +30,9 @@ public class ConnectionUtil {
     private static ConnectionUtil instance;
 
     public static Connection getConnect() {
-    	return connectionTl.get();
+        return connectionTl.get();
     }
-    
+
     public static Statement createStatement() {
         try {
             return connectionTl.get().createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -104,16 +104,17 @@ public class ConnectionUtil {
         DB_PASSWORD = dB_PASSWORD;
     }
 
-    public static String getRealUrl(String dbType, String ip, String port, String dbName){
-    	if(dbType.equals(GenCoreConstant.ORACLE_11G)){
-    		return "jdbc:oracle:thin:@"+ ip +":"+ port + ":" + dbName;
-    	}if(dbType.equals(GenCoreConstant.ORACLE_12C)){
-    		return "jdbc:oracle:thin:@"+ ip +":"+ port + "/" + dbName;
-    	}else if(dbType.equals(GenCoreConstant.DB2)){
-    		return "jdbc:db2://"+ ip +":"+ port + "/" + dbName;
-    	}else if(dbType.equals(GenCoreConstant.MYSQL)){
-    		return "jdbc:mysql://"+ ip +":"+ port;
-    	}
-    	return null;
+    public static String getRealUrl(String dbType, String ip, String port, String dbName) {
+        if (dbType.equals(GenCoreConstant.ORACLE_11G)) {
+            return "jdbc:oracle:thin:@" + ip + ":" + port + ":" + dbName;
+        }
+        if (dbType.equals(GenCoreConstant.ORACLE_12C)) {
+            return "jdbc:oracle:thin:@" + ip + ":" + port + "/" + dbName;
+        } else if (dbType.equals(GenCoreConstant.DB2)) {
+            return "jdbc:db2://" + ip + ":" + port + "/" + dbName;
+        } else if (dbType.equals(GenCoreConstant.MYSQL)) {
+            return "jdbc:mysql://" + ip + ":" + port;
+        }
+        return null;
     }
 }

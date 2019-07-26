@@ -13,21 +13,21 @@ import tk.mybatis.mapper.common.Mapper;
  * 建表记录DAO层
  * 2018-01-03
  */
-public interface CreateTableHistoryMapper extends Mapper<CreateTableHistory>{
+public interface CreateTableHistoryMapper extends Mapper<CreateTableHistory> {
 
-	List<CommonEntity> queryPageInfo(Map<String, Object> params); 
-	
-	List<CreateTableHistory> entityList(Map<String, Object> params); 
+    List<CommonEntity> queryPageInfo(Map<String, Object> params);
 
-	CreateTableHistory queryOne(Map<String, Object> params); 
+    List<CreateTableHistory> entityList(Map<String, Object> params);
 
-	int insertBatch(List<CreateTableHistory> list);
-	
-	int deleteByParams(Map<String, Object> params);
-	
-	List<CommonEntity> list(Map<String, Object> params); 
-	
-	int executeCreate(Map<String, Object> params);
-	
-	int updateByParams(Map<String, Object> params);
+    CreateTableHistory queryOne(Map<String, Object> params);
+
+    int insertBatch(List<CreateTableHistory> list);
+
+    int deleteByParams(Map<String, Object> params);
+
+    List<CommonEntity> list(Map<String, Object> params);
+
+    int executeCreate(Map<String, Object> params);
+
+    int updateByParams(Map<String, Object> params);
 }

@@ -1,12 +1,15 @@
 .fz12 {
     font-size: 1.2em;
 }
+
 .fz14 {
     font-size: 1.4em;
 }
+
 .bg-h {
     color: #b8dcf3;
 }
+
 .wrapper .containers {
     padding: 30px 10px 100px;
     height: 100%;
@@ -15,6 +18,7 @@
     position: relative;
     overflow-y: auto;
 }
+
 .wrapper .containers:after {
     background-color: #F5F5F5;
     border: 1px solid #eeeff8;
@@ -28,6 +32,7 @@
     position: absolute;
     top: -1px;
 }
+
 .containers .table:before {
     background-color: #F5F5F5;
     border-top: 0px;
@@ -42,6 +47,7 @@
     padding: 3px 7px;
     position: absolute;
 }
+
 .containers .move:after {
     background-color: #F5F5F5;
     border: 1px solid #DDDDDD;
@@ -54,36 +60,45 @@
     padding: 3px 7px;
     position: absolute;
 }
+
 .containers img {
     border: 1px solid #dddddd;
     width: 50px;
     height: 50px;
 }
+
 .fd-view-drag-in {
     min-height: 30px;
 }
+
 td.fd-view-drag-in {
     height: 35px;
 }
+
 .fd-view-selected {
     border: 2px solid #3B97E3 !important;
     /* -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.2);
 	box-shadow: 0 0 5px rgba(0,0,0,0.2) */
 }
+
 .fd-view-hover {
     outline: 1px dotted #666;
 }
+
 .fd-view-bordered {
     border: 1px solid #e3e6f3;
 }
+
 nav li a {
     color: black !important;
     background-color: #eee;
 }
+
 .row {
     margin: 0px;
     overflow-y: hidden;
 }
+
 [fd-view] {
     margin-top: 5px;
 }
@@ -93,38 +108,45 @@ nav li a {
     min-height: 50px;
     border-bottom: 1px solid #999;
 }
+
 .asidePanel {
     height: 100%;
     position: relative;
     background-color: #2d3c4b;
     float: right;
 }
+
 .asidePanel .panel {
     margin-bottom: 0;
     background-color: #2d3c4b;
     height: 100%;
 }
+
 .asidePanel .panel-body {
     padding: 5px;
     border: 1px solid #42485b;
     background-color: #2d3c4b;
 }
+
 .navbar-btn {
     margin: 0;
     line-height: 28px !important;
 }
+
 @media (min-width: 1200px) {
     .tool-menu {
         width: 210px;
         float: left;
     }
 }
+
 .tool-menu {
     position: relative;
     margin-top: 20px;
     background-color: #2d3c4b;
     padding: 0;
 }
+
 section .wrapper {
     position: relative;
     top: 0;
@@ -135,23 +157,28 @@ section .wrapper {
     overflow-y: auto;
     background-color: #2d3c4b;
 }
+
 .tool-menu .panel-heading {
     text-align: left;
     padding-left: 30px;
 }
+
 .tool-menu .panel-body {
     text-align: center;
     background-color: #1f2b34;
 }
+
 .tool-menu .panel {
     border: 0;
     background-color: #2d3c4b;
     margin: 0;
 }
+
 .tool-menu .panel ul {
     margin: 0;
     padding: 5px;
 }
+
 .tool-menu .panel-group {
     margin: 0;
 }
@@ -217,27 +244,29 @@ section .wrapper {
 .wrapper .panel-body {
     height: 100%;
 }
+
 .tab-pane label,
 .tab-pane a {
     color: white;
 }
-.nav-tabs>li.active>a,
-.nav-tabs>li.active>a:hover,
-.nav-tabs>li.active>a:focus {
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
     border: none !important;
     border-bottom: 1px solid white !important;
 }
 
-.nav-tabs.nav>li>a {
+.nav-tabs.nav > li > a {
     padding: 10px 0;
 }
 
-.nav-tabs>li>a {
+.nav-tabs > li > a {
     border: none;
 }
 
 @media (min-width: 768px) {
-    .nav-tabs.nav-justified>li>a {
+    .nav-tabs.nav-justified > li > a {
         border-bottom: 1px solid transparent;
     }
 }
@@ -269,11 +298,11 @@ section .wrapper {
     border: 1px solid #ddd;
 }
 
-.table>tbody>tr>td {
+.table > tbody > tr > td {
     border: 1px solid #ddd;
 }
 
-.table>tbody>tr:nth-of-type(odd) {
+.table > tbody > tr:nth-of-type(odd) {
     background-color: #f8f8f8;
 }
 

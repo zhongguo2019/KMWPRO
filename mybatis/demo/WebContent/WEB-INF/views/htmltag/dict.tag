@@ -11,35 +11,36 @@
 
 @if(dictMode == "showSelect"){ //显示下拉模式
 <select class="chosen-select ${class}" name="${name}" id="${id}">
-	@if(!isEmpty(isDefault)) {
-	<option value="">全部</option>
-	@}
-	@if(!showType){
-		@for(item in dict.getDictListByType(type)){
-			<option value="${item.value!}" 
-				${decode(value!,item.value,'selected','')}>
-			${item.label!}
-			</option>
-		@}
-	@}else{
-		@for(item in getDictListByType(type,"allType")){
-			<option value="${item.key!}">
-				${item.key!}
-			</option>
-		@}
-	@}
+    @if(!isEmpty(isDefault)) {
+    <option value="">全部</option>
+    @}
+    @if(!showType){
+    @for(item in dict.getDictListByType(type)){
+    <option value="${item.value!}"
+    ${decode(value!,item.value,'selected','')}>
+        ${item.label!}
+    </option>
+    @}
+    @}else{
+    @for(item in getDictListByType(type,"allType")){
+    <option value="${item.key!}">
+        ${item.key!}
+    </option>
+    @}
+    @}
 </select>
 @}else if(dictMode == "showName"){ //显示类型名称
-	@for(item in getDictListByType(type)){
-		@if(value == item.value && type == item.type){
-			${item.label!}
-			@break;
-		@}
-	@}elsefor{}
+@for(item in getDictListByType(type)){
+@if(value == item.value && type == item.type){
+${item.label!}
+@break;
+@}
+@}elsefor{}
 @}
 <script type="text/javascript">
-$("#${id}").chosen({width: "${width}",search_contains: true}); 
-@if(isScript == "true"){
-	${tagBody!}
-@}
+    $("#${id}").chosen({width: "${width}", search_contains: true});
+@if (isScript == "true") {
+        ${tagBody!}
+    @
+    }
 </script>

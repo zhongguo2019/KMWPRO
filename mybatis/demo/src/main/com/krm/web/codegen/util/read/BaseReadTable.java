@@ -20,8 +20,8 @@ import com.krm.web.codegen.util.StringConvert;
 
 /**
  * 读表基础类
- * @author Parker
  *
+ * @author Parker
  */
 public abstract class BaseReadTable {
 
@@ -29,6 +29,7 @@ public abstract class BaseReadTable {
 
     /**
      * 获取所有数据库名
+     *
      * @param sql
      * @return
      * @throws SQLException
@@ -39,9 +40,9 @@ public abstract class BaseReadTable {
         try {
             ResultSet rs = ConnectionUtil.createStatement().executeQuery(String.format(sql));
             while (rs.next()) {
-            	CommonEntity entity = new CommonEntity();
-            	entity.put("label", rs.getString(1));
-            	entity.put("value", rs.getString(1));
+                CommonEntity entity = new CommonEntity();
+                entity.put("label", rs.getString(1));
+                entity.put("value", rs.getString(1));
                 list.add(entity);
             }
         } catch (Exception e) {
@@ -58,6 +59,7 @@ public abstract class BaseReadTable {
 
     /**
      * 获取所有表名
+     *
      * @param dbName
      * @param sql
      * @return
@@ -76,11 +78,11 @@ public abstract class BaseReadTable {
                 if (StringUtils.isEmpty(dbTableName)) {
                     throw new RuntimeException("表不存在");
                 } else {
-                	CommonEntity entity = new CommonEntity();
+                    CommonEntity entity = new CommonEntity();
                     if (StringUtils.isNotEmpty(comment)) {
-                        entity.put("label", dbTableName + "【" +handlerTableComment(comment) + "】");
-                    }else{
-                    	entity.put("label", dbTableName);
+                        entity.put("label", dbTableName + "【" + handlerTableComment(comment) + "】");
+                    } else {
+                        entity.put("label", dbTableName);
                     }
                     entity.put("value", dbTableName.toLowerCase());
                     list.add(entity);
@@ -109,7 +111,7 @@ public abstract class BaseReadTable {
             if (StringUtils.isEmpty(dbTableName)) {
                 throw new RuntimeException("表不存在");
             } else {
-            	TableConfig entity = new TableConfig();
+                TableConfig entity = new TableConfig();
                 entity.setTableName(dbTableName);
                 return entity;
             }
@@ -123,9 +125,10 @@ public abstract class BaseReadTable {
             }
         }
     }
-    
+
     /**
      * 获取表结构
+     *
      * @param dbName
      * @param tableName
      * @param sql
@@ -146,19 +149,19 @@ public abstract class BaseReadTable {
                 field.setRemarks(rs.getString("remarks"));
                 field.setIsPrimary(StringUtil.isEmpty(rs.getString("isPrimary")) ? "N" : "Y");
                 if (StringUtils.isNotEmpty(rs.getString("length"))) {
-                	field.setLength(rs.getInt("length"));
+                    field.setLength(rs.getInt("length"));
                 } else {
-                	field.setLength(rs.getInt("numeric_precision"));
+                    field.setLength(rs.getInt("numeric_precision"));
                 }
                 field.setDecimalPrecision(rs.getInt("decimalPrecision"));
                 field.setFieldType(rs.getString("fieldType"));
                 field.setJavaType(getJavaType(field.getFieldType(), field.getLength(), field.getDecimalPrecision()));
                 field.setDefaultValue(rs.getString("defaultValue"));
                 field.setSorts(rs.getInt("sorts"));
-                if("YES".equalsIgnoreCase(rs.getString("isNullable")) || "Y".equalsIgnoreCase(rs.getString("isNullable"))){
-                	field.setIsNullable("N");
-                }else{
-                	field.setIsNullable("Y");
+                if ("YES".equalsIgnoreCase(rs.getString("isNullable")) || "Y".equalsIgnoreCase(rs.getString("isNullable"))) {
+                    field.setIsNullable("N");
+                } else {
+                    field.setIsNullable("Y");
                 }
                 field.setIsListShow("Y");
                 field.setIsUse("Y");
@@ -176,33 +179,35 @@ public abstract class BaseReadTable {
         }
         return list;
     }
-    
+
     /**
      * 获取java类型
-     * @param fieldType 数据库类型
-     * @param length	长度
-     * @param decimalPrecision	小数精度
+     *
+     * @param fieldType        数据库类型
+     * @param length           长度
+     * @param decimalPrecision 小数精度
      * @return
      */
-    protected String getJavaType(String fieldType, Integer length, Integer decimalPrecision){
-    	if(fieldType.contains("(")){
-    		fieldType = fieldType.substring(0, fieldType.indexOf("("));
-    	}
-    	Class<?> clazz = JdbcType.getCodeLookup().get(fieldType.toUpperCase());
-        if(StringUtil.isNotEmpty(clazz) && clazz.equals(Number.class)){
-        	if(decimalPrecision == 0){
-        		if(length != null){
-        			if(length < 6){
-        				return "Integer";
-        			}else{
-        				return "Long";
-        			}
-        		}
-        	}
-			return "Double";
-        }else{
-        	return StringUtil.isEmpty(clazz) ? null : clazz.getSimpleName();
+    protected String getJavaType(String fieldType, Integer length, Integer decimalPrecision) {
+        if (fieldType.contains("(")) {
+            fieldType = fieldType.substring(0, fieldType.indexOf("("));
+        }
+        Class<?> clazz = JdbcType.getCodeLookup().get(fieldType.toUpperCase());
+        if (StringUtil.isNotEmpty(clazz) && clazz.equals(Number.class)) {
+            if (decimalPrecision == 0) {
+                if (length != null) {
+                    if (length < 6) {
+                        return "Integer";
+                    } else {
+                        return "Long";
+                    }
+                }
+            }
+            return "Double";
+        } else {
+            return StringUtil.isEmpty(clazz) ? null : clazz.getSimpleName();
         }
     }
+
     protected abstract String handlerTableComment(String comment);
 }

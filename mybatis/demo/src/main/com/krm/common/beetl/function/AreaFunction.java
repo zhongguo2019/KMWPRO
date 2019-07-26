@@ -14,24 +14,24 @@ import com.krm.web.sys.model.SysArea;
 import com.krm.web.sys.service.SysAreaService;
 
 @Component
-public class AreaFunction implements Function{
+public class AreaFunction implements Function {
 
-	@Resource
-	private SysAreaService sysAreaService;
-	
-	@Override
-	public Object call(Object[] params, Context ctx) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		List<SysArea> list = null;
-		try {
-			list = sysAreaService.findAllArea();
-			for(SysArea area : list){
-				map.put(area.getId(), area);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return map;
-	}
+    @Resource
+    private SysAreaService sysAreaService;
+
+    @Override
+    public Object call(Object[] params, Context ctx) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<SysArea> list = null;
+        try {
+            list = sysAreaService.findAllArea();
+            for (SysArea area : list) {
+                map.put(area.getId(), area);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
 
 }

@@ -1,227 +1,245 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" metadata-complete="false" version="3.0">
-  <!-- 部署WAS时将其打开 -->
-	 <!-- <servlet>  
-    	<servlet-name>default</servlet-name>  
-    	<servlet-class>com.ibm.ws.webcontainer.servlet.SimpleFileServlet</servlet-class>  
-    	<load-on-startup>0</load-on-startup> 
-	</servlet>    -->
-	<!-- 部署WebLogic时将其打开 -->
-		<!-- <servlet>  
-    	<servlet-name>default</servlet-name>  
-    	<servlet-class>weblogic.servlet.FileServlet</servlet-class>  
-    	<load-on-startup>0</load-on-startup> 
-	</servlet>  -->
-	<!-- Tomcat, Jetty, JBoss, and GlassFish不需要做任何变更 -->
-  <servlet-mapping>
-    <servlet-name>default</servlet-name>
-    <url-pattern>/static/fonts/*</url-pattern>
-    <url-pattern>*.jpg</url-pattern>
-    <url-pattern>*.png</url-pattern>
-    <url-pattern>*.gif</url-pattern>
-    <url-pattern>*.js</url-pattern>
-    <url-pattern>*.css</url-pattern>
-    <url-pattern>*.ico</url-pattern>
-  </servlet-mapping>
-  <context-param>
-    <param-name>contextConfigLocation</param-name>
-    <param-value>
-			classpath:spring-config.xml
-		</param-value>
-  </context-param>
-  <listener>
-    <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
-  </listener>
-  <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-  </listener>
-  <listener>
-    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-  </listener>
-  
-  <servlet>
-    <description></description>
-    <display-name>ExportServlet</display-name>
-    <servlet-name>ExportServlet</servlet-name>
-    <servlet-class> com.krm.dbaudit.web.util.draw.io.ExportServlet</servlet-class>
-    <async-supported>true</async-supported>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ExportServlet</servlet-name>
-    <url-pattern>/export/flow</url-pattern>
-  </servlet-mapping>
-  
-  
-    <!-- 单点登录配置开始 20190619 赵祖龙 -->  
-  <filter>
-		<description> 单点登录,如果使用单点登出，须配置SingleSignOutHttpSessionListener监听器  </description>
-		<filter-name>SSO Filter</filter-name>
-		<filter-class>com.bonc.sso.client.SSOFilter</filter-class>
-		<init-param>
-			<description> 代理服务器入口地址 生产地址F5 32.4.18.64:9080</description>
-			<param-name>serverName</param-name>
-			<param-value>127.0.0.1:8081</param-value>
-		</init-param>
-		<init-param>
-			<description> SSO服务器地址全路径 </description>
-			<param-name>casServerUrlPrefix</param-name>
-			<param-value>http://127.0.0.1:8081/sso</param-value>
-		</init-param>
-		<init-param>
-			<description> SSO服务器通过代理服务器登录地址 全路径 </description>
-			<param-name>casServerLoginUrl</param-name>
-			<param-value>http://127.0.0.1:8081/sso/login</param-value>
-		</init-param>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         metadata-complete="false" version="3.0">
+    <!-- 部署WAS时将其打开 -->
+    <!-- <servlet> <servlet-name>default</servlet-name> <servlet-class>com.ibm.ws.webcontainer.servlet.SimpleFileServlet</servlet-class>
+        <load-on-startup>0</load-on-startup> </servlet> -->
+    <!-- 部署WebLogic时将其打开 -->
+    <!-- <servlet> <servlet-name>default</servlet-name> <servlet-class>weblogic.servlet.FileServlet</servlet-class>
+        <load-on-startup>0</load-on-startup> </servlet> -->
+    <!-- Tomcat, Jetty, JBoss, and GlassFish不需要做任何变更 -->
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/static/fonts/*</url-pattern>
+        <url-pattern>*.jpg</url-pattern>
+        <url-pattern>*.png</url-pattern>
+        <url-pattern>*.gif</url-pattern>
+        <url-pattern>*.js</url-pattern>
+        <url-pattern>*.css</url-pattern>
+        <url-pattern>*.ico</url-pattern>
+    </servlet-mapping>
 
-		<init-param>
-			<description> 是否启用单点登出 </description>
-			<param-name>singleSignOut</param-name>
-			<param-value>true</param-value>
-		</init-param>
-		<init-param>
-			<description> 单点登录忽略校验URL </description>
-			<param-name>skipUrls</param-name>
-			<param-value>/logout.jsp,/index.jsp </param-value>
-		</init-param>
-		<init-param>
-			<description> 登录成功后的的用户信息准备 须实现com.bonc.sso.client.IAuthHandle 接口 </description>
-			<param-name>loginUserHandle</param-name>
-			<param-value>com.krm.sso.AuthHandleImpl</param-value>
-		</init-param>
-		<init-param>
-			<description> 可选参数，客户端应用使用的字符集，如果已经有其他的地方设置过了，则会忽略这个配置。默认将使用UTF-8作为默认字符集 </description>
-			<param-name>characterEncoding</param-name>
-			<param-value>UTF-8</param-value>
-		</init-param>
-		<init-param>
-			<description> 解决读取CAS server端返用户扩展信息中文乱码问题 </description>
-			<param-name>encoding</param-name>
-			<param-value>UTF-8</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>SSO Filter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	
-  <!-- Shiro Filter -->  
-    <filter>  
-        <filter-name>shiroFilter</filter-name>  
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>  
+    <listener>
+        <!-- 此监听器主要用于解决java.beans.Introspector 导致的内存泄漏的问题 -->
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+
+    <!-- 配置Listener参数：告诉它Spring的配置文件位置，它好去创建容器 -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:spring-config.xml
+        </param-value>
+    </context-param>
+    <!-- 配置Listener，用来创建Spring容器 -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!-- request表示该针对每一次HTTP请求都会产生一个新的bean，同时该bean仅在当前 HTTP request内有效，配置实例：
+        request、session、global session -->
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+
+    <servlet>
+        <description></description>
+        <display-name>ExportServlet</display-name>
+        <servlet-name>ExportServlet</servlet-name>
+        <servlet-class>com.krm.dbaudit.web.util.draw.io.ExportServlet</servlet-class>
         <async-supported>true</async-supported>
-        <init-param>  
-            <param-name>targetFilterLifecycle</param-name>  
-            <param-value>true</param-value>  
-        </init-param>  
-    </filter>  
-    <filter-mapping>  
-        <filter-name>shiroFilter</filter-name>  
-        <url-pattern>/*</url-pattern>  
-    </filter-mapping> 
-    
-      
-  <filter>
-    <filter-name>encodingFilter</filter-name>
-    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-    <async-supported>true</async-supported>
-    <init-param>
-      <param-name>encoding</param-name>
-      <param-value>UTF-8</param-value>
-    </init-param>
-    <init-param>
-      <param-name>forceEncoding</param-name>
-      <param-value>true</param-value>
-    </init-param>
-  </filter>
-  <filter-mapping>
-    <filter-name>encodingFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  <filter>
-    <filter-name>DruidWebStatFilter</filter-name>
-    <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
-    <async-supported>true</async-supported>
-    <init-param>
-      <param-name>exclusions</param-name>
-      <param-value>/static/*,*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*</param-value>
-    </init-param>
-    <init-param>
-      <param-name>profileEnable</param-name>
-      <param-value>true</param-value>
-    </init-param>
-    <init-param>
-      <param-name>principalSessionName</param-name>
-      <param-value>loginUser</param-value>
-    </init-param>
-  </filter>
-  <filter-mapping>
-    <filter-name>DruidWebStatFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-  <servlet>
-    <servlet-name>DruidStatView</servlet-name>
-    <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
-    <init-param>
-      <param-name>loginUsername</param-name>
-      <param-value>admin</param-value>
-    </init-param>
-    <init-param>
-      <param-name>loginPassword</param-name>
-      <param-value>admin</param-value>
-    </init-param>
-    <async-supported>true</async-supported>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>DruidStatView</servlet-name>
-    <url-pattern>/druid/*</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>applicationContext</servlet-name>
-    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-    <init-param>
-      <param-name>contextConfigLocation</param-name>
-      <param-value>classpath:mvc/spring-mvc.xml</param-value>
-    </init-param>
-    <load-on-startup>1</load-on-startup>
-    <async-supported>true</async-supported>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>applicationContext</servlet-name>
-    <url-pattern>/</url-pattern>
-  </servlet-mapping>
-  
-   
-    
-  <session-config>
-    <session-timeout>180</session-timeout>
-  </session-config>
-  <error-page>
-    <error-code>404</error-code>
-    <location>/ErrorHandler</location>
-  </error-page>
-  <error-page>
-    <error-code>400</error-code>
-    <location>/ErrorHandler</location>
-  </error-page>
-  <error-page>
-    <error-code>500</error-code>
-    <location>/ErrorHandle</location>
-  </error-page>
-  <error-page>
-    <error-code>503</error-code>
-    <location>/ErrorHandler</location>
-  </error-page>
-  <error-page>
-    <exception-type>java.lang.Exception</exception-type>
-    <location>/ErrorHandler</location>
-  </error-page>
-  
-  
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ExportServlet</servlet-name>
+        <url-pattern>/export/flow</url-pattern>
+    </servlet-mapping>
 
-	
 
-		
-	
-  
-  
+    <!-- 单点登录配置开始 20190619 赵祖龙 -->
+    <filter>
+        <description>单点登录,如果使用单点登出，须配置SingleSignOutHttpSessionListener监听器</description>
+        <filter-name>SSO Filter</filter-name>
+        <filter-class>com.bonc.sso.client.SSOFilter</filter-class>
+        <init-param>
+            <description>SSO服务器地址全路径</description>
+            <param-name>casServerUrlPrefix</param-name>
+            <param-value>http://192.168.2.198:8081/sso</param-value>
+        </init-param>
+        <init-param>
+            <description>SSO服务器通过代理服务器登录地址 全路径</description>
+            <param-name>casServerLoginUrl</param-name>
+            <param-value>http://192.168.2.198:8081/sso/login</param-value>
+        </init-param>
+        <init-param>
+            <description>本机的应用发布的地址很重要。。。。一般人配不对</description>
+            <param-name>serverName</param-name>
+            <param-value>http://192.168.2.11:8081/</param-value>
+        </init-param>
+        <init-param>
+            <description>是否启用单点登出</description>
+            <param-name>singleSignOut</param-name>
+            <param-value>true</param-value>
+        </init-param>
+
+        <init-param>
+            <description>单点登录忽略校验URL</description>
+            <param-name>skipUrls</param-name>
+            <param-value>/logout.jsp,/index.jsp</param-value>
+        </init-param>
+        <init-param>
+            <description>登录成功后的的用户信息准备 须实现com.bonc.sso.client.IAuthHandle 接口</description>
+            <param-name>loginUserHandle</param-name>
+            <param-value>com.krm.sso.AuthHandleImpl</param-value>
+        </init-param>
+        <init-param>
+            <description>可选参数，客户端应用使用的字符集，如果已经有其他的地方设置过了，则会忽略这个配置。默认将使用UTF-8作为默认字符集</description>
+            <param-name>characterEncoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <description>解决读取CAS server端返用户扩展信息中文乱码问题</description>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>SSO Filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--单点登录配置结束，要求放到shiroFilter 的前面才可以生效 -->
+
+
+    <!-- Shiro Filter -->
+    <filter>
+        <filter-name>shiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+    <!-- Druid,监控数据库,以及WEB访问连接信息 -->
+    <filter>
+        <filter-name>DruidWebStatFilter</filter-name>
+        <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>exclusions</param-name>
+            <param-value>/static/*,*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*</param-value>
+        </init-param>
+        <init-param>
+            <param-name>profileEnable</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>principalSessionName</param-name>
+            <param-value>loginUser</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>DruidWebStatFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <servlet>
+        <servlet-name>DruidStatView</servlet-name>
+        <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+        <init-param>
+            <param-name>loginUsername</param-name>
+            <param-value>admin</param-value>
+        </init-param>
+        <init-param>
+            <param-name>loginPassword</param-name>
+            <param-value>admin</param-value>
+        </init-param>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DruidStatView</servlet-name>
+        <url-pattern>/druid/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- spring MVC 配置  -->
+    <servlet>
+        <servlet-name>applicationContext</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:mvc/spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>applicationContext</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+
+    <context-param>
+        <param-name>spring.profiles.active</param-name>
+        <param-value>dev</param-value>
+    </context-param>
+    <context-param>
+        <param-name>spring.profiles.default</param-name>
+        <param-value>dev</param-value>
+    </context-param>
+    <context-param>
+        <param-name>spring.liveBeansView.mbeanDomain</param-name>
+        <param-value>dev</param-value>
+    </context-param>
+
+
+    <session-config>
+        <session-timeout>180</session-timeout>
+    </session-config>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/ErrorHandler</location>
+    </error-page>
+    <error-page>
+        <error-code>400</error-code>
+        <location>/ErrorHandler</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/ErrorHandle</location>
+    </error-page>
+    <error-page>
+        <error-code>503</error-code>
+        <location>/ErrorHandler</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/ErrorHandler</location>
+    </error-page>
+
+
 </web-app>

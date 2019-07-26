@@ -12,16 +12,14 @@ import com.krm.common.base.BaseEntity;
 import com.krm.common.constant.Constant;
 
 /**
- * 
  * @author Parker
- *
  */
-@Table(name="sys_user")
-public class SysUser extends BaseEntity<SysUser>{
+@Table(name = "sys_user")
+public class SysUser extends BaseEntity<SysUser> {
 
-	private static final long serialVersionUID = 1L;
-	@Id
-	private String id; 				//主键
+    private static final long serialVersionUID = 1L;
+    @Id
+    private String id;                //主键
     private String email; //email <邮箱>
     private Date loginDate; //login_date <最后登陆时间>
     private String loginIp; //login_ip <最后登陆IP>
@@ -36,209 +34,209 @@ public class SysUser extends BaseEntity<SysUser>{
     private String username; //username <登录名>
     private String userType; //user_type <用户类型>
     private String updateBy; //update_by <更新者>
-	private Date updateDate; //update_date <更新时间>
-	private String createBy; //create_by <创建者>
-	private Date createDate; //create_date <创建时间>
-	private String delFlag; //del_flag <删除标记(0.正常  1.删除)>
-	private String status; //status <状态>
-    
+    private Date updateDate; //update_date <更新时间>
+    private String createBy; //create_by <创建者>
+    private Date createDate; //create_date <创建时间>
+    private String delFlag; //del_flag <删除标记(0.正常  1.删除)>
+    private String status; //status <状态>
+
     @Transient
     private String[] roleIds; //角色
-    
+
     public SysUser() {
-    	super.setModuleName("用户信息");
-	}
-
-	public SysUser(String deptId, String email, String mobile, String name,
-			String no, String organId, String password, String phone,
-			String remarks, String username, String userType, String[] roleIds) {
-		super();
-		this.deptId = deptId;
-		this.email = email;
-		this.mobile = mobile;
-		this.name = name;
-		this.no = no;
-		this.organId = organId;
-		this.password = password;
-		this.phone = phone;
-		this.remarks = remarks;
-		this.username = username;
-		this.userType = userType;
-		this.roleIds = roleIds;
-	}
-
-    
-    //是否是超级管理员
-    public boolean isAdmin(){
-    	return Constant.SUPER_ADMIN.equals(this.getUserType())?true:false;
+        super.setModuleName("用户信息");
     }
-    
-	public String getId() {
-		return id;
-	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public SysUser(String deptId, String email, String mobile, String name,
+                   String no, String organId, String password, String phone,
+                   String remarks, String username, String userType, String[] roleIds) {
+        super();
+        this.deptId = deptId;
+        this.email = email;
+        this.mobile = mobile;
+        this.name = name;
+        this.no = no;
+        this.organId = organId;
+        this.password = password;
+        this.phone = phone;
+        this.remarks = remarks;
+        this.username = username;
+        this.userType = userType;
+        this.roleIds = roleIds;
+    }
 
-	public String getEmail() {
-		return email;
-	}
 
-	public Date getLoginDate() {
-		return loginDate;
-	}
+    //是否是超级管理员
+    public boolean isAdmin() {
+        return Constant.SUPER_ADMIN.equals(this.getUserType()) ? true : false;
+    }
 
-	public String getLoginIp() {
-		return loginIp;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getMobile() {
-		return mobile;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public String getNo() {
-		return no;
-	}
+    public Date getLoginDate() {
+        return loginDate;
+    }
 
-	public String getOrganId() {
-		return organId;
-	}
+    public String getLoginIp() {
+        return loginIp;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getMobile() {
+        return mobile;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getRemarks() {
-		return remarks;
-	}
+    public String getNo() {
+        return no;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public String getOrganId() {
+        return organId;
+    }
 
-	public String getUserType() {
-		return userType;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getUpdateBy() {
-		return updateBy;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public Date getUpdateDate() {
-		return updateDate;
-	}
+    public String getRemarks() {
+        return remarks;
+    }
 
-	public String getCreateBy() {
-		return createBy;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public Date getCreateDate() {
-		return createDate;
-	}
+    public String getUserType() {
+        return userType;
+    }
 
-	public String getDelFlag() {
-		return delFlag;
-	}
+    public String getUpdateBy() {
+        return updateBy;
+    }
 
-	public String[] getRoleIds() {
-		return roleIds;
-	}
+    public Date getUpdateDate() {
+        return updateDate;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getCreateBy() {
+        return createBy;
+    }
 
-	public void setLoginDate(Date loginDate) {
-		this.loginDate = loginDate;
-	}
+    public Date getCreateDate() {
+        return createDate;
+    }
 
-	public void setLoginIp(String loginIp) {
-		this.loginIp = loginIp;
-	}
+    public String getDelFlag() {
+        return delFlag;
+    }
 
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
+    public String[] getRoleIds() {
+        return roleIds;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setNo(String no) {
-		this.no = no;
-	}
+    public void setLoginDate(Date loginDate) {
+        this.loginDate = loginDate;
+    }
 
-	public void setOrganId(String organId) {
-		this.organId = organId;
-	}
+    public void setLoginIp(String loginIp) {
+        this.loginIp = loginIp;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
+    public void setNo(String no) {
+        this.no = no;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setOrganId(String organId) {
+        this.organId = organId;
+    }
 
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setUpdateBy(String updateBy) {
-		this.updateBy = updateBy;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
 
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
 
-	public void setDelFlag(String delFlag) {
-		this.delFlag = delFlag;
-	}
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
 
-	public void setRoleIds(String[] roleIds) {
-		this.roleIds = roleIds;
-	}
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
 
-	public String getDeptId() {
-		return deptId;
-	}
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag;
+    }
 
-	public void setDeptId(String deptId) {
-		this.deptId = deptId;
-	}
-    
+    public void setRoleIds(String[] roleIds) {
+        this.roleIds = roleIds;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
+    }
+
 }

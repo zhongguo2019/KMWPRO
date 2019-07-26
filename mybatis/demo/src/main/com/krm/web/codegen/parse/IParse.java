@@ -6,8 +6,8 @@ import com.krm.web.codegen.model.CodeGenModel;
 
 /**
  * 模板解析接口
- * @author Parker
  *
+ * @author Parker
  */
 public interface IParse {
 

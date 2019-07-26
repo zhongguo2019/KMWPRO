@@ -5,9 +5,7 @@ import static com.krm.web.codegen.GenCoreConstant.BEETL;
 import com.krm.web.codegen.parse.impl.BeetlParseImpl;
 
 /**
- * 
  * @author Parker
- *
  */
 public class ParseFactory {
 

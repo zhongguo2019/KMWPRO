@@ -18,42 +18,42 @@ import com.krm.web.util.SysUserUtils;
 @Service
 public class SysUserCenterService extends ServiceMybatis<SysUser> {
 
-	@Resource
-	private OrganFunctions organFunctions;
+    @Resource
+    private OrganFunctions organFunctions;
 
-	public SysUser getSysUserInfo() {
-		SysUser sysUser = SysUserUtils.getCacheLoginUser();
-		Map<String, SysOrgan> organs = organFunctions.getAllOrganMap();
-		String organId = sysUser.getOrganId();
-		String deptId = sysUser.getDeptId();
-		String orgStr = null;
-		if (deptId.equals(organId)) { // 机构
-			orgStr = ((SysOrgan) organs.get(organId)).getName();
-		} else {
-			orgStr = ((SysOrgan) organs.get(organId)).getName() + " —— "
-					+ ((SysOrgan) organs.get(deptId)).getName();
-		}
-		String curIP = IPUtils.getClientAddress(SysUserUtils.getCurRequest());
-		String ipEx = "";
-		if (!StringUtils.equals(sysUser.getLoginIp(), curIP))
-			ipEx = "(当前IP为:" + curIP + "，与上次登录IP不一致，请注意!)";
+    public SysUser getSysUserInfo() {
+        SysUser sysUser = SysUserUtils.getCacheLoginUser();
+        Map<String, SysOrgan> organs = organFunctions.getAllOrganMap();
+        String organId = sysUser.getOrganId();
+        String deptId = sysUser.getDeptId();
+        String orgStr = null;
+        if (deptId.equals(organId)) { // 机构
+            orgStr = ((SysOrgan) organs.get(organId)).getName();
+        } else {
+            orgStr = ((SysOrgan) organs.get(organId)).getName() + " —— "
+                    + ((SysOrgan) organs.get(deptId)).getName();
+        }
+        String curIP = IPUtils.getClientAddress(SysUserUtils.getCurRequest());
+        String ipEx = "";
+        if (!StringUtils.equals(sysUser.getLoginIp(), curIP))
+            ipEx = "(当前IP为:" + curIP + "，与上次登录IP不一致，请注意!)";
 //		sysUser.set("orgStr", orgStr);
 //		sysUser.set("ipEx", ipEx);
-		return sysUser;
-	}
+        return sysUser;
+    }
 
-	/**
-	 * 用户更新资料
-	 */
-	public Integer updateSysuserInfo(SysUser sysUser) {
-		String pwd = null;
-		if(StringUtils.isNotBlank(sysUser.getPassword())){
-			pwd = PasswordEncoder.encrypt(sysUser.getPassword(),
-					SysUserUtils.getCacheLoginUser().getUsername());
-		}
-		sysUser.setPassword(pwd);
-		sysUser.setId(SysUserUtils.getCacheLoginUser().getId());
-		return this.updateByPrimaryKeySelective(sysUser);
-	}
+    /**
+     * 用户更新资料
+     */
+    public Integer updateSysuserInfo(SysUser sysUser) {
+        String pwd = null;
+        if (StringUtils.isNotBlank(sysUser.getPassword())) {
+            pwd = PasswordEncoder.encrypt(sysUser.getPassword(),
+                    SysUserUtils.getCacheLoginUser().getUsername());
+        }
+        sysUser.setPassword(pwd);
+        sysUser.setId(SysUserUtils.getCacheLoginUser().getId());
+        return this.updateByPrimaryKeySelective(sysUser);
+    }
 
 }

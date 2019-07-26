@@ -11,50 +11,50 @@ import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSONObject;
 
-@SuppressWarnings({ "unused"})
+@SuppressWarnings({"unused"})
 @Entity
 public class CommonEntity extends JSONObject {
 
-	private static final long serialVersionUID = 1L;
-	
-	public CommonEntity() {
-		super();
-	}
-	
-	public CommonEntity(Map<String, Object> map) {
-		super(map);
-	}
+    private static final long serialVersionUID = 1L;
 
-	public CommonEntity getEntity(String key) {
-		Object value = this.get(key);
-		if (value instanceof CommonEntity) {
-			return (CommonEntity) value;
-		}
-		
-		JSONObject jobj = null;
+    public CommonEntity() {
+        super();
+    }
 
-		if (value instanceof JSONObject) {
-			jobj = (JSONObject) value;
-		} else {
-			jobj = (JSONObject) toJSON(value);
-		}
+    public CommonEntity(Map<String, Object> map) {
+        super(map);
+    }
 
-		return jobj == null ? null : new CommonEntity(jobj);
-	}
+    public CommonEntity getEntity(String key) {
+        Object value = this.get(key);
+        if (value instanceof CommonEntity) {
+            return (CommonEntity) value;
+        }
 
-	public CommonEntity set(String key, Object value, boolean force) {
-		if (force || value != null) {
-			super.put(key, value);
-		}
-		return this;
-	}
+        JSONObject jobj = null;
 
-	public CommonEntity set(String key, Object value) {
-		return this.set(key, value, true);
-	}
+        if (value instanceof JSONObject) {
+            jobj = (JSONObject) value;
+        } else {
+            jobj = (JSONObject) toJSON(value);
+        }
 
-	public CommonEntity setAll(Map<? extends String, ? extends Object> m) {
-		super.putAll(m);
-		return this;
-	}
+        return jobj == null ? null : new CommonEntity(jobj);
+    }
+
+    public CommonEntity set(String key, Object value, boolean force) {
+        if (force || value != null) {
+            super.put(key, value);
+        }
+        return this;
+    }
+
+    public CommonEntity set(String key, Object value) {
+        return this.set(key, value, true);
+    }
+
+    public CommonEntity setAll(Map<? extends String, ? extends Object> m) {
+        super.putAll(m);
+        return this;
+    }
 }

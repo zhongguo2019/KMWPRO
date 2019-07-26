@@ -12,13 +12,12 @@ import com.krm.web.sys.model.SysUser;
 import tk.mybatis.mapper.common.Mapper;
 
 /**
- * 
- * @author 
+ * @author
  */
 
-public interface SysUserMapper extends Mapper<SysUser>{
-	
-	public List<CommonEntity> findPageInfo(Map<String, Object> params);
-	
-	public int saveUser(SysUser sysUser);
+public interface SysUserMapper extends Mapper<SysUser> {
+
+    public List<CommonEntity> findPageInfo(Map<String, Object> params);
+
+    public int saveUser(SysUser sysUser);
 }

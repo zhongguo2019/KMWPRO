@@ -21,11 +21,11 @@ var ec_opts = {
             radius: '55%',
             center: ['50%', '60%'],
             data: [
-                { value: 335, name: '直接访问' },
-                { value: 310, name: '邮件营销' },
-                { value: 234, name: '联盟广告' },
-                { value: 135, name: '视频广告' },
-                { value: 1548, name: '搜索引擎' }
+                {value: 335, name: '直接访问'},
+                {value: 310, name: '邮件营销'},
+                {value: 234, name: '联盟广告'},
+                {value: 135, name: '视频广告'},
+                {value: 1548, name: '搜索引擎'}
             ],
             itemStyle: {
                 emphasis: {
@@ -48,7 +48,7 @@ var ec_opts = {
         },
         legend: {
             data: ['直接访问']
-        },        
+        },
         grid: {
             left: '3%',
             right: '4%',
@@ -103,10 +103,10 @@ var ec_opts = {
             data: ['巴西', '印尼', '美国', '印度', '中国', '世界人口(万)']
         },
         series: [{
-                name: '2011年',
-                type: 'bar',
-                data: [18203, 23489, 29034, 104970, 131744, 630230]
-            },
+            name: '2011年',
+            type: 'bar',
+            data: [18203, 23489, 29034, 104970, 131744, 630230]
+        },
             {
                 name: '2012年',
                 type: 'bar',
@@ -139,11 +139,11 @@ var ec_opts = {
             type: 'value'
         },
         series: [{
-                name: '机构一',
-                type: 'line',
-                stack: '总量',
-                data: [150, 232, 201, 154, 190, 330, 410]
-            },
+            name: '机构一',
+            type: 'line',
+            stack: '总量',
+            data: [150, 232, 201, 154, 190, 330, 410]
+        },
             {
                 name: '机构二',
                 type: 'line',
@@ -215,13 +215,13 @@ var ec_opts = {
                 [37062, 75.4, 252847810, 'United States', 1990]
             ],
             type: 'scatter',
-            symbolSize: function(data) {
+            symbolSize: function (data) {
                 return Math.sqrt(data[2]) / 5e2;
             },
             label: {
                 emphasis: {
                     show: true,
-                    formatter: function(param) {
+                    formatter: function (param) {
                         return param.data[3];
                     },
                     position: 'top'
@@ -258,13 +258,13 @@ var ec_opts = {
                 [53354, 79.1, 321773631, 'United States', 2015]
             ],
             type: 'scatter',
-            symbolSize: function(data) {
+            symbolSize: function (data) {
                 return Math.sqrt(data[2]) / 5e2;
             },
             label: {
                 emphasis: {
                     show: true,
-                    formatter: function(param) {
+                    formatter: function (param) {
                         return param.data[3];
                     },
                     position: 'top'
@@ -290,21 +290,21 @@ var ec_opts = {
         radar: {
             // shape: 'circle',
             indicator: [
-                { name: '销售（sales）', max: 6500 },
-                { name: '管理（Administration）', max: 16000 },
-                { name: '信息技术（Information Techology）', max: 30000 },
-                { name: '客服（Customer Support）', max: 38000 },
-                { name: '研发（Development）', max: 52000 },
-                { name: '市场（Marketing）', max: 25000 }
+                {name: '销售（sales）', max: 6500},
+                {name: '管理（Administration）', max: 16000},
+                {name: '信息技术（Information Techology）', max: 30000},
+                {name: '客服（Customer Support）', max: 38000},
+                {name: '研发（Development）', max: 52000},
+                {name: '市场（Marketing）', max: 25000}
             ]
         },
         series: [{
             name: '预算 vs 开销（Budget vs spending）',
             type: 'radar',
             data: [{
-                    value: [4300, 10000, 28000, 35000, 50000, 19000],
-                    name: '预算分配（Allocated Budget）'
-                },
+                value: [4300, 10000, 28000, 35000, 50000, 19000],
+                name: '预算分配（Allocated Budget）'
+            },
                 {
                     value: [5000, 14000, 28000, 31000, 42000, 21000],
                     name: '实际开销（Actual Spending）'
@@ -322,8 +322,8 @@ var ec_opts = {
         series: [{
             name: '业务指标',
             type: 'gauge',
-            detail: { formatter: '{value}%' },
-            data: [{ value: 50, name: '完成率' }]
+            detail: {formatter: '{value}%'},
+            data: [{value: 50, name: '完成率'}]
         }]
     },
     funnel: {
@@ -337,7 +337,7 @@ var ec_opts = {
         },
         toolbox: {
             feature: {
-                dataView: { readOnly: false },
+                dataView: {readOnly: false},
                 restore: {},
                 saveAsImage: {}
             }
@@ -388,11 +388,11 @@ var ec_opts = {
                 }
             },
             data: [
-                { value: 60, name: '访问' },
-                { value: 40, name: '咨询' },
-                { value: 20, name: '订单' },
-                { value: 80, name: '点击' },
-                { value: 100, name: '展现' }
+                {value: 60, name: '访问'},
+                {value: 40, name: '咨询'},
+                {value: 20, name: '订单'},
+                {value: 80, name: '点击'},
+                {value: 100, name: '展现'}
             ]
         }]
     },
@@ -605,7 +605,7 @@ var ec_opts = {
                 [6, 21, 2],
                 [6, 22, 2],
                 [6, 23, 6]
-            ].map(function(item) {
+            ].map(function (item) {
                 return [item[1], item[0], item[2] || '-'];
             }),
             label: {
@@ -622,18 +622,20 @@ var ec_opts = {
         }]
     }
 };
+
 //初始化图表
 function ecinit(id, option) {
     echartInit(document.getElementById(id), option);
 }
+
 function echartInit(dom, option) {
-    var myChart = echarts.init(dom,"macarons");
+    var myChart = echarts.init(dom, "macarons");
     myChart.setOption(option);
     window.onresize = myChart.resize;
 }
 
 //input绑定change事件
-$('.c-edit').bind('change', function() {
+$('.c-edit').bind('change', function () {
     var v = $(this).val(),
         t = $(this).prev().html(),
         n = $(this).attr('name').split('|'),
@@ -642,20 +644,21 @@ $('.c-edit').bind('change', function() {
         domOpt = dom.getOption();
     setValue(dom, domOpt, n, t, v);
 });
+
 function loadValue(view) {
     var id = $(view).attr('id'),
         dom = echarts.getInstanceByDom(document.getElementById(id)),
         domOpt = dom.getOption(),
         inputs = $('.c-edit');
-    var i, n, val,len = inputs.length;
+    var i, n, val, len = inputs.length;
     for (i = 0; i < len; i++) {
         n = $(inputs[i]).attr('name').split('|');
         if (n[0] == 'color') {
-           val = domOpt[n[0]][n[1]];
-           $(inputs[i]).css('background-color', val);
-        }else if (!domOpt[n[0]]) {
+            val = domOpt[n[0]][n[1]];
+            $(inputs[i]).css('background-color', val);
+        } else if (!domOpt[n[0]]) {
             val = '';
-        }else if (!n[2] && !n[3]) {
+        } else if (!n[2] && !n[3]) {
             if (domOpt[n[0]].length < 1 || !Array.isArray(domOpt[n[0]])) {
                 val = domOpt[n[0]][n[1]];
             } else {
@@ -671,6 +674,7 @@ function loadValue(view) {
         $(inputs[i]).val(val);
     }
 };
+
 function setValue(dom, domOpt, n, t, v) {
     if (!domOpt[n[0]]) {
         toastr.warning("该图例无此属性");

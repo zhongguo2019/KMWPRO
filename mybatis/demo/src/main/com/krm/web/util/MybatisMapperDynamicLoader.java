@@ -57,6 +57,7 @@ public class MybatisMapperDynamicLoader implements InitializingBean, Application
     class Scanner {
         private static final String XML_RESOURCE_PATTERN = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + "**/*Mapper.xml";
         private final ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
+
         public Scanner() throws IOException {
             Resource[] resources = findResource();
             if (resources != null) {
@@ -67,6 +68,7 @@ public class MybatisMapperDynamicLoader implements InitializingBean, Application
                 }
             }
         }
+
         public void reloadXML() throws Exception {
             SqlSessionFactory factory = context.getBean(SqlSessionFactory.class);
             Configuration configuration = factory.getConfiguration();
@@ -80,6 +82,7 @@ public class MybatisMapperDynamicLoader implements InitializingBean, Application
                 }
             }
         }
+
         private void removeConfig(Configuration configuration) throws Exception {
             Class<?> classConfig = configuration.getClass();
             clearMap(classConfig, configuration, "mappedStatements");
@@ -90,16 +93,19 @@ public class MybatisMapperDynamicLoader implements InitializingBean, Application
             clearMap(classConfig, configuration, "sqlFragments");
             clearSet(classConfig, configuration, "loadedResources");
         }
+
         private void clearMap(Class<?> classConfig, Configuration configuration, String fieldName) throws Exception {
             Field field = classConfig.getDeclaredField(fieldName);
             field.setAccessible(true);
             ((Map) field.get(configuration)).clear();
         }
+
         private void clearSet(Class<?> classConfig, Configuration configuration, String fieldName) throws Exception {
             Field field = classConfig.getDeclaredField(fieldName);
             field.setAccessible(true);
             ((Set) field.get(configuration)).clear();
         }
+
         public boolean isChanged() throws IOException {
             boolean isChanged = false;
             for (Resource resource : findResource()) {
@@ -112,9 +118,11 @@ public class MybatisMapperDynamicLoader implements InitializingBean, Application
             }
             return isChanged;
         }
+
         private Resource[] findResource() throws IOException {
             return resourcePatternResolver.getResources(XML_RESOURCE_PATTERN);
         }
+
         private String getMd(Resource resource) throws IOException {
             return new StringBuilder().append(resource.contentLength()).append("-").append(resource.lastModified()).toString();
         }

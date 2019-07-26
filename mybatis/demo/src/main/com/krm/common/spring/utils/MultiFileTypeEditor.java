@@ -9,16 +9,16 @@ import java.util.Date;
 import org.springframework.util.StringUtils;
 
 public class MultiFileTypeEditor extends PropertyEditorSupport {
-	
 
-	public void setAsText(String text) throws IllegalArgumentException {
-		System.out.println(text);
-	}
 
-	/**
-	 * Format the Date as String, using the specified DateFormat.
-	 */
-	public String getAsText() {
-		return null;
-	}
+    public void setAsText(String text) throws IllegalArgumentException {
+        System.out.println(text);
+    }
+
+    /**
+     * Format the Date as String, using the specified DateFormat.
+     */
+    public String getAsText() {
+        return null;
+    }
 }

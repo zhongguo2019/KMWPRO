@@ -17,8 +17,8 @@ import com.krm.web.codegen.parse.IParse;
 
 /**
  * 解析模板,生产代码
- * @author Parker
  *
+ * @author Parker
  */
 public class BeetlParseImpl implements IParse {
 
@@ -30,9 +30,9 @@ public class BeetlParseImpl implements IParse {
     private static GroupTemplate gt;
 
     static {
-    	try {
+        try {
             cfg = Configuration.defaultConfiguration();
-            Map<String,String> fn = cfg.getFnPkgMap();
+            Map<String, String> fn = cfg.getFnPkgMap();
             fn.put("stringutil", "com.krm.common.beetl.function.StrutilFunction");
             fn.put("shiro", "com.krm.common.beetl.function.ShiroFunction");
             fn.put("num", "com.krm.common.beetl.function.AutoNoGenFunction");
@@ -49,7 +49,7 @@ public class BeetlParseImpl implements IParse {
 
     @Override
     public List<String> parse(CodeGenModel model) {
-    	List<String> renderList = new ArrayList<String>();
+        List<String> renderList = new ArrayList<String>();
         Template t;
         for (String file : model.getFiles()) {
             t = gt.getTemplate(file);

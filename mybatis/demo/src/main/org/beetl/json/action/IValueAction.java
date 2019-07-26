@@ -6,6 +6,6 @@ import org.beetl.json.LocationAction;
 import org.beetl.json.OutputNode;
 import org.beetl.json.OutputNodeKey;
 
-public interface IValueAction extends LocationAction  {
-	public ActionReturn doit(OutputNodeKey field,Object o,OutputNode thisNode,JsonWriter w);
+public interface IValueAction extends LocationAction {
+    public ActionReturn doit(OutputNodeKey field, Object o, OutputNode thisNode, JsonWriter w);
 }

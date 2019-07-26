@@ -10,7 +10,7 @@ import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
 
 public class BaseProvider {
 
-	private static final ObjectFactory DEFAULT_OBJECT_FACTORY = new DefaultObjectFactory();
+    private static final ObjectFactory DEFAULT_OBJECT_FACTORY = new DefaultObjectFactory();
     private static final ObjectWrapperFactory DEFAULT_OBJECT_WRAPPER_FACTORY = new DefaultObjectWrapperFactory();
 
     /**
@@ -50,11 +50,11 @@ public class BaseProvider {
     protected boolean isNotEmpty(String value) {
         return !isEmpty(value);
     }
-    
+
     protected void throwNullKeyException(String property) {
         throw new NullPointerException("主键属性" + property + "不能为空!");
     }
-    
+
     /**
      * 主键字段不能为空
      *
@@ -66,5 +66,5 @@ public class BaseProvider {
             throwNullKeyException(property);
         }
     }
-    
+
 }

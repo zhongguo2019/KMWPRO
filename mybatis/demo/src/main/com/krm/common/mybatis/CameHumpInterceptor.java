@@ -25,8 +25,8 @@ public class CameHumpInterceptor implements Interceptor {
 
     public static final String RESULT_TYPE = "-Inline";
 
-    
-	@Override
+
+    @Override
     public Object intercept(Invocation invocation) throws Throwable {
         //先执行，后处理
         Object result = invocation.proceed();
@@ -39,7 +39,7 @@ public class CameHumpInterceptor implements Interceptor {
             //1.resultType时
             if (resultMap.getId().endsWith(RESULT_TYPE)) {
                 for (Object re : resultList) {
-                	if(re == null) continue;
+                    if (re == null) continue;
                     processMap((Map) re);
                 }
             } else {//2.resultMap时
@@ -56,8 +56,8 @@ public class CameHumpInterceptor implements Interceptor {
      *
      * @param map
      */
-	@SuppressWarnings("unchecked")
-	private void processMap(Map map) {
+    @SuppressWarnings("unchecked")
+    private void processMap(Map map) {
         Map cameHumpMap = new HashMap();
         Iterator<Map.Entry> iterator = map.entrySet().iterator();
         while (iterator.hasNext()) {
@@ -65,13 +65,13 @@ public class CameHumpInterceptor implements Interceptor {
             String key = (String) entry.getKey();
             String cameHumpKey = underlineToCamelhump(key);
             if (!key.equals(cameHumpKey)) {
-            	Object value = entry.getValue();
-            	if (value instanceof Calendar) {
-            		value = DateUtils.formatDateTime(((Calendar)value).getTime());
-            	}
-            	if (value instanceof Date) {
-            		value = DateUtils.formatDateTime((Date)value);
-            	}
+                Object value = entry.getValue();
+                if (value instanceof Calendar) {
+                    value = DateUtils.formatDateTime(((Calendar) value).getTime());
+                }
+                if (value instanceof Date) {
+                    value = DateUtils.formatDateTime((Date) value);
+                }
                 cameHumpMap.put(cameHumpKey, value);
                 iterator.remove();
             }
@@ -86,7 +86,7 @@ public class CameHumpInterceptor implements Interceptor {
      * @param resultMappings
      */
     @SuppressWarnings("unchecked")
-	private void processMap(Map map, List<ResultMapping> resultMappings) {
+    private void processMap(Map map, List<ResultMapping> resultMappings) {
         Set<String> propertySet = toPropertySet(resultMappings);
         Map cameHumpMap = new HashMap();
         Iterator<Map.Entry> iterator = map.entrySet().iterator();
@@ -96,16 +96,16 @@ public class CameHumpInterceptor implements Interceptor {
             if (propertySet.contains(key)) {
                 continue;
             }
-            
+
             String cameHumpKey = underlineToCamelhump(key);
             if (!key.equals(cameHumpKey)) {
-            	Object value = entry.getValue();
-            	if (value instanceof Calendar) {
-            		value = DateUtils.formatDateTime(((Calendar)value).getTime());
-            	}
-            	if (value instanceof Date) {
-            		value = DateUtils.formatDateTime((Date)value);
-            	}
+                Object value = entry.getValue();
+                if (value instanceof Calendar) {
+                    value = DateUtils.formatDateTime(((Calendar) value).getTime());
+                }
+                if (value instanceof Date) {
+                    value = DateUtils.formatDateTime((Date) value);
+                }
                 cameHumpMap.put(cameHumpKey, value);
                 iterator.remove();
             }
@@ -126,41 +126,41 @@ public class CameHumpInterceptor implements Interceptor {
         }
         return propertySet;
     }
-    
+
     /**
-	 * 将下划线风格替换为驼峰风格
-	 */
-	public static String underlineToCamelhump(String name) {
-		char[] buffer = name.toCharArray();
-		int count = 0;
-		boolean lastUnderscore = false;
-		for (int i = 0; i < buffer.length; i++) {
-			char c = buffer[i];
-			if (c == '_') {
-				lastUnderscore = true;
-			} else {
-				c = (lastUnderscore && count != 0) ? toUpperAscii(c)
-						: toLowerAscii(c);
-				buffer[count++] = c;
-				lastUnderscore = false;
-			}
-		}
-		if (count != buffer.length) {
-			buffer = subarray(buffer, 0, count);
-		}
-		return new String(buffer);
-	}
-    
+     * 将下划线风格替换为驼峰风格
+     */
+    public static String underlineToCamelhump(String name) {
+        char[] buffer = name.toCharArray();
+        int count = 0;
+        boolean lastUnderscore = false;
+        for (int i = 0; i < buffer.length; i++) {
+            char c = buffer[i];
+            if (c == '_') {
+                lastUnderscore = true;
+            } else {
+                c = (lastUnderscore && count != 0) ? toUpperAscii(c)
+                        : toLowerAscii(c);
+                buffer[count++] = c;
+                lastUnderscore = false;
+            }
+        }
+        if (count != buffer.length) {
+            buffer = subarray(buffer, 0, count);
+        }
+        return new String(buffer);
+    }
+
     public static char[] subarray(char[] src, int offset, int len) {
         char[] dest = new char[len];
         System.arraycopy(src, offset, dest, 0, len);
         return dest;
     }
-    
+
     public static boolean isLowercaseAlpha(char c) {
         return (c >= 'a') && (c <= 'z');
     }
-    
+
     public static char toUpperAscii(char c) {
         if (isLowercaseAlpha(c)) {
             c -= (char) 0x20;

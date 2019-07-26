@@ -13,78 +13,76 @@ import org.beetl.json.node.PojoNode;
 
 /**
  * 循环的时候忽略某些属性（导致循环的元素)
- * @author joelli
  *
+ * @author joelli
  */
 public class ClassCycleIgnoreAction implements IValueAction {
 
-	String[] names = null;
-	public ClassCycleIgnoreAction(String names){
-		this.names = names.split(",");
-	}
-	
-	
+    String[] names = null;
 
-	@Override
-	public ActionReturn doit(OutputNodeKey field,Object obj,OutputNode thisNode,JsonWriter w) {
-		if(thisNode instanceof PojoAttributeNode){
-			return new ActionReturn(obj,ActionReturn.CONTINUE);
-		}
-		//  pojo node,direct render
-		try{
-			if(w.containObjectInPath(obj)){
-				w.writeKey(field);
-				String path = w.getObjectPath(obj);
-				w.writeScopeChar('{');
-				w.writeKeyValue("$ref", path);
-				cycleRender((PojoNode)thisNode,field,obj,w);
-				w.writeScopeChar('}');
-				return new ActionReturn(obj,ActionReturn.RETURN);
-			}else{
-				return new ActionReturn(obj,ActionReturn.CONTINUE);
-			}
+    public ClassCycleIgnoreAction(String names) {
+        this.names = names.split(",");
+    }
 
-			
-			
-		}catch(IOException  ioe){
-			throw new RuntimeException(ioe);
-		}
-		
-		
-		
-	}
 
-	
-	public void cycleRender(PojoNode pojo,OutputNodeKey filed,Object obj, JsonWriter w) throws IOException {
-		
-		List<PojoAttributeNode> attrs =  pojo.getAttrs();
-		Iterator<PojoAttributeNode> it = attrs.iterator();
-		if(!it.hasNext()){
-			return ;
-		}
-		boolean firstWrite = true ;
-		while(true){			
-			PojoAttributeNode node = it.next();
-			if(!containAttr(node.getAttrName())){
-			
-				node.render(null,obj, w);				
-				firstWrite = true ;
-			}		
-			if(!it.hasNext()){
-				return ;
-			}
-		
-		}
-		
-	}
-	
-	private boolean containAttr(String attr){
-		for(String s:names){
-			if(s.equals(attr)){
-				return true;
-			}
-		}
-		return false;
-	}
+    @Override
+    public ActionReturn doit(OutputNodeKey field, Object obj, OutputNode thisNode, JsonWriter w) {
+        if (thisNode instanceof PojoAttributeNode) {
+            return new ActionReturn(obj, ActionReturn.CONTINUE);
+        }
+        //  pojo node,direct render
+        try {
+            if (w.containObjectInPath(obj)) {
+                w.writeKey(field);
+                String path = w.getObjectPath(obj);
+                w.writeScopeChar('{');
+                w.writeKeyValue("$ref", path);
+                cycleRender((PojoNode) thisNode, field, obj, w);
+                w.writeScopeChar('}');
+                return new ActionReturn(obj, ActionReturn.RETURN);
+            } else {
+                return new ActionReturn(obj, ActionReturn.CONTINUE);
+            }
+
+
+        } catch (IOException ioe) {
+            throw new RuntimeException(ioe);
+        }
+
+
+    }
+
+
+    public void cycleRender(PojoNode pojo, OutputNodeKey filed, Object obj, JsonWriter w) throws IOException {
+
+        List<PojoAttributeNode> attrs = pojo.getAttrs();
+        Iterator<PojoAttributeNode> it = attrs.iterator();
+        if (!it.hasNext()) {
+            return;
+        }
+        boolean firstWrite = true;
+        while (true) {
+            PojoAttributeNode node = it.next();
+            if (!containAttr(node.getAttrName())) {
+
+                node.render(null, obj, w);
+                firstWrite = true;
+            }
+            if (!it.hasNext()) {
+                return;
+            }
+
+        }
+
+    }
+
+    private boolean containAttr(String attr) {
+        for (String s : names) {
+            if (s.equals(attr)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

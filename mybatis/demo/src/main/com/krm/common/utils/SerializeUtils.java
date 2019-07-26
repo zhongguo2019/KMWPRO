@@ -19,6 +19,7 @@ public class SerializeUtils {
 
     /**
      * 把对象写入到文件中
+     *
      * @param obj
      * @param fileFullName
      */
@@ -27,13 +28,14 @@ public class SerializeUtils {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileFullName));
             out.writeObject(obj);
             out.close();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
      * 从文件中读取对象
+     *
      * @param fileFullName
      * @return
      */
@@ -43,7 +45,7 @@ public class SerializeUtils {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileFullName));
             obj = in.readObject();
             in.close();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return obj;
@@ -51,6 +53,7 @@ public class SerializeUtils {
 
     /**
      * 把字节数组转换为对象
+     *
      * @param bytes
      * @return
      */
@@ -60,7 +63,7 @@ public class SerializeUtils {
             ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bytes));
             obj = in.readObject();
             in.close();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return obj;
@@ -68,6 +71,7 @@ public class SerializeUtils {
 
     /**
      * 把对象转换为字节数组
+     *
      * @param obj
      * @return
      */
@@ -77,7 +81,7 @@ public class SerializeUtils {
             ObjectOutputStream out = new ObjectOutputStream(bytesOut);
             out.writeObject(obj);
             out.close();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return bytesOut.toByteArray();
@@ -85,6 +89,7 @@ public class SerializeUtils {
 
     /**
      * 把对象转换为字符串，使用base64处理
+     *
      * @param obj
      * @return
      */
@@ -95,6 +100,7 @@ public class SerializeUtils {
 
     /**
      * 把字符串转化为对象 使用base64处理
+     *
      * @param objStr
      * @return
      */
@@ -102,10 +108,10 @@ public class SerializeUtils {
         byte[] objBytes = Base64.decode(objStr);
         return readObjectFromBytes(objBytes);
     }
-    
+
     public static void main(String[] args) {
-		
-    	System.out.println(converObject2String("SELECT ID as key,NAME as value FROM SYS_organ  "));
-    	System.out.println(converString2Object("rO0ABXQATFNFTEVDVCB0LlBST19OQU1FIExBQkxFLCB0LklEIFZBTFVFIEZST00gR0VOX1BST0pFQ1RTIHQgd2hlcmUgdC5kZWxfZmxhZyA9IDA="));
-	}
+
+        System.out.println(converObject2String("SELECT ID as key,NAME as value FROM SYS_organ  "));
+        System.out.println(converString2Object("rO0ABXQATFNFTEVDVCB0LlBST19OQU1FIExBQkxFLCB0LklEIFZBTFVFIEZST00gR0VOX1BST0pFQ1RTIHQgd2hlcmUgdC5kZWxfZmxhZyA9IDA="));
+    }
 }

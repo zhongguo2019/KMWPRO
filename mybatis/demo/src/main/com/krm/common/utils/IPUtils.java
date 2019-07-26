@@ -3,10 +3,10 @@ package com.krm.common.utils;
 import javax.servlet.http.HttpServletRequest;
 
 /**
-* IP校验
-*/
+ * IP校验
+ */
 public class IPUtils {
-    
+
     public static String getClientAddress(HttpServletRequest request) {
         if (request == null) {
             return "unknown";
@@ -30,5 +30,5 @@ public class IPUtils {
         }
         return ip;
     }
-    
+
 }

@@ -10,16 +10,15 @@ import com.krm.web.sys.model.SysArea;
 import tk.mybatis.mapper.common.Mapper;
 
 /**
- * 
- * @author 
+ * @author
  */
 
-public interface SysAreaMapper extends Mapper<SysArea>{
-	
-	public int updateParentIds(SysArea sysArea);
-	
-	public int deleteAreaByRootId(String id);
+public interface SysAreaMapper extends Mapper<SysArea> {
 
-	public List<SysArea> findSysAreaList(Map<String, Object> params);
-	
+    public int updateParentIds(SysArea sysArea);
+
+    public int deleteAreaByRootId(String id);
+
+    public List<SysArea> findSysAreaList(Map<String, Object> params);
+
 }

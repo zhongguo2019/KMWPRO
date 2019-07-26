@@ -3,13 +3,14 @@
     height: 36px;
     line-height: 36px;
     border-bottom: 1px solid #eee;
-	font-size: 14px;
-	font-weight: normal;
+    font-size: 14px;
+    font-weight: normal;
     color: #1890ff;
     overflow: hidden;
     background-color: #fafafa;
     border-radius: 2px 2px 0 0;
 }
+
 .layui-layer-setwin {
     position: absolute;
     right: 15px;
@@ -17,6 +18,7 @@
     font-size: 0;
     line-height: initial;
 }
+
 .layui-layer-btn a {
     height: 26px;
     line-height: 26px;
@@ -31,6 +33,7 @@
     text-decoration: none;
     min-width: 88px;
 }
+
 .layui-layer-btn .layui-layer-btn0 {
     background: #1890ff;
     border: 0;

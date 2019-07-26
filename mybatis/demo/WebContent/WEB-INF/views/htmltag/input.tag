@@ -10,26 +10,26 @@
 @var specFlag = specFlag!'false';
 @var dollar = '$';
 @var maxLength = maxLength!;
-					<tr class="FormData">
-    					<td class="CaptionTD">${text}:</td>
-    					<td class="DataTD ${class}">
-				   	@//非空标记  	 1:非空
-					@if(nullFlag == '1'){
-						@//可更改标记 	0:不可更改
-				   	 	@if(alterFlag == '0'){
-						     <input type="text" name="${name}" id="${name}" readonly value="${value! }" maxlength="${maxLength}" required/>
-				   	 	@}else{
-						     <input type="text" name="${name}" id="${name}" value="${value! }" maxlength="${maxLength}" required/>
-				   	 	@}
-				    @}else{
-				    	@if(alterFlag == '0'){
-						     <input type="text" name="${name}" id="${name}" maxlength="${maxLength}" readonly value="${value! }"/>
-				   	 	@}else{
-						     <input type="text" name="${name}" id="${name}" maxlength="${maxLength}" value="${value! }"/>
-				   	 	@}
-				    @}
-					    </td>
-				    @if(nullFlag == '1'){
-					    <td><font color="red" size="+1">*</font></td>
-				    @}
-					</tr>
+<tr class="FormData">
+    <td class="CaptionTD">${text}:</td>
+    <td class="DataTD ${class}">
+        @//非空标记 1:非空
+        @if(nullFlag == '1'){
+        @//可更改标记 0:不可更改
+        @if(alterFlag == '0'){
+        <input type="text" name="${name}" id="${name}" readonly value="${value! }" maxlength="${maxLength}" required/>
+        @}else{
+        <input type="text" name="${name}" id="${name}" value="${value! }" maxlength="${maxLength}" required/>
+        @}
+        @}else{
+        @if(alterFlag == '0'){
+        <input type="text" name="${name}" id="${name}" maxlength="${maxLength}" readonly value="${value! }"/>
+        @}else{
+        <input type="text" name="${name}" id="${name}" maxlength="${maxLength}" value="${value! }"/>
+        @}
+        @}
+    </td>
+    @if(nullFlag == '1'){
+    <td><font color="red" size="+1">*</font></td>
+    @}
+</tr>

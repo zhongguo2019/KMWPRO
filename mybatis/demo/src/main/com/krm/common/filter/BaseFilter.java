@@ -43,7 +43,6 @@ import java.util.List;
  * </filter-mapping>
  * <p/>
  * 过滤器介绍：
- *
  */
 public abstract class BaseFilter implements Filter {
 
@@ -95,7 +94,7 @@ public abstract class BaseFilter implements Filter {
         String currentURL = httpRequest.getServletPath();
 
         logger.debug("url filter : current url : [{}]", currentURL);
-        
+
         httpResponse.setHeader("Cache-Control", "no-cache");
 //        httpResponse.setHeader("Pragma", "no-cache");
 

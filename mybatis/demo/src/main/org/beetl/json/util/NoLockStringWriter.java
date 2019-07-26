@@ -12,7 +12,7 @@ public class NoLockStringWriter extends Writer {
 
     public NoLockStringWriter() {
         buf = ContextLocal.get().getWriterBuffer();
-     
+
     }
 
     public NoLockStringWriter(int initialSize) {
@@ -22,15 +22,15 @@ public class NoLockStringWriter extends Writer {
         buf = new StringBuilder(initialSize);
     }
 
-   
+
     public void write(int c) {
         buf.append((char) c);
     }
 
-   
+
     public void write(char cbuf[], int off, int len) {
         if ((off < 0) || (off > cbuf.length) || (len < 0) ||
-            ((off + len) > cbuf.length) || ((off + len) < 0)) {
+                ((off + len) > cbuf.length) || ((off + len) < 0)) {
             throw new IndexOutOfBoundsException();
         } else if (len == 0) {
             return;
@@ -45,7 +45,7 @@ public class NoLockStringWriter extends Writer {
         buf.append(str);
     }
 
-    public void write(String str, int off, int len)  {
+    public void write(String str, int off, int len) {
         buf.append(str.substring(off, off + len));
     }
 
@@ -68,17 +68,16 @@ public class NoLockStringWriter extends Writer {
         return this;
     }
 
- 
+
     public String toString() {
         return buf.toString();
     }
 
-   
 
     public void flush() {
     }
 
-  
+
     public void close() throws IOException {
     }
 

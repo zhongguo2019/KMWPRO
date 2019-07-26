@@ -8,6 +8,6 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Json {
-	public JsonPolicy[]  policys();
-	
+    public JsonPolicy[] policys();
+
 }

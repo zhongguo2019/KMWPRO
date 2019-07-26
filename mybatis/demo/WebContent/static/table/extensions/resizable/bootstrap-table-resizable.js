@@ -61,7 +61,7 @@
         _resetView.apply(this, Array.prototype.slice.apply(arguments));
         if (this.options.resizable) {
             // because in fitHeader function, we use setTimeout(func, 100);
-        	initResizable(that);
+            initResizable(that);
             setTimeout(function () {
             }, 100);
         }

@@ -5,5 +5,5 @@ import java.util.Date;
 import java.util.Properties;
 
 public abstract interface ConfigDao {
-	public abstract Properties queryConfig(Date paramDate);
+    public abstract Properties queryConfig(Date paramDate);
 }

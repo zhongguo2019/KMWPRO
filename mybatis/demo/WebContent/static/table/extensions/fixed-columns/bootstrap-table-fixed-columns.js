@@ -45,7 +45,7 @@
         }
 
         this.initFixedColumns();
-        
+
         var that = this, $trs = this.$header.find('tr').clone();
         $trs.each(function () {
             $(this).find('th:gt(' + (that.options.fixedNumber - 1) + ')').remove();
@@ -119,7 +119,7 @@
             if (that.options.detailView && !that.options.cardView) {
                 index = i - 1;
             }
-            
+
             that.$fixedHeader.find('th[data-field="' + visibleFields[index] + '"]')
                 .find('.fht-cell').width($this.innerWidth());
             headerWidth += $this.outerWidth();
@@ -138,7 +138,7 @@
         }
 
         if (!this.options.height) {
-            top = this.$fixedHeader.height()- 1;
+            top = this.$fixedHeader.height() - 1;
             height = height - top;
         }
 

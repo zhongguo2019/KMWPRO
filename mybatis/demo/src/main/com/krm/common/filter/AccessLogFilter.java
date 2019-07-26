@@ -14,12 +14,12 @@ import java.io.IOException;
  */
 public class AccessLogFilter extends BaseFilter {
 
-	@Override
-	public void doFilter(HttpServletRequest request,
-			HttpServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		LogUtils.logAccess(request);
-		chain.doFilter(request, response);
-	}
+    @Override
+    public void doFilter(HttpServletRequest request,
+                         HttpServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        LogUtils.logAccess(request);
+        chain.doFilter(request, response);
+    }
 
 }

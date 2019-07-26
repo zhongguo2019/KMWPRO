@@ -1,4 +1,4 @@
-(function($) {
+(function ($) {
     var selectors = [];
     var check_binded = false;
     var check_lock = false;
@@ -8,10 +8,11 @@
     };
     var $window = $(window);
     var $prior_appeared;
+
     function process() {
         check_lock = false;
         for (var index = 0; index < selectors.length; index++) {
-            var $appeared = $(selectors[index]).filter(function() {
+            var $appeared = $(selectors[index]).filter(function () {
                 return $(this).is(":appeared")
             });
             $appeared.trigger("appear", [$appeared]);
@@ -22,7 +23,8 @@
             $prior_appeared = $appeared
         }
     }
-    $.expr[":"]["appeared"] = function(element) {
+
+    $.expr[":"]["appeared"] = function (element) {
         var $element = $(element);
         if (!$element.is(":visible")) {
             return false
@@ -39,12 +41,12 @@
         }
     };
     $.fn.extend({
-        appear: function(options) {
+        appear: function (options) {
             var opts = $.extend({},
-            defaults, options || {});
+                defaults, options || {});
             var selector = this.selector || this;
             if (!check_binded) {
-                var on_check = function() {
+                var on_check = function () {
                     if (check_lock) {
                         return
                     }
@@ -63,7 +65,7 @@
         }
     });
     $.extend({
-        force_appear: function() {
+        force_appear: function () {
             if (check_binded) {
                 process();
                 return true

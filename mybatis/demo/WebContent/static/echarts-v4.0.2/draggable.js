@@ -23,7 +23,8 @@
         init: function (mainEl, chart, opt) {
             opt = opt || {};
 
-            var chartResize = chart ? $.proxy(chart.resize, chart) : function () {};
+            var chartResize = chart ? $.proxy(chart.resize, chart) : function () {
+            };
             if (opt.throttle) {
                 chartResize = throttle(chartResize, opt.throttle, true, false);
             }
@@ -107,19 +108,18 @@
                     resize(e.pageX, e.pageY);
                 }
             });
-            
-            window.onresize = function(){
-        		resize(opt.div.next().position().top, opt.div.next().position().left);
-        	}
+
+            window.onresize = function () {
+                resize(opt.div.next().position().top, opt.div.next().position().left);
+            }
 
             $(document).on('mouseup', function () {
                 dragging = false;
             });
 
 
-
             function resize(x, y, isInit) {
-            	//debugger
+                //debugger
                 var mainOffset = mainEl.offset();
                 var mainPosition = mainEl.position();
                 var mainContentWidth = $(document.body).width() - mainOffset.left - BORDER_WIDTH;
@@ -168,8 +168,7 @@
 
         if (isSingle) {
             return createCallback();
-        }
-        else {
+        } else {
             var ret = [];
             for (var i = 0; i < fn.length; i++) {
                 ret[i] = createCallback(i);
@@ -196,16 +195,13 @@
                 if (debounce) {
                     if (trailing) {
                         timer = setTimeout(exec, delay);
-                    }
-                    else if (diff >= 0) {
+                    } else if (diff >= 0) {
                         exec();
                     }
-                }
-                else {
+                } else {
                     if (diff >= 0) {
                         exec();
-                    }
-                    else if (trailing) {
+                    } else if (trailing) {
                         timer = setTimeout(exec, -diff);
                     }
                 }

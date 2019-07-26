@@ -40,296 +40,295 @@ import com.mxgraph.util.mxUtils;
  */
 public class ExportServlet extends HttpServlet {
 
-	/**
-	 * 
-	 */
-	private static final Logger logger = Logger.getLogger(ExportServlet.class
-			.getName());
+    /**
+     *
+     */
+    private static final Logger logger = Logger.getLogger(ExportServlet.class
+            .getName());
 
-	static {
-		Constants.IMAGE_DOMAIN_MATCHES.add("http://img.diagramly.com/");
-	}
+    static {
+        Constants.IMAGE_DOMAIN_MATCHES.add("http://img.diagramly.com/");
+    }
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5040708166131034515L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -5040708166131034515L;
 
-	/**
-	 * 
-	 */
-	private transient SAXParserFactory parserFactory = SAXParserFactory
-			.newInstance();
+    /**
+     *
+     */
+    private transient SAXParserFactory parserFactory = SAXParserFactory
+            .newInstance();
 
-	/**
-	 * Cache for all images.
-	 */
-	private transient Hashtable<String, Image> imageCache = new Hashtable<String, Image>();
+    /**
+     * Cache for all images.
+     */
+    private transient Hashtable<String, Image> imageCache = new Hashtable<String, Image>();
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public ExportServlet() {
-		super();
-	}
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public ExportServlet() {
+        super();
+    }
 
-	/**
-	 * Handles exceptions and the output stream buffer.
-	 */
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		try {
-			if (request.getContentLength() < Constants.MAX_REQUEST_SIZE) {
-				long t0 = System.currentTimeMillis();
+    /**
+     * Handles exceptions and the output stream buffer.
+     */
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response) throws ServletException, IOException {
+        try {
+            if (request.getContentLength() < Constants.MAX_REQUEST_SIZE) {
+                long t0 = System.currentTimeMillis();
 
-				handleRequest(request, response);
+                handleRequest(request, response);
 
-				long mem = Runtime.getRuntime().totalMemory()
-						- Runtime.getRuntime().freeMemory();
-				long dt = System.currentTimeMillis() - t0;
+                long mem = Runtime.getRuntime().totalMemory()
+                        - Runtime.getRuntime().freeMemory();
+                long dt = System.currentTimeMillis() - t0;
 
-				logger.info("export: ip=" + request.getRemoteAddr() + " ref=\""
-						+ request.getHeader("Referer") + "\" length="
-						+ request.getContentLength() + " mem=" + mem + " dt="
-						+ dt);
-			} else {
-				response
-						.setStatus(HttpServletResponse.SC_REQUEST_ENTITY_TOO_LARGE);
-			}
-		} catch (OutOfMemoryError e) {
-			e.printStackTrace();
-			final Runtime r = Runtime.getRuntime();
-			logger.info("r.freeMemory() = " + r.freeMemory() / 1024.0 / 1024);
-			logger.info("r.totalMemory() = " + r.totalMemory() / 1024.0 / 1024);
-			logger.info("r.maxMemory() = " + r.maxMemory() / 1024.0 / 1024);
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		} finally {
-			response.getOutputStream().flush();
-			response.getOutputStream().close();
-		}
-	}
+                logger.info("export: ip=" + request.getRemoteAddr() + " ref=\""
+                        + request.getHeader("Referer") + "\" length="
+                        + request.getContentLength() + " mem=" + mem + " dt="
+                        + dt);
+            } else {
+                response
+                        .setStatus(HttpServletResponse.SC_REQUEST_ENTITY_TOO_LARGE);
+            }
+        } catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            final Runtime r = Runtime.getRuntime();
+            logger.info("r.freeMemory() = " + r.freeMemory() / 1024.0 / 1024);
+            logger.info("r.totalMemory() = " + r.totalMemory() / 1024.0 / 1024);
+            logger.info("r.maxMemory() = " + r.maxMemory() / 1024.0 / 1024);
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        } finally {
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+        }
+    }
 
-	/**
-	 * Gets the parameters and logs the request.
-	 * 
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
-	 * @throws DocumentException
-	 */
-	protected void handleRequest(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		// Parses parameters
-		request.setCharacterEncoding("utf-8");
-	//	response.setCharacterEncoding("utf-8");
-		String format = request.getParameter("format");
-		String fname = request.getParameter("filename");
-		int w = Integer.parseInt(request.getParameter("w"));
-		int h = Integer.parseInt(request.getParameter("h"));
-		String tmp = request.getParameter("bg");
-		String xml = getRequestXml(request);
+    /**
+     * Gets the parameters and logs the request.
+     *
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws DocumentException
+     */
+    protected void handleRequest(HttpServletRequest request,
+                                 HttpServletResponse response) throws Exception {
+        // Parses parameters
+        request.setCharacterEncoding("utf-8");
+        //	response.setCharacterEncoding("utf-8");
+        String format = request.getParameter("format");
+        String fname = request.getParameter("filename");
+        int w = Integer.parseInt(request.getParameter("w"));
+        int h = Integer.parseInt(request.getParameter("h"));
+        String tmp = request.getParameter("bg");
+        String xml = getRequestXml(request);
 
-		Color bg = (tmp != null) ? mxUtils.parseColor(tmp) : null;
+        Color bg = (tmp != null) ? mxUtils.parseColor(tmp) : null;
 
-		// Checks parameters
-		if (w > 0 && w <= Constants.MAX_WIDTH && h > 0
-				&& h <= Constants.MAX_HEIGHT && format != null && xml != null
-				&& xml.length() > 0) {
-			// Allows transparent backgrounds only for PNG
-			if (bg == null && !format.equals("png")) {
-				bg = Color.WHITE;
-			}
+        // Checks parameters
+        if (w > 0 && w <= Constants.MAX_WIDTH && h > 0
+                && h <= Constants.MAX_HEIGHT && format != null && xml != null
+                && xml.length() > 0) {
+            // Allows transparent backgrounds only for PNG
+            if (bg == null && !format.equals("png")) {
+                bg = Color.WHITE;
+            }
 
-			if (fname != null && fname.toLowerCase().endsWith(".xml")) {
-				fname = fname.substring(0, fname.length() - 4) + format;
-			}
+            if (fname != null && fname.toLowerCase().endsWith(".xml")) {
+                fname = fname.substring(0, fname.length() - 4) + format;
+            }
 
-			// Writes response
-			if (format.equals("pdf")) {
-				writePdf(fname, w, h, bg, xml, response);
-			} else {
-				writeImage(format, fname, w, h, bg, xml, response,request);
-			}
+            // Writes response
+            if (format.equals("pdf")) {
+                writePdf(fname, w, h, bg, xml, response);
+            } else {
+                writeImage(format, fname, w, h, bg, xml, response, request);
+            }
 
-			response.setStatus(HttpServletResponse.SC_OK);
-		} else {
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-		}
-	}
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+    }
 
-	/**
-	 * Gets the XML request parameter.
-	 */
-	protected String getRequestXml(HttpServletRequest request)
-			throws IOException, UnsupportedEncodingException {
-		String enc = request.getParameter("xml");
-		String xml = null;
+    /**
+     * Gets the XML request parameter.
+     */
+    protected String getRequestXml(HttpServletRequest request)
+            throws IOException, UnsupportedEncodingException {
+        String enc = request.getParameter("xml");
+        String xml = null;
 
-		if (enc != null && enc.length() > 0) {
-			xml = Utils.inflate(mxBase64
-					.decode(URLDecoder.decode(enc, "UTF-8")));
-		} else {
-			xml = URLDecoder.decode(request.getParameter("plain"), "UTF-8");
-		}
+        if (enc != null && enc.length() > 0) {
+            xml = Utils.inflate(mxBase64
+                    .decode(URLDecoder.decode(enc, "UTF-8")));
+        } else {
+            xml = URLDecoder.decode(request.getParameter("plain"), "UTF-8");
+        }
 
-		return xml;
-	}
+        return xml;
+    }
 
-	/**
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
-	 * @throws IOException
-	 * 
-	 */
-	protected void writeImage(String format, String fname, int w, int h,
-			Color bg, String xml, HttpServletResponse response,HttpServletRequest request)
-			throws IOException, SAXException, ParserConfigurationException {
-		if (fname != null) {
-			response.setContentType("application/octet-stream");
-			if(request.getHeader( "USER-AGENT" ).toLowerCase().indexOf( "msie" ) >  0){
-				response.setHeader("Content-Disposition",
-						"attachment; filename=" + new String(fname.getBytes("gbk") , "ISO8859-1"));
-			}else{
-				response.setHeader("Content-Disposition",
-						"attachment; filename=" + new String(fname.getBytes() , "ISO8859-1"));
-			}
-			 
-		} else if (format != null) {
-			response.setContentType("image/" + format.toLowerCase());
-		}
+    /**
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
+     */
+    protected void writeImage(String format, String fname, int w, int h,
+                              Color bg, String xml, HttpServletResponse response, HttpServletRequest request)
+            throws IOException, SAXException, ParserConfigurationException {
+        if (fname != null) {
+            response.setContentType("application/octet-stream");
+            if (request.getHeader("USER-AGENT").toLowerCase().indexOf("msie") > 0) {
+                response.setHeader("Content-Disposition",
+                        "attachment; filename=" + new String(fname.getBytes("gbk"), "ISO8859-1"));
+            } else {
+                response.setHeader("Content-Disposition",
+                        "attachment; filename=" + new String(fname.getBytes(), "ISO8859-1"));
+            }
 
-		CreateImage.getInstance().createImage(w, h, bg, format, response.getOutputStream(), xml);
-	}
+        } else if (format != null) {
+            response.setContentType("image/" + format.toLowerCase());
+        }
 
-	/**
-	 * Creates and returns the canvas for rendering.
-	 * 
-	 * @throws IOException
-	 * @throws DocumentException
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
-	 */
-	protected void writePdf(String fname, int w, int h, Color bg, String xml,
-			HttpServletResponse response) throws DocumentException,
-			IOException, SAXException, ParserConfigurationException {
-		response.setContentType("application/pdf");
+        CreateImage.getInstance().createImage(w, h, bg, format, response.getOutputStream(), xml);
+    }
 
-		if (fname != null) {
-			response.setHeader("Content-Disposition", "attachment; filename=\""
-					+ fname + "\"");
-		}
+    /**
+     * Creates and returns the canvas for rendering.
+     *
+     * @throws IOException
+     * @throws DocumentException
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     */
+    protected void writePdf(String fname, int w, int h, Color bg, String xml,
+                            HttpServletResponse response) throws DocumentException,
+            IOException, SAXException, ParserConfigurationException {
+        response.setContentType("application/pdf");
 
-		// Fixes PDF offset
-		w += 1;
-		h += 1;
+        if (fname != null) {
+            response.setHeader("Content-Disposition", "attachment; filename=\""
+                    + fname + "\"");
+        }
 
-		Document document = new Document(new Rectangle(w, h));
-		PdfWriter writer = PdfWriter.getInstance(document, response
-				.getOutputStream());
-		document.open();
+        // Fixes PDF offset
+        w += 1;
+        h += 1;
 
-		PdfContentByte pcb = writer.getDirectContent();
+        Document document = new Document(new Rectangle(w, h));
+        PdfWriter writer = PdfWriter.getInstance(document, response
+                .getOutputStream());
+        document.open();
 
-		FontMapper fontMapper = new FontMapper() {
-			public BaseFont awtToPdf(Font font) {
-				try {
-					// FIXME written specifically for a modern mac
-					return BaseFont.createFont(
-							"Unicode.ttf",
-							BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-				} catch (DocumentException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				return null;
-			}
+        PdfContentByte pcb = writer.getDirectContent();
 
-			public Font pdfToAwt(BaseFont font, int size) {
-				return null;
-			}
-		};
+        FontMapper fontMapper = new FontMapper() {
+            public BaseFont awtToPdf(Font font) {
+                try {
+                    // FIXME written specifically for a modern mac
+                    return BaseFont.createFont(
+                            "Unicode.ttf",
+                            BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                } catch (DocumentException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
 
-		Graphics2D g2d = pcb.createGraphics(w, h, fontMapper);
-		mxGraphicsCanvas2D gc = createCanvas(g2d);
+            public Font pdfToAwt(BaseFont font, int size) {
+                return null;
+            }
+        };
 
-		// Fixes PDF offset
-		gc.translate(1, 1);
+        Graphics2D g2d = pcb.createGraphics(w, h, fontMapper);
+        mxGraphicsCanvas2D gc = createCanvas(g2d);
 
-		renderXml(xml, gc);
-		gc.getGraphics().dispose();
-		document.close();
-		writer.flush();
-		writer.close();
-	}
+        // Fixes PDF offset
+        gc.translate(1, 1);
 
-	/**
-	 * Renders the XML to the given canvas.
-	 */
-	protected void renderXml(String xml, mxICanvas2D canvas)
-			throws SAXException, ParserConfigurationException, IOException {
-		XMLReader reader = parserFactory.newSAXParser().getXMLReader();
-		reader.setContentHandler(new mxSaxOutputHandler(canvas));
-		reader.parse(new InputSource(new StringReader(xml)));
-	}
+        renderXml(xml, gc);
+        gc.getGraphics().dispose();
+        document.close();
+        writer.flush();
+        writer.close();
+    }
 
-	/**
-	 * Creates a graphics canvas with an image cache.
-	 */
-	protected mxGraphicsCanvas2D createCanvas(Graphics2D g2) {
-		// Caches custom images for the time of the request
-		final Hashtable<String, Image> shortCache = new Hashtable<String, Image>();
+    /**
+     * Renders the XML to the given canvas.
+     */
+    protected void renderXml(String xml, mxICanvas2D canvas)
+            throws SAXException, ParserConfigurationException, IOException {
+        XMLReader reader = parserFactory.newSAXParser().getXMLReader();
+        reader.setContentHandler(new mxSaxOutputHandler(canvas));
+        reader.parse(new InputSource(new StringReader(xml)));
+    }
 
-		mxGraphicsCanvas2D g2c = new mxGraphicsCanvas2D(g2) {
-			public Image loadImage(String src) {
-				// We can't do SSL connections currently
-				if (src.startsWith("https://") && src.length() > 8) {
-					src = "http://" + src.substring(8, src.length());
-				}
+    /**
+     * Creates a graphics canvas with an image cache.
+     */
+    protected mxGraphicsCanvas2D createCanvas(Graphics2D g2) {
+        // Caches custom images for the time of the request
+        final Hashtable<String, Image> shortCache = new Hashtable<String, Image>();
 
-				// Relative path handling
-				if (!src.startsWith("http://")) {
-					src = Constants.IMAGE_DOMAIN + src;
-				}
+        mxGraphicsCanvas2D g2c = new mxGraphicsCanvas2D(g2) {
+            public Image loadImage(String src) {
+                // We can't do SSL connections currently
+                if (src.startsWith("https://") && src.length() > 8) {
+                    src = "http://" + src.substring(8, src.length());
+                }
 
-				// Match old domains used for image hosting
-				for (String domain : Constants.IMAGE_DOMAIN_MATCHES) {
-					if (src.startsWith(domain)
-							&& src.length() > domain.length()) {
-						src = Constants.IMAGE_DOMAIN
-								+ src.substring(domain.length(), src.length());
-					}
-				}
+                // Relative path handling
+                if (!src.startsWith("http://")) {
+                    src = Constants.IMAGE_DOMAIN + src;
+                }
 
-				// Uses local image cache by default
-				Hashtable<String, Image> cache = shortCache;
+                // Match old domains used for image hosting
+                for (String domain : Constants.IMAGE_DOMAIN_MATCHES) {
+                    if (src.startsWith(domain)
+                            && src.length() > domain.length()) {
+                        src = Constants.IMAGE_DOMAIN
+                                + src.substring(domain.length(), src.length());
+                    }
+                }
 
-				// Uses global image cache for all server-side images
-				if (src.startsWith(Constants.IMAGE_DOMAIN)) {
-					cache = imageCache;
-				}
+                // Uses local image cache by default
+                Hashtable<String, Image> cache = shortCache;
 
-				Image image = cache.get(src);
+                // Uses global image cache for all server-side images
+                if (src.startsWith(Constants.IMAGE_DOMAIN)) {
+                    cache = imageCache;
+                }
 
-				if (image == null) {
-					image = super.loadImage(src);
+                Image image = cache.get(src);
 
-					if (image != null) {
-						cache.put(src, image);
-					} else {
-						cache.put(src, Constants.EMPTY_IMAGE);
-					}
-				} else if (image == Constants.EMPTY_IMAGE) {
-					image = null;
-				}
+                if (image == null) {
+                    image = super.loadImage(src);
 
-				return image;
-			}
-		};
+                    if (image != null) {
+                        cache.put(src, image);
+                    } else {
+                        cache.put(src, Constants.EMPTY_IMAGE);
+                    }
+                } else if (image == Constants.EMPTY_IMAGE) {
+                    image = null;
+                }
 
-		return g2c;
-	}
+                return image;
+            }
+        };
+
+        return g2c;
+    }
 
 }

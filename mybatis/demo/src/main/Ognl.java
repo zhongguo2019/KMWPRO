@@ -9,28 +9,28 @@ public class Ognl {
     }
 
     @SuppressWarnings("rawtypes")
-	public static boolean isEmpty(Object o) throws IllegalArgumentException {
-        if(o == null) {
+    public static boolean isEmpty(Object o) throws IllegalArgumentException {
+        if (o == null) {
             return true;
         } else {
-            if(o instanceof String) {
-                if(((String)o).length() == 0) {
+            if (o instanceof String) {
+                if (((String) o).length() == 0) {
                     return true;
                 }
-            } else if(o instanceof Collection) {
-                if(((Collection)o).isEmpty()) {
+            } else if (o instanceof Collection) {
+                if (((Collection) o).isEmpty()) {
                     return true;
                 }
-            } else if(o.getClass().isArray()) {
-                if(Array.getLength(o) == 0) {
+            } else if (o.getClass().isArray()) {
+                if (Array.getLength(o) == 0) {
                     return true;
                 }
             } else {
-                if(!(o instanceof Map)) {
+                if (!(o instanceof Map)) {
                     return false;
                 }
 
-                if(((Map)o).isEmpty()) {
+                if (((Map) o).isEmpty()) {
                     return true;
                 }
             }
@@ -46,7 +46,7 @@ public class Ognl {
     public static boolean isBlank(String s) {
         return StringUtils.isBlank(s);
     }
-    
+
     public static boolean isNotBlank(Object o) {
         return StringUtils.isNotBlank(o.toString());
     }

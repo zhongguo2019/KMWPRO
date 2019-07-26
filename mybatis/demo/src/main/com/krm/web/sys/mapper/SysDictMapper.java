@@ -10,10 +10,9 @@ import com.krm.web.sys.model.SysDict;
 import tk.mybatis.mapper.common.Mapper;
 
 /**
- * 
- * @author 
+ * @author
  */
 
-public interface SysDictMapper extends Mapper<SysDict>{
-	public List<SysDict> list(Map<String, Object> params);
+public interface SysDictMapper extends Mapper<SysDict> {
+    public List<SysDict> list(Map<String, Object> params);
 }

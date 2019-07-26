@@ -19,15 +19,16 @@
 	插件名称不能相同，对此的详细说明请到网站查看
 */
 function ckcpt() {
-	var browserName = window.browser.name;
+    var browserName = window.browser.name;
     var cpt = '';
-    if(browserName != "IE"){
-    	cpt += 'bufferspeed.swf,0,0,20,20,2,0|'; //缓冲速度显示插件
-    	cpt += 'speed.swf,2,2,-310,-30,2,1|';
-    	cpt += 'prompttext.swf,1,2,0,-100,2,0|';//操作提示语插件
+    if (browserName != "IE") {
+        cpt += 'bufferspeed.swf,0,0,20,20,2,0|'; //缓冲速度显示插件
+        cpt += 'speed.swf,2,2,-310,-30,2,1|';
+        cpt += 'prompttext.swf,1,2,0,-100,2,0|';//操作提示语插件
     }
     return cpt;
 }
+
 /*
 插件的定义结束
 以下是对播放器功能进行配置
@@ -47,15 +48,15 @@ function ckstyle() { //定义总的风格
 		这里是用来做为对flashvars值的补充，除了c和x二个参数以外的设置都可以在这里进行配置
 		                          1 1 1 1   1 1 1 1 1 1 2 2 2  2 2 2 2 2    2 2 3 3 3 3 3 3 3 3 3   3 4  4 4 4
        			1 2 3 4 5 6 7 8 9 0 1 2 3   4 5 6 7 8 9 0 1 2  3 4 5 6 7    8 9 0 1 2 3 4 5 6 7 8   9 0  1 2 3*/
-        setup:  '1,1,1,1,1,'+
-        		'2,0,1,0,0,'+
-        		'0,1,200,0,2,'+
-        		'1,0,1,1,1,'+
-        		'3,10,3,0,1,'+
-        		'2,5000,0,0,0,'+
-        		'1,1,1,1,1,'+
-        		'1,1,250,0,90,'+
-        		'0,0,0',
+        setup: '1,1,1,1,1,' +
+            '2,0,1,0,0,' +
+            '0,1,200,0,2,' +
+            '1,0,1,1,1,' +
+            '3,10,3,0,1,' +
+            '2,5000,0,0,0,' +
+            '1,1,1,1,1,' +
+            '1,1,250,0,90,' +
+            '0,0,0',
         /*
 		这是配置文件里比较重要的一个参数，共有N个功能控制参数，并且以后会继续的增加，各控制参数以英文逗号(,)隔开。下面列出各参数的说明：
 			1、鼠标经过按钮是否使用手型，0普通鼠标，1手型鼠标，2是只有按钮手型，3是控制栏手型
@@ -172,9 +173,9 @@ function ckstyle() { //定义总的风格
 			建议一定要设置延时时间，不然当鼠标在进度栏上划过的时候就会读取视频地址进行预览，很占资源 
 		*/
         pm_repc: '',
-		/*
-		视频地址替换符，该功能主要是用来做简单加密的功能，使用方法很简单，请注意，只针对f值是视频地址的时候有效，其它地方不能使用。具体的请查看http://www.ckplayer.com/manual.php?id=4#title_25
-		*/
+        /*
+        视频地址替换符，该功能主要是用来做简单加密的功能，使用方法很简单，请注意，只针对f值是视频地址的时候有效，其它地方不能使用。具体的请查看http://www.ckplayer.com/manual.php?id=4#title_25
+        */
         pm_spac: '|',
         /*
 		视频地址间隔符，这里主要是播放多段视频时使用普通调用方式或网址调用方式时使用的。默认使用|，如果视频地址里本身存在|的话需要另外设置一个间隔符，注意，即使只有一个视频也需要设置。另外在使用rtmp协议播放视频的时候，如果视频存在多级目录的话，这里要改成其它的符号，因为rtmp协议的视频地址多级的话也需要用到|隔开流地址和实例地址 
@@ -241,7 +242,7 @@ function ckstyle() { //定义总的风格
 			7、文本框高度
 		*/
         //pm_advmarquee: '1,2,50,-60,50,18,0,0x000000,50,0,20,1,15,2000',
-		pm_advmarquee: '1,2,50,-70,50,20,0,0x000000,50,0,20,1,30,2000',
+        pm_advmarquee: '1,2,50,-70,50,20,0,0x000000,50,0,20,1,30,2000',
         /*
 		滚动广告的控制，要使用的话需要在setup里的第9个参数设置成1
 		这里分二种情况,前六个参数是定位控制，第7个参数是设置定位方式(0：相对定位，1：绝对定位)
@@ -270,38 +271,38 @@ function ckstyle() { //定义总的风格
 			13、是行高，这个在设置向上或向下滚动的时候有用处
 			14、控制向上或向下滚动时每次停止的时间
 		*/
-		pm_glowfilter:'1,0x01485d, 100, 6, 3, 10, 1, 0, 0',
-		/*
-		滚动文字广告是否采用发光滤镜
-			1、是否使用发光滤镜，0是不采用，1是使用
-			2、(default = 0xFF0000) — 光晕颜色，采用十六进制格式 0xRRGGBB。 默认值为 0xFF0000  
-			3、(default = 100) — 颜色的 Alpha 透明度值。 有效值为 0 到 100。 例如，25 设置透明度为 25%
-			4、(default = 6.0) — 水平模糊量。 有效值为 0 到 255（浮点）。 2 的乘方值（如 2、4、8、16 和 32）经过优化，呈现速度比其它值更快  
-			5、(default = 6.0) — 垂直模糊量。 有效值为 0 到 255（浮点）。 2 的乘方值（如 2、4、8、16 和 32）经过优化，呈现速度比其它值更快  
-			6、(default = 2) —光晕的强度。 该值越高，光晕的颜色越深，而且发光与背景之间的对比度也越强。 有效值为 0 到 255  
-			7、(default = 1) — 应用滤镜的次数
-			8、(default = 0) — 指定发光是否为内侧发光。 值 1 指定发光是内侧发光。 值 0 指定发光是外侧发光（对象外缘周围的发光）  
-			9、(default = 0) — 指定对象是否具有挖空效果。 值为 1 将使对象的填充变为透明，并显示文档的背景颜色 
-		*/
+        pm_glowfilter: '1,0x01485d, 100, 6, 3, 10, 1, 0, 0',
+        /*
+        滚动文字广告是否采用发光滤镜
+            1、是否使用发光滤镜，0是不采用，1是使用
+            2、(default = 0xFF0000) — 光晕颜色，采用十六进制格式 0xRRGGBB。 默认值为 0xFF0000  
+            3、(default = 100) — 颜色的 Alpha 透明度值。 有效值为 0 到 100。 例如，25 设置透明度为 25%
+            4、(default = 6.0) — 水平模糊量。 有效值为 0 到 255（浮点）。 2 的乘方值（如 2、4、8、16 和 32）经过优化，呈现速度比其它值更快  
+            5、(default = 6.0) — 垂直模糊量。 有效值为 0 到 255（浮点）。 2 的乘方值（如 2、4、8、16 和 32）经过优化，呈现速度比其它值更快  
+            6、(default = 2) —光晕的强度。 该值越高，光晕的颜色越深，而且发光与背景之间的对比度也越强。 有效值为 0 到 255  
+            7、(default = 1) — 应用滤镜的次数
+            8、(default = 0) — 指定发光是否为内侧发光。 值 1 指定发光是内侧发光。 值 0 指定发光是外侧发光（对象外缘周围的发光）  
+            9、(default = 0) — 指定对象是否具有挖空效果。 值为 1 将使对象的填充变为透明，并显示文档的背景颜色 
+        */
         advmarquee: escape('{a href="http://www.ckplayer.com"}{font color="#FFFFFF" size="12" face="Microsoft YaHei"}这里可以放文字广告，播放器默认使用这里设置的广告内容，如果不想在这里使用可以清空这里的内容，如果想在页面中实时定义滚动文字广告内容，可以清空这里的内容，然后在页面中设置广告函数。{/font}{/a}'),
         /*
 		该处是滚动文字广告的内容，如果不想在这里设置，就把这里清空并且在页面中使用js的函数定义function ckmarqueeadv(){return '广告内容'}
 		*/
-		mainfuntion:'',
-		/*
-		当flashvars里s=3/4时，调用的函数包名称，默认为空，调用时间轴上的函数setAppObj
-		*/
-		flashplayer:'',
-		/*
-		当flashvars里的s=3/4时，也可以把swf文件放在这里
-		*/
-		calljs:'ckplayer_status,ckadjump,playerstop,ckmarqueeadv',
-		/*
-			1、全局监听返回结果的函数
-			2、跳过广告的函数
-			3、播放结束时调用的js函数
-			4、加载滚动文字广告的函
-		*/
+        mainfuntion: '',
+        /*
+        当flashvars里s=3/4时，调用的函数包名称，默认为空，调用时间轴上的函数setAppObj
+        */
+        flashplayer: '',
+        /*
+        当flashvars里的s=3/4时，也可以把swf文件放在这里
+        */
+        calljs: 'ckplayer_status,ckadjump,playerstop,ckmarqueeadv',
+        /*
+            1、全局监听返回结果的函数
+            2、跳过广告的函数
+            3、播放结束时调用的js函数
+            4、加载滚动文字广告的函
+        */
         myweb: escape(''),
         /*
 		------------------------------------------------------------------------------------------------------------------
@@ -311,9 +312,9 @@ function ckstyle() { //定义总的风格
 		------------------------------------------------------------------------------------------------------------------
 		*/
         cpt_lights: '0',
-		/*
-		该处定义是否使用开关灯，使用开灯效果时调用页面的js函数function closelights(){}，关灯调用 function closelights(){};
-		*/
+        /*
+        该处定义是否使用开关灯，使用开灯效果时调用页面的js函数function closelights(){}，关灯调用 function closelights(){};
+        */
         cpt_share: '',
         /*
 		分享插件调用的配置文件地址,此设设置成空，则不启用分享按钮
@@ -326,114 +327,116 @@ function ckstyle() { //定义总的风格
     }
     return ck;
 }
+
 /*
 html5部分开始
 以下代码是支持html5的，如果你不需要，可以删除。
 html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛交流更改心得
 */
-(function() {
+(function () {
     var CKobject = {
-        _K_: function(d){return document.getElementById(d);},
-        _T_: false,
-		_M_: false,
-		_G_: false,
-		_Y_: false,
-		_I_: null,
-		_J_: 0,
-		_O_: {},
-		uaMatch:function(u,rMsie,rFirefox,rOpera,rChrome,rSafari,rSafari2,mozilla,mobile){
-			var match = rMsie.exec(u);
-			if (match != null) {
-				return {
-					b: 'IE',
-					v: match[2] || '0'
-				}
-			}
-			match = rFirefox.exec(u);
-			if (match != null) {
-				return {
-					b: match[1] || '',
-					v: match[2] || '0'
-				}
-			}
-			match = rOpera.exec(u);
-			if (match != null) {
-				return {
-					b: match[1] || '',
-					v: match[2] || '0'
-				}
-			}
-			match = rChrome.exec(u);
-			if (match != null) {
-				return {
-					b: match[1] || '',
-					v: match[2] || '0'
-				}
-			}
-			match = rSafari.exec(u);
-			if (match != null) {
-				return {
-					b: match[2] || '',
-					v: match[1] || '0'
-				}
-			}
-			match = rSafari2.exec(u);
-			if (match != null) {
-				return {
-					b: match[1] || '',
-					v: match[2] || '0'
-				}
-			}
-			match = mozilla.exec(u);
-			if (match != null) {
-				return {
-					b: match[1] || '',
-					v: match[2] || '0'
-				}
-			}
-			match = mobile.exec(u);
-			if (match != null) {
-				return {
-					b: match[1] || '',
-					v: match[2] || '0'
-				}
-			}
-			else {
-				return {
-					b: 'unknown',
-					v: '0'
-				}
-			}
-		},
-		browser: function() {
-			var u = navigator.userAgent,
-			rMsie = /(msie\s|trident.*rv:)([\w.]+)/,
-			rFirefox = /(firefox)\/([\w.]+)/,
-			rOpera = /(opera).+version\/([\w.]+)/,
-			rChrome = /(chrome)\/([\w.]+)/,
-			rSafari = /version\/([\w.]+).*(safari)/,
-			rSafari2 = /(safari)\/([\w.]+)/,
-			mozilla = /(mozilla)\/([\w.]+)/,
-			mobile = /(mobile)\/([\w.]+)/;
-			var c = u.toLowerCase();
-			var d = this.uaMatch(c,rMsie,rFirefox,rOpera,rChrome,rSafari,rSafari2,mozilla,mobile);
-			if (d.b) {
-				b = d.b;
-				v = d.v;
-			}
-			return {B: b, V: v};
+        _K_: function (d) {
+            return document.getElementById(d);
         },
-        Platform: function() {
+        _T_: false,
+        _M_: false,
+        _G_: false,
+        _Y_: false,
+        _I_: null,
+        _J_: 0,
+        _O_: {},
+        uaMatch: function (u, rMsie, rFirefox, rOpera, rChrome, rSafari, rSafari2, mozilla, mobile) {
+            var match = rMsie.exec(u);
+            if (match != null) {
+                return {
+                    b: 'IE',
+                    v: match[2] || '0'
+                }
+            }
+            match = rFirefox.exec(u);
+            if (match != null) {
+                return {
+                    b: match[1] || '',
+                    v: match[2] || '0'
+                }
+            }
+            match = rOpera.exec(u);
+            if (match != null) {
+                return {
+                    b: match[1] || '',
+                    v: match[2] || '0'
+                }
+            }
+            match = rChrome.exec(u);
+            if (match != null) {
+                return {
+                    b: match[1] || '',
+                    v: match[2] || '0'
+                }
+            }
+            match = rSafari.exec(u);
+            if (match != null) {
+                return {
+                    b: match[2] || '',
+                    v: match[1] || '0'
+                }
+            }
+            match = rSafari2.exec(u);
+            if (match != null) {
+                return {
+                    b: match[1] || '',
+                    v: match[2] || '0'
+                }
+            }
+            match = mozilla.exec(u);
+            if (match != null) {
+                return {
+                    b: match[1] || '',
+                    v: match[2] || '0'
+                }
+            }
+            match = mobile.exec(u);
+            if (match != null) {
+                return {
+                    b: match[1] || '',
+                    v: match[2] || '0'
+                }
+            } else {
+                return {
+                    b: 'unknown',
+                    v: '0'
+                }
+            }
+        },
+        browser: function () {
+            var u = navigator.userAgent,
+                rMsie = /(msie\s|trident.*rv:)([\w.]+)/,
+                rFirefox = /(firefox)\/([\w.]+)/,
+                rOpera = /(opera).+version\/([\w.]+)/,
+                rChrome = /(chrome)\/([\w.]+)/,
+                rSafari = /version\/([\w.]+).*(safari)/,
+                rSafari2 = /(safari)\/([\w.]+)/,
+                mozilla = /(mozilla)\/([\w.]+)/,
+                mobile = /(mobile)\/([\w.]+)/;
+            var c = u.toLowerCase();
+            var d = this.uaMatch(c, rMsie, rFirefox, rOpera, rChrome, rSafari, rSafari2, mozilla, mobile);
+            if (d.b) {
+                b = d.b;
+                v = d.v;
+            }
+            return {B: b, V: v};
+        },
+        Platform: function () {
             var w = '';
             var u = navigator.userAgent,
-            app = navigator.appVersion;
+                app = navigator.appVersion;
             var b = {
                 iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
                 iPad: u.indexOf('iPad') > -1,
                 ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
                 android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
                 webKit: u.indexOf('AppleWebKit') > -1,
-				trident: u.indexOf('Trident') > -1,
+                trident: u.indexOf('Trident') > -1,
                 gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,
                 presto: u.indexOf('Presto') > -1,
                 mobile: !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/AppleWebKit/),
@@ -447,16 +450,16 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
             }
             return w;
         },
-		isHTML5:function(){
-			return !!document.createElement('video').canPlayType;
-		},
-		getType:function(){
-			return this._T_;
-		},
-        getVideo: function() {
+        isHTML5: function () {
+            return !!document.createElement('video').canPlayType;
+        },
+        getType: function () {
+            return this._T_;
+        },
+        getVideo: function () {
             var v = '';
             var s = this._E_['v'];
-            if (s && s.length>1) {
+            if (s && s.length > 1) {
                 for (var i = 0; i < s.length; i++) {
                     var a = s[i].split('->');
                     if (a.length >= 1 && a[0] != '') {
@@ -470,18 +473,18 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
             }
             return v;
         },
-        getVars: function(k) {
-			var o=this._A_;
-			if (typeof(o) == 'undefined') { 
-				return null;
-			}
+        getVars: function (k) {
+            var o = this._A_;
+            if (typeof (o) == 'undefined') {
+                return null;
+            }
             if (k in o) {
                 return o[k];
             } else {
                 return null;
             }
         },
-        getParams: function() {
+        getParams: function () {
             var p = '';
             if (this._A_) {
                 if (parseInt(this.getVars('p')) == 1) {
@@ -499,18 +502,18 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
             }
             return p;
         },
-        getpath: function(z) {
-			var f='CDEFGHIJKLMNOPQRSTUVWXYZcdefghijklmnopqrstuvwxyz';
-			var w=z.substr(0,1);
-			if(f.indexOf(w)>-1 && (z.substr(0,4)==w+'://' || z.substr(0,4)==w+':\\')){
-				return z;
-			}
+        getpath: function (z) {
+            var f = 'CDEFGHIJKLMNOPQRSTUVWXYZcdefghijklmnopqrstuvwxyz';
+            var w = z.substr(0, 1);
+            if (f.indexOf(w) > -1 && (z.substr(0, 4) == w + '://' || z.substr(0, 4) == w + ':\\')) {
+                return z;
+            }
             var d = unescape(window.location.href).replace('file:///', '');
             var k = parseInt(document.location.port);
             var u = document.location.protocol + '//' + document.location.hostname;
             var l = '',
-            e = '',
-            t = '';
+                e = '',
+                t = '';
             var s = 0;
             var r = unescape(z).split('//');
             if (r.length > 0) {
@@ -548,14 +551,14 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
             }
             return t;
         },
-        getXhr: function() {
+        getXhr: function () {
             var x;
             try {
                 x = new ActiveXObject('Msxml2.XMLHTTP');
-            } catch(e) {
+            } catch (e) {
                 try {
                     x = new ActiveXObject('Microsoft.XMLHTTP');
-                } catch(e) {
+                } catch (e) {
                     x = false;
                 }
             }
@@ -564,35 +567,34 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
             }
             return x;
         },
-		getX: function(){
-			var f='ckstyle()';
-			if (this.getVars('x') && parseInt(this.getVars('c'))!=1 ) {
-				f=this.getVars('x')+'()';
-			}
-			try {
-				if (typeof(eval(f)) == 'object') {
-					this._X_ = eval(f);
-				}
-			} catch(e) {
-				try {
-					if (typeof(eval(ckstyle)) == 'object') {
-						this._X_ = ckstyle();
-					}
-				} catch(e) {
-					this._X_ = ckstyle();
-				}
-			}
-		},
-		getSn: function(s, n) {
-			if(n>=0){
-				return this._X_[s].split(',')[n];
-			}
-			else{
-				return this._X_[s];
-			}
+        getX: function () {
+            var f = 'ckstyle()';
+            if (this.getVars('x') && parseInt(this.getVars('c')) != 1) {
+                f = this.getVars('x') + '()';
+            }
+            try {
+                if (typeof (eval(f)) == 'object') {
+                    this._X_ = eval(f);
+                }
+            } catch (e) {
+                try {
+                    if (typeof (eval(ckstyle)) == 'object') {
+                        this._X_ = ckstyle();
+                    }
+                } catch (e) {
+                    this._X_ = ckstyle();
+                }
+            }
         },
-		getUrl: function(L, B) {
-			var C = this;
+        getSn: function (s, n) {
+            if (n >= 0) {
+                return this._X_[s].split(',')[n];
+            } else {
+                return this._X_[s];
+            }
+        },
+        getUrl: function (L, B) {
+            var C = this;
             var b = ['get', 'utf-8'];
             if (L && L.length == 2) {
                 var a = L[0];
@@ -604,41 +606,41 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
                     b[1] = c[2];
                 }
                 this.ajax(b[0], b[1], a,
-                function(s) {
-                    if (s && s != 'error') {
-                        var d = '',
-                        e = s;
-                        if (s.indexOf('}') > -1) {
-                            var f = s.split('}');
-                            for (var i = 0; i < f.length - 1; i++) {
-                                d += f[i] + '}';
-                                var h = f[i].replace('{', '').split('->');
-                                if (h.length == 2) {
-                                    C._A_[h[0]] = h[1];
+                    function (s) {
+                        if (s && s != 'error') {
+                            var d = '',
+                                e = s;
+                            if (s.indexOf('}') > -1) {
+                                var f = s.split('}');
+                                for (var i = 0; i < f.length - 1; i++) {
+                                    d += f[i] + '}';
+                                    var h = f[i].replace('{', '').split('->');
+                                    if (h.length == 2) {
+                                        C._A_[h[0]] = h[1];
+                                    }
                                 }
+                                e = f[f.length - 1];
                             }
-                            e = f[f.length - 1];
+                            C._E_['v'] = e.split(',');
+                            if (B) {
+                                C.showHtml5();
+                            } else {
+                                C.changeParams(d);
+                                C.newAdr();
+                            }
                         }
-                        C._E_['v'] = e.split(',');
-                        if (B) {
-                            C.showHtml5();
-                        } else {
-                            C.changeParams(d);
-                            C.newAdr();
-                        }
-                    }
-                });
+                    });
             }
         },
-        getflashvars: function(s) {
+        getflashvars: function (s) {
             var v = '',
-            i = 0;
+                i = 0;
             if (s) {
                 for (var k in s) {
                     if (i > 0) {
                         v += '&';
                     }
-                    if (k == 'f' && s[k] && ! this.getSn('pm_repc',-1)) {
+                    if (k == 'f' && s[k] && !this.getSn('pm_repc', -1)) {
                         s[k] = this.getpath(s[k]);
                         if (s[k].indexOf('&') > -1) {
                             s[k] = encodeURIComponent(s[k]);
@@ -653,15 +655,15 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
             }
             return v;
         },
-        getparam: function(s) {
+        getparam: function (s) {
             var w = '',
-            v = '',
-            o = {
-                allowScriptAccess: 'always',
-                allowFullScreen: true,
-                quality: 'high',
-                bgcolor: '#000'
-            };
+                v = '',
+                o = {
+                    allowScriptAccess: 'always',
+                    allowFullScreen: true,
+                    quality: 'high',
+                    bgcolor: '#000'
+                };
             if (s) {
                 for (var k in s) {
                     o[k] = s[k];
@@ -677,31 +679,31 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
                 v: v
             };
         },
-        getObjectById: function(s) {
-			var C = this;
+        getObjectById: function (s) {
+            var C = this;
             if (C._T_) {
-				C._V_=C._K_(s)
-                return C ;
+                C._V_ = C._K_(s)
+                return C;
             }
             var x = null,
-            y = C._K_(s),
-            r = 'embed';
+                y = C._K_(s),
+                r = 'embed';
             if (y && y.nodeName == 'OBJECT') {
                 if (typeof y.SetVariable != 'undefined') {
-                   x= y;
+                    x = y;
                 } else {
                     var z = y.getElementsByTagName(r)[0];
                     if (z) {
-                        x= z;
+                        x = z;
                     }
                 }
             }
             return x;
         },
-        ajax: function(b, u, s, f) {
+        ajax: function (b, u, s, f) {
             var x = this.getXhr();
             var a = [],
-            m = '';
+                m = '';
             if (b == 'get') {
                 if (s.indexOf('?') > -1) {
                     m = s + '&t=' + new Date().getTime();
@@ -712,7 +714,7 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
             } else {
                 a = s.split('?');
                 s = a[0],
-                m = a[1];
+                    m = a[1];
                 x.open('post', s, true);
             }
             x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -722,7 +724,7 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
             } else {
                 x.send(null);
             }
-            x.onreadystatechange = function() {
+            x.onreadystatechange = function () {
                 if (x.readyState == 4) {
                     var g = x.responseText;
                     if (g != '') {
@@ -733,91 +735,84 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
                 }
             }
         },
-        addListener: function(e, f) {
-			var o=this._V_;
-			switch(e){
-				case 'time':
-					e='timeupdate';
-					this.AT=f;
-					f=this.addListenerTime;
-					break;
-				case 'totaltime':
-					this.ATAll=f;
-					return;
-					break;
-				default:
-					break;
-			}
-			//console.log(typeof(f));
-			if(typeof(f)=='string'){
-				f=eval(f);
-			}
+        addListener: function (e, f) {
+            var o = this._V_;
+            switch (e) {
+                case 'time':
+                    e = 'timeupdate';
+                    this.AT = f;
+                    f = this.addListenerTime;
+                    break;
+                case 'totaltime':
+                    this.ATAll = f;
+                    return;
+                    break;
+                default:
+                    break;
+            }
+            //console.log(typeof(f));
+            if (typeof (f) == 'string') {
+                f = eval(f);
+            }
             if (o.addEventListener) {
-				try{
-                	o.addEventListener(e, f, false);
-				}
-				catch (e) {
-					 this.getNot();
-				}
-            }
-			else if (o.attachEvent) {
-				try{
-                	o.attachEvent('on' + e, f);
-				}
-				catch(e){
-					 this.getNot();
-				}
-            }
-			else {
+                try {
+                    o.addEventListener(e, f, false);
+                } catch (e) {
+                    this.getNot();
+                }
+            } else if (o.attachEvent) {
+                try {
+                    o.attachEvent('on' + e, f);
+                } catch (e) {
+                    this.getNot();
+                }
+            } else {
                 o['on' + e] = f;
             }
         },
-        removeListener: function( e, f) {
-			var o=this._V_;
-			switch(e){
-				case 'time':
-					e='timeupdate';
-					this.AT=null;
-					break;
-				case 'totaltime':
-					this.ATAll=null;
-					return;
-					break;
-				default:
-					break;
-			}
-			if(typeof(f)=='string'){
-				f=eval(f);
-			}
+        removeListener: function (e, f) {
+            var o = this._V_;
+            switch (e) {
+                case 'time':
+                    e = 'timeupdate';
+                    this.AT = null;
+                    break;
+                case 'totaltime':
+                    this.ATAll = null;
+                    return;
+                    break;
+                default:
+                    break;
+            }
+            if (typeof (f) == 'string') {
+                f = eval(f);
+            }
             if (o.removeEventListener) {
-				try{
-                	o.removeEventListener(e, f, false);
-				}
-				catch(e){
-					 this.getNot();
-				}
-			}
-			else if (o.detachEvent) {
-				try{
-                	o.detachEvent('on' + e, f);
-				}
-				catch(e){
-					 this.getNot();
-				}
-			}
-			else {
+                try {
+                    o.removeEventListener(e, f, false);
+                } catch (e) {
+                    this.getNot();
+                }
+            } else if (o.detachEvent) {
+                try {
+                    o.detachEvent('on' + e, f);
+                } catch (e) {
+                    this.getNot();
+                }
+            } else {
                 o['on' + e] = null;
             }
         },
-        Flash: function() {
-            var f = false,v = 0;
-            if (document.all  || this.browser()['B'].toLowerCase().indexOf('ie')>-1) {
+        Flash: function () {
+            var f = false, v = 0;
+            if (document.all || this.browser()['B'].toLowerCase().indexOf('ie') > -1) {
                 try {
                     var s = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
                     f = true;
                     var z = s.GetVariable('$version');
                     v = parseInt(z.split(' ')[1].split(',')[0]);
-                } catch(e) {}
+                } catch (e) {
+                }
             } else {
                 if (navigator.plugins && navigator.plugins.length > 0) {
                     var s = navigator.plugins['Shockwave Flash'];
@@ -836,29 +831,25 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
                 v: v
             };
         },
-		embed:function(f,d,i,w,h,b,v,e,p,j){
-			var s=['all'];
-			if(b){
-				if(this.isHTML5()){
-					this.embedHTML5(d,i,w,h,e,v,s,j);
-				}
-				else{
-					this.embedSWF(f,d,i,w,h,v,p);
-				}
-			}
-			else{
-				if(this.Flash()['f'] && parseInt(this.Flash()['v'])>10){
-					this.embedSWF(f,d,i,w,h,v,p);
-				}
-				else if(this.isHTML5()){
-					this.embedHTML5(d,i,w,h,e,v,s,j);
-				}
-				else{
-					this.embedSWF(f,d,i,w,h,v,p);
-				}
-			}
-		},
-		embedSWF: function(C, D, N, W, H, V, P) {
+        embed: function (f, d, i, w, h, b, v, e, p, j) {
+            var s = ['all'];
+            if (b) {
+                if (this.isHTML5()) {
+                    this.embedHTML5(d, i, w, h, e, v, s, j);
+                } else {
+                    this.embedSWF(f, d, i, w, h, v, p);
+                }
+            } else {
+                if (this.Flash()['f'] && parseInt(this.Flash()['v']) > 10) {
+                    this.embedSWF(f, d, i, w, h, v, p);
+                } else if (this.isHTML5()) {
+                    this.embedHTML5(d, i, w, h, e, v, s, j);
+                } else {
+                    this.embedSWF(f, d, i, w, h, v, p);
+                }
+            }
+        },
+        embedSWF: function (C, D, N, W, H, V, P) {
             if (!N) {
                 N = 'ckplayer_a1'
             }
@@ -867,32 +858,32 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
                     bgcolor: '#FFF',
                     allowFullScreen: true,
                     allowScriptAccess: 'always',
-					wmode:'transparent'
+                    wmode: 'transparent'
                 };
             }
-			this._A_=V;
-			this.getX();
+            this._A_ = V;
+            this.getX();
             var u = 'undefined',
-			g = false,
-            j = document,
-            r = 'http://www.macromedia.com/go/getflashplayer',
-            t = '<a href="' + r + '" target="_blank">请点击此处下载安装最新的flash插件</a>',
-            error = {
-                w: '您的网页不符合w3c标准，无法显示播放器',
-                f: '您没有安装flash插件，无法播放视频，' + t,
-                v: '您的flash插件版本过低，无法播放视频，' + t
-            },
-            w3c = typeof j.getElementById != u && typeof j.getElementsByTagName != u && typeof j.createElement != u,
-            i = 'id="' + N + '" name="' + N + '" ',
-            s = '',
-            l = '';
+                g = false,
+                j = document,
+                r = 'http://www.macromedia.com/go/getflashplayer',
+                t = '<a href="' + r + '" target="_blank">请点击此处下载安装最新的flash插件</a>',
+                error = {
+                    w: '您的网页不符合w3c标准，无法显示播放器',
+                    f: '您没有安装flash插件，无法播放视频，' + t,
+                    v: '您的flash插件版本过低，无法播放视频，' + t
+                },
+                w3c = typeof j.getElementById != u && typeof j.getElementsByTagName != u && typeof j.createElement != u,
+                i = 'id="' + N + '" name="' + N + '" ',
+                s = '',
+                l = '';
             P['movie'] = C;
             P['flashvars'] = this.getflashvars(V);
-			if(W==-1){
-				d=true;
-				this._K_(D).style.width='100%';
-				W='100%';
-			}
+            if (W == -1) {
+                d = true;
+                this._K_(D).style.width = '100%';
+                W = '100%';
+            }
             s += '<object pluginspage="http://www.macromedia.com/go/getflashplayer" ';
             s += 'classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" ';
             s += 'codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=11,3,0,0" ';
@@ -908,31 +899,31 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
             s += '</object>';
             if (!w3c) {
                 l = error['w'];
-				g = true;
+                g = true;
             } else {
                 if (!this.Flash()['f']) {
                     l = error['f'];
-					g = true;
+                    g = true;
                 } else {
                     if (this.Flash()['v'] < 11) {
                         l = error['v'];
-						g = true;
+                        g = true;
                     } else {
                         l = s;
-						this._T_=false;
+                        this._T_ = false;
                     }
                 }
             }
             if (l) {
                 this._K_(D).innerHTML = l;
             }
-			if (g){
-				this._K_(D).style.color = '#0066cc';
-				this._K_(D).style.lineHeight = this._K_(D).style.height;
-				this._K_(D).style.textAlign= 'center';
-			}
+            if (g) {
+                this._K_(D).style.color = '#0066cc';
+                this._K_(D).style.lineHeight = this._K_(D).style.height;
+                this._K_(D).style.textAlign = 'center';
+            }
         },
-        embedHTML5: function(C, P, W, H, V, A, S, J) {
+        embedHTML5: function (C, P, W, H, V, A, S, J) {
             this._E_ = {
                 c: C,
                 p: P,
@@ -940,20 +931,20 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
                 h: H,
                 v: V,
                 s: S,
-				j: J==undefined || J?true:false
+                j: J == undefined || J ? true : false
             };
             this._A_ = A;
-			this.getX();
+            this.getX();
             b = this.browser()['B'],
-            v = this.browser()['V'],
-            x = v.split('.'),
-            t = x[0],
-            m = b + v,
-            n = b + t,
-            w = '',
-            s = false,
-            f = this.Flash()['f'],
-            a = false;
+                v = this.browser()['V'],
+                x = v.split('.'),
+                t = x[0],
+                m = b + v,
+                n = b + t,
+                w = '',
+                s = false,
+                f = this.Flash()['f'],
+                a = false;
             if (!S) {
                 S = ['iPad', 'iPhone', 'ios'];
             }
@@ -979,7 +970,7 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
                             s = true;
                             break;
                         }
-                    }else {
+                    } else {
                         s = true;
                         break;
                     }
@@ -996,116 +987,116 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
                 this.showHtml5();
             }
         },
-        status: function() {
+        status: function () {
             this._H_ = parseInt(this.getSn('setup', 20));
-			var f='ckplayer_status';
-			if (this.getSn('calljs', 0)!='') {
-				f=this.getSn('calljs', 0);
-			}
-			try {
-				if (typeof(eval(f)) == 'function') {
-					this._L_=eval(f);
-					this._M_=true;
-					return true;
-				}
-			} catch(e) {
-				try {
-					if (typeof(eval(ckplayer_status)) == 'function') {
-						this._L_=ckplayer_status;
-						this._M_=true;
-						return true;
-					}
-				} catch(e) {
-					return false;
-				}
-			}
-			return false;
+            var f = 'ckplayer_status';
+            if (this.getSn('calljs', 0) != '') {
+                f = this.getSn('calljs', 0);
+            }
+            try {
+                if (typeof (eval(f)) == 'function') {
+                    this._L_ = eval(f);
+                    this._M_ = true;
+                    return true;
+                }
+            } catch (e) {
+                try {
+                    if (typeof (eval(ckplayer_status)) == 'function') {
+                        this._L_ = ckplayer_status;
+                        this._M_ = true;
+                        return true;
+                    }
+                } catch (e) {
+                    return false;
+                }
+            }
+            return false;
         },
-        showHtml5: function() {
+        showHtml5: function () {
             var C = this;
             var p = C._E_['p'],
-			a = C._E_['v'],
-			c = C._E_['c'],
-			j = '',
-			b = false;
-			var s = this._E_['v'];
-			var w=C._E_['w'],h=C._E_['h'];
-			var d=false;
-			var r='';
-			if(s.length==1){
-				r=' src="'+s[0].split('->')[0]+'"';
-			}
-			if(w==-1){
-				d=true;
-				C._K_(c).style.width='100%';
-				w='100%';
-			}
-			if(w.toString().indexOf('%')>-1){
-				w='100%';
-			}
-			if(h.toString().indexOf('%')>-1){
-				h='100%';
-			}
-			if(C._E_['j']){
-				j=' controls="controls"';
-			}
-			var v = '<video'+j+r+' id="' + p + '" width="' + w + '" height="' + h + '"' + C.getParams() + ' webkit-playsinline>' + C.getVideo() + '</video>';
+                a = C._E_['v'],
+                c = C._E_['c'],
+                j = '',
+                b = false;
+            var s = this._E_['v'];
+            var w = C._E_['w'], h = C._E_['h'];
+            var d = false;
+            var r = '';
+            if (s.length == 1) {
+                r = ' src="' + s[0].split('->')[0] + '"';
+            }
+            if (w == -1) {
+                d = true;
+                C._K_(c).style.width = '100%';
+                w = '100%';
+            }
+            if (w.toString().indexOf('%') > -1) {
+                w = '100%';
+            }
+            if (h.toString().indexOf('%') > -1) {
+                h = '100%';
+            }
+            if (C._E_['j']) {
+                j = ' controls="controls"';
+            }
+            var v = '<video' + j + r + ' id="' + p + '" width="' + w + '" height="' + h + '"' + C.getParams() + ' webkit-playsinline>' + C.getVideo() + '</video>';
             C._K_(c).innerHTML = v;
             C._K_(c).style.backgroundColor = '#000';
             C._V_ = C._K_(p);
-			if(!d){
-				C._K_(c).style.width=C._E_['w'].toString().indexOf('%')>-1?(C._K_(c).offsetWidth*parseInt(C._E_['w'])*0.01)+'px':C._V_.width+'px';
-				C._K_(c).style.height=C._E_['h'].toString().indexOf('%')>-1?(C._K_(c).offsetHeight*parseInt(C._E_['h'])*0.01)+'px':C._V_.height+'px';
-			}
+            if (!d) {
+                C._K_(c).style.width = C._E_['w'].toString().indexOf('%') > -1 ? (C._K_(c).offsetWidth * parseInt(C._E_['w']) * 0.01) + 'px' : C._V_.width + 'px';
+                C._K_(c).style.height = C._E_['h'].toString().indexOf('%') > -1 ? (C._K_(c).offsetHeight * parseInt(C._E_['h']) * 0.01) + 'px' : C._V_.height + 'px';
+            }
             C._P_ = false;
             C._T_ = true;
-			if (C.getVars('loaded')!='') {
-				var f=C.getVars('loaded')+'()';
-				try {
-                	if (typeof(eval(f)) == 'function') {
-						eval(f);
-					}
-				} catch(e) {
-					try {
-						if (typeof(eval(loadedHandler)) == 'function') {
-							loadedHandler();
-						}
-					} catch(e) {
-					}
-				}
+            if (C.getVars('loaded') != '') {
+                var f = C.getVars('loaded') + '()';
+                try {
+                    if (typeof (eval(f)) == 'function') {
+                        eval(f);
+                    }
+                } catch (e) {
+                    try {
+                        if (typeof (eval(loadedHandler)) == 'function') {
+                            loadedHandler();
+                        }
+                    } catch (e) {
+                    }
+                }
             }
             C.status();
-			C.addListener('play', C.playHandler);
-			C.addListener('pause', C.playHandler);
-			C.addListener('error', C.errorHandler);
-			C.addListener('emptied', C.errorHandler);
-			C.addListener('loadedmetadata', C.loadedMetadataHandler);
-			C.addListener('ended', C.endedHandler);
-			C.addListener('volumechange', C.volumeChangeHandler);
-			if((C.getVars('m')!='' && C.getVars('m')!=null) || parseInt( C.getSn('setup', 0))>0){
-				C._K_(c).style.cursor='pointer';
-			}
-			if((C.getVars('m')!='' && C.getVars('m')!=null) || parseInt( C.getSn('setup', 1))==1){
-				C.addListener('click', C.html5Click);
-			}
+            C.addListener('play', C.playHandler);
+            C.addListener('pause', C.playHandler);
+            C.addListener('error', C.errorHandler);
+            C.addListener('emptied', C.errorHandler);
+            C.addListener('loadedmetadata', C.loadedMetadataHandler);
+            C.addListener('ended', C.endedHandler);
+            C.addListener('volumechange', C.volumeChangeHandler);
+            if ((C.getVars('m') != '' && C.getVars('m') != null) || parseInt(C.getSn('setup', 0)) > 0) {
+                C._K_(c).style.cursor = 'pointer';
+            }
+            if ((C.getVars('m') != '' && C.getVars('m') != null) || parseInt(C.getSn('setup', 1)) == 1) {
+                C.addListener('click', C.html5Click);
+            }
         },
-		addListenerTime:function(){
-			var C = CKobject;
-			if(C.AT){
-				C.AT(C._V_['currentTime']);
-			}
-		},
-        videoPlay: function() {
+        addListenerTime: function () {
+            var C = CKobject;
+            if (C.AT) {
+                C.AT(C._V_['currentTime']);
+            }
+        },
+        videoPlay: function () {
             if (this._T_) {
                 this._V_.play();
             }
         },
-        videoPause: function() {
+        videoPause: function () {
             if (this._T_) {
                 this._V_.pause();
             }
         },
-        playOrPause: function() {
+        playOrPause: function () {
             if (this._T_) {
                 if (this._V_.paused) {
                     this._V_.play();
@@ -1114,30 +1105,30 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
                 }
             }
         },
-        fastNext: function() {
+        fastNext: function () {
             if (this._T_) {
                 this._V_['currentTime'] = this._V_['currentTime'] + 10;
             }
         },
-        fastBack: function() {
+        fastBack: function () {
             if (this._T_) {
                 this._V_['currentTime'] = this._V_['currentTime'] - 10;
             }
         },
-        changeVolume: function(n) {
-			if(n<0 || n>100){
-				return;
-			}
+        changeVolume: function (n) {
+            if (n < 0 || n > 100) {
+                return;
+            }
             if (this._T_) {
                 this._V_['volume'] = n * 0.01;
             }
         },
-        videoSeek: function(t) {
+        videoSeek: function (t) {
             if (this._T_) {
                 this._V_['currentTime'] = t;
             }
         },
-        newAddress: function(u) {
+        newAddress: function (u) {
             var s = [];
             if (u) {
                 s = this.isHtml5New(u);
@@ -1155,32 +1146,30 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
                 this.newAdr();
             }
         },
-		quitFullScreen:function() {
-			if(document.cancelFullScreen) {
-				document.cancelFullScreen();
-			} 
-			else if(document.mozCancelFullScreen) {
-				document.mozCancelFullScreen();
-			} else if(document.webkitCancelFullScreen) {
-	   			document.webkitCancelFullScreen();
-			}
+        quitFullScreen: function () {
+            if (document.cancelFullScreen) {
+                document.cancelFullScreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitCancelFullScreen) {
+                document.webkitCancelFullScreen();
+            }
 
-		},
-		changeStatus:function(n){
-			this._H_=n;
-		},
-        newAdr: function() {
-			var s = this._E_['v'];
+        },
+        changeStatus: function (n) {
+            this._H_ = n;
+        },
+        newAdr: function () {
+            var s = this._E_['v'];
             this._V_.pause();
-			if(s.length==1){
-            	this._V_.src=s[0].split('->')[0];
-			}
-			else{
-				this._V_['innerHTML'] = this.getVideo();
-			}
+            if (s.length == 1) {
+                this._V_.src = s[0].split('->')[0];
+            } else {
+                this._V_['innerHTML'] = this.getVideo();
+            }
             this._V_.load();
         },
-        isHtml5New: function(s) {
+        isHtml5New: function (s) {
             if (s.indexOf('html5') == -1) {
                 return false;
             }
@@ -1195,164 +1184,161 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
             }
             return c;
         },
-        changeParams: function(f) {
+        changeParams: function (f) {
             if (f) {
                 var a = f.replace(/{/g, '');
                 var b = a.split('}');
                 var c = '';
                 for (var i = 0; i < b.length; i++) {
                     var d = b[i].split('->');
-					if(d.length == 2){
-						switch(d[0]){
-							case 'p':
-								if(parseInt(d[1]) == 1){
-									this._V_.autoplay = true;
-								}
-								else if(parseInt(d[1]) == 2){
-									this._V_.preload = 'metadata';
-								}
-								else{
-									this._V_.autoplay = false;
-									if(this._I_!=null){
-										clearInterval(this._I_);
-										this._I_=null;
-									}
-								}
-								break;
-							case 'e':
-								if(parseInt(d[1]) == 1){
-									this._V_.loop = true;
-								}
-								else{
-									this._V_.loop = false;
-								}
-								break;
-							case 'i':
-								this._V_.poster = d[1];
-								break;
-							default:
-								break;
-						}
-					}
+                    if (d.length == 2) {
+                        switch (d[0]) {
+                            case 'p':
+                                if (parseInt(d[1]) == 1) {
+                                    this._V_.autoplay = true;
+                                } else if (parseInt(d[1]) == 2) {
+                                    this._V_.preload = 'metadata';
+                                } else {
+                                    this._V_.autoplay = false;
+                                    if (this._I_ != null) {
+                                        clearInterval(this._I_);
+                                        this._I_ = null;
+                                    }
+                                }
+                                break;
+                            case 'e':
+                                if (parseInt(d[1]) == 1) {
+                                    this._V_.loop = true;
+                                } else {
+                                    this._V_.loop = false;
+                                }
+                                break;
+                            case 'i':
+                                this._V_.poster = d[1];
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
             }
         },
-        frontAdPause: function(s) {
+        frontAdPause: function (s) {
             this.getNot();
         },
-        frontAdUnload: function() {
+        frontAdUnload: function () {
             this.getNot();
         },
-        changeFace: function(s) {
+        changeFace: function (s) {
             this.getNot();
         },
-        plugin: function(a, b, c, d, e, f, g) {
+        plugin: function (a, b, c, d, e, f, g) {
             this.getNot();
         },
-        videoClear: function() {
+        videoClear: function () {
             this.getNot();
         },
-        videoBrightness: function(s) {
+        videoBrightness: function (s) {
             this.getNot();
         },
-        videoContrast: function(s) {
+        videoContrast: function (s) {
             this.getNot();
         },
-        videoSaturation: function(s) {
+        videoSaturation: function (s) {
             this.getNot();
         },
-        videoSetHue: function(s) {
+        videoSetHue: function (s) {
             this.getNot();
         },
-        videoWAndH: function(a, b) {
+        videoWAndH: function (a, b) {
             this.getNot();
         },
-        videoWHXY: function(a, b, c, d) {
+        videoWHXY: function (a, b, c, d) {
             this.getNot();
         },
-		changeFlashvars: function(a) {
+        changeFlashvars: function (a) {
             this.getNot();
         },
-		changeMyObject: function(a, b) {
+        changeMyObject: function (a, b) {
             this.getNot();
         },
-		getMyObject: function(a, b) {
+        getMyObject: function (a, b) {
             this.getNot();
         },
-		changeeFace: function() {
+        changeeFace: function () {
             this.getNot();
         },
-		changeStyle: function(a, b) {
+        changeStyle: function (a, b) {
             this.getNot();
         },
-		promptLoad: function() {
+        promptLoad: function () {
             this.getNot();
         },
-		promptUnload: function() {
+        promptUnload: function () {
             this.getNot();
         },
-		marqueeLoad: function(a,b) {
+        marqueeLoad: function (a, b) {
             this.getNot();
         },
-		marqueeClose: function(s) {
+        marqueeClose: function (s) {
             this.getNot();
         },
-		videoError: function(s) {
+        videoError: function (s) {
             this.getNot();
         },
-		formatUrl: function(s) {
+        formatUrl: function (s) {
             this.getNot();
         },
-		sendJS: function(s) {
+        sendJS: function (s) {
             this.getNot();
         },
-		plugAttribute: function(s) {
+        plugAttribute: function (s) {
             this.getNot();
         },
-		errorTextShow: function(s) {
+        errorTextShow: function (s) {
             this.getNot();
         },
-		openUrl: function(s) {
+        openUrl: function (s) {
             window.open(s);
         },
-		jsonParse: function(s) {
+        jsonParse: function (s) {
             this.getNot();
         },
-		promptShow: function(s,x,y) {
+        promptShow: function (s, x, y) {
             this.getNot();
         },
-		screenShot: function(s,x,y,x2,y2) {
+        screenShot: function (s, x, y, x2, y2) {
             this.getNot();
         },
-		fullScreen: function() {
+        fullScreen: function () {
             this.getNot();
         },
-		allowFull: function() {
+        allowFull: function () {
             this.getNot();
         },
-		loadButton: function() {
+        loadButton: function () {
             this.getNot();
         },
-		getFile: function() {
+        getFile: function () {
             this.getNot();
         },
-		textBoxShow:function() {
+        textBoxShow: function () {
             this.getNot();
         },
-		loadElement: function() {
+        loadElement: function () {
             this.getNot();
         },
-		textBoxClose: function() {
+        textBoxClose: function () {
             this.getNot();
         },
-		textBoxTween: function() {
+        textBoxTween: function () {
             this.getNot();
         },
-        getNot: function() {
-            var s='The ckplayer\'s API for HTML5 does not exist';
-			return s;
+        getNot: function () {
+            var s = 'The ckplayer\'s API for HTML5 does not exist';
+            return s;
         },
-        volumeChangeHandler: function() {
+        volumeChangeHandler: function () {
             var C = CKobject;
             if (C._V_.muted) {
                 C.returnStatus('volumechange:0', 1);
@@ -1361,44 +1347,44 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
             } else {
                 C._O_['mute'] = false;
                 C._O_['volume'] = C._V_['volume'] * 100;
-                C.returnStatus('volumechange:'+C._V_['volume'] * 100, 1);
+                C.returnStatus('volumechange:' + C._V_['volume'] * 100, 1);
             }
         },
-        endedHandler: function() {
+        endedHandler: function () {
             var C = CKobject;
-			var e=parseInt(C.getVars('e'));
+            var e = parseInt(C.getVars('e'));
             C.returnStatus('ended', 1);
-			if(C._I_){
-				clearInterval(C._I_);
-				C._I_=null;
-			}
-            if ( e!= 0 && e !=4 && e !=6) {
+            if (C._I_) {
+                clearInterval(C._I_);
+                C._I_ = null;
+            }
+            if (e != 0 && e != 4 && e != 6) {
                 return;
             }
-			if(e==6){
-				this.quitFullScreen();
-			}
-			var f='playerstop()';
-			if (C.getSn('calljs', 2)!='') {
-				f=C.getSn('calljs', 2)+'()';
-			}
-			try {
-				if (typeof(eval(f)) == 'function') {
-					eval(f);
-					return;
-				}
-			} catch(e) {
-				try {
-					if (typeof(eval(playerstop)) == 'function') {
-						playerstop();
-						return;
-					}
-				} catch(e) {
-					return;
-				}
-			}
+            if (e == 6) {
+                this.quitFullScreen();
+            }
+            var f = 'playerstop()';
+            if (C.getSn('calljs', 2) != '') {
+                f = C.getSn('calljs', 2) + '()';
+            }
+            try {
+                if (typeof (eval(f)) == 'function') {
+                    eval(f);
+                    return;
+                }
+            } catch (e) {
+                try {
+                    if (typeof (eval(playerstop)) == 'function') {
+                        playerstop();
+                        return;
+                    }
+                } catch (e) {
+                    return;
+                }
+            }
         },
-        loadedMetadataHandler: function() {
+        loadedMetadataHandler: function () {
             var C = CKobject;
             C.returnStatus('loadedmetadata', 1);
             C._O_['totalTime'] = C._V_['duration'];
@@ -1413,27 +1399,27 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
             } else {
                 C._O_['mute'] = false;
                 C._O_['volume'] = C._V_['volume'] * 100;
-                C.returnStatus('volumechange:'+C._V_['volume'] * 100, 1);
+                C.returnStatus('volumechange:' + C._V_['volume'] * 100, 1);
             }
-			if (parseInt(C.getVars('p')) == 1) {
-				C.playHandler();
-			}
-			if(C.ATAll){
-				C.ATAll(C._V_['duration']);
-			}
+            if (parseInt(C.getVars('p')) == 1) {
+                C.playHandler();
+            }
+            if (C.ATAll) {
+                C.ATAll(C._V_['duration']);
+            }
         },
-        errorHandler: function() {
+        errorHandler: function () {
             CKobject.returnStatus('error', 1);
         },
-        playHandler: function() {
+        playHandler: function () {
             var C = CKobject;
             if (C._V_.paused) {
                 C.returnStatus('pause', 1);
                 C.addO('play', false);
-				if(C._I_!=null){
-					clearInterval(C._I_);
-					C._I_=null;
-				}
+                if (C._I_ != null) {
+                    clearInterval(C._I_);
+                    C._I_ = null;
+                }
             } else {
                 C.returnStatus('play', 1);
                 C.addO('play', true);
@@ -1441,62 +1427,61 @@ html5代码块的代码可以随意更改以适合你的应用，欢迎到论坛
                     C.returnStatus('play', 1);
                     C._P_ = true;
                 }
-                C._I_ = setInterval(C.playTime, parseInt( C.getSn('setup', 37)));
-				if(!C._G_){
-					C._G_=true;
-					for(var k in C._A_){
-						if(k=='g' && C._A_[k]){
-							var g=parseInt(C._A_[k]);
-							C.videoSeek(g);
-						}	
-					}
-				}
-				if(!C._Y_){
-					C._Y_=true;
-					for(var k in C._A_){
-						if(k=='j' && C._A_[k]){
-							var j=parseInt(C._A_[k]);
-							if(j>0){
-								C._J_=j;
-							}
-							else{
-								C._J_=parseInt(C._O_['totalTime'])+j;
-							}
-						}	
-					}
-				}
+                C._I_ = setInterval(C.playTime, parseInt(C.getSn('setup', 37)));
+                if (!C._G_) {
+                    C._G_ = true;
+                    for (var k in C._A_) {
+                        if (k == 'g' && C._A_[k]) {
+                            var g = parseInt(C._A_[k]);
+                            C.videoSeek(g);
+                        }
+                    }
+                }
+                if (!C._Y_) {
+                    C._Y_ = true;
+                    for (var k in C._A_) {
+                        if (k == 'j' && C._A_[k]) {
+                            var j = parseInt(C._A_[k]);
+                            if (j > 0) {
+                                C._J_ = j;
+                            } else {
+                                C._J_ = parseInt(C._O_['totalTime']) + j;
+                            }
+                        }
+                    }
+                }
             }
         },
-		html5Click: function(){
-			//console.log(this);
-			var C = CKobject;
-			if(C.getVars('m')!='' && C.getVars('m')!=null){
-				window.open(C.getVars('m'));
-			}
-		},
-        returnStatus: function(s, j) {
+        html5Click: function () {
+            //console.log(this);
+            var C = CKobject;
+            if (C.getVars('m') != '' && C.getVars('m') != null) {
+                window.open(C.getVars('m'));
+            }
+        },
+        returnStatus: function (s, j) {
             var h = s;
             if (this._H_ == 3) {
-                h = this._E_['p'] +'->'+ h;
+                h = this._E_['p'] + '->' + h;
             }
-            if (this._M_ && j <= this._H_ ) {
+            if (this._M_ && j <= this._H_) {
                 this._L_(h);
             }
         },
-        addO: function(s, z) {
+        addO: function (s, z) {
             this._O_[s] = z;
         },
-        getStatus: function() {
+        getStatus: function () {
             return this._O_;
         },
-        playTime: function() {
+        playTime: function () {
             var C = CKobject;
             var t = C._V_['currentTime'];
             C._O_['time'] = t;
-			if(C._J_>0 && t>C._J_){
-				C._J_=0;
-				C.videoSeek(C._O_['totaltime']);
-			}
+            if (C._J_ > 0 && t > C._J_) {
+                C._J_ = 0;
+                C.videoSeek(C._O_['totaltime']);
+            }
             C.returnStatus('time:' + t, 1);
         }
     }

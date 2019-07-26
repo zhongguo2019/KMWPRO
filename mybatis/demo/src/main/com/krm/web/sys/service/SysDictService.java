@@ -29,7 +29,6 @@ import com.krm.web.sys.model.SysOrgan;
 import com.krm.web.sys.model.SysRole;
 
 /**
- * 
  * @author
  */
 
@@ -37,104 +36,104 @@ import com.krm.web.sys.model.SysRole;
 @CacheConfig(cacheNames = "sysDict_cache")
 public class SysDictService extends ServiceMybatis<SysDict> {
 
-	@Resource
-	private SysDictMapper sysDictMapper;
+    @Resource
+    private SysDictMapper sysDictMapper;
 
-	@Resource
-	private SysAreaMapper sysAreaMapper;
+    @Resource
+    private SysAreaMapper sysAreaMapper;
 
-	/**
-	 * 分页展示
-	 * @param params
-	 * @return
-	 */
-	public PageInfo<SysDict> findPageInfo(Map<String, Object> params) {
-		logger.info("分页查询【字典】");
-		PageHelper.startPage(params);
-		List<SysDict> list = sysDictMapper.list(params);
-		return new PageInfo<SysDict>(list);
-	}
-	
-	/**
-	 * 保存或更新
-	 * 
-	 * @param sysDict
-	 * @return
-	 */
-	@CacheEvict(allEntries = true)
-	public int saveSysdict(SysDict sysDict) {
-		return this.saveOrUpdate(sysDict);
-	}
+    /**
+     * 分页展示
+     *
+     * @param params
+     * @return
+     */
+    public PageInfo<SysDict> findPageInfo(Map<String, Object> params) {
+        logger.info("分页查询【字典】");
+        PageHelper.startPage(params);
+        List<SysDict> list = sysDictMapper.list(params);
+        return new PageInfo<SysDict>(list);
+    }
 
-	/**
-	 * 删除
-	* @param sysDict
-	* @return
-	 */
-	@CacheEvict(allEntries = true)
-	public int deleteSysDict(SysDict sysDict) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("type", sysDict.getValue());
-		if(sysDict.getType().equals("sys_area_type")){
-			int areaCount = this.beforeDelete(SysArea.class,params);
-			if(areaCount<0) return -1;
-		}
-		if(sysDict.getType().equals("sys_organ_type")){
-			int organCount = this.beforeDelete(SysOrgan.class,params);
-			if(organCount<0) return -1;
-		}
-		if(sysDict.getType().equals("sys_data_scope")){
-			int roleCount = this.beforeDelete(SysRole.class, params);
-			if(roleCount<0) return -1;
-		}
-		return this.updateDelFlagToDelStatusById(SysDict.class, sysDict.getId());
-	}
+    /**
+     * 保存或更新
+     *
+     * @param sysDict
+     * @return
+     */
+    @CacheEvict(allEntries = true)
+    public int saveSysdict(SysDict sysDict) {
+        return this.saveOrUpdate(sysDict);
+    }
 
-	@Cacheable(key="'allDictTable'")
-	public Table<String,String, SysDict> findAllDictTable(){
-		List<SysDict> dictList = this.select(new SysDict(), "sort");
-		Table<String,String, SysDict> tableDicts = HashBasedTable.create();
-		for(SysDict dict : dictList){
-			tableDicts.put(dict.getType(), dict.getValue(), dict);
-		}
-		return tableDicts;
-	}
-	
-	@Cacheable(key="'allDictMultimap'")
-	public Multimap<String, SysDict> findAllMultimap(){
-		List<SysDict> dictList = this.select(new SysDict(), "sort");
-		Multimap<String, SysDict> multimap = ArrayListMultimap.create();
-		for(SysDict dict : dictList){
-			multimap.put(dict.getType(), dict);
-		}
-		return multimap;
-	}
+    /**
+     * 删除
+     *
+     * @param sysDict
+     * @return
+     */
+    @CacheEvict(allEntries = true)
+    public int deleteSysDict(SysDict sysDict) {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("type", sysDict.getValue());
+        if (sysDict.getType().equals("sys_area_type")) {
+            int areaCount = this.beforeDelete(SysArea.class, params);
+            if (areaCount < 0) return -1;
+        }
+        if (sysDict.getType().equals("sys_organ_type")) {
+            int organCount = this.beforeDelete(SysOrgan.class, params);
+            if (organCount < 0) return -1;
+        }
+        if (sysDict.getType().equals("sys_data_scope")) {
+            int roleCount = this.beforeDelete(SysRole.class, params);
+            if (roleCount < 0) return -1;
+        }
+        return this.updateDelFlagToDelStatusById(SysDict.class, sysDict.getId());
+    }
 
-	@Cacheable(key="'allDicts'")
-	public Multimap<String, SysDict> getAllDicts(){
-		List<SysDict> dictList = this.select(new SysDict(), "sort");
-		Multimap<String, SysDict> multimap = ArrayListMultimap.create();
-		for (SysDict dict : dictList)
-		{
-			multimap.put(dict.getDescription(), dict);
-		}
-		
-		return multimap;
-	}
-	
-	@Cacheable(key="'list'")
-	public List<SysDict> list(Map<String, Object> params){
-		logger.info("分页查询【字典】");
-		return sysDictMapper.list(params);
-	}
-	
-	public Map<String, String> findAllType(){
-		List<SysDict> dictList = this.select(new SysDict(), "sort");
-		Map<String, String> multimap = Maps.newHashMap();
-		for (SysDict dict : dictList)
-		{
-			multimap.put(dict.getType(), dict.getDescription());
-		}
-		return multimap;
-	}
+    @Cacheable(key = "'allDictTable'")
+    public Table<String, String, SysDict> findAllDictTable() {
+        List<SysDict> dictList = this.select(new SysDict(), "sort");
+        Table<String, String, SysDict> tableDicts = HashBasedTable.create();
+        for (SysDict dict : dictList) {
+            tableDicts.put(dict.getType(), dict.getValue(), dict);
+        }
+        return tableDicts;
+    }
+
+    @Cacheable(key = "'allDictMultimap'")
+    public Multimap<String, SysDict> findAllMultimap() {
+        List<SysDict> dictList = this.select(new SysDict(), "sort");
+        Multimap<String, SysDict> multimap = ArrayListMultimap.create();
+        for (SysDict dict : dictList) {
+            multimap.put(dict.getType(), dict);
+        }
+        return multimap;
+    }
+
+    @Cacheable(key = "'allDicts'")
+    public Multimap<String, SysDict> getAllDicts() {
+        List<SysDict> dictList = this.select(new SysDict(), "sort");
+        Multimap<String, SysDict> multimap = ArrayListMultimap.create();
+        for (SysDict dict : dictList) {
+            multimap.put(dict.getDescription(), dict);
+        }
+
+        return multimap;
+    }
+
+    @Cacheable(key = "'list'")
+    public List<SysDict> list(Map<String, Object> params) {
+        logger.info("分页查询【字典】");
+        return sysDictMapper.list(params);
+    }
+
+    public Map<String, String> findAllType() {
+        List<SysDict> dictList = this.select(new SysDict(), "sort");
+        Map<String, String> multimap = Maps.newHashMap();
+        for (SysDict dict : dictList) {
+            multimap.put(dict.getType(), dict.getDescription());
+        }
+        return multimap;
+    }
 }

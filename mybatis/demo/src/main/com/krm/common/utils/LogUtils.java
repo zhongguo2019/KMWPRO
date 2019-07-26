@@ -115,21 +115,20 @@ public class LogUtils {
     }
 
 
-
-	protected static String getParams(HttpServletRequest request) {
+    protected static String getParams(HttpServletRequest request) {
         Map<String, String[]> params = request.getParameterMap();
         return JSON.toJSONString(params);
     }
 
 
-	private static String getHeaders(HttpServletRequest request) {
+    private static String getHeaders(HttpServletRequest request) {
         Map<String, List<String>> headers = Maps.newHashMap();
         Enumeration<String> namesEnumeration = request.getHeaderNames();
-        while(namesEnumeration.hasMoreElements()) {
+        while (namesEnumeration.hasMoreElements()) {
             String name = namesEnumeration.nextElement();
             Enumeration<String> valueEnumeration = request.getHeaders(name);
             List<String> values = Lists.newArrayList();
-            while(valueEnumeration.hasMoreElements()) {
+            while (valueEnumeration.hasMoreElements()) {
                 values.add(valueEnumeration.nextElement());
             }
             headers.put(name, values);
@@ -139,8 +138,8 @@ public class LogUtils {
 
 
     protected static String getUsername() {
-    	SysUser sysUser = SysUserUtils.getCacheLoginUser();
-    	if(sysUser == null) return "未登录";
+        SysUser sysUser = SysUserUtils.getCacheLoginUser();
+        if (sysUser == null) return "未登录";
         return sysUser.getName();
     }
 

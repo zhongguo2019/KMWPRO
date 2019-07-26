@@ -15,6 +15,7 @@ public class JsonUtil {
 
     /**
      * 对象toJSON
+     *
      * @param object
      * @return
      */
@@ -29,6 +30,7 @@ public class JsonUtil {
 
     /**
      * json转换Bean
+     *
      * @param json
      * @param clazz
      * @param <T>
@@ -42,10 +44,10 @@ public class JsonUtil {
             return null;
         }
     }
-    
-    
+
+
     public static void main(String[] args) {
-    	Message text = new Message();
-		System.out.println(getString(text));
-	}
+        Message text = new Message();
+        System.out.println(getString(text));
+    }
 }

@@ -12,16 +12,14 @@ import com.krm.common.base.BaseEntity;
 
 
 /**
- * 
  * @author Parker
- *
  */
-@Table(name="sys_area")
+@Table(name = "sys_area")
 public class SysArea extends BaseEntity<SysArea> {
 
-	private static final long serialVersionUID = 1L;
-	@Id
-	private String id; 				//主键
+    private static final long serialVersionUID = 1L;
+    @Id
+    private String id;                //主键
     private String code; //code <区域编码>
     private String name; //name <区域名称>
     private String parentId; //parent_id <父级编号>
@@ -30,132 +28,134 @@ public class SysArea extends BaseEntity<SysArea> {
     private String type; //type <区域类型>
     private String icon; //icon <图标>
     private String updateBy; //update_by <更新者>
-	private Date updateDate; //update_date <更新时间>
-	private String createBy; //create_by <创建者>
-	private Date createDate; //create_date <创建时间>
-	private String delFlag; //del_flag <删除标记(0.正常  1.删除)>
+    private Date updateDate; //update_date <更新时间>
+    private String createBy; //create_by <创建者>
+    private Date createDate; //create_date <创建时间>
+    private String delFlag; //del_flag <删除标记(0.正常  1.删除)>
 
     @Transient
     private String oldParentIds; //旧的pids,非表中字段，用作更新用
 
-	public SysArea() {
-		super();
-		super.setModuleName("区域信息");
-	}
+    public SysArea() {
+        super();
+        super.setModuleName("区域信息");
+    }
 
-	/**
-	 * 主键
-	 * @param id
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
-	public String getId() {
-		return id;
-	}
+    /**
+     * 主键
+     *
+     * @param id
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public String getParentId() {
-		return parentId;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getParentIds() {
-		return parentIds;
-	}
+    public String getParentId() {
+        return parentId;
+    }
 
-	public String getRemarks() {
-		return remarks;
-	}
+    public String getParentIds() {
+        return parentIds;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public String getRemarks() {
+        return remarks;
+    }
 
-	public String getIcon() {
-		return icon;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public String getUpdateBy() {
-		return updateBy;
-	}
+    public String getIcon() {
+        return icon;
+    }
 
-	public Date getUpdateDate() {
-		return updateDate;
-	}
+    public String getUpdateBy() {
+        return updateBy;
+    }
 
-	public String getCreateBy() {
-		return createBy;
-	}
+    public Date getUpdateDate() {
+        return updateDate;
+    }
 
-	public Date getCreateDate() {
-		return createDate;
-	}
+    public String getCreateBy() {
+        return createBy;
+    }
 
-	public String getDelFlag() {
-		return delFlag;
-	}
+    public Date getCreateDate() {
+        return createDate;
+    }
 
-	public String getOldParentIds() {
-		return oldParentIds;
-	}
+    public String getDelFlag() {
+        return delFlag;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public String getOldParentIds() {
+        return oldParentIds;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setParentIds(String parentIds) {
-		this.parentIds = parentIds;
-	}
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
 
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
+    public void setParentIds(String parentIds) {
+        this.parentIds = parentIds;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
 
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public void setUpdateBy(String updateBy) {
-		this.updateBy = updateBy;
-	}
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
 
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
 
-	public void setDelFlag(String delFlag) {
-		this.delFlag = delFlag;
-	}
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
 
-	public void setOldParentIds(String oldParentIds) {
-		this.oldParentIds = oldParentIds;
-	}
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag;
+    }
+
+    public void setOldParentIds(String oldParentIds) {
+        this.oldParentIds = oldParentIds;
+    }
 
 }

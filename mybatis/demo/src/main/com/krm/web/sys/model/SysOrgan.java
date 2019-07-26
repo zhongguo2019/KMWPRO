@@ -11,290 +11,289 @@ import javax.persistence.Transient;
 import com.krm.common.base.BaseEntity;
 
 
-@Table(name="sys_organ")
-public class SysOrgan extends BaseEntity<SysOrgan>{
+@Table(name = "sys_organ")
+public class SysOrgan extends BaseEntity<SysOrgan> {
 
-	private static final long serialVersionUID = 1L;
-	@Id
-	private String id; 				//主键
-	private String code; 		//机构号
-    private String address; 	//<地址>
-    private String areaId; 		//<区域>
-    private String email; 		//email <邮件>
-    private String fax; 		//fax <传真>
-    private String grade; 		//grade 
-    private String master; 		//master 负责人
-    private String name; 		//name <名称>
-    private String parentId; 	//parent_id <上级机构号>
-    private String parentIds; 	//parent_ids <所有上级机构号>
-    private String phone; 		//phone <电话>
-    private String remarks; 	//remarks <机构描述>
-    private String type; 		//type <机构类别（机构/部门）>
-    private String zipCode; 	//zip_code <邮政编码>
-    private String icon; 		//icon <图标>
-    private String updateBy; 	//update_by <最近修改人>
-	private Date updateDate; 	//update_date <最近修改时间>
-	private String createBy; 	//create_by <创建人>
-	private Date createDate; 	//create_date <创建时间>
-	private String delFlag; 	//del_flag <假删除标记(0.正常  1.删除)>
-    
+    private static final long serialVersionUID = 1L;
+    @Id
+    private String id;                //主键
+    private String code;        //机构号
+    private String address;    //<地址>
+    private String areaId;        //<区域>
+    private String email;        //email <邮件>
+    private String fax;        //fax <传真>
+    private String grade;        //grade
+    private String master;        //master 负责人
+    private String name;        //name <名称>
+    private String parentId;    //parent_id <上级机构号>
+    private String parentIds;    //parent_ids <所有上级机构号>
+    private String phone;        //phone <电话>
+    private String remarks;    //remarks <机构描述>
+    private String type;        //type <机构类别（机构/部门）>
+    private String zipCode;    //zip_code <邮政编码>
+    private String icon;        //icon <图标>
+    private String updateBy;    //update_by <最近修改人>
+    private Date updateDate;    //update_date <最近修改时间>
+    private String createBy;    //create_by <创建人>
+    private Date createDate;    //create_date <创建时间>
+    private String delFlag;    //del_flag <假删除标记(0.正常  1.删除)>
+
     @Transient
     private String oldParentIds; //
-    
-	public SysOrgan(){
-		super.setModuleName("机构信息");
-	}
-	
-	public SysOrgan(String id, String address, String areaId, String code,
-			String email, String fax, String grade, String master, String name,
-			String parentId, String parentIds, String phone, String remarks,
-			String type, String zipCode, String icon, String updateBy,
-			Date updateDate, String createBy, Date createDate, String delFlag,
-			String oldParentIds)
-	{
-		super();
-		this.id = id;
-		this.address = address;
-		this.areaId = areaId;
-		this.code = code;
-		this.email = email;
-		this.fax = fax;
-		this.grade = grade;
-		this.master = master;
-		this.name = name;
-		this.parentId = parentId;
-		this.parentIds = parentIds;
-		this.phone = phone;
-		this.remarks = remarks;
-		this.type = type;
-		this.zipCode = zipCode;
-		this.icon = icon;
-		this.updateBy = updateBy;
-		this.updateDate = updateDate;
-		this.createBy = createBy;
-		this.createDate = createDate;
-		this.delFlag = delFlag;
-		this.oldParentIds = oldParentIds;
-	}
 
-	
-	public String getId() {
-		return id;
-	}
+    public SysOrgan() {
+        super.setModuleName("机构信息");
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public SysOrgan(String id, String address, String areaId, String code,
+                    String email, String fax, String grade, String master, String name,
+                    String parentId, String parentIds, String phone, String remarks,
+                    String type, String zipCode, String icon, String updateBy,
+                    Date updateDate, String createBy, Date createDate, String delFlag,
+                    String oldParentIds) {
+        super();
+        this.id = id;
+        this.address = address;
+        this.areaId = areaId;
+        this.code = code;
+        this.email = email;
+        this.fax = fax;
+        this.grade = grade;
+        this.master = master;
+        this.name = name;
+        this.parentId = parentId;
+        this.parentIds = parentIds;
+        this.phone = phone;
+        this.remarks = remarks;
+        this.type = type;
+        this.zipCode = zipCode;
+        this.icon = icon;
+        this.updateBy = updateBy;
+        this.updateDate = updateDate;
+        this.createBy = createBy;
+        this.createDate = createDate;
+        this.delFlag = delFlag;
+        this.oldParentIds = oldParentIds;
+    }
 
-	public String getAddress() {
-		return address;
-	}
 
+    public String getId() {
+        return id;
+    }
 
-	public String getAreaId() {
-		return areaId;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
+    public String getAddress() {
+        return address;
+    }
 
-	public String getCode() {
-		return code;
-	}
 
+    public String getAreaId() {
+        return areaId;
+    }
 
-	public String getEmail() {
-		return email;
-	}
 
+    public String getCode() {
+        return code;
+    }
 
-	public String getFax() {
-		return fax;
-	}
 
+    public String getEmail() {
+        return email;
+    }
 
-	public String getGrade() {
-		return grade;
-	}
 
+    public String getFax() {
+        return fax;
+    }
 
-	public String getMaster() {
-		return master;
-	}
 
+    public String getGrade() {
+        return grade;
+    }
 
-	public String getName() {
-		return name;
-	}
 
+    public String getMaster() {
+        return master;
+    }
 
-	public String getParentId() {
-		return parentId;
-	}
 
+    public String getName() {
+        return name;
+    }
 
-	public String getParentIds() {
-		return parentIds;
-	}
 
+    public String getParentId() {
+        return parentId;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
 
+    public String getParentIds() {
+        return parentIds;
+    }
 
-	public String getRemarks() {
-		return remarks;
-	}
 
+    public String getPhone() {
+        return phone;
+    }
 
-	public String getType() {
-		return type;
-	}
 
+    public String getRemarks() {
+        return remarks;
+    }
 
-	public String getZipCode() {
-		return zipCode;
-	}
 
+    public String getType() {
+        return type;
+    }
 
-	public String getIcon() {
-		return icon;
-	}
 
+    public String getZipCode() {
+        return zipCode;
+    }
 
-	public String getUpdateBy() {
-		return updateBy;
-	}
 
+    public String getIcon() {
+        return icon;
+    }
 
-	public Date getUpdateDate() {
-		return updateDate;
-	}
 
+    public String getUpdateBy() {
+        return updateBy;
+    }
 
-	public String getCreateBy() {
-		return createBy;
-	}
 
+    public Date getUpdateDate() {
+        return updateDate;
+    }
 
-	public Date getCreateDate() {
-		return createDate;
-	}
 
+    public String getCreateBy() {
+        return createBy;
+    }
 
-	public String getDelFlag() {
-		return delFlag;
-	}
 
+    public Date getCreateDate() {
+        return createDate;
+    }
 
-	public String getOldParentIds() {
-		return oldParentIds;
-	}
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public String getDelFlag() {
+        return delFlag;
+    }
 
 
-	public void setAreaId(String areaId) {
-		this.areaId = areaId;
-	}
+    public String getOldParentIds() {
+        return oldParentIds;
+    }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
 
+    public void setAreaId(String areaId) {
+        this.areaId = areaId;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public void setFax(String fax) {
-		this.fax = fax;
-	}
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
 
+    public void setFax(String fax) {
+        this.fax = fax;
+    }
 
-	public void setMaster(String master) {
-		this.master = master;
-	}
 
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
 
+    public void setMaster(String master) {
+        this.master = master;
+    }
 
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
-	}
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setParentIds(String parentIds) {
-		this.parentIds = parentIds;
-	}
 
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
 
+    public void setParentIds(String parentIds) {
+        this.parentIds = parentIds;
+    }
 
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
 
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public void setType(String type) {
-		this.type = type;
-	}
 
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
 
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
-	}
 
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
 
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
 
-	public void setUpdateBy(String updateBy) {
-		this.updateBy = updateBy;
-	}
 
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
 
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
 
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
 
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
 
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
 
-	public void setDelFlag(String delFlag) {
-		this.delFlag = delFlag;
-	}
 
-	public void setOldParentIds(String oldParentIds) {
-		this.oldParentIds = oldParentIds;
-	}
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
 
-	@Override
-	public String toString() {
-		return "机构信息表： {\"id\": \""+id+"\", \"code\": \""+code+"\", \"name\": \""+name+"\", \"parentId\": \""+parentId+"\", \"areaId\": \""+areaId+"\", \"type\": \""+type+"\", \"grade\": \""+grade+"\", \"address\": \""+address+"\", \"zipCode\": \""+zipCode+"\", \"master\": \""+master+"\", \"phone\": \""+phone+"\", \"fax\": \""+fax+"\", \"email\": \""+email+"\", \"createBy\": \""+createBy+"\", \"createDate\": \""+createDate+"\", \"updateBy\": \""+updateBy+"\", \"updateDate\": \""+updateDate+"\", \"remarks\": \""+remarks+"\", \"delFlag\": \""+delFlag+"\", \"icon\": \""+icon+"\", \"parentIds\": \""+parentIds+"\"}";
-	}
+
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag;
+    }
+
+    public void setOldParentIds(String oldParentIds) {
+        this.oldParentIds = oldParentIds;
+    }
+
+    @Override
+    public String toString() {
+        return "机构信息表： {\"id\": \"" + id + "\", \"code\": \"" + code + "\", \"name\": \"" + name + "\", \"parentId\": \"" + parentId + "\", \"areaId\": \"" + areaId + "\", \"type\": \"" + type + "\", \"grade\": \"" + grade + "\", \"address\": \"" + address + "\", \"zipCode\": \"" + zipCode + "\", \"master\": \"" + master + "\", \"phone\": \"" + phone + "\", \"fax\": \"" + fax + "\", \"email\": \"" + email + "\", \"createBy\": \"" + createBy + "\", \"createDate\": \"" + createDate + "\", \"updateBy\": \"" + updateBy + "\", \"updateDate\": \"" + updateDate + "\", \"remarks\": \"" + remarks + "\", \"delFlag\": \"" + delFlag + "\", \"icon\": \"" + icon + "\", \"parentIds\": \"" + parentIds + "\"}";
+    }
 }
