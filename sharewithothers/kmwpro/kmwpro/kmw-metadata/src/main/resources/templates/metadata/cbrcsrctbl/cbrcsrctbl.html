@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('银监报送报来源分析列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+<!--                             <li>
+                                <p>业务主题：</p>
+                                <input type="text" name="subjectname"/>
+                            </li> -->
+                            <li>
+                                <p>报表编码：</p>
+                                <input type="text" name="rptcode"/>
+                            </li>
+                            <li>
+                                <p>报表名称：</p>
+                                <input type="text" name="rptname"/>
+                            </li>
+                            <li>
+                                <p>报送频度：</p>
+                                <input type="text" name="seq"/>
+                            </li>
+                            <li>
+                                <p>来源表1：</p>
+                                <input type="text" name="srctbl01"/>
+                            </li>
+                         <!--    <li>
+                                <p>来源表2：</p>
+                                <input type="text" name="srctbl02"/>
+                            </li>
+                            <li>
+                                <p>来源表3：</p>
+                                <input type="text" name="srctbl03"/>
+                            </li>
+                            <li>
+                                <p>来源表4：</p>
+                                <input type="text" name="srctbl04"/>
+                            </li>
+                            <li>
+                                <p>来源表5：</p>
+                                <input type="text" name="srctbl05"/>
+                            </li>
+                            <li>
+                                <p>来源表6：</p>
+                                <input type="text" name="srctbl06"/>
+                            </li>
+                            <li>
+                                <p>来源表7：</p>
+                                <input type="text" name="srctbl07"/>
+                            </li>
+                            <li>
+                                <p>来源表8：</p>
+                                <input type="text" name="srctbl08"/>
+                            </li>
+                            <li>
+                                <p>来源表9：</p>
+                                <input type="text" name="srctbl09"/>
+                            </li>
+                            <li>
+                                <p>来源表10：</p>
+                                <input type="text" name="srctbl10"/>
+                            </li>
+                            <li>
+                                <p>来源表11：</p>
+                                <input type="text" name="srctbl11"/>
+                            </li>
+                            <li>
+                                <p>来源表12：</p>
+                                <input type="text" name="srctbl12"/>
+                            </li>
+                            <li>
+                                <p>来源表13：</p>
+                                <input type="text" name="srctbl13"/>
+                            </li>
+                            <li>
+                                <p>来源表14：</p>
+                                <input type="text" name="srctbl14"/>
+                            </li> -->
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="metadata:cbrcsrctbl:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="metadata:cbrcsrctbl:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="metadata:cbrcsrctbl:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="metadata:cbrcsrctbl:export">
+                    <i class="fa fa-download"></i> 导出
+                 </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('metadata:cbrcsrctbl:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('metadata:cbrcsrctbl:remove')}]];
+        var prefix = ctx + "metadata/cbrcsrctbl";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "银监报送报来源分析",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field : 'orderno', 
+                    title : '主键',
+                    visible: false
+                },
+                {
+                    field : 'subjectname', 
+                    title : '业务主题',
+                    visible: false
+                },
+                {
+                    field : 'rptcode', 
+                    title : '报表编码'
+                },
+                {
+                    field : 'rptname', 
+                    title : '报表名称'
+                },
+                {
+                    field : 'seq', 
+                    title : '报送频度'
+                },
+                {
+                    field : 'srctbl01', 
+                    title : '来源表1'
+                },
+                {
+                    field : 'srctbl02', 
+                    title : '来源表2'
+                },
+                {
+                    field : 'srctbl03', 
+                    title : '来源表3'
+                },
+                {
+                    field : 'srctbl04', 
+                    title : '来源表4',
+                    visible: false
+                },
+                {
+                    field : 'srctbl05', 
+                    title : '来源表5',
+                    visible: false
+                },
+                {
+                    field : 'srctbl06', 
+                    title : '来源表6',
+                    visible: false
+                },
+                {
+                    field : 'srctbl07', 
+                    title : '来源表7',
+                    visible: false
+                },
+                {
+                    field : 'srctbl08', 
+                    title : '来源表8',
+                    visible: false
+                },
+                {
+                    field : 'srctbl09', 
+                    title : '来源表9',
+                    visible: false
+                },
+                {
+                    field : 'srctbl10', 
+                    title : '来源表10',
+                    visible: false
+                },
+                {
+                    field : 'srctbl11', 
+                    title : '来源表11',
+                    visible: false
+                },
+                {
+                    field : 'srctbl12', 
+                    title : '来源表12',
+                    visible: false
+                },
+                {
+                    field : 'srctbl13', 
+                    title : '来源表13',
+                    visible: false
+                },
+                {
+                    field : 'srctbl14', 
+                    title : '来源表14',
+                    visible: false
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.orderno + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.orderno + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmw.metadata.mapper.CdmJsnxodsDictionaryMapper">
+    
+    <resultMap type="CdmJsnxodsDictionary" id="CdmJsnxodsDictionaryResult">
+        <result property="layerName"    column="layer_name"    />
+        <result property="systemName"    column="system_name"    />
+        <result property="subjectName"    column="subject_name"    />
+        <result property="tblEnname"    column="tbl_enname"    />
+        <result property="tblCnname"    column="tbl_cnname"    />
+        <result property="orderSort"    column="order_sort"    />
+        <result property="fldEnname"    column="fld_enname"    />
+        <result property="fldCnname"    column="fld_cnname"    />
+        <result property="fldType"    column="fld_type"    />
+        <result property="fldLen"    column="fld_len"    />
+        <result property="fldPrecision"    column="fld_precision"    />
+        <result property="fldIskey"    column="fld_iskey"    />
+        <result property="fldIsnull"    column="fld_isnull"    />
+        <result property="isPartion"    column="is_partion"    />
+        <result property="tblspaceName"    column="tblspace_name"    />
+        <result property="fldCode"    column="fld_code"    />
+        <result property="fldCommet"    column="fld_commet"    />
+        <result property="systemCnname"    column="system_cnname"    />
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectCdmJsnxodsDictionaryVo">
+        select layer_name, system_name, subject_name, tbl_enname, tbl_cnname, order_sort, fld_enname, fld_cnname, fld_type, fld_len, fld_precision, fld_iskey, fld_isnull, is_partion, tblspace_name, fld_code, fld_commet, system_cnname, id, create_by, create_time, update_by, update_time from cdm_jsnxods_dictionary
+    </sql>
+
+    <select id="selectCdmJsnxodsDictionaryList" parameterType="CdmJsnxodsDictionary" resultMap="CdmJsnxodsDictionaryResult">
+        <include refid="selectCdmJsnxodsDictionaryVo"/>
+        <where>  
+            <if test="layerName != null  and layerName != ''"> and layer_name like concat('%', #{layerName}, '%')</if>
+            <if test="systemName != null  and systemName != ''"> and system_name like concat('%', #{systemName}, '%')</if>
+            <if test="subjectName != null  and subjectName != ''"> and subject_name like concat('%', #{subjectName}, '%')</if>
+            <if test="tblEnname != null  and tblEnname != ''"> and tbl_enname like concat('%', #{tblEnname}, '%')</if>
+            <if test="tblCnname != null  and tblCnname != ''"> and tbl_cnname like concat('%', #{tblCnname}, '%')</if>
+            <if test="orderSort != null  and orderSort != ''"> and order_sort = #{orderSort}</if>
+            <if test="fldEnname != null  and fldEnname != ''"> and fld_enname like concat('%', #{fldEnname}, '%')</if>
+            <if test="fldCnname != null  and fldCnname != ''"> and fld_cnname like concat('%', #{fldCnname}, '%')</if>
+            <if test="fldType != null  and fldType != ''"> and fld_type = #{fldType}</if>
+            <if test="fldLen != null  and fldLen != ''"> and fld_len = #{fldLen}</if>
+            <if test="fldPrecision != null  and fldPrecision != ''"> and fld_precision = #{fldPrecision}</if>
+            <if test="fldIskey != null  and fldIskey != ''"> and fld_iskey = #{fldIskey}</if>
+            <if test="fldIsnull != null  and fldIsnull != ''"> and fld_isnull = #{fldIsnull}</if>
+            <if test="isPartion != null  and isPartion != ''"> and is_partion = #{isPartion}</if>
+            <if test="tblspaceName != null  and tblspaceName != ''"> and tblspace_name like concat('%', #{tblspaceName}, '%')</if>
+            <if test="fldCode != null  and fldCode != ''"> and fld_code = #{fldCode}</if>
+            <if test="fldCommet != null  and fldCommet != ''"> and fld_commet = #{fldCommet}</if>
+            <if test="systemCnname != null  and systemCnname != ''"> and system_cnname like concat('%', #{systemCnname}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectCdmJsnxodsDictionaryById" parameterType="Integer" resultMap="CdmJsnxodsDictionaryResult">
+        <include refid="selectCdmJsnxodsDictionaryVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCdmJsnxodsDictionary" parameterType="CdmJsnxodsDictionary">
+        insert into cdm_jsnxods_dictionary
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="layerName != null  and layerName != ''">layer_name,</if>
+            <if test="systemName != null  and systemName != ''">system_name,</if>
+            <if test="subjectName != null  and subjectName != ''">subject_name,</if>
+            <if test="tblEnname != null  and tblEnname != ''">tbl_enname,</if>
+            <if test="tblCnname != null  and tblCnname != ''">tbl_cnname,</if>
+            <if test="orderSort != null  and orderSort != ''">order_sort,</if>
+            <if test="fldEnname != null  and fldEnname != ''">fld_enname,</if>
+            <if test="fldCnname != null  and fldCnname != ''">fld_cnname,</if>
+            <if test="fldType != null  and fldType != ''">fld_type,</if>
+            <if test="fldLen != null  and fldLen != ''">fld_len,</if>
+            <if test="fldPrecision != null  and fldPrecision != ''">fld_precision,</if>
+            <if test="fldIskey != null  and fldIskey != ''">fld_iskey,</if>
+            <if test="fldIsnull != null  and fldIsnull != ''">fld_isnull,</if>
+            <if test="isPartion != null  and isPartion != ''">is_partion,</if>
+            <if test="tblspaceName != null  and tblspaceName != ''">tblspace_name,</if>
+            <if test="fldCode != null  and fldCode != ''">fld_code,</if>
+            <if test="fldCommet != null  and fldCommet != ''">fld_commet,</if>
+            <if test="systemCnname != null  and systemCnname != ''">system_cnname,</if>
+            <if test="id != null ">id,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="layerName != null  and layerName != ''">#{layerName},</if>
+            <if test="systemName != null  and systemName != ''">#{systemName},</if>
+            <if test="subjectName != null  and subjectName != ''">#{subjectName},</if>
+            <if test="tblEnname != null  and tblEnname != ''">#{tblEnname},</if>
+            <if test="tblCnname != null  and tblCnname != ''">#{tblCnname},</if>
+            <if test="orderSort != null  and orderSort != ''">#{orderSort},</if>
+            <if test="fldEnname != null  and fldEnname != ''">#{fldEnname},</if>
+            <if test="fldCnname != null  and fldCnname != ''">#{fldCnname},</if>
+            <if test="fldType != null  and fldType != ''">#{fldType},</if>
+            <if test="fldLen != null  and fldLen != ''">#{fldLen},</if>
+            <if test="fldPrecision != null  and fldPrecision != ''">#{fldPrecision},</if>
+            <if test="fldIskey != null  and fldIskey != ''">#{fldIskey},</if>
+            <if test="fldIsnull != null  and fldIsnull != ''">#{fldIsnull},</if>
+            <if test="isPartion != null  and isPartion != ''">#{isPartion},</if>
+            <if test="tblspaceName != null  and tblspaceName != ''">#{tblspaceName},</if>
+            <if test="fldCode != null  and fldCode != ''">#{fldCode},</if>
+            <if test="fldCommet != null  and fldCommet != ''">#{fldCommet},</if>
+            <if test="systemCnname != null  and systemCnname != ''">#{systemCnname},</if>
+            <if test="id != null ">#{id},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCdmJsnxodsDictionary" parameterType="CdmJsnxodsDictionary">
+        update cdm_jsnxods_dictionary
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="layerName != null  and layerName != ''">layer_name = #{layerName},</if>
+            <if test="systemName != null  and systemName != ''">system_name = #{systemName},</if>
+            <if test="subjectName != null  and subjectName != ''">subject_name = #{subjectName},</if>
+            <if test="tblEnname != null  and tblEnname != ''">tbl_enname = #{tblEnname},</if>
+            <if test="tblCnname != null  and tblCnname != ''">tbl_cnname = #{tblCnname},</if>
+            <if test="orderSort != null  and orderSort != ''">order_sort = #{orderSort},</if>
+            <if test="fldEnname != null  and fldEnname != ''">fld_enname = #{fldEnname},</if>
+            <if test="fldCnname != null  and fldCnname != ''">fld_cnname = #{fldCnname},</if>
+            <if test="fldType != null  and fldType != ''">fld_type = #{fldType},</if>
+            <if test="fldLen != null  and fldLen != ''">fld_len = #{fldLen},</if>
+            <if test="fldPrecision != null  and fldPrecision != ''">fld_precision = #{fldPrecision},</if>
+            <if test="fldIskey != null  and fldIskey != ''">fld_iskey = #{fldIskey},</if>
+            <if test="fldIsnull != null  and fldIsnull != ''">fld_isnull = #{fldIsnull},</if>
+            <if test="isPartion != null  and isPartion != ''">is_partion = #{isPartion},</if>
+            <if test="tblspaceName != null  and tblspaceName != ''">tblspace_name = #{tblspaceName},</if>
+            <if test="fldCode != null  and fldCode != ''">fld_code = #{fldCode},</if>
+            <if test="fldCommet != null  and fldCommet != ''">fld_commet = #{fldCommet},</if>
+            <if test="systemCnname != null  and systemCnname != ''">system_cnname = #{systemCnname},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCdmJsnxodsDictionaryById" parameterType="Integer">
+        delete from cdm_jsnxods_dictionary where id = #{id}
+    </delete>
+
+    <delete id="deleteCdmJsnxodsDictionaryByIds" parameterType="String">
+        delete from cdm_jsnxods_dictionary where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增江苏农信省联社给各法人下发的数据库')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-tablelist-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">序号：</label>
+                <div class="col-sm-8">
+                    <input name="orderSort" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">源系统：</label>
+                <div class="col-sm-8">
+                    <input name="sourceSysname" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">表英文名：</label>
+                <div class="col-sm-8">
+                    <input name="tableEnname" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">表中文名：</label>
+                <div class="col-sm-8">
+                    <input name="tableCnname" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">加载频度：</label>
+                <div class="col-sm-8">
+                    <input name="loadFrequence" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">加载方式(全量或增量)：</label>
+                <div class="col-sm-8">
+                    <input name="loadWay" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否拆分：</label>
+                <div class="col-sm-8">
+                    <input name="loadSplit" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">法人号：</label>
+                <div class="col-sm-8">
+                    <input name="loadCrtno" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">源系统中文名称：</label>
+                <div class="col-sm-8">
+                    <input name="sourceSyscnname" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script type="text/javascript">
+        var prefix = ctx + "metadata/tablelist"
+        $("#form-tablelist-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-tablelist-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmw.metadata.mapper.CdmJsnxodsCbrcsrctblMapper">
+    
+    <resultMap type="CdmJsnxodsCbrcsrctbl" id="CdmJsnxodsCbrcsrctblResult">
+        <result property="orderno"    column="orderno"    />
+        <result property="subjectname"    column="subjectname"    />
+        <result property="rptcode"    column="rptcode"    />
+        <result property="rptname"    column="rptname"    />
+        <result property="seq"    column="seq"    />
+        <result property="srctbl01"    column="srctbl01"    />
+        <result property="srctbl02"    column="srctbl02"    />
+        <result property="srctbl03"    column="srctbl03"    />
+        <result property="srctbl04"    column="srctbl04"    />
+        <result property="srctbl05"    column="srctbl05"    />
+        <result property="srctbl06"    column="srctbl06"    />
+        <result property="srctbl07"    column="srctbl07"    />
+        <result property="srctbl08"    column="srctbl08"    />
+        <result property="srctbl09"    column="srctbl09"    />
+        <result property="srctbl10"    column="srctbl10"    />
+        <result property="srctbl11"    column="srctbl11"    />
+        <result property="srctbl12"    column="srctbl12"    />
+        <result property="srctbl13"    column="srctbl13"    />
+        <result property="srctbl14"    column="srctbl14"    />
+    </resultMap>
+
+    <sql id="selectCdmJsnxodsCbrcsrctblVo">
+        select orderno, subjectname, rptcode, rptname, seq, srctbl01, srctbl02, srctbl03, srctbl04, srctbl05, srctbl06, srctbl07, srctbl08, srctbl09, srctbl10, srctbl11, srctbl12, srctbl13, srctbl14 from cdm_jsnxods_cbrcsrctbl
+    </sql>
+
+    <select id="selectCdmJsnxodsCbrcsrctblList" parameterType="CdmJsnxodsCbrcsrctbl" resultMap="CdmJsnxodsCbrcsrctblResult">
+        <include refid="selectCdmJsnxodsCbrcsrctblVo"/>
+        <where>  
+            <if test="subjectname != null  and subjectname != ''"> and subjectname like concat('%', #{subjectname}, '%')</if>
+            <if test="rptcode != null  and rptcode != ''"> and rptcode = #{rptcode}</if>
+            <if test="rptname != null  and rptname != ''"> and rptname like concat('%', #{rptname}, '%')</if>
+            <if test="seq != null  and seq != ''"> and seq = #{seq}</if>
+            <if test="srctbl01 != null  and srctbl01 != ''"> and srctbl01 = #{srctbl01}</if>
+            <if test="srctbl02 != null  and srctbl02 != ''"> and srctbl02 = #{srctbl02}</if>
+            <if test="srctbl03 != null  and srctbl03 != ''"> and srctbl03 = #{srctbl03}</if>
+            <if test="srctbl04 != null  and srctbl04 != ''"> and srctbl04 = #{srctbl04}</if>
+            <if test="srctbl05 != null  and srctbl05 != ''"> and srctbl05 = #{srctbl05}</if>
+            <if test="srctbl06 != null  and srctbl06 != ''"> and srctbl06 = #{srctbl06}</if>
+            <if test="srctbl07 != null  and srctbl07 != ''"> and srctbl07 = #{srctbl07}</if>
+            <if test="srctbl08 != null  and srctbl08 != ''"> and srctbl08 = #{srctbl08}</if>
+            <if test="srctbl09 != null  and srctbl09 != ''"> and srctbl09 = #{srctbl09}</if>
+            <if test="srctbl10 != null  and srctbl10 != ''"> and srctbl10 = #{srctbl10}</if>
+            <if test="srctbl11 != null  and srctbl11 != ''"> and srctbl11 = #{srctbl11}</if>
+            <if test="srctbl12 != null  and srctbl12 != ''"> and srctbl12 = #{srctbl12}</if>
+            <if test="srctbl13 != null  and srctbl13 != ''"> and srctbl13 = #{srctbl13}</if>
+            <if test="srctbl14 != null  and srctbl14 != ''"> and srctbl14 = #{srctbl14}</if>
+        </where>
+    </select>
+    
+    <select id="selectCdmJsnxodsCbrcsrctblById" parameterType="Long" resultMap="CdmJsnxodsCbrcsrctblResult">
+        <include refid="selectCdmJsnxodsCbrcsrctblVo"/>
+        where orderno = #{orderno}
+    </select>
+        
+    <insert id="insertCdmJsnxodsCbrcsrctbl" parameterType="CdmJsnxodsCbrcsrctbl">
+        insert into cdm_jsnxods_cbrcsrctbl
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderno != null ">orderno,</if>
+            <if test="subjectname != null  and subjectname != ''">subjectname,</if>
+            <if test="rptcode != null  and rptcode != ''">rptcode,</if>
+            <if test="rptname != null  and rptname != ''">rptname,</if>
+            <if test="seq != null  and seq != ''">seq,</if>
+            <if test="srctbl01 != null  and srctbl01 != ''">srctbl01,</if>
+            <if test="srctbl02 != null  and srctbl02 != ''">srctbl02,</if>
+            <if test="srctbl03 != null  and srctbl03 != ''">srctbl03,</if>
+            <if test="srctbl04 != null  and srctbl04 != ''">srctbl04,</if>
+            <if test="srctbl05 != null  and srctbl05 != ''">srctbl05,</if>
+            <if test="srctbl06 != null  and srctbl06 != ''">srctbl06,</if>
+            <if test="srctbl07 != null  and srctbl07 != ''">srctbl07,</if>
+            <if test="srctbl08 != null  and srctbl08 != ''">srctbl08,</if>
+            <if test="srctbl09 != null  and srctbl09 != ''">srctbl09,</if>
+            <if test="srctbl10 != null  and srctbl10 != ''">srctbl10,</if>
+            <if test="srctbl11 != null  and srctbl11 != ''">srctbl11,</if>
+            <if test="srctbl12 != null  and srctbl12 != ''">srctbl12,</if>
+            <if test="srctbl13 != null  and srctbl13 != ''">srctbl13,</if>
+            <if test="srctbl14 != null  and srctbl14 != ''">srctbl14,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderno != null ">#{orderno},</if>
+            <if test="subjectname != null  and subjectname != ''">#{subjectname},</if>
+            <if test="rptcode != null  and rptcode != ''">#{rptcode},</if>
+            <if test="rptname != null  and rptname != ''">#{rptname},</if>
+            <if test="seq != null  and seq != ''">#{seq},</if>
+            <if test="srctbl01 != null  and srctbl01 != ''">#{srctbl01},</if>
+            <if test="srctbl02 != null  and srctbl02 != ''">#{srctbl02},</if>
+            <if test="srctbl03 != null  and srctbl03 != ''">#{srctbl03},</if>
+            <if test="srctbl04 != null  and srctbl04 != ''">#{srctbl04},</if>
+            <if test="srctbl05 != null  and srctbl05 != ''">#{srctbl05},</if>
+            <if test="srctbl06 != null  and srctbl06 != ''">#{srctbl06},</if>
+            <if test="srctbl07 != null  and srctbl07 != ''">#{srctbl07},</if>
+            <if test="srctbl08 != null  and srctbl08 != ''">#{srctbl08},</if>
+            <if test="srctbl09 != null  and srctbl09 != ''">#{srctbl09},</if>
+            <if test="srctbl10 != null  and srctbl10 != ''">#{srctbl10},</if>
+            <if test="srctbl11 != null  and srctbl11 != ''">#{srctbl11},</if>
+            <if test="srctbl12 != null  and srctbl12 != ''">#{srctbl12},</if>
+            <if test="srctbl13 != null  and srctbl13 != ''">#{srctbl13},</if>
+            <if test="srctbl14 != null  and srctbl14 != ''">#{srctbl14},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCdmJsnxodsCbrcsrctbl" parameterType="CdmJsnxodsCbrcsrctbl">
+        update cdm_jsnxods_cbrcsrctbl
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="subjectname != null  and subjectname != ''">subjectname = #{subjectname},</if>
+            <if test="rptcode != null  and rptcode != ''">rptcode = #{rptcode},</if>
+            <if test="rptname != null  and rptname != ''">rptname = #{rptname},</if>
+            <if test="seq != null  and seq != ''">seq = #{seq},</if>
+            <if test="srctbl01 != null  and srctbl01 != ''">srctbl01 = #{srctbl01},</if>
+            <if test="srctbl02 != null  and srctbl02 != ''">srctbl02 = #{srctbl02},</if>
+            <if test="srctbl03 != null  and srctbl03 != ''">srctbl03 = #{srctbl03},</if>
+            <if test="srctbl04 != null  and srctbl04 != ''">srctbl04 = #{srctbl04},</if>
+            <if test="srctbl05 != null  and srctbl05 != ''">srctbl05 = #{srctbl05},</if>
+            <if test="srctbl06 != null  and srctbl06 != ''">srctbl06 = #{srctbl06},</if>
+            <if test="srctbl07 != null  and srctbl07 != ''">srctbl07 = #{srctbl07},</if>
+            <if test="srctbl08 != null  and srctbl08 != ''">srctbl08 = #{srctbl08},</if>
+            <if test="srctbl09 != null  and srctbl09 != ''">srctbl09 = #{srctbl09},</if>
+            <if test="srctbl10 != null  and srctbl10 != ''">srctbl10 = #{srctbl10},</if>
+            <if test="srctbl11 != null  and srctbl11 != ''">srctbl11 = #{srctbl11},</if>
+            <if test="srctbl12 != null  and srctbl12 != ''">srctbl12 = #{srctbl12},</if>
+            <if test="srctbl13 != null  and srctbl13 != ''">srctbl13 = #{srctbl13},</if>
+            <if test="srctbl14 != null  and srctbl14 != ''">srctbl14 = #{srctbl14},</if>
+        </trim>
+        where orderno = #{orderno}
+    </update>
+
+    <delete id="deleteCdmJsnxodsCbrcsrctblById" parameterType="Long">
+        delete from cdm_jsnxods_cbrcsrctbl where orderno = #{orderno}
+    </delete>
+
+    <delete id="deleteCdmJsnxodsCbrcsrctblByIds" parameterType="String">
+        delete from cdm_jsnxods_cbrcsrctbl where orderno in 
+        <foreach item="orderno" collection="array" open="(" separator="," close=")">
+            #{orderno}
+        </foreach>
+    </delete>
+    
+</mapper>

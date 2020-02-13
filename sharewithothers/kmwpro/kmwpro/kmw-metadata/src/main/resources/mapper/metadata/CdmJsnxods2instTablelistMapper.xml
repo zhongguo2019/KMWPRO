@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmw.metadata.mapper.CdmJsnxods2instTablelistMapper">
+    
+    <resultMap type="CdmJsnxods2instTablelist" id="CdmJsnxods2instTablelistResult">
+        <result property="orderSort"    column="order_sort"    />
+        <result property="sourceSysname"    column="source_sysname"    />
+        <result property="tableEnname"    column="table_enname"    />
+        <result property="tableCnname"    column="table_cnname"    />
+        <result property="loadFrequence"    column="load_frequence"    />
+        <result property="loadWay"    column="load_way"    />
+        <result property="loadSplit"    column="load_split"    />
+        <result property="loadCrtno"    column="load_crtno"    />
+        <result property="sourceSyscnname"    column="source_syscnname"    />
+        <result property="id"    column="id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectCdmJsnxods2instTablelistVo">
+        select order_sort, source_sysname, table_enname, table_cnname, load_frequence, load_way, load_split, load_crtno, source_syscnname, id, create_by, create_time, update_by, update_time from cdm_jsnxods2inst_tablelist
+    </sql>
+
+    <select id="selectCdmJsnxods2instTablelistList" parameterType="CdmJsnxods2instTablelist" resultMap="CdmJsnxods2instTablelistResult">
+        <include refid="selectCdmJsnxods2instTablelistVo"/>
+        <where>  
+            <if test="orderSort != null  and orderSort != ''"> and order_sort = #{orderSort}</if>
+            <if test="sourceSysname != null  and sourceSysname != ''"> and source_sysname like concat('%', #{sourceSysname}, '%')</if>
+            <if test="tableEnname != null  and tableEnname != ''"> and table_enname like concat('%', #{tableEnname}, '%')</if>
+            <if test="tableCnname != null  and tableCnname != ''"> and table_cnname like concat('%', #{tableCnname}, '%')</if>
+            <if test="loadFrequence != null  and loadFrequence != ''"> and load_frequence = #{loadFrequence}</if>
+            <if test="loadWay != null  and loadWay != ''"> and load_way = #{loadWay}</if>
+            <if test="loadSplit != null  and loadSplit != ''"> and load_split = #{loadSplit}</if>
+            <if test="loadCrtno != null  and loadCrtno != ''"> and load_crtno = #{loadCrtno}</if>
+            <if test="sourceSyscnname != null  and sourceSyscnname != ''"> and source_syscnname like concat('%', #{sourceSyscnname}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectCdmJsnxods2instTablelistById" parameterType="Long" resultMap="CdmJsnxods2instTablelistResult">
+        <include refid="selectCdmJsnxods2instTablelistVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCdmJsnxods2instTablelist" parameterType="CdmJsnxods2instTablelist">
+        insert into cdm_jsnxods2inst_tablelist
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderSort != null  and orderSort != ''">order_sort,</if>
+            <if test="sourceSysname != null  and sourceSysname != ''">source_sysname,</if>
+            <if test="tableEnname != null  and tableEnname != ''">table_enname,</if>
+            <if test="tableCnname != null  and tableCnname != ''">table_cnname,</if>
+            <if test="loadFrequence != null  and loadFrequence != ''">load_frequence,</if>
+            <if test="loadWay != null  and loadWay != ''">load_way,</if>
+            <if test="loadSplit != null  and loadSplit != ''">load_split,</if>
+            <if test="loadCrtno != null  and loadCrtno != ''">load_crtno,</if>
+            <if test="sourceSyscnname != null  and sourceSyscnname != ''">source_syscnname,</if>
+            <if test="id != null ">id,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderSort != null  and orderSort != ''">#{orderSort},</if>
+            <if test="sourceSysname != null  and sourceSysname != ''">#{sourceSysname},</if>
+            <if test="tableEnname != null  and tableEnname != ''">#{tableEnname},</if>
+            <if test="tableCnname != null  and tableCnname != ''">#{tableCnname},</if>
+            <if test="loadFrequence != null  and loadFrequence != ''">#{loadFrequence},</if>
+            <if test="loadWay != null  and loadWay != ''">#{loadWay},</if>
+            <if test="loadSplit != null  and loadSplit != ''">#{loadSplit},</if>
+            <if test="loadCrtno != null  and loadCrtno != ''">#{loadCrtno},</if>
+            <if test="sourceSyscnname != null  and sourceSyscnname != ''">#{sourceSyscnname},</if>
+            <if test="id != null ">#{id},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCdmJsnxods2instTablelist" parameterType="CdmJsnxods2instTablelist">
+        update cdm_jsnxods2inst_tablelist
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderSort != null  and orderSort != ''">order_sort = #{orderSort},</if>
+            <if test="sourceSysname != null  and sourceSysname != ''">source_sysname = #{sourceSysname},</if>
+            <if test="tableEnname != null  and tableEnname != ''">table_enname = #{tableEnname},</if>
+            <if test="tableCnname != null  and tableCnname != ''">table_cnname = #{tableCnname},</if>
+            <if test="loadFrequence != null  and loadFrequence != ''">load_frequence = #{loadFrequence},</if>
+            <if test="loadWay != null  and loadWay != ''">load_way = #{loadWay},</if>
+            <if test="loadSplit != null  and loadSplit != ''">load_split = #{loadSplit},</if>
+            <if test="loadCrtno != null  and loadCrtno != ''">load_crtno = #{loadCrtno},</if>
+            <if test="sourceSyscnname != null  and sourceSyscnname != ''">source_syscnname = #{sourceSyscnname},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCdmJsnxods2instTablelistById" parameterType="Long">
+        delete from cdm_jsnxods2inst_tablelist where id = #{id}
+    </delete>
+
+    <delete id="deleteCdmJsnxods2instTablelistByIds" parameterType="String">
+        delete from cdm_jsnxods2inst_tablelist where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

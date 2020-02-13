@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmw.metadata.mapper.CdmJsnxodsTableallMapper">
+    
+    <resultMap type="CdmJsnxodsTableall" id="CdmJsnxodsTableallResult">
+        <result property="layerName"    column="layer_name"    />
+        <result property="systemName"    column="system_name"    />
+        <result property="subjectName"    column="subject_name"    />
+        <result property="tblEnname"    column="tbl_enname"    />
+        <result property="tblCnname"    column="tbl_cnname"    />
+        <result property="tblspaceName"    column="tblspace_name"    />
+        <result property="systemCnname"    column="system_cnname"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="id"    column="id"    />
+    </resultMap>
+
+    <sql id="selectCdmJsnxodsTableallVo">
+        select layer_name, system_name, subject_name, tbl_enname, tbl_cnname, tblspace_name, system_cnname, create_time, create_by, update_time, update_by, id from cdm_jsnxods_tableall
+    </sql>
+
+    <select id="selectCdmJsnxodsTableallList" parameterType="CdmJsnxodsTableall" resultMap="CdmJsnxodsTableallResult">
+        <include refid="selectCdmJsnxodsTableallVo"/>
+        <where>  
+            <if test="layerName != null  and layerName != ''"> and layer_name like concat('%', #{layerName}, '%')</if>
+            <if test="systemName != null  and systemName != ''"> and system_name like concat('%', #{systemName}, '%')</if>
+            <if test="subjectName != null  and subjectName != ''"> and subject_name like concat('%', #{subjectName}, '%')</if>
+            <if test="tblEnname != null  and tblEnname != ''"> and tbl_enname like concat('%', #{tblEnname}, '%')</if>
+            <if test="tblCnname != null  and tblCnname != ''"> and tbl_cnname like concat('%', #{tblCnname}, '%')</if>
+            <if test="tblspaceName != null  and tblspaceName != ''"> and tblspace_name like concat('%', #{tblspaceName}, '%')</if>
+            <if test="systemCnname != null  and systemCnname != ''"> and system_cnname like concat('%', #{systemCnname}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectCdmJsnxodsTableallById" parameterType="Long" resultMap="CdmJsnxodsTableallResult">
+        <include refid="selectCdmJsnxodsTableallVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCdmJsnxodsTableall" parameterType="CdmJsnxodsTableall">
+        insert into cdm_jsnxods_tableall
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="layerName != null  and layerName != ''">layer_name,</if>
+            <if test="systemName != null  and systemName != ''">system_name,</if>
+            <if test="subjectName != null  and subjectName != ''">subject_name,</if>
+            <if test="tblEnname != null  and tblEnname != ''">tbl_enname,</if>
+            <if test="tblCnname != null  and tblCnname != ''">tbl_cnname,</if>
+            <if test="tblspaceName != null  and tblspaceName != ''">tblspace_name,</if>
+            <if test="systemCnname != null  and systemCnname != ''">system_cnname,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="id != null ">id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="layerName != null  and layerName != ''">#{layerName},</if>
+            <if test="systemName != null  and systemName != ''">#{systemName},</if>
+            <if test="subjectName != null  and subjectName != ''">#{subjectName},</if>
+            <if test="tblEnname != null  and tblEnname != ''">#{tblEnname},</if>
+            <if test="tblCnname != null  and tblCnname != ''">#{tblCnname},</if>
+            <if test="tblspaceName != null  and tblspaceName != ''">#{tblspaceName},</if>
+            <if test="systemCnname != null  and systemCnname != ''">#{systemCnname},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="id != null ">#{id},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCdmJsnxodsTableall" parameterType="CdmJsnxodsTableall">
+        update cdm_jsnxods_tableall
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="layerName != null  and layerName != ''">layer_name = #{layerName},</if>
+            <if test="systemName != null  and systemName != ''">system_name = #{systemName},</if>
+            <if test="subjectName != null  and subjectName != ''">subject_name = #{subjectName},</if>
+            <if test="tblEnname != null  and tblEnname != ''">tbl_enname = #{tblEnname},</if>
+            <if test="tblCnname != null  and tblCnname != ''">tbl_cnname = #{tblCnname},</if>
+            <if test="tblspaceName != null  and tblspaceName != ''">tblspace_name = #{tblspaceName},</if>
+            <if test="systemCnname != null  and systemCnname != ''">system_cnname = #{systemCnname},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCdmJsnxodsTableallById" parameterType="Long">
+        delete from cdm_jsnxods_tableall where id = #{id}
+    </delete>
+
+    <delete id="deleteCdmJsnxodsTableallByIds" parameterType="String">
+        delete from cdm_jsnxods_tableall where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>
