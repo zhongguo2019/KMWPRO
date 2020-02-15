@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('数据标准所有主题码值对照列表')" />
+    <th:block th:include="include :: header('VIEW列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
         <div class="row">
-            <!--< div class="col-sm-12 search-collapse">
+            <div class="col-sm-12 search-collapse">
                 <form id="formId">
                     <div class="select-list">
                         <ul>
@@ -57,18 +57,18 @@
                     </div>
                 </form>
             </div>
- -->
+
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="metadata:allsubjectcoderef:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="metadata:zsyhcoderef:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="metadata:allsubjectcoderef:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="metadata:zsyhcoderef:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="metadata:allsubjectcoderef:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="metadata:zsyhcoderef:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="metadata:allsubjectcoderef:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="metadata:zsyhcoderef:export">
                     <i class="fa fa-download"></i> 导出
                  </a>
             </div>
@@ -79,10 +79,10 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('metadata:allsubjectcoderef:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('metadata:allsubjectcoderef:remove')}]];
+        var editFlag = [[${@permission.hasPermi('metadata:zsyhcoderef:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('metadata:zsyhcoderef:remove')}]];
         var codeSubjectDatas = [[${@dict.getType('sys_cdm_stdsubject')}]];
-        var prefix = ctx + "metadata/allsubjectcoderef";
+        var prefix = ctx + "metadata/zsyhcoderef";
 
         $(function() {
             var options = {
@@ -91,15 +91,9 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                url: prefix + "/viewcodelist/" +[[${dictcode}]],
-                modalName: "数据标准所有主题码值对照",
+                modalName: "VIEW",
                 columns: [{
                     checkbox: true
-                },
-                {
-                    field : 'id', 
-                    title : '主键',
-                    visible: false
                 },
                 {
                     field : 'codeSubject', 
@@ -130,8 +124,7 @@
                 },
                 {
                     field : 'codeNote', 
-                    title : '备注',
-                    visible: false
+                    title : '备注'
                 },
                 {
                     field : 'codeValueCnname', 
@@ -147,8 +140,7 @@
                 },
                 {
                     field : 'bankName', 
-                    title : '银行名称',
-                    visible: false
+                    title : '银行名称'
                 },
                 {
                     title: '操作',

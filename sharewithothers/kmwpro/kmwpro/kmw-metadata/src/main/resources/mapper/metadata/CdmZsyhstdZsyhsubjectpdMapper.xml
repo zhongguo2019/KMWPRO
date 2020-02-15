@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmw.metadata.mapper.CdmZsyhstdZsyhsubjectpdMapper">
+    
+    <resultMap type="CdmZsyhstdZsyhsubjectpd" id="CdmZsyhstdZsyhsubjectpdResult">
+        <result property="id"    column="id"    />
+        <result property="busStdLevel"    column="bus_std_level"    />
+        <result property="busStdCode"    column="bus_std_code"    />
+        <result property="busStdSubject"    column="bus_std_subject"    />
+        <result property="busLevOne"    column="bus_lev_one"    />
+        <result property="busLevTwo"    column="bus_lev_two"    />
+        <result property="busLevThree"    column="bus_lev_three"    />
+        <result property="busCnName"    column="bus_cn_name"    />
+        <result property="busEnName"    column="bus_en_name"    />
+        <result property="busNickName"    column="bus_nick_name"    />
+        <result property="busBussMean"    column="bus_buss_mean"    />
+        <result property="busIsSuit"    column="bus_is_suit"    />
+        <result property="busForceCondition"    column="bus_force_condition"    />
+        <result property="forceAccord"    column="force_accord"    />
+        <result property="busIsSupervision"    column="bus_is_supervision"    />
+        <result property="busNote"    column="bus_note"    />
+        <result property="techDataType"    column="tech_data_type"    />
+        <result property="techMeasureUnit"    column="tech_measure_unit"    />
+        <result property="techDataLength"    column="tech_data_length"    />
+        <result property="techDataPrecision"    column="tech_data_precision"    />
+        <result property="techDatasScope"    column="tech_datas_scope"    />
+        <result property="techDataFormat"    column="tech_data_format"    />
+        <result property="techPublicSubject"    column="tech_public_subject"    />
+        <result property="techAccordCode"    column="tech_accord_code"    />
+        <result property="techCodeLink"    column="tech_code_link"    />
+        <result property="techCheckrule"    column="tech_checkrule"    />
+        <result property="manageBusinessDepartment"    column="manage_business_department"    />
+        <result property="manageDeployStatus"    column="manage_deploy_status"    />
+        <result property="manageDeployTime"    column="manage_deploy_time"    />
+        <result property="manageNote"    column="manage_note"    />
+        <result property="bankName"    column="bank_name"    />
+    </resultMap>
+
+    <sql id="selectCdmZsyhstdZsyhsubjectpdVo">
+        select id, bus_std_level, bus_std_code, bus_std_subject, bus_lev_one, bus_lev_two, bus_lev_three, bus_cn_name, bus_en_name, bus_nick_name, bus_buss_mean, bus_is_suit, bus_force_condition, force_accord, bus_is_supervision, bus_note, tech_data_type, tech_measure_unit, tech_data_length, tech_data_precision, tech_datas_scope, tech_data_format, tech_public_subject, tech_accord_code, tech_code_link, tech_checkrule, manage_business_department, manage_deploy_status, manage_deploy_time, manage_note, bank_name from cdm_zsyhstd_zsyhsubjectpd
+    </sql>
+
+    <select id="selectCdmZsyhstdZsyhsubjectpdList" parameterType="CdmZsyhstdZsyhsubjectpd" resultMap="CdmZsyhstdZsyhsubjectpdResult">
+        <include refid="selectCdmZsyhstdZsyhsubjectpdVo"/>
+        <where>  
+            <if test="busStdLevel != null  and busStdLevel != ''"> and bus_std_level = #{busStdLevel}</if>
+            <if test="busStdCode != null  and busStdCode != ''"> and bus_std_code = #{busStdCode}</if>
+            <if test="busStdSubject != null  and busStdSubject != ''"> and bus_std_subject = #{busStdSubject}</if>
+            <if test="busLevOne != null  and busLevOne != ''"> and bus_lev_one = #{busLevOne}</if>
+            <if test="busLevTwo != null  and busLevTwo != ''"> and bus_lev_two = #{busLevTwo}</if>
+            <if test="busLevThree != null  and busLevThree != ''"> and bus_lev_three = #{busLevThree}</if>
+            <if test="busCnName != null  and busCnName != ''"> and bus_cn_name like concat('%', #{busCnName}, '%')</if>
+            <if test="busEnName != null  and busEnName != ''"> and bus_en_name like concat('%', #{busEnName}, '%')</if>
+            <if test="busNickName != null  and busNickName != ''"> and bus_nick_name like concat('%', #{busNickName}, '%')</if>
+            <if test="busBussMean != null  and busBussMean != ''"> and bus_buss_mean = #{busBussMean}</if>
+            <if test="busIsSuit != null  and busIsSuit != ''"> and bus_is_suit = #{busIsSuit}</if>
+            <if test="busForceCondition != null  and busForceCondition != ''"> and bus_force_condition = #{busForceCondition}</if>
+            <if test="forceAccord != null  and forceAccord != ''"> and force_accord = #{forceAccord}</if>
+            <if test="busIsSupervision != null  and busIsSupervision != ''"> and bus_is_supervision = #{busIsSupervision}</if>
+            <if test="busNote != null  and busNote != ''"> and bus_note = #{busNote}</if>
+            <if test="techDataType != null  and techDataType != ''"> and tech_data_type = #{techDataType}</if>
+            <if test="techMeasureUnit != null  and techMeasureUnit != ''"> and tech_measure_unit = #{techMeasureUnit}</if>
+            <if test="techDataLength != null  and techDataLength != ''"> and tech_data_length = #{techDataLength}</if>
+            <if test="techDataPrecision != null  and techDataPrecision != ''"> and tech_data_precision = #{techDataPrecision}</if>
+            <if test="techDatasScope != null  and techDatasScope != ''"> and tech_datas_scope = #{techDatasScope}</if>
+            <if test="techDataFormat != null  and techDataFormat != ''"> and tech_data_format = #{techDataFormat}</if>
+            <if test="techPublicSubject != null  and techPublicSubject != ''"> and tech_public_subject = #{techPublicSubject}</if>
+            <if test="techAccordCode != null  and techAccordCode != ''"> and tech_accord_code = #{techAccordCode}</if>
+            <if test="techCodeLink != null  and techCodeLink != ''"> and tech_code_link = #{techCodeLink}</if>
+            <if test="techCheckrule != null  and techCheckrule != ''"> and tech_checkrule = #{techCheckrule}</if>
+            <if test="manageBusinessDepartment != null  and manageBusinessDepartment != ''"> and manage_business_department = #{manageBusinessDepartment}</if>
+            <if test="manageDeployStatus != null  and manageDeployStatus != ''"> and manage_deploy_status = #{manageDeployStatus}</if>
+            <if test="manageDeployTime != null  and manageDeployTime != ''"> and manage_deploy_time = #{manageDeployTime}</if>
+            <if test="manageNote != null  and manageNote != ''"> and manage_note = #{manageNote}</if>
+            <if test="bankName != null  and bankName != ''"> and bank_name like concat('%', #{bankName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectCdmZsyhstdZsyhsubjectpdById" parameterType="Long" resultMap="CdmZsyhstdZsyhsubjectpdResult">
+        <include refid="selectCdmZsyhstdZsyhsubjectpdVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCdmZsyhstdZsyhsubjectpd" parameterType="CdmZsyhstdZsyhsubjectpd">
+        insert into cdm_zsyhstd_zsyhsubjectpd
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="busStdLevel != null  and busStdLevel != ''">bus_std_level,</if>
+            <if test="busStdCode != null  and busStdCode != ''">bus_std_code,</if>
+            <if test="busStdSubject != null  and busStdSubject != ''">bus_std_subject,</if>
+            <if test="busLevOne != null  and busLevOne != ''">bus_lev_one,</if>
+            <if test="busLevTwo != null  and busLevTwo != ''">bus_lev_two,</if>
+            <if test="busLevThree != null  and busLevThree != ''">bus_lev_three,</if>
+            <if test="busCnName != null  and busCnName != ''">bus_cn_name,</if>
+            <if test="busEnName != null  and busEnName != ''">bus_en_name,</if>
+            <if test="busNickName != null  and busNickName != ''">bus_nick_name,</if>
+            <if test="busBussMean != null  and busBussMean != ''">bus_buss_mean,</if>
+            <if test="busIsSuit != null  and busIsSuit != ''">bus_is_suit,</if>
+            <if test="busForceCondition != null  and busForceCondition != ''">bus_force_condition,</if>
+            <if test="forceAccord != null  and forceAccord != ''">force_accord,</if>
+            <if test="busIsSupervision != null  and busIsSupervision != ''">bus_is_supervision,</if>
+            <if test="busNote != null  and busNote != ''">bus_note,</if>
+            <if test="techDataType != null  and techDataType != ''">tech_data_type,</if>
+            <if test="techMeasureUnit != null  and techMeasureUnit != ''">tech_measure_unit,</if>
+            <if test="techDataLength != null  and techDataLength != ''">tech_data_length,</if>
+            <if test="techDataPrecision != null  and techDataPrecision != ''">tech_data_precision,</if>
+            <if test="techDatasScope != null  and techDatasScope != ''">tech_datas_scope,</if>
+            <if test="techDataFormat != null  and techDataFormat != ''">tech_data_format,</if>
+            <if test="techPublicSubject != null  and techPublicSubject != ''">tech_public_subject,</if>
+            <if test="techAccordCode != null  and techAccordCode != ''">tech_accord_code,</if>
+            <if test="techCodeLink != null  and techCodeLink != ''">tech_code_link,</if>
+            <if test="techCheckrule != null  and techCheckrule != ''">tech_checkrule,</if>
+            <if test="manageBusinessDepartment != null  and manageBusinessDepartment != ''">manage_business_department,</if>
+            <if test="manageDeployStatus != null  and manageDeployStatus != ''">manage_deploy_status,</if>
+            <if test="manageDeployTime != null  and manageDeployTime != ''">manage_deploy_time,</if>
+            <if test="manageNote != null  and manageNote != ''">manage_note,</if>
+            <if test="bankName != null  and bankName != ''">bank_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="busStdLevel != null  and busStdLevel != ''">#{busStdLevel},</if>
+            <if test="busStdCode != null  and busStdCode != ''">#{busStdCode},</if>
+            <if test="busStdSubject != null  and busStdSubject != ''">#{busStdSubject},</if>
+            <if test="busLevOne != null  and busLevOne != ''">#{busLevOne},</if>
+            <if test="busLevTwo != null  and busLevTwo != ''">#{busLevTwo},</if>
+            <if test="busLevThree != null  and busLevThree != ''">#{busLevThree},</if>
+            <if test="busCnName != null  and busCnName != ''">#{busCnName},</if>
+            <if test="busEnName != null  and busEnName != ''">#{busEnName},</if>
+            <if test="busNickName != null  and busNickName != ''">#{busNickName},</if>
+            <if test="busBussMean != null  and busBussMean != ''">#{busBussMean},</if>
+            <if test="busIsSuit != null  and busIsSuit != ''">#{busIsSuit},</if>
+            <if test="busForceCondition != null  and busForceCondition != ''">#{busForceCondition},</if>
+            <if test="forceAccord != null  and forceAccord != ''">#{forceAccord},</if>
+            <if test="busIsSupervision != null  and busIsSupervision != ''">#{busIsSupervision},</if>
+            <if test="busNote != null  and busNote != ''">#{busNote},</if>
+            <if test="techDataType != null  and techDataType != ''">#{techDataType},</if>
+            <if test="techMeasureUnit != null  and techMeasureUnit != ''">#{techMeasureUnit},</if>
+            <if test="techDataLength != null  and techDataLength != ''">#{techDataLength},</if>
+            <if test="techDataPrecision != null  and techDataPrecision != ''">#{techDataPrecision},</if>
+            <if test="techDatasScope != null  and techDatasScope != ''">#{techDatasScope},</if>
+            <if test="techDataFormat != null  and techDataFormat != ''">#{techDataFormat},</if>
+            <if test="techPublicSubject != null  and techPublicSubject != ''">#{techPublicSubject},</if>
+            <if test="techAccordCode != null  and techAccordCode != ''">#{techAccordCode},</if>
+            <if test="techCodeLink != null  and techCodeLink != ''">#{techCodeLink},</if>
+            <if test="techCheckrule != null  and techCheckrule != ''">#{techCheckrule},</if>
+            <if test="manageBusinessDepartment != null  and manageBusinessDepartment != ''">#{manageBusinessDepartment},</if>
+            <if test="manageDeployStatus != null  and manageDeployStatus != ''">#{manageDeployStatus},</if>
+            <if test="manageDeployTime != null  and manageDeployTime != ''">#{manageDeployTime},</if>
+            <if test="manageNote != null  and manageNote != ''">#{manageNote},</if>
+            <if test="bankName != null  and bankName != ''">#{bankName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCdmZsyhstdZsyhsubjectpd" parameterType="CdmZsyhstdZsyhsubjectpd">
+        update cdm_zsyhstd_zsyhsubjectpd
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="busStdLevel != null  and busStdLevel != ''">bus_std_level = #{busStdLevel},</if>
+            <if test="busStdCode != null  and busStdCode != ''">bus_std_code = #{busStdCode},</if>
+            <if test="busStdSubject != null  and busStdSubject != ''">bus_std_subject = #{busStdSubject},</if>
+            <if test="busLevOne != null  and busLevOne != ''">bus_lev_one = #{busLevOne},</if>
+            <if test="busLevTwo != null  and busLevTwo != ''">bus_lev_two = #{busLevTwo},</if>
+            <if test="busLevThree != null  and busLevThree != ''">bus_lev_three = #{busLevThree},</if>
+            <if test="busCnName != null  and busCnName != ''">bus_cn_name = #{busCnName},</if>
+            <if test="busEnName != null  and busEnName != ''">bus_en_name = #{busEnName},</if>
+            <if test="busNickName != null  and busNickName != ''">bus_nick_name = #{busNickName},</if>
+            <if test="busBussMean != null  and busBussMean != ''">bus_buss_mean = #{busBussMean},</if>
+            <if test="busIsSuit != null  and busIsSuit != ''">bus_is_suit = #{busIsSuit},</if>
+            <if test="busForceCondition != null  and busForceCondition != ''">bus_force_condition = #{busForceCondition},</if>
+            <if test="forceAccord != null  and forceAccord != ''">force_accord = #{forceAccord},</if>
+            <if test="busIsSupervision != null  and busIsSupervision != ''">bus_is_supervision = #{busIsSupervision},</if>
+            <if test="busNote != null  and busNote != ''">bus_note = #{busNote},</if>
+            <if test="techDataType != null  and techDataType != ''">tech_data_type = #{techDataType},</if>
+            <if test="techMeasureUnit != null  and techMeasureUnit != ''">tech_measure_unit = #{techMeasureUnit},</if>
+            <if test="techDataLength != null  and techDataLength != ''">tech_data_length = #{techDataLength},</if>
+            <if test="techDataPrecision != null  and techDataPrecision != ''">tech_data_precision = #{techDataPrecision},</if>
+            <if test="techDatasScope != null  and techDatasScope != ''">tech_datas_scope = #{techDatasScope},</if>
+            <if test="techDataFormat != null  and techDataFormat != ''">tech_data_format = #{techDataFormat},</if>
+            <if test="techPublicSubject != null  and techPublicSubject != ''">tech_public_subject = #{techPublicSubject},</if>
+            <if test="techAccordCode != null  and techAccordCode != ''">tech_accord_code = #{techAccordCode},</if>
+            <if test="techCodeLink != null  and techCodeLink != ''">tech_code_link = #{techCodeLink},</if>
+            <if test="techCheckrule != null  and techCheckrule != ''">tech_checkrule = #{techCheckrule},</if>
+            <if test="manageBusinessDepartment != null  and manageBusinessDepartment != ''">manage_business_department = #{manageBusinessDepartment},</if>
+            <if test="manageDeployStatus != null  and manageDeployStatus != ''">manage_deploy_status = #{manageDeployStatus},</if>
+            <if test="manageDeployTime != null  and manageDeployTime != ''">manage_deploy_time = #{manageDeployTime},</if>
+            <if test="manageNote != null  and manageNote != ''">manage_note = #{manageNote},</if>
+            <if test="bankName != null  and bankName != ''">bank_name = #{bankName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCdmZsyhstdZsyhsubjectpdById" parameterType="Long">
+        delete from cdm_zsyhstd_zsyhsubjectpd where id = #{id}
+    </delete>
+
+    <delete id="deleteCdmZsyhstdZsyhsubjectpdByIds" parameterType="String">
+        delete from cdm_zsyhstd_zsyhsubjectpd where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

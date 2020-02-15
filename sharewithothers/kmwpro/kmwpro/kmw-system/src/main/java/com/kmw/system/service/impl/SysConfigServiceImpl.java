@@ -2,6 +2,7 @@ package com.kmw.system.service.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import com.kmw.common.constant.UserConstants;
@@ -10,6 +11,7 @@ import com.kmw.common.utils.StringUtils;
 import com.kmw.system.domain.SysConfig;
 import com.kmw.system.mapper.SysConfigMapper;
 import com.kmw.system.service.ISysConfigService;
+import com.sun.media.jfxmedia.logging.Logger;
 
 /**
  * 参数配置 服务层实现
@@ -28,11 +30,13 @@ public class SysConfigServiceImpl implements ISysConfigService
      * @param configId 参数配置ID
      * @return 参数配置信息
      */
+    @CachePut(cacheNames="config",key="#configId")
     @Override
     public SysConfig selectConfigById(Long configId)
     {
         SysConfig config = new SysConfig();
         config.setConfigId(configId);
+       System.out.println("查询配置信息，设置缓存configID"+configId);
         return configMapper.selectConfig(config);
     }
 
@@ -81,6 +85,7 @@ public class SysConfigServiceImpl implements ISysConfigService
      * @param config 参数配置信息
      * @return 结果
      */
+    @CachePut(cacheNames="config",key="#config.configId")
     @Override
     public int updateConfig(SysConfig config)
     {

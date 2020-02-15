@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmw.metadata.mapper.CdmZsyhstdZsyhcoderefMapper">
+    
+    <resultMap type="CdmZsyhstdZsyhcoderef" id="CdmZsyhstdZsyhcoderefResult">
+        <result property="id"    column="id"    />
+        <result property="codeSubject"    column="code_subject"    />
+        <result property="codeId"    column="code_id"    />
+        <result property="codeStdname"    column="code_stdname"    />
+        <result property="codeStdenname"    column="code_stdenname"    />
+        <result property="codeValue"    column="code_value"    />
+        <result property="codeDesc"    column="code_desc"    />
+        <result property="codeNote"    column="code_note"    />
+        <result property="codeValueCnname"    column="code_value_cnname"    />
+        <result property="codeRule"    column="code_rule"    />
+        <result property="codeAccord"    column="code_accord"    />
+        <result property="bankName"    column="bank_name"    />
+    </resultMap>
+
+    <sql id="selectCdmZsyhstdZsyhcoderefVo">
+        select id, code_subject, code_id, code_stdname, code_stdenname, code_value, code_desc, code_note, code_value_cnname, code_rule, code_accord, bank_name from cdm_zsyhstd_zsyhcoderef
+    </sql>
+
+    <select id="selectCdmZsyhstdZsyhcoderefList" parameterType="CdmZsyhstdZsyhcoderef" resultMap="CdmZsyhstdZsyhcoderefResult">
+        <include refid="selectCdmZsyhstdZsyhcoderefVo"/>
+        <where>  
+            <if test="codeSubject != null  and codeSubject != ''"> and code_subject = #{codeSubject}</if>
+            <if test="codeId != null  and codeId != ''"> and code_id = #{codeId}</if>
+            <if test="codeStdname != null  and codeStdname != ''"> and code_stdname like concat('%', #{codeStdname}, '%')</if>
+            <if test="codeStdenname != null  and codeStdenname != ''"> and code_stdenname like concat('%', #{codeStdenname}, '%')</if>
+            <if test="codeValue != null  and codeValue != ''"> and code_value = #{codeValue}</if>
+            <if test="codeDesc != null  and codeDesc != ''"> and code_desc = #{codeDesc}</if>
+            <if test="codeNote != null  and codeNote != ''"> and code_note = #{codeNote}</if>
+            <if test="codeValueCnname != null  and codeValueCnname != ''"> and code_value_cnname like concat('%', #{codeValueCnname}, '%')</if>
+            <if test="codeRule != null  and codeRule != ''"> and code_rule = #{codeRule}</if>
+            <if test="codeAccord != null  and codeAccord != ''"> and code_accord = #{codeAccord}</if>
+            <if test="bankName != null  and bankName != ''"> and bank_name like concat('%', #{bankName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectCdmZsyhstdZsyhcoderefById" parameterType="Long" resultMap="CdmZsyhstdZsyhcoderefResult">
+        <include refid="selectCdmZsyhstdZsyhcoderefVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertCdmZsyhstdZsyhcoderef" parameterType="CdmZsyhstdZsyhcoderef">
+        insert into cdm_zsyhstd_zsyhcoderef
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null ">id,</if>
+            <if test="codeSubject != null  and codeSubject != ''">code_subject,</if>
+            <if test="codeId != null  and codeId != ''">code_id,</if>
+            <if test="codeStdname != null  and codeStdname != ''">code_stdname,</if>
+            <if test="codeStdenname != null  and codeStdenname != ''">code_stdenname,</if>
+            <if test="codeValue != null  and codeValue != ''">code_value,</if>
+            <if test="codeDesc != null  and codeDesc != ''">code_desc,</if>
+            <if test="codeNote != null  and codeNote != ''">code_note,</if>
+            <if test="codeValueCnname != null  and codeValueCnname != ''">code_value_cnname,</if>
+            <if test="codeRule != null  and codeRule != ''">code_rule,</if>
+            <if test="codeAccord != null  and codeAccord != ''">code_accord,</if>
+            <if test="bankName != null  and bankName != ''">bank_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null ">#{id},</if>
+            <if test="codeSubject != null  and codeSubject != ''">#{codeSubject},</if>
+            <if test="codeId != null  and codeId != ''">#{codeId},</if>
+            <if test="codeStdname != null  and codeStdname != ''">#{codeStdname},</if>
+            <if test="codeStdenname != null  and codeStdenname != ''">#{codeStdenname},</if>
+            <if test="codeValue != null  and codeValue != ''">#{codeValue},</if>
+            <if test="codeDesc != null  and codeDesc != ''">#{codeDesc},</if>
+            <if test="codeNote != null  and codeNote != ''">#{codeNote},</if>
+            <if test="codeValueCnname != null  and codeValueCnname != ''">#{codeValueCnname},</if>
+            <if test="codeRule != null  and codeRule != ''">#{codeRule},</if>
+            <if test="codeAccord != null  and codeAccord != ''">#{codeAccord},</if>
+            <if test="bankName != null  and bankName != ''">#{bankName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCdmZsyhstdZsyhcoderef" parameterType="CdmZsyhstdZsyhcoderef">
+        update cdm_zsyhstd_zsyhcoderef
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="codeSubject != null  and codeSubject != ''">code_subject = #{codeSubject},</if>
+            <if test="codeId != null  and codeId != ''">code_id = #{codeId},</if>
+            <if test="codeStdname != null  and codeStdname != ''">code_stdname = #{codeStdname},</if>
+            <if test="codeStdenname != null  and codeStdenname != ''">code_stdenname = #{codeStdenname},</if>
+            <if test="codeValue != null  and codeValue != ''">code_value = #{codeValue},</if>
+            <if test="codeDesc != null  and codeDesc != ''">code_desc = #{codeDesc},</if>
+            <if test="codeNote != null  and codeNote != ''">code_note = #{codeNote},</if>
+            <if test="codeValueCnname != null  and codeValueCnname != ''">code_value_cnname = #{codeValueCnname},</if>
+            <if test="codeRule != null  and codeRule != ''">code_rule = #{codeRule},</if>
+            <if test="codeAccord != null  and codeAccord != ''">code_accord = #{codeAccord},</if>
+            <if test="bankName != null  and bankName != ''">bank_name = #{bankName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCdmZsyhstdZsyhcoderefById" parameterType="Long">
+        delete from cdm_zsyhstd_zsyhcoderef where id = #{id}
+    </delete>
+
+    <delete id="deleteCdmZsyhstdZsyhcoderefByIds" parameterType="String">
+        delete from cdm_zsyhstd_zsyhcoderef where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

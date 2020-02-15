@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('案例二数据标准列表')" />
+    <th:block th:include="include :: header('数据标准客户主题列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -10,7 +10,7 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-                           <!--  <li>
+                            <li>
                                 <p>标准层次：</p>
                                 <input type="text" name="busStdLevel"/>
                             </li>
@@ -20,20 +20,9 @@
                             </li>
                             <li>
                                 <p>标准主题：</p>
-                                <select name="busStdSubject" th:with="type=${@dict.getType('sys_cdm_stdsubject')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li> -->
+                                <input type="text" name="busStdSubject"/>
+                            </li>
                             <li>
-								<p>主题分类：</p> <select name="busStdSubject"
-								th:with="type=${@dict.getType('sys_cdm_stdsubject')}">
-									<option value="">所有</option>
-									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
-										th:value="${dict.dictValue}"></option>
-							</select>
-							</li>
-                            <!-- <li>
                                 <p>一级分类：</p>
                                 <input type="text" name="busLevOne"/>
                             </li>
@@ -44,7 +33,7 @@
                             <li>
                                 <p>三级分类：</p>
                                 <input type="text" name="busLevThree"/>
-                            </li> -->
+                            </li>
                             <li>
                                 <p>中文名称：</p>
                                 <input type="text" name="busCnName"/>
@@ -53,9 +42,13 @@
                                 <p>英文名称：</p>
                                 <input type="text" name="busEnName"/>
                             </li>
-                            <!-- <li>
+                            <li>
                                 <p>常用名称：</p>
                                 <input type="text" name="busNickName"/>
+                            </li>
+                            <li>
+                                <p>业务定义：</p>
+                                <input type="text" name="busBussMean"/>
                             </li>
                             <li>
                                 <p>适用类型：</p>
@@ -66,17 +59,25 @@
                                 <input type="text" name="busForceCondition"/>
                             </li>
                             <li>
+                                <p>制定依据：</p>
+                                <input type="text" name="forceAccord"/>
+                            </li>
+                            <li>
                                 <p>监管标志：</p>
                                 <input type="text" name="busIsSupervision"/>
-                            </li> -->
+                            </li>
+                            <li>
+                                <p>备注：</p>
+                                <input type="text" name="busNote"/>
+                            </li>
                             <li>
                                 <p>数据类型：</p>
-                                <select name="techDataType" th:with="type=${@dict.getType('sys_cdm_fldtype')}">
+                                <select name="techDataType" th:with="type=${@dict.getType('')}">
                                     <option value="">所有</option>
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
-                            <!-- <li>
+                            <li>
                                 <p>度量单位：</p>
                                 <input type="text" name="techMeasureUnit"/>
                             </li>
@@ -99,47 +100,41 @@
                             <li>
                                 <p>公共代码主题：</p>
                                 <input type="text" name="techPublicSubject"/>
-                            </li> -->
+                            </li>
                             <li>
                                 <p>引用代码：</p>
                                 <input type="text" name="techAccordCode"/>
                             </li>
-                           <!--  <li>
+                            <li>
                                 <p>代码链接：</p>
                                 <input type="text" name="techCodeLink"/>
                             </li>
                             <li>
                                 <p>校验规则：</p>
                                 <input type="text" name="techCheckrule"/>
-                            </li> -->
+                            </li>
                             <li>
                                 <p>主管部门：</p>
-                                <select name="manageBusinessDepartment" th:with="type=${@dict.getType('sys_cdm_bankdept')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
+                                <input type="text" name="manageBusinessDepartment"/>
                             </li>
                             <li>
                                 <p>发布状态：</p>
-                                <select name="manageDeployStatus" th:with="type=${@dict.getType('sys_cdm_deploystatus')}">
+                                <select name="manageDeployStatus">
                                     <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
-                            <li class="select-time">
+                            <li>
                                 <p>发布时间：</p>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginManageDeployTime]"/>
-                                <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endManageDeployTime]"/>
+                                <input type="text" name="manageDeployTime"/>
                             </li>
-                           <!--  <li>
+                            <li>
                                 <p>备注：</p>
                                 <input type="text" name="manageNote"/>
                             </li>
                             <li>
                                 <p>银行名称：</p>
                                 <input type="text" name="bankName"/>
-                            </li> -->
+                            </li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -150,16 +145,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="metadata:zsyhallsubject:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="metadata:zsyhsubjectcu:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="metadata:zsyhallsubject:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="metadata:zsyhsubjectcu:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="metadata:zsyhallsubject:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="metadata:zsyhsubjectcu:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="metadata:zsyhallsubject:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="metadata:zsyhsubjectcu:export">
                     <i class="fa fa-download"></i> 导出
                  </a>
             </div>
@@ -170,14 +165,10 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('metadata:zsyhallsubject:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('metadata:zsyhallsubject:remove')}]];
-        var busStdSubjectDatas = [[${@dict.getType('sys_cdm_stdsubject')}]];
-        var techDataTypeDatas = [[${@dict.getType('sys_cdm_fldtype')}]];
-        var manageBusinessDepartmentDatas = [[${@dict.getType('sys_cdm_bankdept')}]];
-        var manageDeployStatusDatas = [[${@dict.getType('sys_cdm_deploystatus')}]];
-        var prefix = ctx + "metadata/zsyhallsubject";
-        var codeprefix =  ctx + "metadata/zsyhcoderef";
+        var editFlag = [[${@permission.hasPermi('metadata:zsyhsubjectcu:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('metadata:zsyhsubjectcu:remove')}]];
+        var prefix = ctx + "metadata/zsyhsubjectcu";
+
         $(function() {
             var options = {
                 url: prefix + "/list",
@@ -185,16 +176,13 @@
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                codeUrl:  codeprefix+"/viewonecode/{dictcode}",
-		        onDblClickRow: onDblClickRow,
-                modalName: "案例二数据标准",
+                modalName: "数据标准客户主题",
                 columns: [{
                     checkbox: true
                 },
                 {
                     field : 'busStdLevel', 
-                    title : '标准层次',
-                    visible: false
+                    title : '标准层次'
                 },
                 {
                     field : 'busStdCode', 
@@ -226,122 +214,91 @@
                 },
                 {
                     field : 'busNickName', 
-                    title : '常用名称',
-                    visible: false
+                    title : '常用名称'
                 },
                 {
                     field : 'busBussMean', 
-                    title : '业务定义',
-                    formatter: function(value, row, index) {
-                        return $.table.tooltip(value);
-                    }
+                    title : '业务定义'
                 },
                 {
                     field : 'busIsSuit', 
-                    title : '适用类型',
-                    visible: false
+                    title : '适用类型'
                 },
                 {
                     field : 'busForceCondition', 
-                    title : '适用条件',
-                    visible: false
+                    title : '适用条件'
                 },
                 {
                     field : 'forceAccord', 
-                    title : '制定依据',
-                    formatter: function(value, row, index) {
-                        return $.table.tooltip(value);
-                    }
+                    title : '制定依据'
                 },
                 {
                     field : 'busIsSupervision', 
-                    title : '监管标志',
-                    visible: false
+                    title : '监管标志'
                 },
                 {
                     field : 'busNote', 
-                    title : '备注',
-                    visible: false
+                    title : '备注'
                 },
                 {
                     field : 'techDataType', 
-                    title : '数据类型',
-                    visible: false
+                    title : '数据类型'
                 },
                 {
                     field : 'techMeasureUnit', 
-                    title : '度量单位',
-                    visible: false
+                    title : '度量单位'
                 },
                 {
                     field : 'techDataLength', 
-                    title : '数据长度',
-                    visible: false
+                    title : '数据长度'
                 },
                 {
                     field : 'techDataPrecision', 
-                    title : '数据精度',
-                    visible: false
+                    title : '数据精度'
                 },
                 {
                     field : 'techDatasScope', 
-                    title : '取值范围',
-                    visible: false
+                    title : '取值范围'
                 },
                 {
                     field : 'techDataFormat', 
-                    title : '数据格式',
-                    visible: false
+                    title : '数据格式'
                 },
                 {
                     field : 'techPublicSubject', 
-                    title : '公共代码主题',
-                    visible: false
+                    title : '公共代码主题'
                 },
                 {
                     field : 'techAccordCode', 
-                    title : '引用代码' ,     
-                        visible: true,
-                        formatter: function(value, row, index) {
-                            var actions = [];
-                            actions.push('<a  href="javascript:void(0)" onclick="$.operate.codedict(\'' + row.techAccordCode + '\')">'+row.techAccordCode+'</a> ');
-                            return actions.join('');
-                        }
+                    title : '引用代码'
                 },
                 {
                     field : 'techCodeLink', 
-                    title : '代码链接',
-                    visible: false
+                    title : '代码链接'
                 },
                 {
                     field : 'techCheckrule', 
-                    title : '校验规则',
-                    visible: false
+                    title : '校验规则'
                 },
                 {
                     field : 'manageBusinessDepartment', 
-                    title : '主管部门',
-                    visible: false
+                    title : '主管部门'
                 },
                 {
                     field : 'manageDeployStatus', 
-                    title : '发布状态',
-                    visible: false
+                    title : '发布状态'
                 },
                 {
                     field : 'manageDeployTime', 
-                    title : '发布时间',
-                    visible: false
+                    title : '发布时间'
                 },
                 {
                     field : 'manageNote', 
-                    title : '备注',
-                    visible: false
+                    title : '备注'
                 },
                 {
                     field : 'bankName', 
-                    title : '银行名称',
-                    visible: false
+                    title : '银行名称'
                 },
                 {
                     title: '操作',
@@ -355,12 +312,6 @@
                 }]
             };
             $.table.init(options);
-            
-            function onDblClickRow(row, $element){
-
-            	/* alert("双击行得到用户的后台ID：" + row.id + " busStdCode：" + row.busStdCode); */
-            	$.operate.edit( row.id );
-            }
         });
     </script>
 </body>
