@@ -122,4 +122,23 @@ public class CdmZsyhstdZsyhallsubjectController extends BaseController
     {
         return toAjax(cdmZsyhstdZsyhallsubjectService.deleteCdmZsyhstdZsyhallsubjectByIds(ids));
     }
+    
+    
+    /**
+     * 查询案例二数据标准列表
+     */
+    @RequiresPermissions("metadata:zsyhallsubject:list")
+    @GetMapping("/listbysubject/{subjectName}")
+    public String zsyhallsubject(@PathVariable("subjectName") String subjectName, ModelMap mmap)
+    {
+		/*
+		 * CdmZsyhstdZsyhallsubject cdmZsyhstdZsyhallsubject = new
+		 * CdmZsyhstdZsyhallsubject();
+		 * cdmZsyhstdZsyhallsubject.setBankName(subjectName);
+		 * mmap.put("cdmZsyhstdZsyhallsubject", cdmZsyhstdZsyhallsubject);
+		 */
+    	
+    	mmap.put("subjectName", subjectName);
+    	 return prefix + "/zsyhallsubject_subject";
+    }
 }

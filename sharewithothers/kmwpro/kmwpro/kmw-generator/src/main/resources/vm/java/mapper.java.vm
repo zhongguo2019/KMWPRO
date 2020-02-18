@@ -1,7 +1,9 @@
 package ${packageName}.mapper;
 
 import ${packageName}.domain.${ClassName};
+import com.kmw.common.CommonEntity;
 import java.util.List;
+import java.util.Map;
 
 /**
  * ${functionName}Mapper接口
@@ -58,4 +60,26 @@ public interface ${ClassName}Mapper
      * @return 结果
      */
     public int delete${ClassName}ByIds(String[] ${pkColumn.javaField}s);
+    
+    /**
+     * 通用实体查询，Map参数 列表查询,返回的是通用实体，不受实体属性限制，相当于map
+     * 
+     * @param Map<String, Object> params  查询条件以map形式
+     * @return 结果
+     */
+    public List<CommonEntity> queryPageInfo(Map<String, Object> params);
+        /**
+     * 通用实体查询，Map参数 列表查询,返回的是通用实体，不受实体属性限制，相当于map
+     * 
+     * @param Map<String, Object> params  查询条件以map形式
+     * @return 结果
+     */
+    public List<CommonEntity> queryEntityList(Map<String, Object> params);
+        /**
+     * 通用实体查询，Map参数 列表查询,返回的是通用实体，不受实体属性限制，相当于map
+     * 
+     * @param Map<String, Object> params  查询条件以map形式
+     * @return 结果
+     */
+    public CommonEntity queryOneCommon(Map<String, Object> params);
 }

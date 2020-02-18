@@ -25,13 +25,6 @@
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li> -->
-                             <li>
-                                <p>所属主题：</p>
-                                <select name="busStdSubject" th:with="type=${@dict.getType('sys_cdm_stdsubject')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
                             <!-- <li>
                                 <p>一级分类：</p>
                                 <input type="text" name="busLevOne"/>
@@ -139,6 +132,13 @@
                                 <p>银行名称：</p>
                                 <input type="text" name="bankName"/>
                             </li> -->
+                         	<li>
+								<!-- <p>所属主题：</p> --> <!--    <select name="busStdSubject" th:with="type=${@dict.getType('sys_cdm_stdsubject')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select> --> <input type="text"
+								name="busStdSubject" hidden="true" th:value="${subjectName}" />
+							</li>
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>

@@ -1001,23 +1001,25 @@ var table = {
             	}
             	$.modal.openFull("修改" + table.options.modalName, url);
             },
-            // 字典信息
+            
+            // 字典信息 add by zhaozulong
             codedict: function(dictcode) {
             	table.set();
+
             	if($.common.isEmpty(dictcode) && table.options.type == table_type.bootstrapTreeTable) {
                 
             	} else {
             	    $.modal.open("字典信息" + table.options.modalName, $.operate.codeUrl(dictcode));
             	}
             },
-            // 字典访问地址
+            // 字典访问地址  add by zhaozulong
             codeUrl: function(dictcode) {
             	var url = "/404.html";
             	if ($.common.isNotEmpty(dictcode)) {
             	    url = table.options.codeUrl.replace("{dictcode}", dictcode);
-            	    alert(url);
-          	   
-            	} 
+             	}else{
+             		url = table.options.codeUrl;
+             	}
                  return url;
             },
             // 修改访问地址

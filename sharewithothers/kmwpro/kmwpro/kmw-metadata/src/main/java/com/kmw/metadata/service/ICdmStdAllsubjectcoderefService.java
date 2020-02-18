@@ -58,4 +58,11 @@ public interface ICdmStdAllsubjectcoderefService
      * @return 结果
      */
     public int deleteCdmStdAllsubjectcoderefById(Long id);
+    /**
+     * 根据银行名称查询该行的所有数据编码
+     * 
+     * @param id 数据标准所有主题码值对照ID
+     * @return 结果
+     */
+    public List<CdmStdAllsubjectcoderef> selectCodeRefByBankName(String bankName);
 }

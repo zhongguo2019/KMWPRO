@@ -58,4 +58,14 @@ public interface CdmStdAllsubjectcoderefMapper
      * @return 结果
      */
     public int deleteCdmStdAllsubjectcoderefByIds(String[] ids);
+    
+    /**
+     * 按银行名称查询代码参数
+     * 
+     * @param ids 需要删除的数据ID
+     * @return 结果
+     */ 
+    public List<CdmStdAllsubjectcoderef>  selectCdmStdAllsubjectcoderefByBankName(CdmStdAllsubjectcoderef cdmStdAllsubjectcoderef);
+   
+
 }

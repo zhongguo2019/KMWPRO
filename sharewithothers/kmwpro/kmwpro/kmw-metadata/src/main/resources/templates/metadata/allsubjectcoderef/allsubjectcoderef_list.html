@@ -83,15 +83,23 @@
         var removeFlag = [[${@permission.hasPermi('metadata:allsubjectcoderef:remove')}]];
         var codeSubjectDatas = [[${@dict.getType('sys_cdm_stdsubject')}]];
         var prefix = ctx + "metadata/allsubjectcoderef";
+        
+        var dictcode = [[${dictcode}]];
+        var midMethod = "/viewcodelist/";
+        
+        var urlAddr = prefix + "/viewcodelist/" + dictcode
+        if ($.common.isEmpty(dictcode)) {
+            urlAddr = prefix + "/list" 
 
+        }
+        alert(urlAddr);
         $(function() {
             var options = {
-                url: prefix + "/list",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                url: prefix + "/viewcodelist/" +[[${dictcode}]],
+                url:urlAddr ,
                 modalName: "数据标准所有主题码值对照",
                 columns: [{
                     checkbox: true
@@ -106,7 +114,8 @@
                     title : '所属主题',
                     formatter: function(value, row, index) {
                        return $.table.selectDictLabel(codeSubjectDatas, value);
-                    }
+                    },
+                    visible: false
                 },
                 {
                     field : 'codeId', 
@@ -126,7 +135,8 @@
                 },
                 {
                     field : 'codeDesc', 
-                    title : '编码说明'
+                    title : '编码说明',
+                    visible: false
                 },
                 {
                     field : 'codeNote', 
@@ -139,11 +149,13 @@
                 },
                 {
                     field : 'codeRule', 
-                    title : '编码规则'
+                    title : '编码规则',
+                    visible: false
                 },
                 {
                     field : 'codeAccord', 
-                    title : '来源依据'
+                    title : '来源依据',
+                    visible: false
                 },
                 {
                     field : 'bankName', 

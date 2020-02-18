@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('案例二数据标准列表')" />
+    <th:block th:include="include :: header('商业银行案例三列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -9,8 +9,8 @@
             <div class="col-sm-12 search-collapse">
                 <form id="formId">
                     <div class="select-list">
-                        <ul>
-                           <!--  <li>
+                       <ul>
+							<!--   <li>
                                 <p>标准层次：</p>
                                 <input type="text" name="busStdLevel"/>
                             </li>
@@ -20,41 +20,47 @@
                             </li>
                             <li>
                                 <p>标准主题：</p>
-                                <select name="busStdSubject" th:with="type=${@dict.getType('sys_cdm_stdsubject')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
+                                <input type="text" name="busStdSubject"/>
+                                sys_cdm_stdsubject
                             </li> -->
-                             <li>
-                                <p>所属主题：</p>
-                                <select name="busStdSubject" th:with="type=${@dict.getType('sys_cdm_stdsubject')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <!-- <li>
+							<li>
+								<p>主题分类：</p> <select name="busStdSubject"
+								th:with="type=${@dict.getType('sys_cdm_stdsubject')}">
+									<option value="">所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+										th:value="${dict.dictValue}"></option>
+							</select>
+							</li>
+
+							<!--                            <li>
                                 <p>一级分类：</p>
-                                <input type="text" name="busLevOne"/>
+                                <select name="busLevOne" th:with="type=${@dict.getType('sys_cdm_bhnscustleveon')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
                             </li>
-                            <li>
+                            
+                               <li>
                                 <p>二级分类：</p>
-                                <input type="text" name="busLevTwo"/>
-                            </li>
-                            <li>
-                                <p>三级分类：</p>
-                                <input type="text" name="busLevThree"/>
+                                <select name="busLevTwo" th:with="type=${@dict.getType('sys_cdm_bhnsaslevetwo')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
                             </li> -->
-                            <li>
-                                <p>中文名称：</p>
-                                <input type="text" name="busCnName"/>
-                            </li>
-                            <li>
-                                <p>英文名称：</p>
-                                <input type="text" name="busEnName"/>
-                            </li>
-                            <!-- <li>
+
+							<li>
+								<p>中文名称：</p> <input type="text" name="busCnName" />
+							</li>
+							<li>
+								<p>英文名称：</p> <input type="text" name="busEnName" />
+							</li>
+							<!-- <li>
                                 <p>常用名称：</p>
                                 <input type="text" name="busNickName"/>
+                            </li>
+                            <li>
+                                <p>业务定义：</p>
+                                <input type="text" name="busBussMean"/>
                             </li>
                             <li>
                                 <p>适用类型：</p>
@@ -65,17 +71,26 @@
                                 <input type="text" name="busForceCondition"/>
                             </li>
                             <li>
+                                <p>制定依据：</p>
+                                <input type="text" name="forceAccord"/>
+                            </li> -->
+							<!--    <li>
                                 <p>监管标志：</p>
                                 <input type="text" name="busIsSupervision"/>
-                            </li> -->
-                            <li>
-                                <p>数据类型：</p>
-                                <select name="techDataType" th:with="type=${@dict.getType('sys_cdm_fldtype')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
                             </li>
-                            <!-- <li>
+                            <li>
+                                <p>备注：</p>
+                                <input type="text" name="busNote"/>
+                            </li> -->
+							<li>
+								<p>数据类型：</p> <select name="techDataType"
+								th:with="type=${@dict.getType('sys_cdm_fldtype')}">
+									<option value="">所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+										th:value="${dict.dictValue}"></option>
+							</select>
+							</li>
+							<!--  <li>
                                 <p>度量单位：</p>
                                 <input type="text" name="techMeasureUnit"/>
                             </li>
@@ -99,11 +114,10 @@
                                 <p>公共代码主题：</p>
                                 <input type="text" name="techPublicSubject"/>
                             </li> -->
-                            <li>
-                                <p>引用代码：</p>
-                                <input type="text" name="techAccordCode"/>
-                            </li>
-                           <!--  <li>
+							<li>
+								<p>引用代码：</p> <input type="text" name="techAccordCode" />
+							</li>
+							<!--    <li>
                                 <p>代码链接：</p>
                                 <input type="text" name="techCodeLink"/>
                             </li>
@@ -111,54 +125,62 @@
                                 <p>校验规则：</p>
                                 <input type="text" name="techCheckrule"/>
                             </li> -->
-                            <li>
-                                <p>主管部门：</p>
-                                <select name="manageBusinessDepartment" th:with="type=${@dict.getType('sys_cdm_bankdept')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li>
-                                <p>发布状态：</p>
-                                <select name="manageDeployStatus" th:with="type=${@dict.getType('sys_cdm_deploystatus')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li class="select-time">
+							<li>
+								<p>主管部门：</p> <select name="manageBusinessDepartment"
+								th:with="type=${@dict.getType('sys_cdm_bankdept')}">
+									<option value="">所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+										th:value="${dict.dictValue}"></option>
+							</select>
+							</li>
+
+							<li>
+								<p>发布状态：</p> <select name="manageDeployStatus"
+								th:with="type=${@dict.getType('sys_cdm_deploystatus')}">
+									<option value="">所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+										th:value="${dict.dictValue}"></option>
+							</select>
+							</li>
+
+							<!--      <li>
                                 <p>发布时间：</p>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginManageDeployTime]"/>
-                                <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endManageDeployTime]"/>
-                            </li>
-                           <!--  <li>
+                                <input type="text" name="manageDeployTime"/>
+                            </li> -->
+
+
+							<li class="select-time">
+								<p>发布时间：</p> <input type="text" class="time-input"
+								id="startTime" placeholder="开始时间"
+								name="params[beginManageDeployTime]" /> <span>-</span> <input
+								type="text" class="time-input" id="endTime" placeholder="结束时间"
+								name="params[endManageDeployTime]" />
+							</li>
+							<!--  <li>
                                 <p>备注：</p>
                                 <input type="text" name="manageNote"/>
-                            </li>
-                            <li>
-                                <p>银行名称：</p>
-                                <input type="text" name="bankName"/>
                             </li> -->
-                            <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-                            </li>
-                        </ul>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
                     </div>
                 </form>
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="metadata:zsyhallsubject:add">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="metadata:hdyhallsubject:add">
                     <i class="fa fa-plus"></i> 添加
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="metadata:zsyhallsubject:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="metadata:hdyhallsubject:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="metadata:zsyhallsubject:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="metadata:hdyhallsubject:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="metadata:zsyhallsubject:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="metadata:hdyhallsubject:export">
                     <i class="fa fa-download"></i> 导出
                  </a>
             </div>
@@ -169,13 +191,9 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('metadata:zsyhallsubject:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('metadata:zsyhallsubject:remove')}]];
-        var busStdSubjectDatas = [[${@dict.getType('sys_cdm_stdsubject')}]];
-        var techDataTypeDatas = [[${@dict.getType('sys_cdm_fldtype')}]];
-        var manageBusinessDepartmentDatas = [[${@dict.getType('sys_cdm_bankdept')}]];
-        var manageDeployStatusDatas = [[${@dict.getType('sys_cdm_deploystatus')}]];
-        var prefix = ctx + "metadata/zsyhallsubject";
+        var editFlag = [[${@permission.hasPermi('metadata:hdyhallsubject:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('metadata:hdyhallsubject:remove')}]];
+        var prefix = ctx + "metadata/hdyhallsubject";
         var codeprefix =  ctx + "metadata/zsyhcoderef";
         $(function() {
             var options = {
@@ -186,7 +204,7 @@
                 exportUrl: prefix + "/export",
                 codeUrl:  codeprefix+"/viewonecode/{dictcode}",
 		        onDblClickRow: onDblClickRow,
-                modalName: "案例二数据标准",
+                modalName: "商业银行案例三",
                 columns: [{
                     checkbox: true
                 },
@@ -201,7 +219,8 @@
                 },
                 {
                     field : 'busStdSubject', 
-                    title : '标准主题'
+                    title : '标准主题',
+                    visible: false
                 },
                 {
                     field : 'busLevOne', 
@@ -354,7 +373,6 @@
                 }]
             };
             $.table.init(options);
-            
             function onDblClickRow(row, $element){
 
             	/* alert("双击行得到用户的后台ID：" + row.id + " busStdCode：" + row.busStdCode); */

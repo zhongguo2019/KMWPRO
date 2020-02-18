@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('案例二数据标准列表')" />
+<th:block th:include="include :: header('商业银行案例四列表')" />
 </head>
 <body class="gray-bg">
-     <div class="container-div">
-        <div class="row">
-            <div class="col-sm-12 search-collapse">
-                <form id="formId">
-                    <div class="select-list">
-                        <ul>
-                           <!--  <li>
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<!--  <li>
                                 <p>标准层次：</p>
                                 <input type="text" name="busStdLevel"/>
                             </li>
@@ -25,14 +26,8 @@
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li> -->
-                             <li>
-                                <p>所属主题：</p>
-                                <select name="busStdSubject" th:with="type=${@dict.getType('sys_cdm_stdsubject')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <!-- <li>
+
+							<!-- <li>
                                 <p>一级分类：</p>
                                 <input type="text" name="busLevOne"/>
                             </li>
@@ -44,15 +39,13 @@
                                 <p>三级分类：</p>
                                 <input type="text" name="busLevThree"/>
                             </li> -->
-                            <li>
-                                <p>中文名称：</p>
-                                <input type="text" name="busCnName"/>
-                            </li>
-                            <li>
-                                <p>英文名称：</p>
-                                <input type="text" name="busEnName"/>
-                            </li>
-                            <!-- <li>
+							<li>
+								<p>中文名称：</p> <input type="text" name="busCnName" />
+							</li>
+							<li>
+								<p>英文名称：</p> <input type="text" name="busEnName" />
+							</li>
+							<!-- <li>
                                 <p>常用名称：</p>
                                 <input type="text" name="busNickName"/>
                             </li>
@@ -68,14 +61,15 @@
                                 <p>监管标志：</p>
                                 <input type="text" name="busIsSupervision"/>
                             </li> -->
-                            <li>
-                                <p>数据类型：</p>
-                                <select name="techDataType" th:with="type=${@dict.getType('sys_cdm_fldtype')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <!-- <li>
+							<li>
+								<p>数据类型：</p> <select name="techDataType"
+								th:with="type=${@dict.getType('sys_cdm_fldtype')}">
+									<option value="">所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+										th:value="${dict.dictValue}"></option>
+							</select>
+							</li>
+							<!-- <li>
                                 <p>度量单位：</p>
                                 <input type="text" name="techMeasureUnit"/>
                             </li>
@@ -99,11 +93,10 @@
                                 <p>公共代码主题：</p>
                                 <input type="text" name="techPublicSubject"/>
                             </li> -->
-                            <li>
-                                <p>引用代码：</p>
-                                <input type="text" name="techAccordCode"/>
-                            </li>
-                           <!--  <li>
+							<li>
+								<p>引用代码：</p> <input type="text" name="techAccordCode" />
+							</li>
+							<!--  <li>
                                 <p>代码链接：</p>
                                 <input type="text" name="techCodeLink"/>
                             </li>
@@ -111,27 +104,30 @@
                                 <p>校验规则：</p>
                                 <input type="text" name="techCheckrule"/>
                             </li> -->
-                            <li>
-                                <p>主管部门：</p>
-                                <select name="manageBusinessDepartment" th:with="type=${@dict.getType('sys_cdm_bankdept')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li>
-                                <p>发布状态：</p>
-                                <select name="manageDeployStatus" th:with="type=${@dict.getType('sys_cdm_deploystatus')}">
-                                    <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
-                                </select>
-                            </li>
-                            <li class="select-time">
-                                <p>发布时间：</p>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginManageDeployTime]"/>
-                                <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endManageDeployTime]"/>
-                            </li>
-                           <!--  <li>
+							<li>
+								<p>主管部门：</p> <select name="manageBusinessDepartment"
+								th:with="type=${@dict.getType('sys_cdm_bankdept')}">
+									<option value="">所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+										th:value="${dict.dictValue}"></option>
+							</select>
+							</li>
+							<li>
+								<p>发布状态：</p> <select name="manageDeployStatus"
+								th:with="type=${@dict.getType('sys_cdm_deploystatus')}">
+									<option value="">所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+										th:value="${dict.dictValue}"></option>
+							</select>
+							</li>
+							<li class="select-time">
+								<p>发布时间：</p> <input type="text" class="time-input"
+								id="startTime" placeholder="开始时间"
+								name="params[beginManageDeployTime]" /> <span>-</span> <input
+								type="text" class="time-input" id="endTime" placeholder="结束时间"
+								name="params[endManageDeployTime]" />
+							</li>
+							<!--  <li>
                                 <p>备注：</p>
                                 <input type="text" name="manageNote"/>
                             </li>
@@ -139,43 +135,52 @@
                                 <p>银行名称：</p>
                                 <input type="text" name="bankName"/>
                             </li> -->
-                            <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-                            </li>
-                        </ul>
-                    </div>
-                </form>
-            </div>
 
-            <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="metadata:zsyhallsubject:add">
-                    <i class="fa fa-plus"></i> 添加
-                </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="metadata:zsyhallsubject:edit">
-                    <i class="fa fa-edit"></i> 修改
-                </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="metadata:zsyhallsubject:remove">
-                    <i class="fa fa-remove"></i> 删除
-                </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="metadata:zsyhallsubject:export">
-                    <i class="fa fa-download"></i> 导出
-                 </a>
-            </div>
-            <div class="col-sm-12 select-table table-striped">
-                <table id="bootstrap-table"></table>
-            </div>
-        </div>
-    </div>
-    <th:block th:include="include :: footer" />
-    <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('metadata:zsyhallsubject:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('metadata:zsyhallsubject:remove')}]];
-        var busStdSubjectDatas = [[${@dict.getType('sys_cdm_stdsubject')}]];
-        var techDataTypeDatas = [[${@dict.getType('sys_cdm_fldtype')}]];
-        var manageBusinessDepartmentDatas = [[${@dict.getType('sys_cdm_bankdept')}]];
-        var manageDeployStatusDatas = [[${@dict.getType('sys_cdm_deploystatus')}]];
-        var prefix = ctx + "metadata/zsyhallsubject";
+
+							<li>
+								<!-- <p>所属主题：</p> --> <!--    <select name="busStdSubject" th:with="type=${@dict.getType('sys_cdm_stdsubject')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select> --> <input type="text"
+								name="busStdSubject" hidden="true" th:value="${subjectName}" />
+							</li>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								 onclick="javascript:openDemo();"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()"
+					shiro:hasPermission="metadata:shyhallsubject:add"> <i
+					class="fa fa-plus"></i> 添加
+				</a> <a class="btn btn-primary single disabled"
+					onclick="$.operate.edit()"
+					shiro:hasPermission="metadata:shyhallsubject:edit"> <i
+					class="fa fa-edit"></i> 修改
+				</a> <a class="btn btn-danger multiple disabled"
+					onclick="$.operate.removeAll()"
+					shiro:hasPermission="metadata:shyhallsubject:remove"> <i
+					class="fa fa-remove"></i> 删除
+				</a> <a class="btn btn-warning" onclick="$.table.exportExcel()"
+					shiro:hasPermission="metadata:shyhallsubject:export"> <i
+					class="fa fa-download"></i> 导出
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('metadata:shyhallsubject:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('metadata:shyhallsubject:remove')}]];
+        var prefix = ctx + "metadata/shyhallsubject";
         var codeprefix =  ctx + "metadata/zsyhcoderef";
         $(function() {
             var options = {
@@ -186,7 +191,7 @@
                 exportUrl: prefix + "/export",
                 codeUrl:  codeprefix+"/viewonecode/{dictcode}",
 		        onDblClickRow: onDblClickRow,
-                modalName: "案例二数据标准",
+                modalName: "商业银行案例四",
                 columns: [{
                     checkbox: true
                 },
@@ -201,7 +206,8 @@
                 },
                 {
                     field : 'busStdSubject', 
-                    title : '标准主题'
+                    title : '标准主题',
+                    visible: false
                 },
                 {
                     field : 'busLevOne', 
@@ -354,13 +360,36 @@
                 }]
             };
             $.table.init(options);
-            
+
             function onDblClickRow(row, $element){
 
             	/* alert("双击行得到用户的后台ID：" + row.id + " busStdCode：" + row.busStdCode); */
             	$.operate.edit( row.id );
-            }
+            }   
+            
+
         });
+        
+        function openDemo(){
+        	  alert('这是调用函数');
+        	  
+        	  var url1 =  ctx+"metadata/shyhallsubject/tableDataInfo";
+        	  var url2 =  ctx+"metadata/shyhallsubject/queryPageInfo";
+        	  var url3 =  ctx+"metadata/shyhallsubject/queryOneEntity";
+        var	data = $('#formId').serialize();
+          	var config = {
+        	        url: url3,
+        	        type: "post",
+        	        dataType: "json",
+        	        data: data,
+        	        beforeSend: function () {
+        	        //	$.modal.loading("正在处理中，请稍后...");
+        	        },
+        	        success: function(result) {
+        	        }
+        	    };
+        	    $.ajax(config)
+        }
     </script>
 </body>
 </html>

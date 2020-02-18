@@ -14,7 +14,7 @@ import com.kmw.common.core.text.Convert;
  * @author kmw
  * @date 2020-02-12
  */
-@Service
+@Service("allcoderef")
 public class CdmStdAllsubjectcoderefServiceImpl implements ICdmStdAllsubjectcoderefService 
 {
     @Autowired
@@ -91,4 +91,21 @@ public class CdmStdAllsubjectcoderefServiceImpl implements ICdmStdAllsubjectcode
     {
         return cdmStdAllsubjectcoderefMapper.deleteCdmStdAllsubjectcoderefById(id);
     }
+    
+    /**
+             *  根据传入的银行名称查询后台代码列表
+     * 
+     * @param id 数据标准所有主题码值对照ID
+     * @return 结果
+     */
+    public List<CdmStdAllsubjectcoderef> selectCodeRefByBankName(String bankName)
+    {
+    	
+    	CdmStdAllsubjectcoderef cdmStdAllsubjectcoderef = new CdmStdAllsubjectcoderef();
+    	cdmStdAllsubjectcoderef.setBankName(bankName);
+        return cdmStdAllsubjectcoderefMapper.selectCdmStdAllsubjectcoderefByBankName(cdmStdAllsubjectcoderef);
+        
+        
+    }
+
 }

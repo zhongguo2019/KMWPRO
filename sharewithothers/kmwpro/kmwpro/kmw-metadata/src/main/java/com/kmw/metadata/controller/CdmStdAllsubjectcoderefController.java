@@ -145,4 +145,6 @@ public class CdmStdAllsubjectcoderefController extends BaseController
     {
         return toAjax(cdmStdAllsubjectcoderefService.deleteCdmStdAllsubjectcoderefByIds(ids));
     }
+    
+   
 }

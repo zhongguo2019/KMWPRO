@@ -40,7 +40,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectCdmStdAllsubjectcoderefById" parameterType="Long" resultMap="CdmStdAllsubjectcoderefResult">
+       <select id="selectCdmStdAllsubjectcoderefByBankName" parameterType="CdmStdAllsubjectcoderef" resultMap="CdmStdAllsubjectcoderefResult">
+         <include refid="selectCdmStdAllsubjectcoderefVo"/>
+           where  bank_name like concat('%', #{bankName}, '%')
+       
+         GROUP BY  code_id, code_stdname
+       </select>
+    
+    
+        <select id="selectCdmStdAllsubjectcoderefById" parameterType="Long" resultMap="CdmStdAllsubjectcoderefResult">
         <include refid="selectCdmStdAllsubjectcoderefVo"/>
         where id = #{id}
     </select>

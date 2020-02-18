@@ -2,6 +2,10 @@ package ${packageName}.service;
 
 import ${packageName}.domain.${ClassName};
 import java.util.List;
+import java.util.Map;
+import com.github.pagehelper.PageInfo;
+import com.kmw.common.CommonEntity;
+
 #if($table.tree)
 import com.kmw.common.core.domain.Ztree;
 #end
@@ -61,6 +65,33 @@ public interface I${ClassName}Service
      * @return 结果
      */
     public int delete${ClassName}ById(${pkColumn.javaType} ${pkColumn.javaField});
+    
+    /**
+	 * 分页展示(可带条件查询) ${functionName}
+	 * 返回的是通用实体，不受实体属性限制，相当于map
+	 * @param params
+	 * @return
+	 */
+    
+	public PageInfo<CommonEntity> queryPageInfoEntity(Map<String, Object> params);
+	
+	/**
+	 * 列表(可带条件查询)  ${functionName}
+	 * 返回的是通用实体，不受实体属性限制，相当于map
+	 * @param params
+	 * @return List<CommonEntity>
+	 */
+	
+	public List<CommonEntity> commonList(Map<String, Object> params);
+	
+	/**
+	 * 根据不同条件查询一条数据 ${functionName}
+	 * @param params
+	 * @return CommonEntity
+	 */
+	public CommonEntity queryOne(Map<String, Object> params);
+}
+    
 #if($table.tree)
 
     /**

@@ -106,7 +106,8 @@
                     title : '所属主题',
                     formatter: function(value, row, index) {
                        return $.table.selectDictLabel(codeSubjectDatas, value);
-                    }
+                    },
+                    visible: false
                 },
                 {
                     field : 'codeId', 
@@ -114,7 +115,7 @@
                 },
                 {
                     field : 'codeStdname', 
-                    title : '标准名称'
+                    title : '代码名称'
                 },
                 {
                     field : 'codeStdenname', 
@@ -126,7 +127,8 @@
                 },
                 {
                     field : 'codeDesc', 
-                    title : '编码说明'
+                    title : '编码说明',
+                    visible: false
                 },
                 {
                     field : 'codeNote', 
@@ -139,11 +141,13 @@
                 },
                 {
                     field : 'codeRule', 
-                    title : '编码规则'
+                    title : '编码规则',
+                    visible: false
                 },
                 {
                     field : 'codeAccord', 
-                    title : '来源依据'
+                    title : '来源依据',
+                    visible: false
                 },
                 {
                     field : 'bankName', 

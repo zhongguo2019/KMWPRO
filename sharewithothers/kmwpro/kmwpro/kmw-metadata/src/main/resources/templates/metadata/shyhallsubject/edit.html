@@ -1,15 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-<th:block th:include="include :: header('修改案例二数据标准')" />
-<th:block th:include="include :: datetimepicker-css" />
+    <th:block th:include="include :: header('修改商业银行案例四')" />
 </head>
 <body class="white-bg">
-	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
-		<form class="form-horizontal m" id="form-zsyhallsubject-edit"
-			th:object="${cdmZsyhstdZsyhallsubject}">
-			<input name="id" th:field="*{id}" type="hidden">
-			<div id="ibox-content">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-shyhallsubject-edit" th:object="${cdmShyhstdShyhallsubject}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div id="ibox-content">
 				<div id="vertical-timeline"
 					class="vertical-container light-timeline">
 					<div class="vertical-timeline-block">
@@ -241,7 +239,7 @@
                                                                                                           3、属于源系统自定义代码，采用主数据归属系统代码。 </p>">引用代码：</label>
 								<div class="col-sm-8">
 									<select name="techAccordCode" class="form-control m-b"
-										th:with="codeRef=${@allcoderef.selectCodeRefByBankName('ZSYH')}">
+										th:with="codeRef=${@allcoderef.selectCodeRefByBankName('SHYH')}">
 										<option th:value="无">无</option>
 										<option th:each="dict : ${codeRef}" th:text="${dict.codeId}+'  '+${dict.codeStdname}"
 											th:value="${dict.codeId}" th:field="*{techAccordCode}"></option>
@@ -323,45 +321,20 @@
 
 
 			</div>
-	</div>
-	</form>
-	</div>
-	<th:block th:include="include :: footer" />
-	<th:block th:include="include :: datetimepicker-js" />
-	<script type="text/javascript">
-		var prefix = ctx + "metadata/zsyhallsubject";
-		$("#form-zsyhallsubject-edit").validate({
-			focusCleanup : true
-		});
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script type="text/javascript">
+        var prefix = ctx + "metadata/shyhallsubject";
+        $("#form-shyhallsubject-edit").validate({
+            focusCleanup: true
+        });
 
-		function submitHandler() {
-			if ($.validate.form()) {
-				$.operate.save(prefix + "/edit", $('#form-zsyhallsubject-edit')
-						.serialize());
-			}
-		}
-
-		$("input[name='manageDeployTime']").datetimepicker({
-			format : "yyyy-mm-dd",
-			minView : "month",
-			autoclose : true
-		});
-
-		/*菜单管理-修改-选择菜单树*/
-		function selectMenuTree() {
-			var menuId = $("#treeId").val();
-			if (menuId > 0) {
-				var url = prefix + "/selectMenuTree/" + menuId;
-				$.modal.open("选择菜单", url, '380', '380');
-			} else {
-				$.modal.alertError("主菜单不能选择");
-			}
-		}
-
-		function selectCodeDict() {
-			var url = ctx + "metadata/allsubjectcoderef"
-			$.modal.open("选择菜单", url, '380', '380');
-		}
-	</script>
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-shyhallsubject-edit').serialize());
+            }
+        }
+    </script>
 </body>
 </html>
