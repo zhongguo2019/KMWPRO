@@ -1,13 +1,15 @@
 package com.kmw.metadata.mapper;
 
 import com.kmw.metadata.domain.CdmKfpBussdefine;
+import com.kmw.common.CommonEntity;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 银行束语定义集Mapper接口
  * 
  * @author kmw
- * @date 2020-02-17
+ * @date 2020-02-18
  */
 public interface CdmKfpBussdefineMapper 
 {
@@ -58,4 +60,26 @@ public interface CdmKfpBussdefineMapper
      * @return 结果
      */
     public int deleteCdmKfpBussdefineByIds(String[] ids);
+    
+    /**
+     * 通用实体查询，Map参数 列表查询,返回的是通用实体，不受实体属性限制，相当于map
+     * 
+     * @param Map<String, Object> params  查询条件以map形式
+     * @return 结果
+     */
+    public List<CommonEntity> queryPageInfo(Map<String, Object> params);
+        /**
+     * 通用实体查询，Map参数 列表查询,返回的是通用实体，不受实体属性限制，相当于map
+     * 
+     * @param Map<String, Object> params  查询条件以map形式
+     * @return 结果
+     */
+    public List<CommonEntity> queryEntityList(Map<String, Object> params);
+        /**
+     * 通用实体查询，Map参数 列表查询,返回的是通用实体，不受实体属性限制，相当于map
+     * 
+     * @param Map<String, Object> params  查询条件以map形式
+     * @return 结果
+     */
+    public CommonEntity queryOneCommon(Map<String, Object> params);
 }

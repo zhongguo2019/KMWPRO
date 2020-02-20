@@ -90,7 +90,7 @@ public interface I${ClassName}Service
 	 * @return CommonEntity
 	 */
 	public CommonEntity queryOne(Map<String, Object> params);
-}
+
     
 #if($table.tree)
 

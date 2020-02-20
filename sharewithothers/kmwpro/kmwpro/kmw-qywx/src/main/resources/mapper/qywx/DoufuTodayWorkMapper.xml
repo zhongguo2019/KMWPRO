@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmw.qywx.mapper.DoufuTodayWorkMapper">
+	<!-- 表字段 声明 -->
+<sql id="DoufuTodayWorkColumns">
+ PROJECT_GROUP_ID, PROJECT_ID, PRODUCT_ID, WORK_CONTENTS, WORK_DETAIL, FINISH_PERCENT, DELAY_REASON, ACCORD_YESTERDAY, IS_IMPORTANT, IS_EMERGENCY, IMPO_LEVEL, ID, DEL_FLAG, STATUS, INST_ID, LOGIN_IP, LOGIN_DATE, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, REMARKS, REPORT_DATE, PRODUCT_NAME, REPORTER_ID, REPORTER_NAME, INPUT_ORDER, IS_AFTER</sql>
+	<!-- 实体与表字段映身声明，返回值 -->
+    <resultMap type="DoufuTodayWork" id="DoufuTodayWorkResult">
+        <result property="projectGroupId"    column="PROJECT_GROUP_ID"    />
+        <result property="projectId"    column="PROJECT_ID"    />
+        <result property="productId"    column="PRODUCT_ID"    />
+        <result property="workContents"    column="WORK_CONTENTS"    />
+        <result property="workDetail"    column="WORK_DETAIL"    />
+        <result property="finishPercent"    column="FINISH_PERCENT"    />
+        <result property="delayReason"    column="DELAY_REASON"    />
+        <result property="accordYesterday"    column="ACCORD_YESTERDAY"    />
+        <result property="isImportant"    column="IS_IMPORTANT"    />
+        <result property="isEmergency"    column="IS_EMERGENCY"    />
+        <result property="impoLevel"    column="IMPO_LEVEL"    />
+        <result property="id"    column="ID"    />
+        <result property="delFlag"    column="DEL_FLAG"    />
+        <result property="status"    column="STATUS"    />
+        <result property="instId"    column="INST_ID"    />
+        <result property="loginIp"    column="LOGIN_IP"    />
+        <result property="loginDate"    column="LOGIN_DATE"    />
+        <result property="createBy"    column="CREATE_BY"    />
+        <result property="createDate"    column="CREATE_DATE"    />
+        <result property="updateBy"    column="UPDATE_BY"    />
+        <result property="updateDate"    column="UPDATE_DATE"    />
+        <result property="remarks"    column="REMARKS"    />
+        <result property="reportDate"    column="REPORT_DATE"    />
+        <result property="productName"    column="PRODUCT_NAME"    />
+        <result property="reporterId"    column="REPORTER_ID"    />
+        <result property="reporterName"    column="REPORTER_NAME"    />
+        <result property="inputOrder"    column="INPUT_ORDER"    />
+        <result property="isAfter"    column="IS_AFTER"    />
+    </resultMap>
+    
+	<!-- 定义查询整张表的SQL -->
+    <sql id="selectDoufuTodayWorkVo">
+        select PROJECT_GROUP_ID, PROJECT_ID, PRODUCT_ID, WORK_CONTENTS, WORK_DETAIL, FINISH_PERCENT, DELAY_REASON, ACCORD_YESTERDAY, IS_IMPORTANT, IS_EMERGENCY, IMPO_LEVEL, ID, DEL_FLAG, STATUS, INST_ID, LOGIN_IP, LOGIN_DATE, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, REMARKS, REPORT_DATE, PRODUCT_NAME, REPORTER_ID, REPORTER_NAME, INPUT_ORDER, IS_AFTER from doufu_today_work
+    </sql>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryPageInfo" resultType="com.kmw.common.CommonEntity">
+        select
+       	<include refid="DoufuTodayWorkColumns" /> 
+        from doufu_today_work t
+        <where>  
+        1=1
+            <if test="projectGroupId != null  and projectGroupId != ''"> and t.PROJECT_GROUP_ID = #{projectGroupId}</if>
+            <if test="projectId != null  and projectId != ''"> and t.PROJECT_ID = #{projectId}</if>
+            <if test="productId != null  and productId != ''"> and t.PRODUCT_ID = #{productId}</if>
+            <if test="workContents != null  and workContents != ''"> and t.WORK_CONTENTS = #{workContents}</if>
+            <if test="workDetail != null  and workDetail != ''"> and t.WORK_DETAIL = #{workDetail}</if>
+            <if test="finishPercent != null  and finishPercent != ''"> and t.FINISH_PERCENT = #{finishPercent}</if>
+            <if test="delayReason != null  and delayReason != ''"> and t.DELAY_REASON = #{delayReason}</if>
+            <if test="accordYesterday != null  and accordYesterday != ''"> and t.ACCORD_YESTERDAY = #{accordYesterday}</if>
+            <if test="isImportant != null  and isImportant != ''"> and t.IS_IMPORTANT = #{isImportant}</if>
+            <if test="isEmergency != null  and isEmergency != ''"> and t.IS_EMERGENCY = #{isEmergency}</if>
+            <if test="impoLevel != null  and impoLevel != ''"> and t.IMPO_LEVEL = #{impoLevel}</if>
+            <if test="delFlag != null  and delFlag != ''"> and t.DEL_FLAG = #{delFlag}</if>
+            <if test="status != null  and status != ''"> and t.STATUS = #{status}</if>
+            <if test="instId != null  and instId != ''"> and t.INST_ID = #{instId}</if>
+            <if test="loginIp != null  and loginIp != ''"> and t.LOGIN_IP = #{loginIp}</if>
+            <if test="loginDate != null "> and t.LOGIN_DATE = #{loginDate}</if>
+            <if test="createBy != null  and createBy != ''"> and t.CREATE_BY = #{createBy}</if>
+            <if test="createDate != null "> and t.CREATE_DATE = #{createDate}</if>
+            <if test="updateBy != null  and updateBy != ''"> and t.UPDATE_BY = #{updateBy}</if>
+            <if test="updateDate != null "> and t.UPDATE_DATE = #{updateDate}</if>
+            <if test="remarks != null  and remarks != ''"> and t.REMARKS = #{remarks}</if>
+            <if test="reportDate != null  and reportDate != ''"> and t.REPORT_DATE = #{reportDate}</if>
+            <if test="productName != null  and productName != ''"> and t.PRODUCT_NAME like concat('%', #{productName}, '%')</if>
+            <if test="reporterId != null  and reporterId != ''"> and t.REPORTER_ID = #{reporterId}</if>
+            <if test="reporterName != null  and reporterName != ''"> and t.REPORTER_NAME like concat('%', #{reporterName}, '%')</if>
+            <if test="inputOrder != null "> and t.INPUT_ORDER = #{inputOrder}</if>
+            <if test="isAfter != null  and isAfter != ''"> and t.IS_AFTER = #{isAfter}</if>
+        </where>
+        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		<if
+			test="sortC != null  and sortC != '' and order != null  and order != ''">
+			ORDER BY t.${sortC} ${order}
+		</if>
+    </select>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryEntityList" resultType="com.kmw.common.CommonEntity">
+        select
+       	<include refid="DoufuTodayWorkColumns" /> 
+        from doufu_today_work t
+        <where>  
+        1=1
+            <if test="projectGroupId != null  and projectGroupId != ''"> and t.PROJECT_GROUP_ID = #{projectGroupId}</if>
+            <if test="projectId != null  and projectId != ''"> and t.PROJECT_ID = #{projectId}</if>
+            <if test="productId != null  and productId != ''"> and t.PRODUCT_ID = #{productId}</if>
+            <if test="workContents != null  and workContents != ''"> and t.WORK_CONTENTS = #{workContents}</if>
+            <if test="workDetail != null  and workDetail != ''"> and t.WORK_DETAIL = #{workDetail}</if>
+            <if test="finishPercent != null  and finishPercent != ''"> and t.FINISH_PERCENT = #{finishPercent}</if>
+            <if test="delayReason != null  and delayReason != ''"> and t.DELAY_REASON = #{delayReason}</if>
+            <if test="accordYesterday != null  and accordYesterday != ''"> and t.ACCORD_YESTERDAY = #{accordYesterday}</if>
+            <if test="isImportant != null  and isImportant != ''"> and t.IS_IMPORTANT = #{isImportant}</if>
+            <if test="isEmergency != null  and isEmergency != ''"> and t.IS_EMERGENCY = #{isEmergency}</if>
+            <if test="impoLevel != null  and impoLevel != ''"> and t.IMPO_LEVEL = #{impoLevel}</if>
+            <if test="delFlag != null  and delFlag != ''"> and t.DEL_FLAG = #{delFlag}</if>
+            <if test="status != null  and status != ''"> and t.STATUS = #{status}</if>
+            <if test="instId != null  and instId != ''"> and t.INST_ID = #{instId}</if>
+            <if test="loginIp != null  and loginIp != ''"> and t.LOGIN_IP = #{loginIp}</if>
+            <if test="loginDate != null "> and t.LOGIN_DATE = #{loginDate}</if>
+            <if test="createBy != null  and createBy != ''"> and t.CREATE_BY = #{createBy}</if>
+            <if test="createDate != null "> and t.CREATE_DATE = #{createDate}</if>
+            <if test="updateBy != null  and updateBy != ''"> and t.UPDATE_BY = #{updateBy}</if>
+            <if test="updateDate != null "> and t.UPDATE_DATE = #{updateDate}</if>
+            <if test="remarks != null  and remarks != ''"> and t.REMARKS = #{remarks}</if>
+            <if test="reportDate != null  and reportDate != ''"> and t.REPORT_DATE = #{reportDate}</if>
+            <if test="productName != null  and productName != ''"> and t.PRODUCT_NAME like concat('%', #{productName}, '%')</if>
+            <if test="reporterId != null  and reporterId != ''"> and t.REPORTER_ID = #{reporterId}</if>
+            <if test="reporterName != null  and reporterName != ''"> and t.REPORTER_NAME like concat('%', #{reporterName}, '%')</if>
+            <if test="inputOrder != null "> and t.INPUT_ORDER = #{inputOrder}</if>
+            <if test="isAfter != null  and isAfter != ''"> and t.IS_AFTER = #{isAfter}</if>
+        </where>
+        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		<if
+			test=" sortC != null  and sortC != '' and order != null  and order != ''">
+			ORDER BY t.${sortC} ${order}
+		</if>
+ 
+    </select>   
+    
+	<!-- 按map参数查询后台的数据， 查询单条数据,返回的是通用实体，不受实体属性限制，相当于map -->
+	<select id="queryOneCommon"
+		resultType="com.kmw.common.CommonEntity">
+		select
+		<include refid="DoufuTodayWorkColumns" />
+		  from doufu_today_work t
+		<where>
+			where id = #{id}
+		</where>
+	</select>    
+    
+    
+	<!-- 按实体参数来查询后台的数据 -->
+    <select id="selectDoufuTodayWorkList" parameterType="DoufuTodayWork" resultMap="DoufuTodayWorkResult">
+        <include refid="selectDoufuTodayWorkVo"/>
+        <where>  
+            <if test="projectGroupId != null  and projectGroupId != ''"> and PROJECT_GROUP_ID = #{projectGroupId}</if>
+            <if test="projectId != null  and projectId != ''"> and PROJECT_ID = #{projectId}</if>
+            <if test="productId != null  and productId != ''"> and PRODUCT_ID = #{productId}</if>
+            <if test="workContents != null  and workContents != ''"> and WORK_CONTENTS = #{workContents}</if>
+            <if test="workDetail != null  and workDetail != ''"> and WORK_DETAIL = #{workDetail}</if>
+            <if test="finishPercent != null  and finishPercent != ''"> and FINISH_PERCENT = #{finishPercent}</if>
+            <if test="delayReason != null  and delayReason != ''"> and DELAY_REASON = #{delayReason}</if>
+            <if test="accordYesterday != null  and accordYesterday != ''"> and ACCORD_YESTERDAY = #{accordYesterday}</if>
+            <if test="isImportant != null  and isImportant != ''"> and IS_IMPORTANT = #{isImportant}</if>
+            <if test="isEmergency != null  and isEmergency != ''"> and IS_EMERGENCY = #{isEmergency}</if>
+            <if test="impoLevel != null  and impoLevel != ''"> and IMPO_LEVEL = #{impoLevel}</if>
+            <if test="delFlag != null  and delFlag != ''"> and DEL_FLAG = #{delFlag}</if>
+            <if test="status != null  and status != ''"> and STATUS = #{status}</if>
+            <if test="instId != null  and instId != ''"> and INST_ID = #{instId}</if>
+            <if test="loginIp != null  and loginIp != ''"> and LOGIN_IP = #{loginIp}</if>
+            <if test="loginDate != null "> and LOGIN_DATE = #{loginDate}</if>
+            <if test="createBy != null  and createBy != ''"> and CREATE_BY = #{createBy}</if>
+            <if test="createDate != null "> and CREATE_DATE = #{createDate}</if>
+            <if test="updateBy != null  and updateBy != ''"> and UPDATE_BY = #{updateBy}</if>
+            <if test="updateDate != null "> and UPDATE_DATE = #{updateDate}</if>
+            <if test="remarks != null  and remarks != ''"> and REMARKS = #{remarks}</if>
+            <if test="reportDate != null  and reportDate != ''"> and REPORT_DATE = #{reportDate}</if>
+            <if test="productName != null  and productName != ''"> and PRODUCT_NAME like concat('%', #{productName}, '%')</if>
+            <if test="reporterId != null  and reporterId != ''"> and REPORTER_ID = #{reporterId}</if>
+            <if test="reporterName != null  and reporterName != ''"> and REPORTER_NAME like concat('%', #{reporterName}, '%')</if>
+            <if test="inputOrder != null "> and INPUT_ORDER = #{inputOrder}</if>
+            <if test="isAfter != null  and isAfter != ''"> and IS_AFTER = #{isAfter}</if>
+        </where>
+    </select>
+ 
+ 	<!-- 按主键来查询后台的数据 -->   
+    <select id="selectDoufuTodayWorkById" parameterType="String" resultMap="DoufuTodayWorkResult">
+        <include refid="selectDoufuTodayWorkVo"/>
+        where ID = #{id}
+    </select>
+    
+ 	<!-- 插入数据库一条数据 -->       
+    <insert id="insertDoufuTodayWork" parameterType="DoufuTodayWork">
+        insert into doufu_today_work
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectGroupId != null  and projectGroupId != ''">PROJECT_GROUP_ID,</if>
+            <if test="projectId != null  and projectId != ''">PROJECT_ID,</if>
+            <if test="productId != null  and productId != ''">PRODUCT_ID,</if>
+            <if test="workContents != null  and workContents != ''">WORK_CONTENTS,</if>
+            <if test="workDetail != null  and workDetail != ''">WORK_DETAIL,</if>
+            <if test="finishPercent != null  and finishPercent != ''">FINISH_PERCENT,</if>
+            <if test="delayReason != null  and delayReason != ''">DELAY_REASON,</if>
+            <if test="accordYesterday != null  and accordYesterday != ''">ACCORD_YESTERDAY,</if>
+            <if test="isImportant != null  and isImportant != ''">IS_IMPORTANT,</if>
+            <if test="isEmergency != null  and isEmergency != ''">IS_EMERGENCY,</if>
+            <if test="impoLevel != null  and impoLevel != ''">IMPO_LEVEL,</if>
+            <if test="id != null  and id != ''">ID,</if>
+            <if test="delFlag != null  and delFlag != ''">DEL_FLAG,</if>
+            <if test="status != null  and status != ''">STATUS,</if>
+            <if test="instId != null  and instId != ''">INST_ID,</if>
+            <if test="loginIp != null  and loginIp != ''">LOGIN_IP,</if>
+            <if test="loginDate != null ">LOGIN_DATE,</if>
+            <if test="createBy != null  and createBy != ''">CREATE_BY,</if>
+            <if test="createDate != null ">CREATE_DATE,</if>
+            <if test="updateBy != null  and updateBy != ''">UPDATE_BY,</if>
+            <if test="updateDate != null ">UPDATE_DATE,</if>
+            <if test="remarks != null  and remarks != ''">REMARKS,</if>
+            <if test="reportDate != null  and reportDate != ''">REPORT_DATE,</if>
+            <if test="productName != null  and productName != ''">PRODUCT_NAME,</if>
+            <if test="reporterId != null  and reporterId != ''">REPORTER_ID,</if>
+            <if test="reporterName != null  and reporterName != ''">REPORTER_NAME,</if>
+            <if test="inputOrder != null ">INPUT_ORDER,</if>
+            <if test="isAfter != null  and isAfter != ''">IS_AFTER,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectGroupId != null  and projectGroupId != ''">#{projectGroupId},</if>
+            <if test="projectId != null  and projectId != ''">#{projectId},</if>
+            <if test="productId != null  and productId != ''">#{productId},</if>
+            <if test="workContents != null  and workContents != ''">#{workContents},</if>
+            <if test="workDetail != null  and workDetail != ''">#{workDetail},</if>
+            <if test="finishPercent != null  and finishPercent != ''">#{finishPercent},</if>
+            <if test="delayReason != null  and delayReason != ''">#{delayReason},</if>
+            <if test="accordYesterday != null  and accordYesterday != ''">#{accordYesterday},</if>
+            <if test="isImportant != null  and isImportant != ''">#{isImportant},</if>
+            <if test="isEmergency != null  and isEmergency != ''">#{isEmergency},</if>
+            <if test="impoLevel != null  and impoLevel != ''">#{impoLevel},</if>
+            <if test="id != null  and id != ''">#{id},</if>
+            <if test="delFlag != null  and delFlag != ''">#{delFlag},</if>
+            <if test="status != null  and status != ''">#{status},</if>
+            <if test="instId != null  and instId != ''">#{instId},</if>
+            <if test="loginIp != null  and loginIp != ''">#{loginIp},</if>
+            <if test="loginDate != null ">#{loginDate},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createDate != null ">#{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateDate != null ">#{updateDate},</if>
+            <if test="remarks != null  and remarks != ''">#{remarks},</if>
+            <if test="reportDate != null  and reportDate != ''">#{reportDate},</if>
+            <if test="productName != null  and productName != ''">#{productName},</if>
+            <if test="reporterId != null  and reporterId != ''">#{reporterId},</if>
+            <if test="reporterName != null  and reporterName != ''">#{reporterName},</if>
+            <if test="inputOrder != null ">#{inputOrder},</if>
+            <if test="isAfter != null  and isAfter != ''">#{isAfter},</if>
+         </trim>
+    </insert>
+	<!-- 按主键更新数据库一条数据 -->
+    <update id="updateDoufuTodayWork" parameterType="DoufuTodayWork">
+        update doufu_today_work
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="projectGroupId != null  and projectGroupId != ''">PROJECT_GROUP_ID = #{projectGroupId},</if>
+            <if test="projectId != null  and projectId != ''">PROJECT_ID = #{projectId},</if>
+            <if test="productId != null  and productId != ''">PRODUCT_ID = #{productId},</if>
+            <if test="workContents != null  and workContents != ''">WORK_CONTENTS = #{workContents},</if>
+            <if test="workDetail != null  and workDetail != ''">WORK_DETAIL = #{workDetail},</if>
+            <if test="finishPercent != null  and finishPercent != ''">FINISH_PERCENT = #{finishPercent},</if>
+            <if test="delayReason != null  and delayReason != ''">DELAY_REASON = #{delayReason},</if>
+            <if test="accordYesterday != null  and accordYesterday != ''">ACCORD_YESTERDAY = #{accordYesterday},</if>
+            <if test="isImportant != null  and isImportant != ''">IS_IMPORTANT = #{isImportant},</if>
+            <if test="isEmergency != null  and isEmergency != ''">IS_EMERGENCY = #{isEmergency},</if>
+            <if test="impoLevel != null  and impoLevel != ''">IMPO_LEVEL = #{impoLevel},</if>
+            <if test="delFlag != null  and delFlag != ''">DEL_FLAG = #{delFlag},</if>
+            <if test="status != null  and status != ''">STATUS = #{status},</if>
+            <if test="instId != null  and instId != ''">INST_ID = #{instId},</if>
+            <if test="loginIp != null  and loginIp != ''">LOGIN_IP = #{loginIp},</if>
+            <if test="loginDate != null ">LOGIN_DATE = #{loginDate},</if>
+            <if test="createBy != null  and createBy != ''">CREATE_BY = #{createBy},</if>
+            <if test="createDate != null ">CREATE_DATE = #{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''">UPDATE_BY = #{updateBy},</if>
+            <if test="updateDate != null ">UPDATE_DATE = #{updateDate},</if>
+            <if test="remarks != null  and remarks != ''">REMARKS = #{remarks},</if>
+            <if test="reportDate != null  and reportDate != ''">REPORT_DATE = #{reportDate},</if>
+            <if test="productName != null  and productName != ''">PRODUCT_NAME = #{productName},</if>
+            <if test="reporterId != null  and reporterId != ''">REPORTER_ID = #{reporterId},</if>
+            <if test="reporterName != null  and reporterName != ''">REPORTER_NAME = #{reporterName},</if>
+            <if test="inputOrder != null ">INPUT_ORDER = #{inputOrder},</if>
+            <if test="isAfter != null  and isAfter != ''">IS_AFTER = #{isAfter},</if>
+        </trim>
+        where ID = #{id}
+    </update>
+	<!-- 按主键删除数据库中一条数据 -->
+    <delete id="deleteDoufuTodayWorkById" parameterType="String">
+        delete from doufu_today_work where ID = #{id}
+    </delete>
+	<!-- 按主键列表字符串用逗号分隔， 删除数据库中多条数据 -->
+    <delete id="deleteDoufuTodayWorkByIds" parameterType="String">
+        delete from doufu_today_work where ID in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <!-- 根据不同条件删除数据，条件可组合 -->
+	<delete id="deleteByParams" parameterType="java.util.Map">
+		delete from doufu_today_work
+		<where>
+			1=1
+			  <if test="projectGroupId != null  and projectGroupId != ''">PROJECT_GROUP_ID = #{projectGroupId},</if>
+            <if test="projectId != null  and projectId != ''">PROJECT_ID = #{projectId},</if>
+            <if test="productId != null  and productId != ''">PRODUCT_ID = #{productId},</if>
+            <if test="workContents != null  and workContents != ''">WORK_CONTENTS = #{workContents},</if>
+            <if test="workDetail != null  and workDetail != ''">WORK_DETAIL = #{workDetail},</if>
+            <if test="finishPercent != null  and finishPercent != ''">FINISH_PERCENT = #{finishPercent},</if>
+            <if test="delayReason != null  and delayReason != ''">DELAY_REASON = #{delayReason},</if>
+            <if test="accordYesterday != null  and accordYesterday != ''">ACCORD_YESTERDAY = #{accordYesterday},</if>
+            <if test="isImportant != null  and isImportant != ''">IS_IMPORTANT = #{isImportant},</if>
+            <if test="isEmergency != null  and isEmergency != ''">IS_EMERGENCY = #{isEmergency},</if>
+            <if test="impoLevel != null  and impoLevel != ''">IMPO_LEVEL = #{impoLevel},</if>
+            <if test="delFlag != null  and delFlag != ''">DEL_FLAG = #{delFlag},</if>
+            <if test="status != null  and status != ''">STATUS = #{status},</if>
+            <if test="instId != null  and instId != ''">INST_ID = #{instId},</if>
+            <if test="loginIp != null  and loginIp != ''">LOGIN_IP = #{loginIp},</if>
+            <if test="loginDate != null ">LOGIN_DATE = #{loginDate},</if>
+            <if test="createBy != null  and createBy != ''">CREATE_BY = #{createBy},</if>
+            <if test="createDate != null ">CREATE_DATE = #{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''">UPDATE_BY = #{updateBy},</if>
+            <if test="updateDate != null ">UPDATE_DATE = #{updateDate},</if>
+            <if test="remarks != null  and remarks != ''">REMARKS = #{remarks},</if>
+            <if test="reportDate != null  and reportDate != ''">REPORT_DATE = #{reportDate},</if>
+            <if test="productName != null  and productName != ''">PRODUCT_NAME = #{productName},</if>
+            <if test="reporterId != null  and reporterId != ''">REPORTER_ID = #{reporterId},</if>
+            <if test="reporterName != null  and reporterName != ''">REPORTER_NAME = #{reporterName},</if>
+            <if test="inputOrder != null ">INPUT_ORDER = #{inputOrder},</if>
+            <if test="isAfter != null  and isAfter != ''">IS_AFTER = #{isAfter},</if>
+			
+			</where>
+	</delete>
+
+
+<!-- 列表查询,返回的是实体-->
+	<select id="entityList" resultType="com.kmw.qywx.domain.DoufuTodayWork">
+        select  <include refid="doufuTodayWorkAliasColumns" />
+		from doufu_today_work  t
+		<where>
+			1=1
+            <if test="projectGroupId != null  and projectGroupId != ''"> and t.PROJECT_GROUP_ID = #{projectGroupId}</if>
+            <if test="projectId != null  and projectId != ''"> and t.PROJECT_ID = #{projectId}</if>
+            <if test="productId != null  and productId != ''"> and t.PRODUCT_ID = #{productId}</if>
+            <if test="workContents != null  and workContents != ''"> and t.WORK_CONTENTS = #{workContents}</if>
+            <if test="workDetail != null  and workDetail != ''"> and t.WORK_DETAIL = #{workDetail}</if>
+            <if test="finishPercent != null  and finishPercent != ''"> and t.FINISH_PERCENT = #{finishPercent}</if>
+            <if test="delayReason != null  and delayReason != ''"> and t.DELAY_REASON = #{delayReason}</if>
+            <if test="accordYesterday != null  and accordYesterday != ''"> and t.ACCORD_YESTERDAY = #{accordYesterday}</if>
+            <if test="isImportant != null  and isImportant != ''"> and t.IS_IMPORTANT = #{isImportant}</if>
+            <if test="isEmergency != null  and isEmergency != ''"> and t.IS_EMERGENCY = #{isEmergency}</if>
+            <if test="impoLevel != null  and impoLevel != ''"> and t.IMPO_LEVEL = #{impoLevel}</if>
+            <if test="delFlag != null  and delFlag != ''"> and t.DEL_FLAG = #{delFlag}</if>
+            <if test="status != null  and status != ''"> and t.STATUS = #{status}</if>
+            <if test="instId != null  and instId != ''"> and t.INST_ID = #{instId}</if>
+            <if test="loginIp != null  and loginIp != ''"> and t.LOGIN_IP = #{loginIp}</if>
+            <if test="loginDate != null "> and t.LOGIN_DATE = #{loginDate}</if>
+            <if test="createBy != null  and createBy != ''"> and t.CREATE_BY = #{createBy}</if>
+            <if test="createDate != null "> and t.CREATE_DATE = #{createDate}</if>
+            <if test="updateBy != null  and updateBy != ''"> and t.UPDATE_BY = #{updateBy}</if>
+            <if test="updateDate != null "> and t.UPDATE_DATE = #{updateDate}</if>
+            <if test="remarks != null  and remarks != ''"> and t.REMARKS = #{remarks}</if>
+            <if test="reportDate != null  and reportDate != ''"> and t.REPORT_DATE = #{reportDate}</if>
+            <if test="productName != null  and productName != ''"> and t.PRODUCT_NAME like concat('%', #{productName}, '%')</if>
+            <if test="reporterId != null  and reporterId != ''"> and t.REPORTER_ID = #{reporterId}</if>
+            <if test="reporterName != null  and reporterName != ''"> and t.REPORTER_NAME like concat('%', #{reporterName}, '%')</if>
+            <if test="inputOrder != null "> and t.INPUT_ORDER = #{inputOrder}</if>
+            <if test="isAfter != null  and isAfter != ''"> and t.IS_AFTER = #{isAfter}</if>
+
+		</where>
+ 		<if test=" ( sortC != null  and sortC !='') and ( order != null  and order !='')"> and ${dynamicSQL}  
+			ORDER BY t.${sortC} ${order}
+		</if>
+	</select>
+	
+	<!-- 批量插入数据 -->
+	<insert id="insertBatch">
+		insert into doufu_today_work(<include refid="doufuTodayWorkColumns" />) values 
+		<foreach collection="list" item="item" separator="," >
+		(
+	    	#{item.projectGroupId},
+	    	#{item.projectId},
+	    	#{item.productId},
+	    	#{item.workContents},
+	    	#{item.workDetail},
+	    	#{item.finishPercent},
+	    	#{item.delayReason},
+	    	#{item.accordYesterday},
+	    	#{item.isImportant},
+	    	#{item.isEmergency},
+	    	#{item.impoLevel},
+	    	#{item.id},
+	    	#{item.delFlag},
+	    	#{item.status},
+	    	#{item.instId},
+	    	#{item.loginIp},
+	    	#{item.loginDate},
+	    	#{item.createBy},
+	    	#{item.createDate},
+	    	#{item.updateBy},
+	    	#{item.updateDate},
+	    	#{item.remarks},
+	    	#{item.reportDate},
+	    	#{item.productName},
+	    	#{item.reporterId},
+	    	#{item.reporterName},
+	    	#{item.inputOrder},
+			#{item.isAfter}
+		)
+		</foreach>
+	</insert>
+
+    <!-- 查询提交的日报情况  查询未提交人员姓名 -->
+	<select id="queryNotCommitUser"
+		resultType="com.boot.util.CommonEntity">
+         select
+         wx_user.account as account ,
+          wx_user.name   as name
+         from wx_user 
+		<where>
+		1=1
+ 
+		<if test="groupname != null  and groupname != ''"> and wx_user.dept like "%"#{groupname}"%"   </if>
+		 
+         and  wx_user.account  not in (
+         select doufu_today_work.REPORTER_NAME  from doufu_today_work
+         <if test="reportdate != null  and reportdate != ''"> where doufu_today_work.REPORT_DATE = #{reportdate}  </if>
+		 )
+		</where>
+	</select>
+	
+			
+		<!-- 统计个人指定的时间段提交的日报日期列表 -->
+	<select id="countCommitTimes"
+		resultType="com.boot.util.CommonEntity">
+         select
+         distinct REPORT_DATE as REPORT_DATE
+         from doufu_today_work t
+		<where>
+		1=1
+		<if test=" reporterName != null  and reporterName != ''"> and REPORTER_NAME = #{reporterName} </if>
+		<if test=" dynamicSQL != null  and dynamicSQL !=''"> and ${dynamicSQL} </if>
+		</where>
+ 		<if test=" ( sortC != null  and sortC !='') and ( order != null  and order !='')">  
+			ORDER BY t.${sortC} ${order}
+		</if>
+	</select>
+	
+	
+		<!-- 统计个人指定的时间段提交的日报日期列表 -->
+	<select id="countMonthCommitTimes"
+		resultType="com.boot.util.CommonEntity">
+         select 
+         COUNT(distinct doufu_today_work.REPORT_DATE) as  commitcount,
+         wx_user.name as username
+         from doufu_today_work,wx_user 
+		<where>
+		 doufu_today_work.REPORTER_NAME=wx_user.account 
+		<if test=" groupname != null  and groupname !='' "> and wx_user.dept  like "%"#{groupname}"%" </if>
+		</where>
+
+		GROUP by doufu_today_work.REPORTER_NAME ORDER by commitcount desc 
+	</select>	
+	
+			<!-- 统计个人指定的时间段提交的日报日期列表 -->
+	<select id="getReportDateList"
+		resultType="com.boot.util.CommonEntity">
+        select distinct report_date  as report_date
+        from  doufu_today_work 
+		<where>
+         REPORT_DATE  <![CDATA[ < ]]> current_date
+		<if test="reporterName != null  and reporterName !=''"> and REPORTER_NAME = #{reporterName} </if>
+		</where>
+		order by REPORT_DATE desc
+	</select>	
+</mapper>

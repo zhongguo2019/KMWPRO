@@ -34,8 +34,19 @@
     <groupId>org.eclipse.persistence</groupId>
     <artifactId>javax.persistence</artifactId>
     <version>2.2.1</version>
-</dependency>
-        
+    </dependency>
+    
+    		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>18.0</version>
+			
+		</dependency>
+        		<dependency>
+			<groupId>com.belerweb</groupId>
+			<artifactId>pinyin4j</artifactId>
+			<version>2.5.0</version>
+		</dependency>
     </dependencies>
 	
 </project>

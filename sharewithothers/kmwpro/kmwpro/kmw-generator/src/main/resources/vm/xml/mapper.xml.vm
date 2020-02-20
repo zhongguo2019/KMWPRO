@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
     
 	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
-    <select id="queryPageInfo" resultMap="com.kmw.common.CommonEntity">
+    <select id="queryPageInfo" resultType="com.kmw.common.CommonEntity">
         select
        	<include refid="${ClassName}Columns" /> 
         from ${tableName} t
@@ -64,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
 	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
-    <select id="queryEntityList" resultMap="com.kmw.common.CommonEntity">
+    <select id="queryEntityList" resultType="com.kmw.common.CommonEntity">
         select
        	<include refid="${ClassName}Columns" /> 
         from ${tableName} t

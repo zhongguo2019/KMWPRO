@@ -145,7 +145,7 @@
 								name="busStdSubject" hidden="true" th:value="${subjectName}" />
 							</li>
 							<li><a class="btn btn-primary btn-rounded btn-sm"
-								 onclick="javascript:openDemo();"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								 onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm"
 								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
 							</li>
@@ -370,14 +370,14 @@
 
         });
         
-        function openDemo(){
+/*         function openDemo(){
         	  alert('这是调用函数');
         	  
-        	  var url1 =  ctx+"metadata/shyhallsubject/tableDataInfo";
-        	  var url2 =  ctx+"metadata/shyhallsubject/queryPageInfo";
-        	  var url3 =  ctx+"metadata/shyhallsubject/queryOneEntity";
-        var	data = $('#formId').serialize();
-          	var config = {
+        	  var url1 =  prefix+"/tableDataInfo";
+        	  var url2 =  prefix+"/queryPageInfo";
+        	  var url3 =  prefix+"/queryOneEntity";
+              var	data = $('#formId').serialize();
+          	  var config = {
         	        url: url3,
         	        type: "post",
         	        dataType: "json",
@@ -389,7 +389,7 @@
         	        }
         	    };
         	    $.ajax(config)
-        }
+        } */
     </script>
 </body>
 </html>

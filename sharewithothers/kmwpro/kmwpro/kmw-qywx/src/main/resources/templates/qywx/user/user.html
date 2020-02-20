@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('企业微信用户信息列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <p>姓名：</p>
+                                <input type="text" name="name"/>
+                            </li>
+                            <li>
+                                <p>帐号：</p>
+                                <input type="text" name="account"/>
+                            </li>
+                            <li>
+                                <p>别名：</p>
+                                <input type="text" name="alaisname"/>
+                            </li>
+                            <li>
+                                <p>职务：</p>
+                                <input type="text" name="duties"/>
+                            </li>
+                            <li>
+                                <p>性别：</p>
+                                <select name="sex" th:with="type=${@dict.getType('')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <p>手机：</p>
+                                <input type="text" name="mobile"/>
+                            </li>
+                            <li>
+                                <p>座机：</p>
+                                <input type="text" name="phone"/>
+                            </li>
+                            <li>
+                                <p>个人邮箱：</p>
+                                <input type="text" name="email"/>
+                            </li>
+                            <li>
+                                <p>地址：</p>
+                                <input type="text" name="address"/>
+                            </li>
+                            <li>
+                                <p>企业简称：</p>
+                                <input type="text" name="shortcorname"/>
+                            </li>
+                            <li>
+                                <p>激活状态：</p>
+                                <input type="text" name="isactive"/>
+                            </li>
+                            <li>
+                                <p>禁用状态：</p>
+                                <input type="text" name="isforbidden"/>
+                            </li>
+                            <li>
+                                <p>微工作台：</p>
+                                <input type="text" name="wxplat"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="qywx:user:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="qywx:user:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="qywx:user:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="qywx:user:export">
+                    <i class="fa fa-download"></i> 导出
+                 </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('qywx:user:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('qywx:user:remove')}]];
+        var prefix = ctx + "qywx/user";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "企业微信用户信息",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field : 'name', 
+                    title : '姓名'
+                },
+                {
+                    field : 'account', 
+                    title : '帐号'
+                },
+                {
+                    field : 'alaisname', 
+                    title : '别名'
+                },
+                {
+                    field : 'duties', 
+                    title : '职务'
+                },
+                {
+                    field : 'dept', 
+                    title : '部门'
+                },
+                {
+                    field : 'sex', 
+                    title : '性别'
+                },
+                {
+                    field : 'mobile', 
+                    title : '手机'
+                },
+                {
+                    field : 'phone', 
+                    title : '座机'
+                },
+                {
+                    field : 'email', 
+                    title : '个人邮箱'
+                },
+                {
+                    field : 'address', 
+                    title : '地址'
+                },
+                {
+                    field : 'shortcorname', 
+                    title : '企业简称'
+                },
+                {
+                    field : 'isactive', 
+                    title : '激活状态'
+                },
+                {
+                    field : 'isforbidden', 
+                    title : '禁用状态'
+                },
+                {
+                    field : 'wxplat', 
+                    title : '微工作台'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.name + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.name + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+        
+        
+        /* 通过map带参调用后台的方法Demo       
+          function openDemo(){
+        	  var url1 =  prefix+"/tableDataInfo";
+        	  var url2 =  prefix+"/queryPageInfo";
+        	  var url3 =  prefix+"/queryOneEntity";
+              var	data = $('#formId').serialize();
+          	  var config = {
+        	        url: url3,
+        	        type: "post",
+        	        dataType: "json",
+        	        data: data,
+        	        beforeSend: function () {
+        	        //	$.modal.loading("正在处理中，请稍后...");
+        	        },
+        	        success: function(result) {
+        	        }
+        	    };
+        	    $.ajax(config)
+        } */
+    </script>
+</body>
+</html>

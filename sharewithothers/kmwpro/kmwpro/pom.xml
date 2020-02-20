@@ -208,7 +208,15 @@
 	            <groupId>com.kmw</groupId>
 	            <artifactId>kmw-metadata</artifactId>
 	            <version>${kmw.version}</version>
-	        </dependency>	        
+	        </dependency>	
+	         
+			<!-- 企业微信管理平台-->
+	        <dependency>
+	            <groupId>com.kmw</groupId>
+	            <artifactId>kmw-qywx</artifactId>
+	            <version>${kmw.version}</version>
+	        </dependency>		
+	                       
         </dependencies>
     </dependencyManagement>
 
@@ -220,16 +228,11 @@
 		<module>kmw-generator</module>
         <module>kmw-common</module>
         <module>kmw-metadata</module>        
+        <module>kmw-qywx</module>         
     </modules>
     <packaging>pom</packaging>
-
-
 	<dependencies>
-
-		 
-
 	</dependencies>
-
 	<build>
         <plugins>
             <plugin>

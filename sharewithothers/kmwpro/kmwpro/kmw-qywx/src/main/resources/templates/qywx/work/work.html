@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('当天工作记录信息列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <p>所在项目组名称：</p>
+                                <input type="text" name="projectGroupId"/>
+                            </li>
+                            <li>
+                                <p>完成比例：</p>
+                                <input type="text" name="finishPercent"/>
+                            </li>
+                            <li>
+                                <p>对应计划：</p>
+                                <input type="text" name="accordYesterday"/>
+                            </li>
+                            <li>
+                                <p>是否重要：</p>
+                                <input type="text" name="isImportant"/>
+                            </li>
+                            <li>
+                                <p>是否紧急：</p>
+                                <input type="text" name="isEmergency"/>
+                            </li>
+                            <li>
+                                <p>重要级别：</p>
+                                <input type="text" name="impoLevel"/>
+                            </li>
+                            <li>
+                                <p>逻辑删除标记(0.正常，1.删除)：</p>
+                                <input type="text" name="delFlag"/>
+                            </li>
+                            <li>
+                                <p>状态：</p>
+                                <select name="status">
+                                    <option value="">所有</option>
+                                </select>
+                            </li>
+                            <li>
+                                <p>机构ID：</p>
+                                <input type="text" name="instId"/>
+                            </li>
+                            <li>
+                                <p>登录IP：</p>
+                                <input type="text" name="loginIp"/>
+                            </li>
+                            <li class="select-time">
+                                <p>登录日期：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginLoginDate]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endLoginDate]"/>
+                            </li>
+                            <li>
+                                <p>创建人：</p>
+                                <input type="text" name="createBy"/>
+                            </li>
+                            <li class="select-time">
+                                <p>创建时间：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginCreateDate]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endCreateDate]"/>
+                            </li>
+                            <li>
+                                <p>最近修改人：</p>
+                                <input type="text" name="updateBy"/>
+                            </li>
+                            <li class="select-time">
+                                <p>最近修改时间：</p>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginUpdateDate]"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endUpdateDate]"/>
+                            </li>
+                            <li>
+                                <p>报告日期：</p>
+                                <input type="text" name="reportDate"/>
+                            </li>
+                            <li>
+                                <p>产品名称：</p>
+                                <input type="text" name="productName"/>
+                            </li>
+                            <li>
+                                <p>报告人ID：</p>
+                                <input type="text" name="reporterId"/>
+                            </li>
+                            <li>
+                                <p>报告人名称：</p>
+                                <input type="text" name="reporterName"/>
+                            </li>
+                            <li>
+                                <p>录入内容序号：</p>
+                                <input type="text" name="inputOrder"/>
+                            </li>
+                            <li>
+                                <p>是否为补报的日报：</p>
+                                <input type="text" name="isAfter"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="qywx:work:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="qywx:work:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="qywx:work:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="qywx:work:export">
+                    <i class="fa fa-download"></i> 导出
+                 </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('qywx:work:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('qywx:work:remove')}]];
+        var prefix = ctx + "qywx/work";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "当天工作记录信息",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field : 'projectGroupId', 
+                    title : '所在项目组名称'
+                },
+                {
+                    field : 'projectId', 
+                    title : '项目名称'
+                },
+                {
+                    field : 'productId', 
+                    title : '对应产品'
+                },
+                {
+                    field : 'workContents', 
+                    title : '工作内容简写'
+                },
+                {
+                    field : 'workDetail', 
+                    title : '工作内容详细描述'
+                },
+                {
+                    field : 'finishPercent', 
+                    title : '完成比例'
+                },
+                {
+                    field : 'delayReason', 
+                    title : '延迟原因'
+                },
+                {
+                    field : 'accordYesterday', 
+                    title : '对应计划'
+                },
+                {
+                    field : 'isImportant', 
+                    title : '是否重要'
+                },
+                {
+                    field : 'isEmergency', 
+                    title : '是否紧急'
+                },
+                {
+                    field : 'impoLevel', 
+                    title : '重要级别'
+                },
+                {
+                    field : 'id', 
+                    title : '主键',
+                    visible: false
+                },
+                {
+                    field : 'delFlag', 
+                    title : '逻辑删除标记(0.正常，1.删除)'
+                },
+                {
+                    field : 'status', 
+                    title : '状态'
+                },
+                {
+                    field : 'instId', 
+                    title : '机构ID'
+                },
+                {
+                    field : 'loginIp', 
+                    title : '登录IP'
+                },
+                {
+                    field : 'loginDate', 
+                    title : '登录日期'
+                },
+                {
+                    field : 'createBy', 
+                    title : '创建人'
+                },
+                {
+                    field : 'createDate', 
+                    title : '创建时间'
+                },
+                {
+                    field : 'updateBy', 
+                    title : '最近修改人'
+                },
+                {
+                    field : 'updateDate', 
+                    title : '最近修改时间'
+                },
+                {
+                    field : 'remarks', 
+                    title : '描述'
+                },
+                {
+                    field : 'reportDate', 
+                    title : '报告日期'
+                },
+                {
+                    field : 'productName', 
+                    title : '产品名称'
+                },
+                {
+                    field : 'reporterId', 
+                    title : '报告人ID'
+                },
+                {
+                    field : 'reporterName', 
+                    title : '报告人名称'
+                },
+                {
+                    field : 'inputOrder', 
+                    title : '录入内容序号'
+                },
+                {
+                    field : 'isAfter', 
+                    title : '是否为补报的日报'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+        
+        
+        /* 通过map带参调用后台的方法Demo       
+          function openDemo(){
+        	  var url1 =  prefix+"/tableDataInfo";
+        	  var url2 =  prefix+"/queryPageInfo";
+        	  var url3 =  prefix+"/queryOneEntity";
+              var	data = $('#formId').serialize();
+          	  var config = {
+        	        url: url3,
+        	        type: "post",
+        	        dataType: "json",
+        	        data: data,
+        	        beforeSend: function () {
+        	        //	$.modal.loading("正在处理中，请稍后...");
+        	        },
+        	        success: function(result) {
+        	        }
+        	    };
+        	    $.ajax(config)
+        } */
+    </script>
+</body>
+</html>

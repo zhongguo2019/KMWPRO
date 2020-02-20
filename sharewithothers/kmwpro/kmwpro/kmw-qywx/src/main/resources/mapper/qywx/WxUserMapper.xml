@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmw.qywx.mapper.WxUserMapper">
+	<!-- 表字段 声明 -->
+<sql id="WxUserColumns">
+ name, account, alaisname, duties, dept, sex, mobile, phone, email, address, shortcorname, isactive, isforbidden, wxplat</sql>
+	<!-- 实体与表字段映身声明，返回值 -->
+    <resultMap type="WxUser" id="WxUserResult">
+        <result property="name"    column="name"    />
+        <result property="account"    column="account"    />
+        <result property="alaisname"    column="alaisname"    />
+        <result property="duties"    column="duties"    />
+        <result property="dept"    column="dept"    />
+        <result property="sex"    column="sex"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="phone"    column="phone"    />
+        <result property="email"    column="email"    />
+        <result property="address"    column="address"    />
+        <result property="shortcorname"    column="shortcorname"    />
+        <result property="isactive"    column="isactive"    />
+        <result property="isforbidden"    column="isforbidden"    />
+        <result property="wxplat"    column="wxplat"    />
+    </resultMap>
+    
+	<!-- 定义查询整张表的SQL -->
+    <sql id="selectWxUserVo">
+        select name, account, alaisname, duties, dept, sex, mobile, phone, email, address, shortcorname, isactive, isforbidden, wxplat from wx_user
+    </sql>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryPageInfo" resultType="com.kmw.common.CommonEntity">
+        select
+       	<include refid="WxUserColumns" /> 
+        from wx_user t
+        <where>  
+        1=1
+            <if test="name != null  and name != ''"> and t.name like concat('%', #{name}, '%')</if>
+            <if test="account != null  and account != ''"> and t.account = #{account}</if>
+            <if test="alaisname != null  and alaisname != ''"> and t.alaisname like concat('%', #{alaisname}, '%')</if>
+            <if test="duties != null  and duties != ''"> and t.duties = #{duties}</if>
+            <if test="dept != null  and dept != ''"> and t.dept = #{dept}</if>
+            <if test="sex != null  and sex != ''"> and t.sex = #{sex}</if>
+            <if test="mobile != null  and mobile != ''"> and t.mobile = #{mobile}</if>
+            <if test="phone != null  and phone != ''"> and t.phone = #{phone}</if>
+            <if test="email != null  and email != ''"> and t.email = #{email}</if>
+            <if test="address != null  and address != ''"> and t.address = #{address}</if>
+            <if test="shortcorname != null  and shortcorname != ''"> and t.shortcorname like concat('%', #{shortcorname}, '%')</if>
+            <if test="isactive != null  and isactive != ''"> and t.isactive = #{isactive}</if>
+            <if test="isforbidden != null  and isforbidden != ''"> and t.isforbidden = #{isforbidden}</if>
+            <if test="wxplat != null  and wxplat != ''"> and t.wxplat = #{wxplat}</if>
+        </where>
+        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		<if
+			test="sortC != null  and sortC != '' and order != null  and order != ''">
+			ORDER BY t.${sortC} ${order}
+		</if>
+    </select>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryEntityList" resultType="com.kmw.common.CommonEntity">
+        select
+       	<include refid="WxUserColumns" /> 
+        from wx_user t
+        <where>  
+        1=1
+            <if test="name != null  and name != ''"> and t.name like concat('%', #{name}, '%')</if>
+            <if test="account != null  and account != ''"> and t.account = #{account}</if>
+            <if test="alaisname != null  and alaisname != ''"> and t.alaisname like concat('%', #{alaisname}, '%')</if>
+            <if test="duties != null  and duties != ''"> and t.duties = #{duties}</if>
+            <if test="dept != null  and dept != ''"> and t.dept = #{dept}</if>
+            <if test="sex != null  and sex != ''"> and t.sex = #{sex}</if>
+            <if test="mobile != null  and mobile != ''"> and t.mobile = #{mobile}</if>
+            <if test="phone != null  and phone != ''"> and t.phone = #{phone}</if>
+            <if test="email != null  and email != ''"> and t.email = #{email}</if>
+            <if test="address != null  and address != ''"> and t.address = #{address}</if>
+            <if test="shortcorname != null  and shortcorname != ''"> and t.shortcorname like concat('%', #{shortcorname}, '%')</if>
+            <if test="isactive != null  and isactive != ''"> and t.isactive = #{isactive}</if>
+            <if test="isforbidden != null  and isforbidden != ''"> and t.isforbidden = #{isforbidden}</if>
+            <if test="wxplat != null  and wxplat != ''"> and t.wxplat = #{wxplat}</if>
+        </where>
+        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		<if
+			test="sortC != null  and sortC != '' and order != null  and order != ''">
+			ORDER BY t.${sortC} ${order}
+		</if>
+    </select>   
+    
+	<!-- 按map参数查询后台的数据， 查询单条数据,返回的是通用实体，不受实体属性限制，相当于map -->
+	<select id="queryOneCommon"
+		resultType="com.kmw.common.CommonEntity">
+		select
+		<include refid="WxUserColumns" />
+		  from wx_user t
+		<where>
+			where id = #{id}
+		</where>
+	</select>    
+    
+    
+	<!-- 按实体参数来查询后台的数据 -->
+    <select id="selectWxUserList" parameterType="WxUser" resultMap="WxUserResult">
+        <include refid="selectWxUserVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="account != null  and account != ''"> and account = #{account}</if>
+            <if test="alaisname != null  and alaisname != ''"> and alaisname like concat('%', #{alaisname}, '%')</if>
+            <if test="duties != null  and duties != ''"> and duties = #{duties}</if>
+            <if test="dept != null  and dept != ''"> and dept = #{dept}</if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="mobile != null  and mobile != ''"> and mobile = #{mobile}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="shortcorname != null  and shortcorname != ''"> and shortcorname like concat('%', #{shortcorname}, '%')</if>
+            <if test="isactive != null  and isactive != ''"> and isactive = #{isactive}</if>
+            <if test="isforbidden != null  and isforbidden != ''"> and isforbidden = #{isforbidden}</if>
+            <if test="wxplat != null  and wxplat != ''"> and wxplat = #{wxplat}</if>
+        </where>
+    </select>
+ 
+ 	<!-- 按主键来查询后台的数据 -->   
+    <select id="selectWxUserById" parameterType="String" resultMap="WxUserResult">
+        <include refid="selectWxUserVo"/>
+        where name = #{name}
+    </select>
+    
+ 	<!-- 插入数据库一条数据 -->       
+    <insert id="insertWxUser" parameterType="WxUser">
+        insert into wx_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">name,</if>
+            <if test="account != null  and account != ''">account,</if>
+            <if test="alaisname != null  and alaisname != ''">alaisname,</if>
+            <if test="duties != null  and duties != ''">duties,</if>
+            <if test="dept != null  and dept != ''">dept,</if>
+            <if test="sex != null  and sex != ''">sex,</if>
+            <if test="mobile != null  and mobile != ''">mobile,</if>
+            <if test="phone != null  and phone != ''">phone,</if>
+            <if test="email != null  and email != ''">email,</if>
+            <if test="address != null  and address != ''">address,</if>
+            <if test="shortcorname != null  and shortcorname != ''">shortcorname,</if>
+            <if test="isactive != null  and isactive != ''">isactive,</if>
+            <if test="isforbidden != null  and isforbidden != ''">isforbidden,</if>
+            <if test="wxplat != null  and wxplat != ''">wxplat,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="account != null  and account != ''">#{account},</if>
+            <if test="alaisname != null  and alaisname != ''">#{alaisname},</if>
+            <if test="duties != null  and duties != ''">#{duties},</if>
+            <if test="dept != null  and dept != ''">#{dept},</if>
+            <if test="sex != null  and sex != ''">#{sex},</if>
+            <if test="mobile != null  and mobile != ''">#{mobile},</if>
+            <if test="phone != null  and phone != ''">#{phone},</if>
+            <if test="email != null  and email != ''">#{email},</if>
+            <if test="address != null  and address != ''">#{address},</if>
+            <if test="shortcorname != null  and shortcorname != ''">#{shortcorname},</if>
+            <if test="isactive != null  and isactive != ''">#{isactive},</if>
+            <if test="isforbidden != null  and isforbidden != ''">#{isforbidden},</if>
+            <if test="wxplat != null  and wxplat != ''">#{wxplat},</if>
+         </trim>
+    </insert>
+	<!-- 按主键更新数据库一条数据 -->
+    <update id="updateWxUser" parameterType="WxUser">
+        update wx_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="account != null  and account != ''">account = #{account},</if>
+            <if test="alaisname != null  and alaisname != ''">alaisname = #{alaisname},</if>
+            <if test="duties != null  and duties != ''">duties = #{duties},</if>
+            <if test="dept != null  and dept != ''">dept = #{dept},</if>
+            <if test="sex != null  and sex != ''">sex = #{sex},</if>
+            <if test="mobile != null  and mobile != ''">mobile = #{mobile},</if>
+            <if test="phone != null  and phone != ''">phone = #{phone},</if>
+            <if test="email != null  and email != ''">email = #{email},</if>
+            <if test="address != null  and address != ''">address = #{address},</if>
+            <if test="shortcorname != null  and shortcorname != ''">shortcorname = #{shortcorname},</if>
+            <if test="isactive != null  and isactive != ''">isactive = #{isactive},</if>
+            <if test="isforbidden != null  and isforbidden != ''">isforbidden = #{isforbidden},</if>
+            <if test="wxplat != null  and wxplat != ''">wxplat = #{wxplat},</if>
+        </trim>
+        where name = #{name}
+    </update>
+	<!-- 按主键删除数据库中一条数据 -->
+    <delete id="deleteWxUserById" parameterType="String">
+        delete from wx_user where name = #{name}
+    </delete>
+	<!-- 按主键列表字符串用逗号分隔， 删除数据库中多条数据 -->
+    <delete id="deleteWxUserByIds" parameterType="String">
+        delete from wx_user where name in 
+        <foreach item="name" collection="array" open="(" separator="," close=")">
+            #{name}
+        </foreach>
+    </delete>
+    
+    	
+	<!-- 查询单条记录 -->
+	<select id="selectWxUser"
+		resultType="com.kmw.qywx.domain.WxUser">
+		select
+		 name,account,alaisname,duties,dept,sex,mobile,phone,email,address,shortcorname,isactive,isforbidden,wxplat,name,account,alaisname,duties,dept,sex,mobile,phone,email,address,shortcorname,isactive,isforbidden,wxplat
+		from wx_user
+		<where>
+			<if test=" username != null  and username != '' "> and account = #{username} </if>	
+		</where>
+	</select>	
+    	<!-- 查询用户所属的组信息，一个用户可以属于多个小组，要求同一时间，这个人必须在指定的一个组里 -->
+	<select id="getWxUserGroup"
+		resultType="com.kmw.common.CommonEntity">
+            SELECT group_code as group_id ,group_cname as group_name FROM wx_user_group 
+		<where>
+            1=1
+			<if test=" username != null  and username != ''"> and  user_code  = #{username} </if>
+		</where>
+	</select>
+			<!-- 列表查询,返回的是实体-->
+	<select id="queryOneWxUser" resultType="com.kmw.qywx.domain.WxUser">
+        select  
+        name,account,alaisname,duties,dept,sex,mobile
+        ,phone,email,address,shortcorname,isactive,isforbidden
+        ,wxplat,name,account,alaisname,duties,dept
+        ,sex,mobile,phone,email,address,shortcorname
+        ,isactive,isforbidden,wxplat,login_date,login_ip,project_group_id
+		from wx_user
+		<where>
+			1=1
+			<if test=" username != null  and username != '' "> and account = #{username} </if>	
+
+		</where>
+	</select>
+</mapper>
