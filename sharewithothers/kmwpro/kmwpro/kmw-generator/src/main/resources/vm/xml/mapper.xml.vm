@@ -4,13 +4,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="${packageName}.mapper.${ClassName}Mapper">
 	<!-- 表字段 声明 -->
-<sql id="${ClassName}Columns">
-#foreach($column in $columns) $column.columnName#if($velocityCount != $columns.size()),#end#end
-</sql>
+	<sql id="${ClassName}Columns">
+		#foreach($column in $columns) $column.columnName#if($velocityCount != $columns.size()),#end#end
+	</sql>
 	<!-- 实体与表字段映身声明，返回值 -->
     <resultMap type="${ClassName}" id="${ClassName}Result">
 #foreach ($column in $columns)
-        <result property="${column.javaField}"    column="${column.columnName}"    />
+		<result property="${column.javaField}"    column="${column.columnName}"    />
 #end
 #if($table.tree)
         <result property="parentName" column="parent_name" />
@@ -19,16 +19,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
 	<!-- 定义查询整张表的SQL -->
     <sql id="select${ClassName}Vo">
-        select#foreach($column in $columns) $column.columnName#if($velocityCount != $columns.size()),#end#end from ${tableName}
+        select
+			#foreach($column in $columns) $column.columnName#if($velocityCount != $columns.size()),#end#end 
+        from ${tableName}
     </sql>
     
 	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
     <select id="queryPageInfo" resultType="com.kmw.common.CommonEntity">
         select
-       	<include refid="${ClassName}Columns" /> 
-        from ${tableName} t
+			<include refid="${ClassName}Columns" /> 
+        from	${tableName} t
         <where>  
-        1=1
+			1=1
 #foreach($column in $columns)
 #set($queryType=$column.queryType)
 #set($javaField=$column.javaField)
@@ -56,11 +58,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 #end
 #end
         </where>
-        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
-		<if
-			test="sortC != null  and sortC != '' and order != null  and order != ''">
-			ORDER BY t.${sortC} ${order}
-		</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''"> ORDER BY t.${sortC} ${order}
+			</if>
     </select>
     
 	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
@@ -96,24 +96,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 #end
 #end
 #end
-        </where>
-        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
-		<if
-			test="sortC != null  and sortC != '' and order != null  and order != ''">
-			ORDER BY t.${sortC} ${order}
-		</if>
+		</where>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''">ORDER BY t.${sortC} ${order}</if>
     </select>   
     
 	<!-- 按map参数查询后台的数据， 查询单条数据,返回的是通用实体，不受实体属性限制，相当于map -->
-	<select id="queryOneCommon"
-		resultType="com.kmw.common.CommonEntity">
-		select
+    <select id="queryOneCommon"	resultType="com.kmw.common.CommonEntity">
+        select
 		<include refid="${ClassName}Columns" />
-		  from ${tableName} t
+        from ${tableName} t
 		<where>
-			where id = #{id}
+        where id = #{id}
 		</where>
-	</select>    
+    </select>    
     
     
 	<!-- 按实体参数来查询后台的数据 -->
@@ -206,5 +202,107 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{${pkColumn.javaField}}
         </foreach>
     </delete>
+    
+       <!-- 根据不同条件删除数据，条件可组合 -->
+	<delete id="deleteByParams" parameterType="java.util.Map">
+		delete from ${tableName} t
+		<where>
+		        
+#foreach($column in $columns)
+#set($queryType=$column.queryType)
+#set($javaField=$column.javaField)
+#set($javaType=$column.javaType)
+#set($columnName=$column.columnName)
+#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+#if($column.query)
+#if($column.queryType == "EQ")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and t.$columnName = #{$javaField}</if>
+#elseif($queryType == "NE")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and t.$columnName != #{$javaField}</if>
+#elseif($queryType == "GT")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and t.$columnName &gt; #{$javaField}</if>
+#elseif($queryType == "GTE")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and t.$columnName &gt;= #{$javaField}</if>
+#elseif($queryType == "LT")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and t.$columnName &lt; #{$javaField}</if>
+#elseif($queryType == "LTE")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and t.$columnName &lt;= #{$javaField}</if>
+#elseif($queryType == "LIKE")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and t.$columnName like concat('%', #{$javaField}, '%')</if>
+#elseif($queryType == "BETWEEN")
+            <if test="params.begin$AttrName != null and params.begin$AttrName != '' and params.end$AttrName != null and params.end$AttrName != ''"> and t.$columnName between #{params.begin$AttrName} and #{params.end$AttrName}</if>
+#end
+#end
+#end
+			
+			</where>
+	</delete>
+	
+    <!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="entityList" resultType="${ClassName}Result">
+        select
+       	<include refid="${ClassName}Columns" /> 
+        from ${tableName} t
+        <where>  
+        1=1
+#foreach($column in $columns)
+#set($queryType=$column.queryType)
+#set($javaField=$column.javaField)
+#set($javaType=$column.javaType)
+#set($columnName=$column.columnName)
+#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+#if($column.query)
+#if($column.queryType == "EQ")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and t.$columnName = #{$javaField}</if>
+#elseif($queryType == "NE")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and t.$columnName != #{$javaField}</if>
+#elseif($queryType == "GT")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and t.$columnName &gt; #{$javaField}</if>
+#elseif($queryType == "GTE")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and t.$columnName &gt;= #{$javaField}</if>
+#elseif($queryType == "LT")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and t.$columnName &lt; #{$javaField}</if>
+#elseif($queryType == "LTE")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and t.$columnName &lt;= #{$javaField}</if>
+#elseif($queryType == "LIKE")
+            <if test="$javaField != null #if($javaType == 'String' ) and $javaField.trim() != ''#end"> and t.$columnName like concat('%', #{$javaField}, '%')</if>
+#elseif($queryType == "BETWEEN")
+            <if test="params.begin$AttrName != null and params.begin$AttrName != '' and params.end$AttrName != null and params.end$AttrName != ''"> and t.$columnName between #{params.begin$AttrName} and #{params.end$AttrName}</if>
+#end
+#end
+#end
+        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+        </where>
+
+		<if
+			test="sortC != null  and sortC != '' and order != null  and order != ''">
+			ORDER BY t.${sortC} ${order}
+		</if>
+    </select>     
+    <!-- 批量插入数据 -->
+	<insert id="insertBatch">
+		insert into ${tableName}(<include refid="${ClassName}Columns" />) values 
+		<foreach collection="list" item="item" separator="," >
+		(
+#foreach($column in $columns)
+            #{item.$column.javaField} #if($velocityCount != $columns.size()),
+#end
+#end
+		)
+		</foreach>
+	</insert>  
+  	<!-- 根据不同条件删除数据，条件可组合 -->
+	<update id="updateBatchEntity" >
+		<foreach collection="list" item="item" separator=",">
+        update ${tableName}
+        set
+#foreach($column in $columns)
+            $column.columnName = #{$column.javaField} #if($velocityCount != $columns.size()),
+#end
+#end    <where>
+			${pkColumn.columnName} = #{${pkColumn.javaField}}
+        </where>
+		</foreach>
+	</update>
     
 </mapper>

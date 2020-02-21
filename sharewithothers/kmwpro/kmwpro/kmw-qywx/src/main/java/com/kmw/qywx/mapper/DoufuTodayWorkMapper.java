@@ -68,26 +68,24 @@ public interface DoufuTodayWorkMapper
      * @return 结果
      */
     public List<CommonEntity> queryPageInfo(Map<String, Object> params);
-        /**
+    
+    /**
      * 通用实体查询，Map参数 列表查询,返回的是通用实体，不受实体属性限制，相当于map
      * 
      * @param Map<String, Object> params  查询条件以map形式
      * @return 结果
      */
     public List<CommonEntity> queryEntityList(Map<String, Object> params);
-        /**
+    
+    /**
      * 通用实体查询，Map参数 列表查询,返回的是通用实体，不受实体属性限制，相当于map
      * 
      * @param Map<String, Object> params  查询条件以map形式
      * @return 结果
      */
     public CommonEntity queryOneCommon(Map<String, Object> params);
-    
-	/**
-	 * 根据不同条件删除数据，条件可组合
-	 */
-    public int deleteByParams(Map<String, Object> params);
-	/**
+	
+    /**
 	 * 批量插入数据
 	 */
 	int insertBatch(List<DoufuTodayWork> list);
@@ -98,10 +96,19 @@ public interface DoufuTodayWorkMapper
 	List<DoufuTodayWork> entityList(Map<String, Object> params);
 	
 	/**
+	 * 根据不同条件删除数据，条件可组合
+	 */
+    public int deleteByParams(Map<String, Object> params);
+	
+    /**
+	 * 批量更新
+	 */
+	int updateBatchEntity( List<DoufuTodayWork> list);
+		
+	/**
 	 * 查询未提交的用户名称
 	 */
 	List<CommonEntity>  queryNotCommitUser(Map<String, Object> params);
-	
 	
 	/**
 	 * 查询指定时间段内指定的用户的提交日期列表

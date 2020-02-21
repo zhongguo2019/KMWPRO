@@ -164,18 +164,56 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
 	 * @return
 	 */
 	public CommonEntity queryOne(Map<String, Object> params){
-		logger.info("#=================开始根据不同条件查询一条【${functionName}信息】数据，返回实体对象========================#");
+		logger.info("#=================开始根据不同条件查询一条【${functionName}】数据，返回实体对象========================#");
 		if(params.containsKey("id")) {
 		return ${className}Mapper.queryOneCommon(params);
 		}else {
-			logger.info("#=================按主键查询【${functionName}信息】一条，Map参数中 id不能为空========================#");
+			logger.info("#=================按主键查询【${functionName}】一条，Map参数中 id不能为空========================#");
 	 return null;
 		}
 	}
         
+  	/**
+	 * 更新操作
+	 * @param ${ClassName}
+	 * @return
+	 */
+	public int updateBatch(List<${ClassName}> list){
+		logger.info("#=================开始传入的实体列表更新【${functionName}】数据========================#");
+		return ${className}Mapper.updateBatchEntity(list);
+	}	  
     
+   
+	/**
+	 * 根据不同组合条件删除
+	 * @param params
+	 * @return
+	 */
+	public int deleteByParams(Map<String, Object> params){
+		logger.info("#=================开始根据不同条件删除【${functionName}】数据========================#");
+		return  ${className}Mapper.deleteByParams(params);
+	}
+	/**
+	 * 批量保存操作
+	 * @param list
+	 * @return
+	 */
+	public int insertBatch(List<${ClassName}> list){
+		return  ${className}Mapper.insertBatch(list);
+	}
     
-    
+	/**
+	 * 列表(可带条件查询) 当天工作记录信息信息
+	 * 通用实体查询，Map参数 返回的是通用实体，不受实体属性限制，相当于map
+	 * @param params
+	 * @return List<${className}>
+	 */
+	public List<${className}> entityList(Map<String, Object> params) {
+		logger.info("#=================开始根据不同条件查询【【${functionName}】列表数据，返回通用对象========================#");
+		List<${ClassName}> list =  ${className}Mapper.entityList(params);
+		return list;
+	}
+	 
     
     
     

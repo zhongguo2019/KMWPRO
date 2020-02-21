@@ -253,6 +253,8 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/kmw/**", "anon");
         filterChainDefinitionMap.put("/druid/**", "anon");
         filterChainDefinitionMap.put("/captcha/captchaImage**", "anon");
+        // 企业微信访问后台不用走权限管理框架
+        filterChainDefinitionMap.put("/kmw/qywx**", "anon");
         // 退出 logout地址，shiro去清除session
         filterChainDefinitionMap.put("/logout", "logout");
         // 不需要拦截的访问

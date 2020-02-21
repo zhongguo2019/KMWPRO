@@ -190,7 +190,45 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 		}
 	}
         
+ /**
+	 * 更新操作
+	 * @param doufuTodayWork
+	 * @return
+	 */
+	public int updateBatch(List<DoufuTodayWork> list){
+		return doufuTodayWorkMapper.updateBatchEntity(list);
+	}	
+	
+	/**
+	 * 根据不同组合条件删除
+	 * @param params
+	 * @return
+	 */
+	public int deleteByParams(Map<String, Object> params){
+		logger.info("#=================开始根据不同条件删除【当天工作记录信息表】数据========================#");
+		return doufuTodayWorkMapper.deleteByParams(params);
+	}
+	/**
+	 * 批量保存操作
+	 * @param list
+	 * @return
+	 */
+	public int insertBatch(List<DoufuTodayWork> list){
+		return doufuTodayWorkMapper.insertBatch(list);
+	}
     
+	/**
+	 * 列表(可带条件查询) 当天工作记录信息信息
+	 * 通用实体查询，Map参数 返回的是通用实体，不受实体属性限制，相当于map
+	 * @param params
+	 * @return List<CommonEntity>
+	 */
+	public List<DoufuTodayWork> entityList(Map<String, Object> params) {
+		logger.info("#=================开始根据不同条件查询【当天工作记录信息】列表数据，返回通用对象========================#");
+		List<DoufuTodayWork> list = doufuTodayWorkMapper.entityList(params);
+		return list;
+	}
+	   
 
 
 	public String getReportError() {
@@ -1192,36 +1230,8 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 		return strRtn;
 
 	}
-    
-	/**
-	 * 根据不同组合条件删除
-	 * @param params
-	 * @return
-	 */
-	public int deleteByParams(Map<String, Object> params){
-		logger.info("#=================开始根据不同条件删除【当天工作记录信息表】数据========================#");
-		return doufuTodayWorkMapper.deleteByParams(params);
-	}
-	/**
-	 * 批量保存操作
-	 * @param list
-	 * @return
-	 */
-	public int insertBatch(List<DoufuTodayWork> list){
-		return doufuTodayWorkMapper.insertBatch(list);
-	}
-    
-	/**
-	 * 列表(可带条件查询) 当天工作记录信息信息
-	 * 通用实体查询，Map参数 返回的是通用实体，不受实体属性限制，相当于map
-	 * @param params
-	 * @return List<CommonEntity>
-	 */
-	public List<DoufuTodayWork> entityList(Map<String, Object> params) {
-		logger.info("#=================开始根据不同条件查询【当天工作记录信息】列表数据，返回通用对象========================#");
-		List<DoufuTodayWork> list = doufuTodayWorkMapper.entityList(params);
-		return list;
-	}
+  
+	
 	
 	/**
 	 * 查询未提交的人员列表

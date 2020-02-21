@@ -94,10 +94,37 @@ public interface IDoufuTodayWorkService
 	 * @return CommonEntity
 	 */
 	public CommonEntity queryOne(Map<String, Object> params);
+	/**
+	 * 根据map查询得到实体数据列表 当天工作记录信息
+	 * @param params
+	 * @return List<DoufuTodayWork> 
+	 */
+	public List<DoufuTodayWork> entityList(Map<String, Object> params);
+
+	/**
+	 * 根据map内容删除表中字段与map值对应上的所有数据 当天工作记录信息
+	 * @param params
+	 * @return int
+	 */
+	public int deleteByParams(Map<String, Object> params);
+	
+	/**
+	 * 批量保存操作
+	 * @param list
+	 * @return
+	 */
+	public int insertBatch(List<DoufuTodayWork> list);
+	
+	/**
+	 * 更新操作
+	 * @param doufuTodayWork
+	 * @return
+	 */
+	public int updateBatch(List<DoufuTodayWork> list);
+	
 	public List<CommonEntity>  queryNotCommitUser(Map<String, Object> params);
 	public String dealEvent(HttpServletRequest request, String strEvenKey);
-	public List<DoufuTodayWork> entityList(Map<String, Object> params);
-	public int deleteByParams(Map<String, Object> params);
+
 	public String dealDayReportInsert(HttpServletRequest request, String strMsgContent, String strFromUser);
 	public String dealDayReportAdd(HttpServletRequest request, String strMsgContent, String strFromUser);
 	public String dealDayReportQuery(HttpServletRequest request, String strMsgContent, String strFromUser) throws ParseException;
