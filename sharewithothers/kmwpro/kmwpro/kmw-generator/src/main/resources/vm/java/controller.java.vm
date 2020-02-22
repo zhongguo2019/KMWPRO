@@ -57,9 +57,10 @@ public class ${ClassName}Controller extends BaseController
     }
 
 #if($table.tree)
-    /**
-     * 查询${functionName}树列表
-     */
+/**
+*@function 查询${functionName}树列表
+**
+*/
     @RequiresPermissions("${permissionPrefix}:list")
     @PostMapping("/list")
     @ResponseBody
@@ -69,9 +70,9 @@ public class ${ClassName}Controller extends BaseController
         return list;
     }
 #elseif($table.crud)
-    /**
-     * 查询${functionName}列表
-     */
+ /**
+ *@function 查询${functionName}列表
+ */
     @RequiresPermissions("${permissionPrefix}:list")
     @PostMapping("/list")
     @ResponseBody
@@ -83,9 +84,9 @@ public class ${ClassName}Controller extends BaseController
     }
 #end
 
-    /**
-     * 导出${functionName}列表
-     */
+/**
+*@function  导出${functionName}列表
+*/
     @RequiresPermissions("${permissionPrefix}:export")
     @PostMapping("/export")
     @ResponseBody
@@ -97,18 +98,18 @@ public class ${ClassName}Controller extends BaseController
     }
 
 #if($table.crud)
-    /**
-     * 新增${functionName}
-     */
+/**
+*@function  新增${functionName}
+*/
     @GetMapping("/add")
     public String add()
     {
         return prefix + "/add";
     }
 #elseif($table.tree)
-    /**
-     * 新增${functionName}
-     */
+/**
+*@function  新增${functionName}
+*/
     @GetMapping(value = { "/add/{${pkColumn.javaField}}", "/add/" })
     public String add(@PathVariable(value = "${pkColumn.javaField}", required = false) Long ${pkColumn.javaField}, ModelMap mmap)
     {
@@ -120,9 +121,9 @@ public class ${ClassName}Controller extends BaseController
     }
 #end
 
-    /**
-     * 新增保存${functionName}
-     */
+/**
+*@function  新增保存${functionName}
+*/
     @RequiresPermissions("${permissionPrefix}:add")
     @Log(title = "${functionName}", businessType = BusinessType.INSERT)
     @PostMapping("/add")
@@ -132,9 +133,9 @@ public class ${ClassName}Controller extends BaseController
         return toAjax(${className}Service.insert${ClassName}(${className}));
     }
 
-    /**
-     * 修改${functionName}
-     */
+/**
+*@function 修改${functionName}
+*/
     @GetMapping("/edit/{${pkColumn.javaField}}")
     public String edit(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField}, ModelMap mmap)
     {
@@ -143,9 +144,9 @@ public class ${ClassName}Controller extends BaseController
         return prefix + "/edit";
     }
 
-    /**
-     * 修改保存${functionName}
-     */
+/**
+*@function 修改保存${functionName}
+*/
     @RequiresPermissions("${permissionPrefix}:edit")
     @Log(title = "${functionName}", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -154,16 +155,15 @@ public class ${ClassName}Controller extends BaseController
     {
         return toAjax(${className}Service.update${ClassName}(${className}));
     }
-
-	/**
-	 *按Map参数据查询，得到公共实体后分页
-	 * 
-	 * @param params
-	 * @return
-	 */
+/**
+*@function 按Map参数据查询，得到公共实体后分页	 
+* 
+* @param params
+* @return
+ */
 	@RequestMapping(value = "queryPageInfo", method = RequestMethod.POST)
 	@ResponseBody
-	public PageInfo PageInfo(@RequestParam Map<String, Object> params, Model model) {
+	public PageInfo<CommonEntity> PageInfo(@RequestParam Map<String, Object> params, Model model) {
 		logger.info("【通用实体查询】 分页显示 ${functionName} ，Map参数：" + params.toString());
 		TableDataInfo tableDataInfo = new TableDataInfo();
 		params.put("pageNum", 0);
@@ -171,19 +171,17 @@ public class ${ClassName}Controller extends BaseController
 		if (params.containsKey("sortC")) { // 如果传过来的参数是驼峰式，这里需要将驼峰转成下划线式
 			params.put("sortC", StringConvert.camelhumpToUnderline(params.get("sortC").toString()));
 		}
-		
-		
 		PageInfo<CommonEntity> page = ${className}Service.queryPageInfoEntity(params);
 		return page;
 
 	}
 
-	/**
-	 * 前台分页显示
-	 * 
-	 * @param params
-	 * @return
-	 */
+/**
+* @function  前台分页显示
+* 
+* @param params
+* @return
+*/
 	@RequestMapping(value = "tableDataInfo", method = RequestMethod.POST)
 	@ResponseBody
 	public TableDataInfo tableDataInfo(@RequestParam Map<String, Object> params, Model model) {
@@ -193,12 +191,12 @@ public class ${ClassName}Controller extends BaseController
 
 	}
 
-	/**
-	 * 查询一条记录
-	 * 
-	 * @param params
-	 * @return
-	 */
+/**
+* @function 查询一条记录
+* 
+* @param params
+* @return
+*/
 	@RequestMapping(value = "queryOneEntity", method = RequestMethod.POST)
 	@ResponseBody
 	public CommonEntity queryOne(@RequestParam Map<String, Object> params, ModelMap mmap) {
@@ -211,9 +209,9 @@ public class ${ClassName}Controller extends BaseController
 
 
 #if($table.crud)
-    /**
-     * 删除${functionName}
-     */
+/**
+*  @function 删除${functionName}
+*/
     @RequiresPermissions("${permissionPrefix}:remove")
     @Log(title = "${functionName}", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
@@ -223,9 +221,9 @@ public class ${ClassName}Controller extends BaseController
         return toAjax(${className}Service.delete${ClassName}ByIds(ids));
     }
 #elseif($table.tree)
-    /**
-     * 删除
-     */
+/**
+* @function return删除
+*/
     @RequiresPermissions("${permissionPrefix}:remove")
     @Log(title = "${functionName}", businessType = BusinessType.DELETE)
     @GetMapping("/remove/{${pkColumn.javaField}}")
@@ -237,9 +235,9 @@ public class ${ClassName}Controller extends BaseController
 #end
 #if($table.tree)
 
-    /**
-     * 选择${functionName}树
-     */
+/**
+* return选择${functionName}树
+*/
 #set($BusinessName=$businessName.substring(0,1).toUpperCase() + ${businessName.substring(1)})
     @GetMapping(value = { "/select${BusinessName}Tree/{${pkColumn.javaField}}", "/select${BusinessName}Tree/" })
     public String select${BusinessName}Tree(@PathVariable(value = "${pkColumn.javaField}", required = false) Long ${pkColumn.javaField}, ModelMap mmap)
@@ -252,7 +250,7 @@ public class ${ClassName}Controller extends BaseController
     }
 
     /**
-     * 加载${functionName}树列表
+     * return加载${functionName}树列表
      */
     @GetMapping("/treeData")
     @ResponseBody

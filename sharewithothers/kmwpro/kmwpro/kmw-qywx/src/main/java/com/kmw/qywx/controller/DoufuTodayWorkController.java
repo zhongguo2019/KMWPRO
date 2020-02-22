@@ -150,16 +150,13 @@ public class DoufuTodayWorkController extends BaseController
 	 */
 	@RequestMapping(value = "queryPageInfo", method = RequestMethod.POST)
 	@ResponseBody
-	public PageInfo PageInfo(@RequestParam Map<String, Object> params, Model model) {
+	public PageInfo<CommonEntity> PageInfo(@RequestParam Map<String, Object> params, Model model) {
 		logger.info("【通用实体查询】 分页显示 当天工作记录信息 ，Map参数：" + params.toString());
-		TableDataInfo tableDataInfo = new TableDataInfo();
 		params.put("pageNum", 0);
 		params.put("pageSize", 100);
 		if (params.containsKey("sortC")) { // 如果传过来的参数是驼峰式，这里需要将驼峰转成下划线式
 			params.put("sortC", StringConvert.camelhumpToUnderline(params.get("sortC").toString()));
 		}
-		
-		
 		PageInfo<CommonEntity> page = doufuTodayWorkService.queryPageInfoEntity(params);
 		return page;
 

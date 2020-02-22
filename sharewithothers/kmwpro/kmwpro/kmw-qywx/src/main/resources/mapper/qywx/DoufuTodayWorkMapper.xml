@@ -5,7 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.kmw.qywx.mapper.DoufuTodayWorkMapper">
 	<!-- 表字段 声明 -->
 <sql id="DoufuTodayWorkColumns">
- PROJECT_GROUP_ID, PROJECT_ID, PRODUCT_ID, WORK_CONTENTS, WORK_DETAIL, FINISH_PERCENT, DELAY_REASON, ACCORD_YESTERDAY, IS_IMPORTANT, IS_EMERGENCY, IMPO_LEVEL, ID, DEL_FLAG, STATUS, INST_ID, LOGIN_IP, LOGIN_DATE, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, REMARKS, REPORT_DATE, PRODUCT_NAME, REPORTER_ID, REPORTER_NAME, INPUT_ORDER, IS_AFTER</sql>
+ PROJECT_GROUP_ID, PROJECT_ID, PRODUCT_ID, WORK_CONTENTS, WORK_DETAIL, FINISH_PERCENT, DELAY_REASON, ACCORD_YESTERDAY, IS_IMPORTANT, IS_EMERGENCY, IMPO_LEVEL, ID, DEL_FLAG, STATUS, INST_ID, LOGIN_IP, LOGIN_DATE, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, REMARKS, REPORT_DATE, PRODUCT_NAME, REPORTER_ID, REPORTER_NAME, INPUT_ORDER, IS_AFTER
+ </sql>
 	<!-- 实体与表字段映身声明，返回值 -->
     <resultMap type="DoufuTodayWork" id="DoufuTodayWorkResult">
         <result property="projectGroupId"    column="PROJECT_GROUP_ID"    />
@@ -328,7 +329,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 <!-- 列表查询,返回的是实体-->
-	<select id="entityList" resultType="DoufuTodayWorkResult">
+	<select id="entityList" resultMap="DoufuTodayWorkResult">
         select  <include refid="DoufuTodayWorkColumns" />
 		from doufu_today_work  t
 		<where>
@@ -443,7 +444,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <!-- 查询提交的日报情况  查询未提交人员姓名 -->
 	<select id="queryNotCommitUser"
-		resultType="com.boot.util.CommonEntity">
+		resultType="com.kmw.common.CommonEntity">
          select
          wx_user.account as account ,
           wx_user.name   as name
@@ -463,7 +464,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			
 		<!-- 统计个人指定的时间段提交的日报日期列表 -->
 	<select id="countCommitTimes"
-		resultType="com.boot.util.CommonEntity">
+		resultType="com.kmw.common.CommonEntity">
          select
          distinct REPORT_DATE as REPORT_DATE
          from doufu_today_work t
@@ -480,7 +481,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 		<!-- 统计个人指定的时间段提交的日报日期列表 -->
 	<select id="countMonthCommitTimes"
-		resultType="com.boot.util.CommonEntity">
+		resultType="com.kmw.common.CommonEntity">
          select 
          COUNT(distinct doufu_today_work.REPORT_DATE) as  commitcount,
          wx_user.name as username
@@ -495,7 +496,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 			<!-- 统计个人指定的时间段提交的日报日期列表 -->
 	<select id="getReportDateList"
-		resultType="com.boot.util.CommonEntity">
+		resultType="com.kmw.common.CommonEntity">
         select distinct report_date  as report_date
         from  doufu_today_work 
 		<where>

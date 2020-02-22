@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Resource;
+
 /**
  * redisTemplate封装
  *
@@ -17,12 +19,14 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisUtil {
 
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
-
-    public RedisUtil(RedisTemplate<String, Object> redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
+	@Resource
+	private RedisTemplate redisTemplate;
+	/*
+	 * private RedisTemplate<String, Object> redisTemplate;
+	 * 
+	 * public RedisUtil(RedisTemplate<String, Object> redisTemplate) {
+	 * this.redisTemplate = redisTemplate; }
+	 */
 
     /**
      * 指定缓存失效时间

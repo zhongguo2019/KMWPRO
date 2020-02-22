@@ -69,13 +69,13 @@ public class WeiXinUtil {
 	public final static String access_token_url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={corpId}&corpsecret={corpsecret}";
 	// 获取jsapi_ticket的接口地址（GET） 限200（次/天）
 	public final static String jsapi_ticket_url = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?";
-	IWxUserService wxUserService = SpringContextHolder.getBean("IWxUserService");
+	IWxUserService wxUserService = SpringContextHolder.getBean("wxUserServiceImpl");
 	
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
  
 	RedisUtil redisUtil = SpringContextHolder.getBean("redisUtil");
-	IDoufuTodayWorkService doufuTodayWorkService = SpringContextHolder.getBean("IDoufuTodayWorkService");
+	IDoufuTodayWorkService doufuTodayWorkService = SpringContextHolder.getBean("doufuTodayWorkServiceImpl");
 
 
 	/**
@@ -209,92 +209,7 @@ public class WeiXinUtil {
 		return file;
 	}
 
-	/**
-	 * @desc ：2.微信上传素材的请求方法,访问指定的地址，上传文件
-	 * 
-	 * @param requestUrl 微信上传临时素材的接口url
-	 * @param file       要上传的文件
-	 * @return String 上传成功后，微信服务器返回的消息
-	 */
-	public static String httpRequest(String requestUrl, File file) {
-		StringBuffer buffer = new StringBuffer();
-
-		try {
-			// 1.建立连接
-			URL url = new URL(requestUrl);
-			HttpURLConnection httpUrlConn = (HttpURLConnection) url.openConnection(); // 打开链接
-			httpUrlConn.setReadTimeout(1000);
-			httpUrlConn.setConnectTimeout(15000);
-
-			// 1.1输入输出设置
-			httpUrlConn.setDoInput(true);
-			httpUrlConn.setDoOutput(true);
-			httpUrlConn.setUseCaches(false); // post方式不能使用缓存
-			// 1.2设置请求头信息
-			httpUrlConn.setRequestProperty("Connection", "Keep-Alive");
-			httpUrlConn.setRequestProperty("Charset", "UTF-8");
-			// 1.3设置边界
-			String BOUNDARY = "----------" + System.currentTimeMillis();
-			httpUrlConn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);
-
-			// 请求正文信息
-			// 第一部分：
-			// 2.将文件头输出到微信服务器
-			StringBuilder sb = new StringBuilder();
-			sb.append("--"); // 必须多两道线
-			sb.append(BOUNDARY);
-			sb.append("\r\n");
-			sb.append("Content-Disposition: form-data;name=\"media\";filelength=" + file.length() + ";filename=\""
-					+ file.getName() + "\"\r\n");
-			sb.append("Content-Type:application/octet-stream\r\n\r\n");
-			byte[] head = sb.toString().getBytes("utf-8");
-			log.info("向服务器写入文件流，服务器地址：【" + sb.toString() + "】");
-			// 获得输出流
-			OutputStream outputStream = new DataOutputStream(httpUrlConn.getOutputStream());
-			// 将表头写入输出流中：输出表头
-			outputStream.write(head);
-
-			// 3.将文件正文部分输出到微信服务器
-			// 把文件以流文件的方式 写入到微信服务器中
-			DataInputStream in = new DataInputStream(new FileInputStream(file));
-			int bytes = 0;
-			byte[] bufferOut = new byte[1024];
-			while ((bytes = in.read(bufferOut)) != -1) {
-				outputStream.write(bufferOut, 0, bytes);
-			}
-			in.close();
-			log.info("向服务器写入文件流完成！" + requestUrl + "\n");
-			// 4.将结尾部分输出到微信服务器
-			byte[] foot = ("\r\n--" + BOUNDARY + "--\r\n").getBytes("utf-8");// 定义最后数据分隔线
-			outputStream.write(foot);
-			outputStream.flush();
-			outputStream.close();
-
-			// 5.将微信服务器返回的输入流转换成字符串
-			InputStream inputStream = httpUrlConn.getInputStream();
-			InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "utf-8");
-			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-			String str = null;
-			while ((str = bufferedReader.readLine()) != null) {
-				buffer.append(str);
-			}
-
-			bufferedReader.close();
-			inputStreamReader.close();
-			// 释放资源
-			inputStream.close();
-			inputStream = null;
-			httpUrlConn.disconnect();
-			log.info("成功接收服务器反回消息【" + buffer.toString() + "】");
-
-		} catch (IOException e) {
-			System.out.println("发送POST请求出现异常！" + e);
-			log.info("发送POST请求出现异常！" + e.toString());
-			e.printStackTrace();
-		}
-		return buffer.toString();
-	}
+	
 
 	/**
 	 * 2.发起http请求获取返回结果
@@ -693,7 +608,7 @@ public class WeiXinUtil {
 			wxUserQuery.setProjectGroupId(projectGroupId);
 			String remoteIP = "";
 			try {
-				remoteIP = getIpAddress(request);
+				remoteIP = HttpUtil.getIpAddress(request);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -740,47 +655,7 @@ public class WeiXinUtil {
 
 	}
 
-	/**
-	 * 获取请求主机IP地址,如果通过代理进来，则透过防火墙获取真实IP地址;
-	 * 
-	 * @param request
-	 * @return
-	 * @throws IOException
-	 */
-	public final static String getIpAddress(HttpServletRequest request) throws IOException {
-		// 获取请求主机IP地址,如果通过代理进来，则透过防火墙获取真实IP地址
-
-		String ip = request.getHeader("X-Forwarded-For");
-
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-				ip = request.getHeader("Proxy-Client-IP");
-			}
-			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-				ip = request.getHeader("WL-Proxy-Client-IP");
-			}
-			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-				ip = request.getHeader("HTTP_CLIENT_IP");
-			}
-			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-				ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-			}
-			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-				ip = request.getRemoteAddr();
-			}
-		} else if (ip.length() > 15) {
-			String[] ips = ip.split(",");
-			for (int index = 0; index < ips.length; index++) {
-				String strIp = (String) ips[index];
-				if (!("unknown".equalsIgnoreCase(strIp))) {
-					ip = strIp;
-					break;
-				}
-			}
-		}
-		return ip;
-	}
-
+	
 	/**
 	 * @desc ：上传临时素材
 	 * 
@@ -803,7 +678,7 @@ public class WeiXinUtil {
 		log.info("uploadTempMaterial上传文件时请求的地址得到的uploadTempMaterial_url【" + str_uploadurl + "");
 
 		// 3.调用接口，发送请求，上传文件到微信服务器
-		String result = WeiXinUtil.httpRequest(str_uploadurl, file);
+		String result = HttpUtil.httpRequest(str_uploadurl, file);
 		// 4.json字符串转对象：解析返回值，json反序列化
 		result = result.replaceAll("[\\\\]", "");
 		System.out.println("result:" + result);

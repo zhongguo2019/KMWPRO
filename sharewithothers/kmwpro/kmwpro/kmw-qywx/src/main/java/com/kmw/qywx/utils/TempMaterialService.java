@@ -33,7 +33,7 @@ public class TempMaterialService {
                 .replace("TYPE", type);
         
         //3.调用接口，发送请求，上传文件到微信服务器
-        String result=WeiXinUtil.httpRequest(uploadTempMaterial_url, file);
+        String result=HttpUtil.httpRequest(uploadTempMaterial_url, file);
         
         //4.json字符串转对象：解析返回值，json反序列化
         result = result.replaceAll("[\\\\]", "");

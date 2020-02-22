@@ -1,8 +1,11 @@
 package com.kmw.qywx.utils;
 
+import com.kmw.common.core.controller.BaseController;
 import com.kmw.qywx.utils.AccessToken;
 import com.kmw.qywx.utils.WeiXinParamesUtil;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,13 +19,13 @@ import java.util.Date;
  * @Description:
  */
 
+@Controller
 @RequestMapping("/redis")
-@RestController
-public class RedisController {
+public class RedisController  extends BaseController {
 
     private static int ExpireTime = 60;   // redis中存储的过期时间60s
 
-    @Resource
+    @Autowired
     private RedisUtil redisUtil;
 
 	/*

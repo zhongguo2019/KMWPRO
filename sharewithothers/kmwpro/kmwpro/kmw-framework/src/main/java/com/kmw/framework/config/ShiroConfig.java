@@ -254,9 +254,12 @@ public class ShiroConfig
         filterChainDefinitionMap.put("/druid/**", "anon");
         filterChainDefinitionMap.put("/captcha/captchaImage**", "anon");
         // 企业微信访问后台不用走权限管理框架
-        filterChainDefinitionMap.put("/kmw/qywx**", "anon");
+        filterChainDefinitionMap.put("/qywx/**", "anon");
+        // bean监控不进行框架构过滤
+//        filterChainDefinitionMap.put("/actuator/**", "anon");
         // 退出 logout地址，shiro去清除session
         filterChainDefinitionMap.put("/logout", "logout");
+       // filterChainDefinitionMap.put("/system/**", "anon,captchaValidate");
         // 不需要拦截的访问
         filterChainDefinitionMap.put("/login", "anon,captchaValidate");
         // 系统权限列表
@@ -273,6 +276,7 @@ public class ShiroConfig
 
         // 所有请求需要认证
         filterChainDefinitionMap.put("/**", "user,kickout,onlineSession,syncOnlineSession");
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
 
         return shiroFilterFactoryBean;
@@ -372,4 +376,5 @@ public class ShiroConfig
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
     }
+    
 }

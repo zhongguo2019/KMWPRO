@@ -239,7 +239,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
     <!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
-    <select id="entityList" resultType="${ClassName}Result">
+    <select id="entityList" resultMap="${ClassName}Result">
         select
        	<include refid="${ClassName}Columns" /> 
         from ${tableName} t
