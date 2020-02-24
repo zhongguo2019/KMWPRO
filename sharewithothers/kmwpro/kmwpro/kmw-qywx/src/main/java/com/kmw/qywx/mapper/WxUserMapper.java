@@ -89,5 +89,6 @@ public interface WxUserMapper
     public WxUser selectWxUser(Map<String, Object> params);    
     public List<CommonEntity>   getWxUserGroup(  @Param("username")  String username  );
     public WxUser queryOneWxUser(Map<String, Object> params);
+    public WxUser queryOneWxUserByName(Map<String, Object> params);
 
 }

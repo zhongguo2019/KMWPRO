@@ -192,7 +192,9 @@ public class WxUserServiceImpl implements IWxUserService
 	}	
 
     
-    
+	public WxUser queryOneWxUserByName(Map<String, Object> params) {
+		return wxUserMapper.queryOneWxUserByName(params);
+	}	    
     
     
     

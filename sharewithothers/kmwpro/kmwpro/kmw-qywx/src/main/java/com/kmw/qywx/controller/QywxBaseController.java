@@ -1,14 +1,15 @@
 package com.kmw.qywx.controller;
 
 import net.sf.json.JSONObject;
- 
+
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
- 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
  
 import org.springframework.stereotype.Controller;
- 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
  
@@ -39,12 +40,14 @@ import java.util.*;
 public class QywxBaseController  extends BaseController{
 
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-
+    private String prefix = "qywx/main";
+  
+    @Autowired
+    WeiXinUtil weiXinUtil;
+    
 	@RequestMapping("/wxconnect")
 	@ResponseBody
 	String getWXConnect(HttpServletRequest request) throws Exception {
-		WeiXinUtil weiXinUtil = new WeiXinUtil();
-
 		// logger.info("------------------------------企业微信发来调用消息,处理开始------------------------------！");
 		WXBizMsgCrypt wxcpt = new WXBizMsgCrypt(WeiXinParamesUtil.token, WeiXinParamesUtil.encodingAESKey,
 				WeiXinParamesUtil.corpId);
@@ -89,7 +92,7 @@ public class QywxBaseController  extends BaseController{
 	@ResponseBody
 	String wxAppJSAPIgetAppid(HttpServletRequest request) throws UnsupportedEncodingException {
 		JSONObject wxConfig = new JSONObject();
-		wxConfig = WeiXinUtil.getWxConfigJSON(request);
+		wxConfig = weiXinUtil.getWxConfigJSON(request);
 		return wxConfig.toString();
 	}
 
@@ -98,7 +101,6 @@ public class QywxBaseController  extends BaseController{
 	String wxgetJSSUser(HttpServletRequest request) throws UnsupportedEncodingException {
 		String data = request.getParameter("data") == null ? "" : request.getParameter("data");
 		String strRtn = null;
-		WeiXinUtil weiXinUtil = new WeiXinUtil();
 		if (!"".equals(data)) {
 
 			data = URLDecoder.decode(URLDecoder.decode(data, "utf-8"), "utf-8");
@@ -114,5 +116,47 @@ public class QywxBaseController  extends BaseController{
 
 	}
 
+    /**
+     *首页面
+     */	
+    @GetMapping("index")
+    public String index()
+    {
+        return prefix + "/qywxindex";
+    }
 	
+    /**
+     *帮助界面
+     */
+    @GetMapping("/help")
+    public String help()
+    {
+        return prefix + "/help";
+    }
+    
+    
+    /**
+     *查询界面
+     */
+    @GetMapping("/reportview")
+    public String reportview()
+    {
+        return prefix + "/reportview";
+    }
+    /**
+     *录入界面
+     */
+    @GetMapping("/reportinput")
+    public String reportinput()
+    {
+        return prefix + "/reportinput";
+    }
+    /**
+     *查看自己录入日报
+     */
+    @GetMapping("/reportviewself")
+    public String reportviewself()
+    {
+        return prefix + "/reportviewself";
+    }
 }

@@ -65,6 +65,9 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 	private String query_end_date = "";
 	private String by_date = "";
 	private int iorder = 0;
+	
+    @Autowired
+    WeiXinUtil weiXinUtil;
     /**
      * 查询当天工作记录信息
      * 
@@ -446,15 +449,14 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 				 * String accessToken = WeiXinUtil .getAccessToken(WeiXinParamesUtil.corpId,
 				 * WeiXinParamesUtil.contactsSecret).getToken();
 				 */
-				WeiXinUtil weiXinUtil = new WeiXinUtil();
 				String accessToken = "";
 
 				// 2.调用业务类，上传临时素材
-				JSONObject upload = WeiXinUtil.uploadTempMaterial(type, filename);
+				JSONObject upload = weiXinUtil.uploadTempMaterial(type, filename);
 				String media_id = upload.getString("media_id");
 				String errmsg = upload.getString("errmsg");
 				if ("ok".equals(errmsg)) {
-					WeiXinUtil.SendFileMessage(media_id, type, accessToken, strFromUser);
+					weiXinUtil.SendFileMessage(media_id, type, accessToken, strFromUser);
 				} else {
 					strRtnMsgContent = "下载失败，错误码【" + errmsg + "】";
 				}
@@ -496,27 +498,29 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 		}
 
 		if (reportError.equals("0")) {
+			String username = queryParam.get("query_name").toString();
+			String userNameFlag ="全部成员";
+			if(!"*".equals(username)) {
+				userNameFlag = username;
+			}
+			String downLoadFilename = getDownLoadFilneName(userNameFlag);
+			
 			List<String> lstHeader = getHeaderListDayReport();
 			List<Map<String, Object>> lstData = getDataListDayReport(request, queryParam);
-			String username = queryParam.get("query_name").toString();
-			String filename = getDownLoadFilneName(username);
-			String createFlag = exportExcel(filename, lstHeader, lstData, username);
+
+			String createFlag = exportExcel(downLoadFilename, lstHeader, lstData, userNameFlag);
 			if ("sucuss".equals(createFlag)) {
 				String type = "file";
-				/*
-				 * String accessToken = WeiXinUtil .getAccessToken(WeiXinParamesUtil.corpId,
-				 * WeiXinParamesUtil.contactsSecret).getToken();
-				 */
-				WeiXinUtil weiXinUtil = new WeiXinUtil();
+	 
 				String accessToken = "";
 
 				// 2.调用业务类，上传临时素材
-				JSONObject upload = WeiXinUtil.uploadTempMaterial( type, filename);
+				JSONObject upload = weiXinUtil.uploadTempMaterial( type, downLoadFilename);
 				
 				String errmsg = upload.getString("errmsg");
 				if ("ok".equals(errmsg)) {
 					String media_id = upload.getString("media_id");
-					WeiXinUtil.SendFileMessage(media_id, type, accessToken, strFromUser);
+					weiXinUtil.SendFileMessage(media_id, type, accessToken, strFromUser);
 				} else {
 					strRtnMsgContent = "下载失败，错误码【" + errmsg + "】";
 				}
@@ -544,20 +548,17 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 
 	public String exportExcel(String fileName, List<String> lstHeader, List<Map<String, Object>> lstData,
 			String strFromUser) throws FileNotFoundException, IOException {
-
 		// 保存文件的绝对路径
-
-		// String realPath = SpringContextHolder.getRootRealPath();
-		FileUtils.createFile(fileName);
-		// ExportExcel ee = new ExportExcel("个人日报", lstHeader);
-		ExportExcel ee = new ExportExcel("个人日报", lstHeader, strFromUser);
+ 		FileUtils.createFile(fileName);
+ 		ExportExcel ee = new ExportExcel("个人日报", lstHeader, strFromUser);
 		for (int i = 0; i < lstData.size(); i++) {
 			Row row = ee.addRow();
 			Map<String, Object> mapcolu = lstData.get(i);
 			ee.addCell(row, 0, mapcolu.get("order"));
-			ee.addCell(row, 1, mapcolu.get("reportDate"));
-			ee.addCell(row, 2, mapcolu.get("productName"));
-			ee.addCell(row, 3, mapcolu.get("workContents"));
+			ee.addCell(row, 1, mapcolu.get("remarks"));
+			ee.addCell(row, 2, mapcolu.get("reportDate"));
+			ee.addCell(row, 3, mapcolu.get("productName"));
+			ee.addCell(row, 4, mapcolu.get("workContents"));
 			/*
 			 * for (int j = 0; j < lstData.get(i).size(); j++) { Map<String,Object> mapcolu
 			 * = lstData.get(i); ee.addCell(row, j, lstData.get(i).get(j)); }
@@ -576,6 +577,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 		List<String> headerList = Lists.newArrayList();
 
 		headerList.add("序号");
+		headerList.add("姓名");
 		headerList.add("日期");
 		headerList.add("项目名称");
 		headerList.add("工作内容");
@@ -611,6 +613,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 			DoufuTodayWork dufuTodayWork = listDayWork.get(i);
 			Map<String, Object> mpcolumn = new HashMap<String, Object>();
 			mpcolumn.put("order", String.valueOf(i + 1));
+			mpcolumn.put("remarks", dufuTodayWork.getRemarks());
 			mpcolumn.put("reportDate", dufuTodayWork.getReportDate());
 			mpcolumn.put("productName", dufuTodayWork.getProductName());
 			mpcolumn.put("workContents", dufuTodayWork.getWorkContents());
@@ -955,7 +958,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 			entryDoufuTodayWork.setWorkDetail(s1);
 			entryDoufuTodayWork.setInputOrder(iorder++);
 			entryDoufuTodayWork.setRemarks(sysuser.getName());
-			entryDoufuTodayWork.setReporterName(sysuser.getName());
+			entryDoufuTodayWork.setReporterName(sysuser.getAccount());
 			entryDoufuTodayWork.setIsAfter(isAfter);
 			entryDoufuTodayWork.setReporterId(sysuser.getId());
 			entryDoufuTodayWork.setProductName(productName);
@@ -1110,7 +1113,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 			throws ParseException {
 		String queryResult = null;
 		String dynamicSQL = "";
-		WxUser wxUser = (WxUser) request.getSession().getAttribute(Constant.SESSION_LOGIN_USER);
+		WxUser wxUserSession = (WxUser) request.getSession().getAttribute(Constant.SESSION_LOGIN_USER);
 		Map<String, Object> queryMap = new HashMap<String, Object>();
 		if ("".equals(map.get("query_start_date")) || null == map.get("query_start_date")) {
 			return null;
@@ -1130,20 +1133,17 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 		String queryUser = "";
 
 		if ("".equals(map.get("query_name")) || null == map.get("query_name")) {
-			queryUser = wxUser.getName();
-		} else {
-			String queryUserName = (String) map.get("query_name");
-			WeiXinUtil weiXinUtil = new WeiXinUtil();
-			 wxUser = weiXinUtil.getUserInfo(queryUserName);
-			if (null != wxUser) {
-				queryUser = wxUser.getName();
-			}
+			queryUser = wxUserSession.getName();
 		}
-//       logger.info("要调阅的用户姓名【"+queryUser+"】");
+		if ("*".equals(map.get("query_name")) ) {
+ 			 queryUser="all";
+			}else {
+					WxUser wxUser2Query =weiXinUtil.getUserInfo(map.get("query_name").toString(),"NAME");
+			        queryUser = wxUser2Query.getAccount();
+			}
 		queryMap.put("reporterName", queryUser);
-
 		queryMap.put("dynamicSQL", dynamicSQL);
-		queryMap.put("sortC", "create_date,input_order,PRODUCT_NAME");
+		queryMap.put("sortC", "reporter_name,create_date,input_order,PRODUCT_NAME");
 		queryMap.put("order", "asc");
 		List<DoufuTodayWork> lstQuery = entityList(queryMap);
 		if (null == lstQuery) {
@@ -1154,7 +1154,6 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 		}
 
 	}
-
 	/**
 	 * 消息保存到数据库中
 	 * 

@@ -37,18 +37,19 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-
-import com.kmw.qywx.utils.RedisUtil;
 import com.kmw.qywx.utils.Result;
 import com.kmw.qywx.utils.SpringContextHolder;
 import com.kmw.qywx.domain.DoufuTodayWork;
 import com.kmw.qywx.domain.WxUser;
 import com.kmw.qywx.service.IDoufuTodayWorkService;
+import com.kmw.qywx.service.IRedisUtilService;
 import com.kmw.qywx.service.IWxUserService;
 import com.kmw.common.Constant;
 import com.kmw.common.utils.DateUtils;
@@ -57,10 +58,10 @@ import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.Iterator;
 
 import java.util.Map;
 
+@Component
 public class WeiXinUtil {
 
 	private static Logger log = LoggerFactory.getLogger(WeiXinUtil.class);
@@ -69,13 +70,21 @@ public class WeiXinUtil {
 	public final static String access_token_url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={corpId}&corpsecret={corpsecret}";
 	// 获取jsapi_ticket的接口地址（GET） 限200（次/天）
 	public final static String jsapi_ticket_url = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?";
-	IWxUserService wxUserService = SpringContextHolder.getBean("wxUserServiceImpl");
 	
-
+    @Autowired
+    IWxUserService wxUserService;
+    
+ 	@Autowired
+	IRedisUtilService redisUtilService;
+	//IWxUserService wxUserService  = SpringContextHolder.getBean("wxUserServiceImpl");
+	@Autowired
+	SendMessageService sendMessageService;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
  
-	RedisUtil redisUtil = SpringContextHolder.getBean("redisUtil");
-	IDoufuTodayWorkService doufuTodayWorkService = SpringContextHolder.getBean("doufuTodayWorkServiceImpl");
+	//RedisUtil redisUtil = SpringContextHolder.getBean("redisUtil");
+	@Autowired
+	IDoufuTodayWorkService doufuTodayWorkService ;
+	//IDoufuTodayWorkService doufuTodayWorkService = SpringContextHolder.getBean("doufuTodayWorkServiceImpl");
 
 
 	/**
@@ -317,7 +326,7 @@ public class WeiXinUtil {
 	 * @param request
 	 * @return
 	 */
-	public static JSONObject getWxConfigJSON(HttpServletRequest request) {
+	public  JSONObject getWxConfigJSON(HttpServletRequest request) {
 		JSONObject wxConfig = new JSONObject();
 		// 1.准备好参与签名的字段
 		String nonceStr = UUID.randomUUID().toString(); // 必填，生成签名的随机串
@@ -626,15 +635,20 @@ public class WeiXinUtil {
 
 	}
 
-	public WxUser getUserInfo(String username) {
+	public WxUser getUserInfo(String username,String queryType) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("username", username);
-		WxUser wxUser = wxUserService.queryOneWxUser(params);
-		if (wxUser != null) {
-			return wxUser;
-		} else {
-			return null;
+		WxUser wxUser = new WxUser();
+		if(queryType.equals("ACCOUNT")){
+		  wxUser = wxUserService.queryOneWxUser(params);
 		}
+		if(queryType.equals("NAME")){
+			  wxUser = wxUserService.queryOneWxUserByName(params);
+			}
+			
+		
+		return wxUser;
+		 
 
 	}
 
@@ -664,11 +678,11 @@ public class WeiXinUtil {
 	 * @param fileUrl     本地文件的url。例如 "D/1.img"。
 	 * @return JSONObject 上传成功后，微信服务器返回的参数，有type、media_id 、created_at
 	 */
-	public static JSONObject uploadTempMaterial(String type, String fileUrl) {
-		WeiXinUtil weiXinUtil = new WeiXinUtil();
+	public  JSONObject uploadTempMaterial(String type, String fileUrl) {
+
 		// 1.创建本地文件
 		File file = new File(fileUrl);
-		String accessToken = weiXinUtil.getRedisToken().toString();
+		String accessToken = getRedisToken().toString();
 
 		// 2.拼接请求url
 
@@ -690,7 +704,7 @@ public class WeiXinUtil {
 
 			if (errcode == 40014) {
 				log.info("上传共享文件时，发现token失效，重新调用方法设定redis token" + resultJSON.toString());
-				weiXinUtil.setRedisToken();
+				setRedisToken();
 			}
 
 			if (resultJSON.get("media_id") != null) {
@@ -730,8 +744,8 @@ public class WeiXinUtil {
 		message.setText(text);
 
     	// 3.发送消息：调用业务类，发送消息
-		SendMessageService sms = new SendMessageService();
-		sms.sendMessage(message);
+
+		sendMessageService.sendMessage(message);
 
 	}
 
@@ -744,7 +758,7 @@ public class WeiXinUtil {
 
 	}
 
-	public static void SendFileMessage(String media_id, String type, String accessToken, String toUser) {
+	public  void SendFileMessage(String media_id, String type, String accessToken, String toUser) {
 		// 1.创建文件对象
 		FileMessage message = new FileMessage();
 		// 1.1非必需
@@ -763,12 +777,12 @@ public class WeiXinUtil {
 		file.setMedia_id(media_id);
 		message.setFile(file);
 		// 3.发送消息：调用业务类，发送消息
-		SendMessageService sms = new SendMessageService();
-		sms.sendMessage(message);
+
+		sendMessageService.sendMessage(message);
 
 	}
 
-	public boolean setRedisToken() {
+	public  boolean setRedisToken() {
 		AccessToken accessToken = new AccessToken();
 		accessToken = WeiXinUtil.getAccessToken(WeiXinParamesUtil.corpId, WeiXinParamesUtil.agentSecret);
 		if(accessToken.getToken()==null ||"".equals(accessToken.getToken())) {
@@ -776,23 +790,25 @@ public class WeiXinUtil {
 			return false;
 		}
 		logger.info("向企业微信申请token 放到redis 中【" + accessToken.getToken() + "】 获取时间【" + DateUtils.getDateTime() + "】");
-		redisUtil.del("token");
+		redisUtilService.setRedisValue("token",  accessToken);
+		return true;
+		//redisUtil.del("token");
 		// return redisUtil.set("token",accessToken,accessToken.getExpiresIn());
-		return redisUtil.set("token", accessToken, 3600);
+		//return redisUtil.set("token", accessToken, 3600);
+		
 	}
 
 	public String getRedisToken() {
 		AccessToken accessToken = new AccessToken();
-		accessToken = (AccessToken) redisUtil.get("token");
-		String accessTokenValue = "";
+   	    accessToken.setToken( redisUtilService.getRedisValue("token"));
 		if (null != accessToken) {
-			accessTokenValue = accessToken.getToken();
+		
 			logger.info("从redis中获取 token【" + accessToken.getToken() + "】");
 		} else {
 			logger.info("获取redis 中的token为空！");
 		}
 
-		return accessTokenValue;
+		return accessToken.getToken();
 
 	}
 

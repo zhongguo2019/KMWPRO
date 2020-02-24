@@ -75,7 +75,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportDate != null  and reportDate != ''"> and t.REPORT_DATE = #{reportDate}</if>
             <if test="productName != null  and productName != ''"> and t.PRODUCT_NAME like concat('%', #{productName}, '%')</if>
             <if test="reporterId != null  and reporterId != ''"> and t.REPORTER_ID = #{reporterId}</if>
-            <if test="reporterName != null  and reporterName != ''"> and t.REPORTER_NAME like concat('%', #{reporterName}, '%')</if>
+            <if test="reporterName != null  and reporterName != '' and reporterName != 'all'"> and t.REPORTER_NAME like concat('%', #{reporterName}, '%')</if>
+             <if test=" reporterName == 'all'"> and t.REPORTER_NAME like "%%" </if>
             <if test="inputOrder != null "> and t.INPUT_ORDER = #{inputOrder}</if>
             <if test="isAfter != null  and isAfter != ''"> and t.IS_AFTER = #{isAfter}</if>
         </where>
@@ -296,33 +297,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from doufu_today_work
 		<where>
 			1=1
-		    <if test="projectGroupId != null  and projectGroupId != ''">PROJECT_GROUP_ID = #{projectGroupId},</if>
-            <if test="projectId != null  and projectId != ''">PROJECT_ID = #{projectId},</if>
-            <if test="productId != null  and productId != ''">PRODUCT_ID = #{productId},</if>
-            <if test="workContents != null  and workContents != ''">WORK_CONTENTS = #{workContents},</if>
-            <if test="workDetail != null  and workDetail != ''">WORK_DETAIL = #{workDetail},</if>
-            <if test="finishPercent != null  and finishPercent != ''">FINISH_PERCENT = #{finishPercent},</if>
-            <if test="delayReason != null  and delayReason != ''">DELAY_REASON = #{delayReason},</if>
-            <if test="accordYesterday != null  and accordYesterday != ''">ACCORD_YESTERDAY = #{accordYesterday},</if>
-            <if test="isImportant != null  and isImportant != ''">IS_IMPORTANT = #{isImportant},</if>
-            <if test="isEmergency != null  and isEmergency != ''">IS_EMERGENCY = #{isEmergency},</if>
-            <if test="impoLevel != null  and impoLevel != ''">IMPO_LEVEL = #{impoLevel},</if>
-            <if test="delFlag != null  and delFlag != ''">DEL_FLAG = #{delFlag},</if>
-            <if test="status != null  and status != ''">STATUS = #{status},</if>
-            <if test="instId != null  and instId != ''">INST_ID = #{instId},</if>
-            <if test="loginIp != null  and loginIp != ''">LOGIN_IP = #{loginIp},</if>
-            <if test="loginDate != null ">LOGIN_DATE = #{loginDate},</if>
-            <if test="createBy != null  and createBy != ''">CREATE_BY = #{createBy},</if>
-            <if test="createDate != null ">CREATE_DATE = #{createDate},</if>
-            <if test="updateBy != null  and updateBy != ''">UPDATE_BY = #{updateBy},</if>
-            <if test="updateDate != null ">UPDATE_DATE = #{updateDate},</if>
-            <if test="remarks != null  and remarks != ''">REMARKS = #{remarks},</if>
-            <if test="reportDate != null  and reportDate != ''">REPORT_DATE = #{reportDate},</if>
-            <if test="productName != null  and productName != ''">PRODUCT_NAME = #{productName},</if>
-            <if test="reporterId != null  and reporterId != ''">REPORTER_ID = #{reporterId},</if>
-            <if test="reporterName != null  and reporterName != ''">REPORTER_NAME = #{reporterName},</if>
-            <if test="inputOrder != null ">INPUT_ORDER = #{inputOrder},</if>
-            <if test="isAfter != null  and isAfter != ''">IS_AFTER = #{isAfter},</if>
+		    <if test="projectGroupId != null  and projectGroupId != ''"> and PROJECT_GROUP_ID = #{projectGroupId}</if>
+            <if test="projectId != null  and projectId != ''"> and PROJECT_ID = #{projectId}</if>
+            <if test="productId != null  and productId != ''"> and PRODUCT_ID = #{productId},</if>
+            <if test="workContents != null  and workContents != ''"> and WORK_CONTENTS = #{workContents}</if>
+            <if test="workDetail != null  and workDetail != ''"> and WORK_DETAIL = #{workDetail}</if>
+            <if test="finishPercent != null  and finishPercent != ''"> and FINISH_PERCENT = #{finishPercent},</if>
+            <if test="delayReason != null  and delayReason != ''"> and DELAY_REASON = #{delayReason}</if>
+            <if test="accordYesterday != null  and accordYesterday != ''"> and ACCORD_YESTERDAY = #{accordYesterday}</if>
+            <if test="isImportant != null  and isImportant != ''"> and IS_IMPORTANT = #{isImportant}</if>
+            <if test="isEmergency != null  and isEmergency != ''"> and IS_EMERGENCY = #{isEmergency}</if>
+            <if test="impoLevel != null  and impoLevel != ''"> and IMPO_LEVEL = #{impoLevel}</if>
+            <if test="delFlag != null  and delFlag != ''"> and DEL_FLAG = #{delFlag}</if>
+            <if test="status != null  and status != ''"> and STATUS = #{status}</if>
+            <if test="instId != null  and instId != ''"> and INST_ID = #{instId},</if>
+            <if test="loginIp != null  and loginIp != ''"> and LOGIN_IP = #{loginIp}</if>
+            <if test="loginDate != null "> and LOGIN_DATE = #{loginDate},</if>
+            <if test="createBy != null  and createBy != ''"> and CREATE_BY = #{createBy}</if>
+            <if test="createDate != null "> and CREATE_DATE = #{createDate}</if>
+            <if test="updateBy != null  and updateBy != ''"> and UPDATE_BY = #{updateBy}</if>
+            <if test="updateDate != null "> and UPDATE_DATE = #{updateDate}</if>
+            <if test="remarks != null  and remarks != ''"> and REMARKS = #{remarks}</if>
+            <if test="reportDate != null  and reportDate != ''"> and REPORT_DATE = #{reportDate}</if>
+            <if test="productName != null  and productName != ''"> and PRODUCT_NAME = #{productName}</if>
+            <if test="reporterId != null  and reporterId != ''"> and REPORTER_ID = #{reporterId}</if>
+            <if test="reporterName != null  and reporterName != ''"> and REPORTER_NAME = #{reporterName}</if>
+            <if test="inputOrder != null "> and INPUT_ORDER = #{inputOrder}</if>
+            <if test="isAfter != null  and isAfter != ''"> and IS_AFTER = #{isAfter}</if>
 			
 			</where>
 	</delete>
@@ -358,8 +359,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="reportDate != null  and reportDate != ''"> and t.REPORT_DATE = #{reportDate}</if>
             <if test="productName != null  and productName != ''"> and t.PRODUCT_NAME like concat('%', #{productName}, '%')</if>
             <if test="reporterId != null  and reporterId != ''"> and t.REPORTER_ID = #{reporterId}</if>
-            <if test="reporterName != null  and reporterName != ''"> and t.REPORTER_NAME like concat('%', #{reporterName}, '%')</if>
-            <if test="inputOrder != null "> and t.INPUT_ORDER = #{inputOrder}</if>
+            <if test="reporterName != null  and reporterName != '' and reporterName !='all'"> and t.REPORTER_NAME like concat('%', #{reporterName}, '%')</if>
+  			<if test=" reporterName == 'all'">and t.REPORTER_NAME  like "%%" </if>
+           <if test="inputOrder != null "> and t.INPUT_ORDER = #{inputOrder}</if>
             <if test="isAfter != null  and isAfter != ''"> and t.IS_AFTER = #{isAfter}</if>
 		    <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
 

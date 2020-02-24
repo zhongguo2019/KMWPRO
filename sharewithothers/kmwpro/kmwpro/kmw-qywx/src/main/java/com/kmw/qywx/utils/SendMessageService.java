@@ -3,6 +3,8 @@ package com.kmw.qywx.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import net.sf.json.JSONObject;
 
@@ -16,11 +18,14 @@ import com.google.gson.Gson;
  * @author: shirayner
  * @date  : 2017-8-18 上午10:06:23
  */
+@Component
 public class SendMessageService {
     private static Logger log = LoggerFactory.getLogger(SendMessageService.class);  
 
-    private  static  String sendMessage_url="https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=ACCESS_TOKEN";  
-
+    private  static  String sendMessage_url="https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=ACCESS_TOKEN"; 
+    
+    @Autowired
+    WeiXinUtil weiXinUtil;
     /**
      * @desc ：0.公共方法：发送消息
      *  
@@ -28,7 +33,7 @@ public class SendMessageService {
      * @param message void
      */
     public void sendMessage(BaseMessage message){
-		WeiXinUtil weiXinUtil = new WeiXinUtil();
+
         //1.获取json字符串：将message对象转换为json字符串    
         Gson gson = new Gson(); 
         String jsonMessage =gson.toJson(message);      //使用gson.toJson(user)即可将user对象顺序转成json

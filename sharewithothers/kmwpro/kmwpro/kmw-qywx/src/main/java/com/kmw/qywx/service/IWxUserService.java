@@ -93,5 +93,6 @@ public interface IWxUserService
     public WxUser selectWxUserByName(Map<String, Object> params);
 	public String getWxProjectGroupId(Map<String, Object> userInfo);
 	public WxUser queryOneWxUser(Map<String, Object> params);
-    
+	public WxUser queryOneWxUserByName(Map<String, Object> params);
+	
 }

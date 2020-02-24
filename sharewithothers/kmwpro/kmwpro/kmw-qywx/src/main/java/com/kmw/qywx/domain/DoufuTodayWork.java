@@ -113,7 +113,7 @@ public class DoufuTodayWork extends BaseEntity
 
     /** 录入内容序号 */
     @Excel(name = "录入内容序号")
-    private int inputOrder;
+    private Integer inputOrder;
 
     /** 是否为补报的日报 */
     @Excel(name = "是否为补报的日报")
@@ -335,12 +335,12 @@ public class DoufuTodayWork extends BaseEntity
     {
         return reporterName;
     }
-    public void setInputOrder(int iorder) 
+    public void setInputOrder(Integer iorder) 
     {
         this.inputOrder = iorder;
     }
 
-    public int getInputOrder() 
+    public Integer getInputOrder() 
     {
         return inputOrder;
     }

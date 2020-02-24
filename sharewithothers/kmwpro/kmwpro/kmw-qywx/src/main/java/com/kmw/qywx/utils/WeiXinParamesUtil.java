@@ -27,8 +27,8 @@ public class WeiXinParamesUtil {
     public final static int agentId = 1000002;
     
 // 测试中配置---我的半月报--应用的凭证密钥
-//    public final static String agentSecret = "7ISBD7JF8AnVtRZtTYdxkbWP1vZNv7XuHWLFxdW2y9Y";
-//    public final static int agentId = 1000003;
+//    public final static String agentSecret = "76Dt4OVopES0rE5yOYmNjDuIO8SNGBkUT4DxSEMMwR0";
+//    public final static int agentId = 1000005;
 
 	/**
 	 * 获取企业微信token地址及对应参数

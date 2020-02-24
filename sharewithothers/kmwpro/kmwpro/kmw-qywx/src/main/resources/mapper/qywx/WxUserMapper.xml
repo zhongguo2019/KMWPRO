@@ -229,4 +229,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 		</where>
 	</select>
+			<!-- 列表查询,返回的是实体-->
+	<select id="queryOneWxUserByName" resultType="com.kmw.qywx.domain.WxUser">
+        select  
+        name,account,alaisname,duties,dept,sex,mobile
+        ,phone,email,address,shortcorname,isactive,isforbidden
+        ,wxplat,name,account,alaisname,duties,dept
+        ,sex,mobile,phone,email,address,shortcorname
+        ,isactive,isforbidden,wxplat,login_date,login_ip,project_group_id
+		from wx_user
+		<where>
+			1=1
+			<if test=" username != null  and username != '' "> and name = #{username} </if>	
+
+		</where>
+	</select>
 </mapper>

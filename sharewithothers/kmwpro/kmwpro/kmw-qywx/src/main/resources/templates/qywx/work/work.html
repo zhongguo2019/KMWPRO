@@ -10,15 +10,15 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-                            <li>
+                          <!--   <li>
                                 <p>所在项目组名称：</p>
                                 <input type="text" name="projectGroupId"/>
-                            </li>
+                            </li> -->
                             <li>
                                 <p>完成比例：</p>
                                 <input type="text" name="finishPercent"/>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <p>对应计划：</p>
                                 <input type="text" name="accordYesterday"/>
                             </li>
@@ -43,8 +43,8 @@
                                 <select name="status">
                                     <option value="">所有</option>
                                 </select>
-                            </li>
-                            <li>
+                            </li> -->
+                            <!-- <li>
                                 <p>机构ID：</p>
                                 <input type="text" name="instId"/>
                             </li>
@@ -57,8 +57,8 @@
                                 <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginLoginDate]"/>
                                 <span>-</span>
                                 <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endLoginDate]"/>
-                            </li>
-                            <li>
+                            </li> -->
+                           <!--  <li>
                                 <p>创建人：</p>
                                 <input type="text" name="createBy"/>
                             </li>
@@ -77,7 +77,7 @@
                                 <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginUpdateDate]"/>
                                 <span>-</span>
                                 <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endUpdateDate]"/>
-                            </li>
+                            </li> -->
                             <li>
                                 <p>报告日期：</p>
                                 <input type="text" name="reportDate"/>
@@ -86,7 +86,7 @@
                                 <p>产品名称：</p>
                                 <input type="text" name="productName"/>
                             </li>
-                            <li>
+                           <!--  <li>
                                 <p>报告人ID：</p>
                                 <input type="text" name="reporterId"/>
                             </li>
@@ -97,9 +97,9 @@
                             <li>
                                 <p>录入内容序号：</p>
                                 <input type="text" name="inputOrder"/>
-                            </li>
+                            </li> -->
                             <li>
-                                <p>是否为补报的日报：</p>
+                                <p>是否补报：</p>
                                 <input type="text" name="isAfter"/>
                             </li>
                             <li>
@@ -144,28 +144,54 @@
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
                 modalName: "当天工作记录信息",
+                sortable: true,                     //是否启用排序
+                sortOrder: "asc",                   //排序方式                
                 columns: [{
                     checkbox: true
                 },
                 {
+                    field : 'remarks', 
+                    title : '姓名',
+                    sortable:true
+                },
+                {
+                    field : 'reportDate', 
+                    title : '报告日期',
+                    sortable:true
+                },
+                {
+                    field : 'productName', 
+                    title : '产品名称'
+                },
+                {
                     field : 'projectGroupId', 
-                    title : '所在项目组名称'
+                    title : '所在项目组名称', 
+                    visible:false
+               
                 },
                 {
                     field : 'projectId', 
-                    title : '项目名称'
+                    title : '项目名称', 
+                    visible:false
                 },
                 {
                     field : 'productId', 
-                    title : '对应产品'
+                    title : '对应产品', 
+                    visible:false
                 },
                 {
                     field : 'workContents', 
-                    title : '工作内容简写'
+                    title : '工作内容简写',
+                    formatter: function(value, row, index) {
+                        return $.table.tooltip(value);
+                    }
                 },
                 {
                     field : 'workDetail', 
-                    title : '工作内容详细描述'
+                    title : '工作内容详细描述',
+                    formatter: function(value, row, index) {
+                        return $.table.tooltip(value);
+                    }
                 },
                 {
                     field : 'finishPercent', 
@@ -173,23 +199,28 @@
                 },
                 {
                     field : 'delayReason', 
-                    title : '延迟原因'
+                    title : '延迟原因', 
+                    visible:false
                 },
                 {
                     field : 'accordYesterday', 
-                    title : '对应计划'
+                    title : '对应计划', 
+                    visible:false
                 },
                 {
                     field : 'isImportant', 
-                    title : '是否重要'
+                    title : '是否重要', 
+                    visible:false
                 },
                 {
                     field : 'isEmergency', 
-                    title : '是否紧急'
+                    title : '是否紧急', 
+                    visible:false
                 },
                 {
                     field : 'impoLevel', 
-                    title : '重要级别'
+                    title : '重要级别', 
+                    visible:false
                 },
                 {
                     field : 'id', 
@@ -198,67 +229,68 @@
                 },
                 {
                     field : 'delFlag', 
-                    title : '逻辑删除标记(0.正常，1.删除)'
+                    title : '逻辑删除标记(0.正常，1.删除)', 
+                    visible:false
                 },
                 {
                     field : 'status', 
-                    title : '状态'
+                    title : '状态', 
+                    visible:false
                 },
                 {
                     field : 'instId', 
-                    title : '机构ID'
+                    title : '机构ID', 
+                    visible:false
                 },
                 {
                     field : 'loginIp', 
-                    title : '登录IP'
+                    title : '登录IP', 
+                    visible:false
                 },
                 {
                     field : 'loginDate', 
-                    title : '登录日期'
+                    title : '登录日期', 
+                    visible:false
                 },
                 {
                     field : 'createBy', 
-                    title : '创建人'
+                    title : '创建人', 
+                    visible:false
                 },
                 {
                     field : 'createDate', 
-                    title : '创建时间'
+                    title : '创建时间', 
+                    visible:false
                 },
                 {
                     field : 'updateBy', 
-                    title : '最近修改人'
+                    title : '最近修改人', 
+                    visible:false
                 },
                 {
                     field : 'updateDate', 
-                    title : '最近修改时间'
+                    title : '最近修改时间', 
+                    visible:false
                 },
-                {
-                    field : 'remarks', 
-                    title : '描述'
-                },
-                {
-                    field : 'reportDate', 
-                    title : '报告日期'
-                },
-                {
-                    field : 'productName', 
-                    title : '产品名称'
-                },
+
                 {
                     field : 'reporterId', 
-                    title : '报告人ID'
+                    title : '报告人ID', 
+                    visible:false
                 },
                 {
                     field : 'reporterName', 
-                    title : '报告人名称'
+                    title : '报告人名称', 
+                    visible:false
                 },
                 {
                     field : 'inputOrder', 
-                    title : '录入内容序号'
+                    title : '录入内容序号', 
+                    visible:false
                 },
                 {
                     field : 'isAfter', 
-                    title : '是否为补报的日报'
+                    title : '是否补报'
                 },
                 {
                     title: '操作',
