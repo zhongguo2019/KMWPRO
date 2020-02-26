@@ -9,7 +9,7 @@ kmw:
   # 实例演示开关
   demoEnabled: true
   # 文件路径 示例（ Windows配置D:/kmw/uploadPath，Linux配置 /home/kmw/uploadPath）
-  profile: D:/kmw/uploadPath
+  profile: /home/kmw/uploadPath
   # 获取ip地址开关
   addressEnabled: true
 

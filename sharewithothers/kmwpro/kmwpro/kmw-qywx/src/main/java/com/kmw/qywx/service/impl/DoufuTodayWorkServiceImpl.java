@@ -51,13 +51,11 @@ import com.kmw.qywx.domain.WxUser;
  * @date 2020-02-20
  */
 @Service
-public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService 
-{
-    @Autowired
-    private DoufuTodayWorkMapper doufuTodayWorkMapper;
-    protected Logger logger = LoggerFactory.getLogger(getClass());
-    
-    
+public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
+	@Autowired
+	private DoufuTodayWorkMapper doufuTodayWorkMapper;
+	protected Logger logger = LoggerFactory.getLogger(getClass());
+
 	private String reportError = "0";
 	private String report_date = DateUtils.DateToStr8(new Date());
 	private String next_date = DateUtils.getNextDateByDate8(report_date);
@@ -65,84 +63,79 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 	private String query_end_date = "";
 	private String by_date = "";
 	private int iorder = 0;
-	
-    @Autowired
-    WeiXinUtil weiXinUtil;
-    /**
-     * 查询当天工作记录信息
-     * 
-     * @param id 当天工作记录信息ID
-     * @return 当天工作记录信息
-     */
-    @Override
-    public DoufuTodayWork selectDoufuTodayWorkById(String id)
-    {
-        return doufuTodayWorkMapper.selectDoufuTodayWorkById(id);
-    }
 
-    /**
-     * 查询当天工作记录信息列表
-     * 
-     * @param doufuTodayWork 当天工作记录信息
-     * @return 当天工作记录信息
-     */
-    @Override
-    public List<DoufuTodayWork> selectDoufuTodayWorkList(DoufuTodayWork doufuTodayWork)
-    {
-        return doufuTodayWorkMapper.selectDoufuTodayWorkList(doufuTodayWork);
-    }
+	@Autowired
+	WeiXinUtil weiXinUtil;
 
-    /**
-     * 新增当天工作记录信息
-     * 
-     * @param doufuTodayWork 当天工作记录信息
-     * @return 结果
-     */
-    @Override
-    public int insertDoufuTodayWork(DoufuTodayWork doufuTodayWork)
-    {
-        return doufuTodayWorkMapper.insertDoufuTodayWork(doufuTodayWork);
-    }
-
-    /**
-     * 修改当天工作记录信息
-     * 
-     * @param doufuTodayWork 当天工作记录信息
-     * @return 结果
-     */
-    @Override
-    public int updateDoufuTodayWork(DoufuTodayWork doufuTodayWork)
-    {
-        return doufuTodayWorkMapper.updateDoufuTodayWork(doufuTodayWork);
-    }
-
-    /**
-     * 删除当天工作记录信息对象
-     * 
-     * @param ids 需要删除的数据ID
-     * @return 结果
-     */
-    @Override
-    public int deleteDoufuTodayWorkByIds(String ids)
-    {
-        return doufuTodayWorkMapper.deleteDoufuTodayWorkByIds(Convert.toStrArray(ids));
-    }
-
-    /**
-     * 删除当天工作记录信息信息
-     * 
-     * @param id 当天工作记录信息ID
-     * @return 结果
-     */
-    @Override
-    public int deleteDoufuTodayWorkById(String id)
-    {
-        return doufuTodayWorkMapper.deleteDoufuTodayWorkById(id);
-    }
-    
 	/**
-	 * 分页展示(可带条件查询) 当天工作记录信息信息
-	 * 通用实体查询，Map参数 返回的是通用实体，不受实体属性限制，相当于map
+	 * 查询当天工作记录信息
+	 * 
+	 * @param id 当天工作记录信息ID
+	 * @return 当天工作记录信息
+	 */
+	@Override
+	public DoufuTodayWork selectDoufuTodayWorkById(String id) {
+		return doufuTodayWorkMapper.selectDoufuTodayWorkById(id);
+	}
+
+	/**
+	 * 查询当天工作记录信息列表
+	 * 
+	 * @param doufuTodayWork 当天工作记录信息
+	 * @return 当天工作记录信息
+	 */
+	@Override
+	public List<DoufuTodayWork> selectDoufuTodayWorkList(DoufuTodayWork doufuTodayWork) {
+		return doufuTodayWorkMapper.selectDoufuTodayWorkList(doufuTodayWork);
+	}
+
+	/**
+	 * 新增当天工作记录信息
+	 * 
+	 * @param doufuTodayWork 当天工作记录信息
+	 * @return 结果
+	 */
+	@Override
+	public int insertDoufuTodayWork(DoufuTodayWork doufuTodayWork) {
+		return doufuTodayWorkMapper.insertDoufuTodayWork(doufuTodayWork);
+	}
+
+	/**
+	 * 修改当天工作记录信息
+	 * 
+	 * @param doufuTodayWork 当天工作记录信息
+	 * @return 结果
+	 */
+	@Override
+	public int updateDoufuTodayWork(DoufuTodayWork doufuTodayWork) {
+		return doufuTodayWorkMapper.updateDoufuTodayWork(doufuTodayWork);
+	}
+
+	/**
+	 * 删除当天工作记录信息对象
+	 * 
+	 * @param ids 需要删除的数据ID
+	 * @return 结果
+	 */
+	@Override
+	public int deleteDoufuTodayWorkByIds(String ids) {
+		return doufuTodayWorkMapper.deleteDoufuTodayWorkByIds(Convert.toStrArray(ids));
+	}
+
+	/**
+	 * 删除当天工作记录信息信息
+	 * 
+	 * @param id 当天工作记录信息ID
+	 * @return 结果
+	 */
+	@Override
+	public int deleteDoufuTodayWorkById(String id) {
+		return doufuTodayWorkMapper.deleteDoufuTodayWorkById(id);
+	}
+
+	/**
+	 * 分页展示(可带条件查询) 当天工作记录信息信息 通用实体查询，Map参数 返回的是通用实体，不受实体属性限制，相当于map
+	 * 
 	 * @param params
 	 * @return
 	 */
@@ -156,8 +149,10 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 		} catch (Exception e) {
 			logger.info("#=================动态权限查询出错，原因如下：========================#");
 			logger.info("#                 1、此表没有和机构或者用户相关联的字段                               #");
-			logger.info("#                 2、角色配置不正确                                                                     #");
-			logger.info("#                 3、SQL本身语法错误                                                                   #");
+			logger.info(
+					"#                 2、角色配置不正确                                                                     #");
+			logger.info(
+					"#                 3、SQL本身语法错误                                                                   #");
 			logger.info("#=================系统默认处理机制：查询所有数据======================#");
 			params.remove("dynamicSQL");
 			PageHelper.startPage(params);
@@ -165,10 +160,10 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 		}
 		return new PageInfo<CommonEntity>(list);
 	}
-	
+
 	/**
-	 * 列表(可带条件查询) 当天工作记录信息信息
-	 * 通用实体查询，Map参数 返回的是通用实体，不受实体属性限制，相当于map
+	 * 列表(可带条件查询) 当天工作记录信息信息 通用实体查询，Map参数 返回的是通用实体，不受实体属性限制，相当于map
+	 * 
 	 * @param params
 	 * @return List<CommonEntity>
 	 */
@@ -177,52 +172,57 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 		List<CommonEntity> list = doufuTodayWorkMapper.queryEntityList(params);
 		return list;
 	}
-	
+
 	/**
 	 * 通用实体查询，Map参数,根据不同条件查询一条数据 当天工作记录信息信息
+	 * 
 	 * @param params
 	 * @return
 	 */
-	public CommonEntity queryOne(Map<String, Object> params){
+	public CommonEntity queryOne(Map<String, Object> params) {
 		logger.info("#=================开始根据不同条件查询一条【当天工作记录信息信息】数据，返回实体对象========================#");
-		if(params.containsKey("id")) {
-		return doufuTodayWorkMapper.queryOneCommon(params);
-		}else {
+		if (params.containsKey("id")) {
+			return doufuTodayWorkMapper.queryOneCommon(params);
+		} else {
 			logger.info("#=================按主键查询【当天工作记录信息信息】一条，Map参数中 id不能为空========================#");
-	 return null;
+			return null;
 		}
 	}
-        
- /**
+
+	/**
 	 * 更新操作
+	 * 
 	 * @param doufuTodayWork
 	 * @return
 	 */
-	public int updateBatch(List<DoufuTodayWork> list){
+	public int updateBatch(List<DoufuTodayWork> list) {
 		return doufuTodayWorkMapper.updateBatchEntity(list);
-	}	
-	
+	}
+
 	/**
 	 * 根据不同组合条件删除
+	 * 
 	 * @param params
 	 * @return
 	 */
-	public int deleteByParams(Map<String, Object> params){
+	public int deleteByParams(Map<String, Object> params) {
 		logger.info("#=================开始根据不同条件删除【当天工作记录信息表】数据========================#");
 		return doufuTodayWorkMapper.deleteByParams(params);
 	}
+
 	/**
 	 * 批量保存操作
+	 * 
 	 * @param list
 	 * @return
 	 */
-	public int insertBatch(List<DoufuTodayWork> list){
+	public int insertBatch(List<DoufuTodayWork> list) {
 		return doufuTodayWorkMapper.insertBatch(list);
 	}
-    
+
 	/**
-	 * 列表(可带条件查询) 当天工作记录信息信息
-	 * 通用实体查询，Map参数 返回的是通用实体，不受实体属性限制，相当于map
+	 * 列表(可带条件查询) 当天工作记录信息信息 通用实体查询，Map参数 返回的是通用实体，不受实体属性限制，相当于map
+	 * 
 	 * @param params
 	 * @return List<CommonEntity>
 	 */
@@ -231,8 +231,6 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 		List<DoufuTodayWork> list = doufuTodayWorkMapper.entityList(params);
 		return list;
 	}
-	   
-
 
 	public String getReportError() {
 		return reportError;
@@ -429,6 +427,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 		String strRtnMsgContent = "";
 		query_start_date = "";
 		query_end_date = "";
+		String accessTokenString = weiXinUtil.getRedisToken();
 		WxUser wxUser = (WxUser) request.getSession().getAttribute(Constant.SESSION_LOGIN_USER);
 		String username = wxUser.getName();
 		// siftWorkContent2方法会将补报的时间从报文中得到。
@@ -452,7 +451,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 				String accessToken = "";
 
 				// 2.调用业务类，上传临时素材
-				JSONObject upload = weiXinUtil.uploadTempMaterial(type, filename);
+				JSONObject upload = weiXinUtil.uploadTempMaterial(type, filename,accessTokenString);
 				String media_id = upload.getString("media_id");
 				String errmsg = upload.getString("errmsg");
 				if ("ok".equals(errmsg)) {
@@ -484,12 +483,13 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 	 * @throws FileNotFoundException
 	 * @throws ParseException
 	 */
+	@SuppressWarnings("static-access")
 	public String dealQueryDownLoad(HttpServletRequest request, String strMsgContent, String strFromUser)
 			throws FileNotFoundException, IOException, ParseException {
 		String strRtnMsgContent = "";
 		query_start_date = "";
 		query_end_date = "";
-
+        String accessTokenString = weiXinUtil.getRedisToken();
 		// siftWorkContent2方法会将补报的时间从报文中得到。
 		Map<String, Object> queryParam = siftWorkContent4(strMsgContent);
 
@@ -499,31 +499,34 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 
 		if (reportError.equals("0")) {
 			String username = queryParam.get("query_name").toString();
-			String userNameFlag ="全部成员";
-			if(!"*".equals(username)) {
+			String userNameFlag = "全部成员";
+			if (!"*".equals(username)) {
 				userNameFlag = username;
 			}
 			String downLoadFilename = getDownLoadFilneName(userNameFlag);
-			
+
 			List<String> lstHeader = getHeaderListDayReport();
 			List<Map<String, Object>> lstData = getDataListDayReport(request, queryParam);
 
 			String createFlag = exportExcel(downLoadFilename, lstHeader, lstData, userNameFlag);
+
 			if ("sucuss".equals(createFlag)) {
 				String type = "file";
-	 
+
 				String accessToken = "";
+				logger.info("调阅个人日报，准备向服务器传文件！");
 
 				// 2.调用业务类，上传临时素材
-				JSONObject upload = weiXinUtil.uploadTempMaterial( type, downLoadFilename);
-				
-				String errmsg = upload.getString("errmsg");
-				if ("ok".equals(errmsg)) {
-					String media_id = upload.getString("media_id");
-					weiXinUtil.SendFileMessage(media_id, type, accessToken, strFromUser);
+				JSONObject upload = weiXinUtil.uploadTempMaterial(type, downLoadFilename,accessTokenString);
+				logger.info("调阅个人日报，结束向服务器传文件！");
+							 
+				logger.info("调阅个人日报，开始根据上传的文件得到服务器上的media_id后推送给前台用户！");
+				if ("ok".equals( upload.getString("errmsg"))) {
+				weiXinUtil.SendFileMessage(upload.getString("media_id"), type, accessToken, strFromUser);
 				} else {
-					strRtnMsgContent = "下载失败，错误码【" + errmsg + "】";
+					strRtnMsgContent="生成后台文件上传到服务器失败，可能原因企业微信网速问题！";
 				}
+				logger.info("调阅个人日报，结束根据上传的文件得到服务器上的media_id后推送给前台用户！");
 
 			}
 
@@ -549,8 +552,8 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 	public String exportExcel(String fileName, List<String> lstHeader, List<Map<String, Object>> lstData,
 			String strFromUser) throws FileNotFoundException, IOException {
 		// 保存文件的绝对路径
- 		FileUtils.createFile(fileName);
- 		ExportExcel ee = new ExportExcel("个人日报", lstHeader, strFromUser);
+		FileUtils.createFile(fileName);
+		ExportExcel ee = new ExportExcel("个人日报", lstHeader, strFromUser);
 		for (int i = 0; i < lstData.size(); i++) {
 			Row row = ee.addRow();
 			Map<String, Object> mapcolu = lstData.get(i);
@@ -851,7 +854,6 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 		return result;
 	}
 
-	
 	/**
 	 * 得到每行录入的内容放到 ReportTmplate 的内容中 参数 Map<String, List<String>>> work
 	 * 
@@ -997,7 +999,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 					+ map.get("query_end_date").toString() + "'";
 		}
 
-		queryMap.put("reporterName", wxUser.getName());
+		queryMap.put("reporterName", wxUser.getAccount());
 		queryMap.put("dynamicSQL", dynamicSQL);
 		queryMap.put("sortC", "report_date,input_order");
 		queryMap.put("order", "asc");
@@ -1122,25 +1124,29 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 		}
 
 		if ("".equals(map.get("query_end_date")) || null == map.get("query_end_date")) {
-			// queryMap.put("endDate", map.get("query_start_date"));
 			dynamicSQL = "t.REPORT_DATE ='" + query_start_date + "'";
 		} else {
-			if (DateUtils.daysBetween(query_start_date, query_end_date) > 5)
-				logger.info("仅提供五天内查询数据，超出时间查询，请联系管理员！");
 			dynamicSQL = "t.REPORT_DATE >='" + map.get("query_start_date").toString() + "' and t.REPORT_DATE <='"
 					+ map.get("query_end_date").toString() + "'";
 		}
 		String queryUser = "";
 
 		if ("".equals(map.get("query_name")) || null == map.get("query_name")) {
-			queryUser = wxUserSession.getName();
-		}
-		if ("*".equals(map.get("query_name")) ) {
- 			 queryUser="all";
-			}else {
-					WxUser wxUser2Query =weiXinUtil.getUserInfo(map.get("query_name").toString(),"NAME");
-			        queryUser = wxUser2Query.getAccount();
+			queryUser = wxUserSession.getAccount();
+		} else {
+			if ("*".equals(map.get("query_name"))) {
+				queryUser = "all";
+			} else {
+				WxUser wxUser2Query = weiXinUtil.getUserInfo(map.get("query_name").toString(), "NAME");
+				if (null != wxUser2Query) {
+					queryUser = wxUser2Query.getAccount();
+				} else {
+					logger.info("当前查询的用户【" + map.get("query_name").toString() + "】未在用户信息表中注册！");
+
+				}
+
 			}
+		}
 		queryMap.put("reporterName", queryUser);
 		queryMap.put("dynamicSQL", dynamicSQL);
 		queryMap.put("sortC", "reporter_name,create_date,input_order,PRODUCT_NAME");
@@ -1154,6 +1160,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 		}
 
 	}
+
 	/**
 	 * 消息保存到数据库中
 	 * 
@@ -1202,14 +1209,14 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 				Map<String, Object> params = new HashMap();
 				params.put("reportDate", report_date);
 				params.put("reporterName", wxUser.getName());
-				 deleteByParams(params);
+				deleteByParams(params);
 				params.put("reportDate", next_date);
 				params.put("reporterName", wxUser.getName());
-				 deleteByParams(params);
+				deleteByParams(params);
 
 			}
 
-			successNumInsert =  insertBatch(listEntyInsert);
+			successNumInsert = insertBatch(listEntyInsert);
 		}
 		return new Result(1, "操作成功！，成功保存" + successNumInsert + "条，失败保存" + failureNumInsert + "条");
 
@@ -1224,32 +1231,32 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService
 
 	public String dealEvent(HttpServletRequest request, String strEvenKey) {
 		String strRtn = null;
-		logger.info("--------------用户对小应用进行操作，如删除用户等事件通知，事件为：\n" + strEvenKey);
+		logger.info("#=================用户对小应用进行操作，如删除用户等事件通知：========================#");
+		logger.info("#=================事件为：========================#\n" + strEvenKey);
 
 		return strRtn;
 
 	}
-  
-	
-	
+
 	/**
 	 * 查询未提交的人员列表
+	 * 
 	 * @param params
 	 * @return
 	 */
-	public List<CommonEntity>  queryNotCommitUser(Map<String, Object> params){
+	public List<CommonEntity> queryNotCommitUser(Map<String, Object> params) {
 		logger.info("#=================根据条件查询未提交日报的人员列表========================#");
 		return doufuTodayWorkMapper.queryNotCommitUser(params);
 	}
-	
 
 	/**
 	 * 查询指定人员指定时间段提交的日期列表
+	 * 
 	 * @param params
 	 * @return
 	 */
-	public List<CommonEntity>  getReportDateList(Map<String, Object> params){
-		logger.info("#=================根据条件查询未提交日报的人员列表========================#");
+	public List<CommonEntity> getReportDateList(Map<String, Object> params) {
+		logger.info("#=================根据条件查询提交日报的日期列表========================#");
 		return doufuTodayWorkMapper.getReportDateList(params);
 	}
 }

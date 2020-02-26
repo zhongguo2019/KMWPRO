@@ -74,8 +74,9 @@ public class WeiXinUtil {
     @Autowired
     IWxUserService wxUserService;
     
- 	@Autowired
-	IRedisUtilService redisUtilService;
+	
+	  @Autowired IRedisUtilService redisUtilService;
+	 
 	//IWxUserService wxUserService  = SpringContextHolder.getBean("wxUserServiceImpl");
 	@Autowired
 	SendMessageService sendMessageService;
@@ -491,7 +492,9 @@ public class WeiXinUtil {
 
 				String strEventName = root.getElementsByTagName("Event").item(0).getTextContent().toString();
 				String strEvenKey = root.getElementsByTagName("EventKey").item(0).getTextContent().toString();
+				if(null !=strEvenKey) {
 				doufuTodayWorkService.dealEvent(request, strEvenKey);
+				}
 			}
 
 			if (strMsgType.equals("text")) {
@@ -678,16 +681,19 @@ public class WeiXinUtil {
 	 * @param fileUrl     本地文件的url。例如 "D/1.img"。
 	 * @return JSONObject 上传成功后，微信服务器返回的参数，有type、media_id 、created_at
 	 */
-	public  JSONObject uploadTempMaterial(String type, String fileUrl) {
+	public  JSONObject uploadTempMaterial(String type, String fileUrl,String accessToken ) {
 
+		
+		log.info("开始进行向企业微信传文件！");
+		
+		
 		// 1.创建本地文件
 		File file = new File(fileUrl);
-		String accessToken = getRedisToken().toString();
 
 		// 2.拼接请求url
 
 		String str_uploadurl = "https://qyapi.weixin.qq.com/cgi-bin/media/upload?";
-		log.info("uploadTempMaterial上传文件时请求的地址得到的redis token【" + accessToken + "");
+		log.info("uploadTempMaterial上传文件时请求的地址得到的redis token【" + accessToken + "】");
 		str_uploadurl = str_uploadurl + "access_token=" + accessToken + "&type=" + "file";
 		log.info("uploadTempMaterial上传文件时请求的地址得到的uploadTempMaterial_url【" + str_uploadurl + "");
 
@@ -792,23 +798,18 @@ public class WeiXinUtil {
 		logger.info("向企业微信申请token 放到redis 中【" + accessToken.getToken() + "】 获取时间【" + DateUtils.getDateTime() + "】");
 		redisUtilService.setRedisValue("token",  accessToken);
 		return true;
-		//redisUtil.del("token");
-		// return redisUtil.set("token",accessToken,accessToken.getExpiresIn());
-		//return redisUtil.set("token", accessToken, 3600);
-		
+
 	}
 
 	public String getRedisToken() {
-		AccessToken accessToken = new AccessToken();
-   	    accessToken.setToken( redisUtilService.getRedisValue("token"));
-		if (null != accessToken) {
-		
-			logger.info("从redis中获取 token【" + accessToken.getToken() + "】");
-		} else {
-			logger.info("获取redis 中的token为空！");
-		}
 
-		return accessToken.getToken();
+		/*
+		 * AccessToken accessToken = new AccessToken(); accessToken.setToken(
+		 * redisUtilService.getRedisValue("token")); logger.info("从redis中获取 token【" +
+		 * accessToken.getToken() + "】"); return accessToken.getToken();
+		 */
+		
+		return redisUtilService.getRedisValue("token");
 
 	}
 
