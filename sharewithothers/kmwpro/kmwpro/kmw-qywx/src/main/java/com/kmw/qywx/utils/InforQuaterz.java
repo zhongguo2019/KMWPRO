@@ -11,74 +11,107 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.quartz.QuartzJobBean;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.stereotype.Component;
 
 import com.kmw.common.CommonEntity;
 import com.kmw.common.utils.DateUtils;
+import com.kmw.qywx.domain.WxUser;
 import com.kmw.qywx.domain.WxUserGroup;
 import com.kmw.qywx.service.IDoufuTodayWorkService;
 import com.kmw.qywx.service.IWxUserGroupService;
 import com.kmw.qywx.service.IWxUserService;
- 
- 
 
-import org.quartz.Job;
-
-public class InforQuaterz implements Job {
+@Component("inforQuaterz")
+public class InforQuaterz {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	IDoufuTodayWorkService doufuTodayWorkService = SpringContextHolder.getBean("doufuTodayWorkService");
-	IWxUserGroupService wxUserGroupService = SpringContextHolder.getBean("IWxUserGroupService");
-
+	@Autowired
+	IDoufuTodayWorkService doufuTodayWorkService;
+	@Autowired
+	IWxUserGroupService wxUserGroupService;
+	@Autowired
+	IWxUserService wxUserService;
+    @Autowired
+    WeiXinUtil weiXinUtil;
 	public InforQuaterz() {
 	}
 
-	public void execute(JobExecutionContext context) throws JobExecutionException {
-		String reportToday = DateUtils.DateToStr8(new Date());
-		String reportPreday = DateUtils.getPreDateByDate8(reportToday);
-		String msgContent = "昨天日报，小组成员都已经提交成功！";
-		List<Map<String, Object>> mplist =  getInfoUser();
+	public void queryNotCommitByGroupName() {
+
+		// 得到分组信息表中所有要通知到的小组信息
+		List<WxUserGroup> listGroutGroups = queryAllGroup();
+		Map<String, Object> mpMap = new HashMap<>();
+		if (null == listGroutGroups || listGroutGroups.size() == 0)
+			return;
 		
-		if(null == mplist) {
+		// 得到所有组里的用户信息
+		for (int i = 0; i < listGroutGroups.size(); i++) {
+			WxUserGroup wxUserGroup = listGroutGroups.get(i);
+			WxUser wxUser = new WxUser();
+			wxUser.setDept(wxUserGroup.getGroupCname());
+			List<WxUser> listWxUsers = wxUserService.selectWxUserList(wxUser);
+			mpMap.put(wxUserGroup.getGroupCode(), listWxUsers);
+		}
+
+		if (mpMap.size() == 0) {
 			return;
 		}
 		
-		// 发送每天日报的提交情况，查询到未提交的人名单，按部门ID进行通知
-		for(int i=0;i<mplist.size();i++) {
-			Map<String, Object> mpinfoUser = mplist.get(i);
-			String infoUserCode = mpinfoUser.get("userCode").toString();
-			String instId = mpinfoUser.get("instid").toString();
-		
-			List<String> lstGroupName = (List<String>) mpinfoUser.get("groupList");
-			 String notCommitInfo = null;
-			if(null != lstGroupName) {
-				 for(String gname:lstGroupName) {
-					 logger.info("拆分后的分组名称【"+gname +"】部门ID【"+instId+"】" );
-					 if(notCommitInfo == null) {
-					 notCommitInfo = queryNotCommitUser(gname, reportPreday);
-					 
-					 }else {
-					 notCommitInfo = notCommitInfo +"\n"+queryNotCommitUser(gname, reportPreday);
-					 }
-					 
-				 }
-				if(null == notCommitInfo) {
-				return;	
-				}
-				WeiXinUtil weiXinUtil = new WeiXinUtil();
-				if ("".equals(notCommitInfo)) {
-					msgContent =notCommitInfo;
-					weiXinUtil.SendTextcardMessage("",instId,msgContent);
-				} else {
-					msgContent = notCommitInfo;
-					weiXinUtil.SendTextcardMessage("",instId, msgContent);
-				}
-			}
-			
+		// 按组分析日报的未提交情况
+		for (String key : mpMap.keySet()) {
+			List<WxUser> value = (List<WxUser>) mpMap.get(key);
+			System.out.println(key + ":" + value);
 		}
 
+	}
+//每隔一小时更新一下Redis中的token
+	public void changeRedisToken() {
+		logger.info("定时更新redis中的token!");
+		weiXinUtil.setRedisToken();
+		
+	}
 	
+	
+	public void queryNotCommitByGroupNameV1() {
 
+		String reportToday = DateUtils.DateToStr8(new Date());
+		String reportPreday = DateUtils.getPreDateByDate8(reportToday);
+		
+		// 得到分组信息表中所有要通知到的小组信息
+		List<WxUserGroup> listGroutGroups = queryAllGroup();
+ 		if (null == listGroutGroups || listGroutGroups.size() == 0)
+			return;
+		// 得到所有组里的用户信息
+		for (int i = 0; i < listGroutGroups.size(); i++) {
+			WxUserGroup wxUserGroup = listGroutGroups.get(i);
+			WxUser wxUser = new WxUser();
+			wxUser.setDept(wxUserGroup.getGroupCname());
+		    String infoMsgString=queryNotCommitUser(wxUserGroup.getGroupCname(),reportPreday);
+		    logger.info("根据各项目组查询后台未提交的用户得到的通知消息：\n"+infoMsgString);
+		    weiXinUtil.SendTextcardMessage("",wxUserGroup.getInstId(),infoMsgString);
+		}
+	}
+
+
+	// 所有分组信息
+	public List<WxUserGroup> queryAllGroup() {
+		Map<String, Object> params = new HashMap<String, Object>();
+		/*
+		 * WxUserGroup wxUserGroup = new WxUserGroup(); List<WxUserGroup> list =
+		 * wxUserGroupService.selectWxUserGroupList(wxUserGroup);
+		 */	
+		List<WxUserGroup> list = wxUserGroupService.entityList(params);
+		return list;
+	}
+
+	// 根据组的中文名称得到分组表中的一个分组信息
+	public WxUserGroup queryOneGroupByName(String groupName) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("groupCname", groupName);
+		List<WxUserGroup> list = wxUserGroupService.entityList(params);
+		return list.get(0);
 	}
 
 	public List<Map<String, Object>> getInfoUser() {
@@ -104,10 +137,7 @@ public class InforQuaterz implements Job {
 			} else {
 				List<String> lstGroupName = splitGroupName(wxGroupName);
 				infUser.put("groupList", lstGroupName);
-				/*
-				 * if (null != lstGroupName) { for (String gname : lstGroupName) {
-				 * logger.info("拆分后的分组名称【" + gname + "】"); } }
-				 */
+
 			}
 			mplist.add(infUser);
 
@@ -128,8 +158,8 @@ public class InforQuaterz implements Job {
 	public String queryNotCommitUser(String groupname, String reportdate) {
 		String strRtn = "";
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("groupname", groupname);
-		params.put("reportdate", reportdate);
+		params.put("groupName", groupname);
+		params.put("reportDate", reportdate);
 		List<CommonEntity> lst = doufuTodayWorkService.queryNotCommitUser(params);
 		String userName, userAccount;
 		if (lst.size() != 0) {
@@ -144,18 +174,15 @@ public class InforQuaterz implements Job {
 				}
 
 			}
-			if(!"".equals(strRtn)) {
-			strRtn ="项目组：【" +groupname+"】日期：【"+reportdate+"】\n未提交日报人员：\n"+strRtn+"\n请及时通知本人，尽快补上！";
+			if (!"".equals(strRtn)) {
+				strRtn = "项目组：【" + groupname + "】日期：【" + reportdate + "】\n未提交日报人员：\n" + strRtn + "\n请及时通知本人，尽快补上！";
 			}
-		}else {
-			strRtn ="项目组：【" +groupname+"】日期：【"+reportdate+"】 日报全部提交！";
+		} else {
+			strRtn = "项目组：【" + groupname + "】日期：【" + reportdate + "】 日报全部提交！";
 		}
 
 		return strRtn;
 
 	}
-	
-	
-	
-	
+
 }

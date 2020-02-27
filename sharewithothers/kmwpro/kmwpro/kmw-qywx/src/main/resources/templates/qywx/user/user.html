@@ -26,18 +26,18 @@
                                 <p>职务：</p>
                                 <input type="text" name="duties"/>
                             </li>
-                            <li>
+                           <!-- <li>
                                 <p>性别：</p>
                                 <select name="sex" th:with="type=${@dict.getType('')}">
                                     <option value="">所有</option>
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
-                            </li>
+                            </li>-->
                             <li>
                                 <p>手机：</p>
                                 <input type="text" name="mobile"/>
                             </li>
-                            <li>
+                           <!-- <li>
                                 <p>座机：</p>
                                 <input type="text" name="phone"/>
                             </li>
@@ -64,7 +64,7 @@
                             <li>
                                 <p>微工作台：</p>
                                 <input type="text" name="wxplat"/>
-                            </li>
+                            </li>-->
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -128,7 +128,10 @@
                 },
                 {
                     field : 'dept', 
-                    title : '部门'
+                    title : '部门',
+                    formatter: function(value, row, index) {
+                        return $.table.tooltip(value);
+                    }
                 },
                 {
                     field : 'sex', 
@@ -144,27 +147,33 @@
                 },
                 {
                     field : 'email', 
-                    title : '个人邮箱'
+                    title : '个人邮箱',
+                    visible: false
                 },
                 {
                     field : 'address', 
-                    title : '地址'
+                    title : '地址',
+                    visible: false
                 },
                 {
                     field : 'shortcorname', 
-                    title : '企业简称'
+                    title : '企业简称',
+                    visible: false
                 },
                 {
                     field : 'isactive', 
-                    title : '激活状态'
+                    title : '激活状态',
+                    visible: false
                 },
                 {
                     field : 'isforbidden', 
-                    title : '禁用状态'
+                    title : '禁用状态',
+                    visible: false
                 },
                 {
                     field : 'wxplat', 
-                    title : '微工作台'
+                    title : '微工作台',
+                    visible: false
                 },
                 {
                     title: '操作',

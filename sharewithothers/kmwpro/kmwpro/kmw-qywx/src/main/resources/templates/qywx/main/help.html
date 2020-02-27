@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<th:block th:include="include :: header('日报使用帮助')" />
+</head>
+<body class="gray-bg">
+	<div class="wrapper wrapper-content animated fadeIn">
+
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="tabs-container">
+					<ul class="nav nav-tabs">
+						<li class="active"><a data-toggle="tab" href="#tab-1"
+							aria-expanded="true">录入</a></li>
+						<li class=""><a data-toggle="tab" href="#tab-2"
+							aria-expanded="false">查询</a></li>
+						<li class=""><a data-toggle="tab" href="#tab-3"
+							aria-expanded="true">下载</a></li>
+						<li class=""><a data-toggle="tab" href="#tab-4"
+							aria-expanded="false">补报</a></li>
+					</ul>
+					<div class="tab-content">
+						<div id="tab-1" class="tab-pane active" style="height: 900px">
+							<div class="panel-body" style="height: 750px">
+								<p>
+									用于完成当天工作内容的录入，操作方式如下：<br> 一、直接发文本提交，格式如下：<br> [日报]<br>
+									今天<br> [XXXX报送系统]<br> 1、人行统计报送工作内容描述XXXX。[XX%]<br>
+									2、人行统计报送工作内容描述XXXX。[XX%]<br> [XXXX系统]<br>
+									1、XXXX。[XX%]<br> 2、XXXX。[XX%]<br> [XXXX系统]<br>
+									1、XXXX。[XX%]<br> 2、XXXX。[XX%]<br> 明天<br> [[XXXX]<br>
+									1、XXXX。[XX%]<br> 2、XXXX。[XX%]<br> 总结<br> XXXXXXX
+									内容不超200字。<br> <br> 案例如下：<br> [日报]<br> 今天<br>
+									[福建EAST4.0项目]<br> 1、历史数据检查及同步到监管平台gbase [100]<br>
+									2、时点为报表历史数据加工[100]<br> 3、历史时点数据校验[100]<br> 明天<br>
+									[福建EAST4.0项目]<br> 1、历史时点数据校验及上报工作[100]<br> 总结<br>
+									1、目前EAST4.0一阶段投产完成，二阶段针对数据检核结果问题分析以及优化过程，以及历史数据补报工作<br> <br>
+									二、功能界面提交日报，操作步骤如下：<br> 点击功能菜单，日报管理->日报录入<br> <br>
+								</p>
+							</div>
+						</div>
+						<div id="tab-2" class="tab-pane" style="height: 900px">
+							<div class="panel-body" style="height: 750px">
+
+								<p>
+									用于查询已经录入的日报内容，只能查询5在区间内的数据,操作方式：：<br> 一、直接发文本提交，格式如下：<br>
+									[查询]<br> YYYY-MM-DD至YYYY-MM-DD<br> 或<br> [查询]<br>
+									YYYY-MM-DD<br> <br> 案例如下：<br> 查询<br>
+									2019-09-25至2019-09-30<br> 二、直接发文本，调阅成员，格式如下：<br>
+									[调阅成员]<br> 姓名<br> YYYY-MM-DD至YYYY-MM-DD<br> 或<br>
+									[调阅成员]<br> 姓名<br> YYYY-MM-DD<br>
+									<br> 案例如下：<br> [调阅成员]<br> 许春林<br>
+									2019-09-20至2019-09-25<br> <br> 三、界面录入，操作步骤如下：<br>
+									点击功能菜单，日报管理->日报调阅<br>
+								</p>
+							</div>
+						</div>
+						<div id="tab-3" class="tab-pane" style="height: 900px">
+							<div class="panel-body" style="height: 750px">
+
+								<p>
+									用于将已经提交的一段时间的日报内容后台生成表格，下载到用户手机，可以通过命令方式：<br> [报告下载]<br>
+									YYYY-MM-DD至YYYY-MM-DD<br> 或<br> [报告下载]<br>
+									YYYY-MM-DD<br>
+									<br> 案例如下：<br> [报告下载]<br> 2019-09-25至2019-09-30<br>
+								</p>
+							</div>
+						</div>
+						<div id="tab-4" class="tab-pane" style="height: 900px">
+							<div class="panel-body" style="height: 750px">
+
+								<p>
+									对于当天未及时提交日报的情况，通过文本形式提交，格式如下：<br> [补报]<br> YYYY-MM-DD
+									----如：2019-09-10<br> [XXXX]<br> 1、XXXX。[XX%]<br>
+									2、XXXX。[XX%]<br> [[XXXX]<br> 1、XXXX。[XX%]<br>
+									2、XXXX。[XX%]<br>
+									<br> 案例如下：<br> [补报]<br> 2020-01-20<br>
+									[福建EAST4.0项目]<br> 1、历史数据检查及同步到监管平台gbase [80]<br>
+									2、时点为报表历史数据加工[80]<br> 3、历史时点数据校验[60]<br> 明天<br>
+									[福建EAST4.0项目]<br> 1、历史时点数据校验[70]<br>
+									2、时点为报表历史数据加工[90]<br> 总结<br>
+									1、目前EAST4.0一阶段投产完成，二阶段针对数据检核结果问题分析以及优化过程，以及历史数据补报工作<br>
+								</p>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+
+		</div>
+		<th:block th:include="include :: footer" />
+</body>
+</html>

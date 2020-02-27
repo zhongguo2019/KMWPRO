@@ -96,8 +96,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 #end
 #end
 #end
-		</where>
 			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		</where>
+
 			<if	test="sortC != null  and sortC != '' and order != null  and order != ''">ORDER BY t.${sortC} ${order}</if>
     </select>   
     

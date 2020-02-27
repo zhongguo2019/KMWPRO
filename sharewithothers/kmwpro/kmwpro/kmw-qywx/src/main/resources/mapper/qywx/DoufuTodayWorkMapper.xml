@@ -366,7 +366,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		    <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
 
 		</where>
- 		<if test=" ( sortC != null  and sortC !='') and ( order != null  and order !='')"> and ${dynamicSQL}  
+ 		<if test=" ( sortC != null  and sortC !='') and ( order != null  and order !='')">  
 			ORDER BY t.${sortC} ${order}
 		</if>
 	</select>
@@ -453,13 +453,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          from wx_user 
 		<where>
 		1=1
- 
-		<if test="groupname != null  and groupname != ''"> and wx_user.dept like "%"#{groupname}"%"   </if>
-		 
-         and  wx_user.account  not in (
+		<if test="groupName != null  and groupName != ''"> and wx_user.dept like  CONCAT('%',#{groupName},'%') </if>
+        and  wx_user.account  not in (
          select doufu_today_work.REPORTER_NAME  from doufu_today_work
-         <if test="reportdate != null  and reportdate != ''"> where doufu_today_work.REPORT_DATE = #{reportdate}  </if>
-		 )
+         <if test="reportDate != null  and reportDate != ''"> where doufu_today_work.REPORT_DATE = #{reportDate}  </if>
+)
 		</where>
 	</select>
 	

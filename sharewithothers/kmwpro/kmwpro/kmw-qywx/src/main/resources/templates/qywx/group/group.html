@@ -10,27 +10,27 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-                            <li>
+                            <!--<li>
                                 <p>小组负责人：</p>
                                 <input type="text" name="userId"/>
                             </li>
                             <li>
-                                <p>用户编码：</p>
+                                <p>负责人代码</p>
                                 <input type="text" name="userCode"/>
-                            </li>
+                            </li>-->
                             <li>
-                                <p>用户名称：</p>
+                                <p>负责人名称</p>
                                 <input type="text" name="username"/>
                             </li>
                             <li>
-                                <p>用户分组编码：</p>
+                                <p>分组编码：</p>
                                 <input type="text" name="groupCode"/>
                             </li>
                             <li>
-                                <p>负责小组名称 广东农信;南京银行MAST;：</p>
+                                <p>小组名称：</p>
                                 <input type="text" name="groupCname"/>
                             </li>
-                            <li>
+                           <!-- <li>
                                 <p>是否要通知微信消息：</p>
                                 <input type="text" name="isMsg"/>
                             </li>
@@ -43,16 +43,16 @@
                                 <select name="status">
                                     <option value="">所有</option>
                                 </select>
-                            </li>
+                            </li>-->
                             <li>
-                                <p>机构ID：</p>
+                                <p>小组代号：</p>
                                 <input type="text" name="instId"/>
                             </li>
-                            <li>
+                           <!-- <li>
                                 <p>登录IP：</p>
                                 <input type="text" name="loginIp"/>
-                            </li>
-                            <li class="select-time">
+                            </li>-->
+  <!--                          <li class="select-time">
                                 <p>登录日期：</p>
                                 <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginLoginDate]"/>
                                 <span>-</span>
@@ -78,6 +78,7 @@
                                 <span>-</span>
                                 <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endUpdateDate]"/>
                             </li>
+                            -->
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -125,27 +126,29 @@
                 },
                 {
                     field : 'userId', 
-                    title : '小组负责人'
+                    title : '小组负责人',
+                    visible:false
                 },
                 {
                     field : 'userCode', 
-                    title : '用户编码'
+                    title : '负责人代码'
                 },
                 {
                     field : 'username', 
-                    title : '用户名称'
+                    title : '负责人'
                 },
                 {
                     field : 'groupCode', 
-                    title : '用户分组编码'
+                    title : '分组编码'
                 },
                 {
                     field : 'groupCname', 
-                    title : '负责小组名称 广东农信;南京银行MAST;'
+                    title : '小组名称'
                 },
                 {
                     field : 'isMsg', 
-                    title : '是否要通知微信消息'
+                    title : '是否要通知微信消息',
+                    visible: false
                 },
                 {
                     field : 'id', 
@@ -154,31 +157,38 @@
                 },
                 {
                     field : 'delFlag', 
-                    title : '逻辑删除标记(0.正常，1.删除)'
+                    title : '逻辑删除标',
+                    visible:false
                 },
                 {
                     field : 'status', 
-                    title : '状态'
+                    title : '状态',
+                    visible: false
                 },
                 {
                     field : 'instId', 
-                    title : '机构ID'
+                    title : '机构ID',
+                    visible: false
                 },
                 {
                     field : 'loginIp', 
-                    title : '登录IP'
+                    title : '登录IP',
+                    visible: false
                 },
                 {
                     field : 'loginDate', 
-                    title : '登录日期'
+                    title : '登录日期',
+                    visible: false
                 },
                 {
                     field : 'createBy', 
-                    title : '创建人'
+                    title : '创建人',
+                    visible: false
                 },
                 {
                     field : 'createDate', 
-                    title : '创建时间'
+                    title : '创建时间',
+                    visible: false
                 },
                 {
                     field : 'updateBy', 
@@ -186,11 +196,13 @@
                 },
                 {
                     field : 'updateDate', 
-                    title : '最近修改时间'
+                    title : '最近修改时间',
+                    visible: false
                 },
                 {
                     field : 'remarks', 
-                    title : '描述'
+                    title : '描述',
+                    visible: false
                 },
                 {
                     title: '操作',

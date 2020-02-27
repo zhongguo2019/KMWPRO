@@ -82,9 +82,14 @@ public class DoufuTodayWorkController extends BaseController {
 	@RequiresPermissions("qywx:work:list")
 	@PostMapping("/list")
 	@ResponseBody
-	public TableDataInfo list(DoufuTodayWork doufuTodayWork) {
+	public TableDataInfo list(@RequestParam Map<String, Object> params) {
 		startPage();
-		List<DoufuTodayWork> list = doufuTodayWorkService.selectDoufuTodayWorkList(doufuTodayWork);
+		//List<DoufuTodayWork> list = doufuTodayWorkService.selectDoufuTodayWorkList(doufuTodayWork);
+	//	Map<String, Object> params = new HashMap<>();
+		params.put("sortC","reporter_Name,report_date");
+		params.put("order","desc");
+		
+		List<DoufuTodayWork> list =doufuTodayWorkService.entityList(params);
 		return getDataTable(list);
 	}
 

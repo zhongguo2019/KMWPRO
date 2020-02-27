@@ -70,23 +70,24 @@ public class WeiXinUtil {
 	public final static String access_token_url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={corpId}&corpsecret={corpsecret}";
 	// 获取jsapi_ticket的接口地址（GET） 限200（次/天）
 	public final static String jsapi_ticket_url = "https://qyapi.weixin.qq.com/cgi-bin/get_jsapi_ticket?";
-	
-    @Autowired
-    IWxUserService wxUserService;
-    
-	
-	  @Autowired IRedisUtilService redisUtilService;
-	 
-	//IWxUserService wxUserService  = SpringContextHolder.getBean("wxUserServiceImpl");
+
+	@Autowired
+	IWxUserService wxUserService;
+
+	@Autowired
+	IRedisUtilService redisUtilService;
+
+	// IWxUserService wxUserService =
+	// SpringContextHolder.getBean("wxUserServiceImpl");
 	@Autowired
 	SendMessageService sendMessageService;
 	Logger logger = LoggerFactory.getLogger(this.getClass());
- 
-	//RedisUtil redisUtil = SpringContextHolder.getBean("redisUtil");
-	@Autowired
-	IDoufuTodayWorkService doufuTodayWorkService ;
-	//IDoufuTodayWorkService doufuTodayWorkService = SpringContextHolder.getBean("doufuTodayWorkServiceImpl");
 
+	// RedisUtil redisUtil = SpringContextHolder.getBean("redisUtil");
+	@Autowired
+	IDoufuTodayWorkService doufuTodayWorkService;
+	// IDoufuTodayWorkService doufuTodayWorkService =
+	// SpringContextHolder.getBean("doufuTodayWorkServiceImpl");
 
 	/**
 	 * 1.发起https请求并获取结果
@@ -153,8 +154,8 @@ public class WeiXinUtil {
 	}
 
 	/**
-	 * 2.发送https请求之获取临时素材
-	 **  从服务器上下载指定的文件
+	 * 2.发送https请求之获取临时素材 从服务器上下载指定的文件
+	 * 
 	 * @param requestUrl
 	 * @param savePath   文件的保存路径，此时还缺一个扩展名
 	 * @return
@@ -218,8 +219,6 @@ public class WeiXinUtil {
 
 		return file;
 	}
-
-	
 
 	/**
 	 * 2.发起http请求获取返回结果
@@ -302,7 +301,7 @@ public class WeiXinUtil {
 	 */
 	public static String getJsapiTicket(String accessToken) {
 
-		String requestUrl = jsapi_ticket_url+"access_token="+accessToken;
+		String requestUrl = jsapi_ticket_url + "access_token=" + accessToken;
 		JSONObject jsonObject = httpRequest(requestUrl, "GET", null);
 
 		String jsapi_ticket = "";
@@ -327,7 +326,7 @@ public class WeiXinUtil {
 	 * @param request
 	 * @return
 	 */
-	public  JSONObject getWxConfigJSON(HttpServletRequest request) {
+	public JSONObject getWxConfigJSON(HttpServletRequest request) {
 		JSONObject wxConfig = new JSONObject();
 		// 1.准备好参与签名的字段
 		String nonceStr = UUID.randomUUID().toString(); // 必填，生成签名的随机串
@@ -491,9 +490,10 @@ public class WeiXinUtil {
 			if (strMsgType.equals("event")) {
 
 				String strEventName = root.getElementsByTagName("Event").item(0).getTextContent().toString();
-				String strEvenKey = root.getElementsByTagName("EventKey").item(0).getTextContent().toString();
-				if(null !=strEvenKey) {
-				doufuTodayWorkService.dealEvent(request, strEvenKey);
+				if (null != root.getElementsByTagName("EventKey").item(0).getTextContent()) {
+					String strEvenKey = root.getElementsByTagName("EventKey").item(0).getTextContent().toString();
+
+					doufuTodayWorkService.dealEvent(request, strEvenKey);
 				}
 			}
 
@@ -638,20 +638,18 @@ public class WeiXinUtil {
 
 	}
 
-	public WxUser getUserInfo(String username,String queryType) {
+	public WxUser getUserInfo(String username, String queryType) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("username", username);
 		WxUser wxUser = new WxUser();
-		if(queryType.equals("ACCOUNT")){
-		  wxUser = wxUserService.queryOneWxUser(params);
+		if (queryType.equals("ACCOUNT")) {
+			wxUser = wxUserService.queryOneWxUser(params);
 		}
-		if(queryType.equals("NAME")){
-			  wxUser = wxUserService.queryOneWxUserByName(params);
-			}
-			
-		
+		if (queryType.equals("NAME")) {
+			wxUser = wxUserService.queryOneWxUserByName(params);
+		}
+
 		return wxUser;
-		 
 
 	}
 
@@ -672,7 +670,6 @@ public class WeiXinUtil {
 
 	}
 
-	
 	/**
 	 * @desc ：上传临时素材
 	 * 
@@ -681,12 +678,10 @@ public class WeiXinUtil {
 	 * @param fileUrl     本地文件的url。例如 "D/1.img"。
 	 * @return JSONObject 上传成功后，微信服务器返回的参数，有type、media_id 、created_at
 	 */
-	public  JSONObject uploadTempMaterial(String type, String fileUrl,String accessToken ) {
+	public JSONObject uploadTempMaterial(String type, String fileUrl, String accessToken) {
 
-		
 		log.info("开始进行向企业微信传文件！");
-		
-		
+
 		// 1.创建本地文件
 		File file = new File(fileUrl);
 
@@ -725,21 +720,20 @@ public class WeiXinUtil {
 
 	// 2.发送文本卡片消息
 
-	public void SendTextcardMessage(String toUser, String toParty,String msgContent) {
+	public void SendTextcardMessage(String toUser, String toParty, String msgContent) {
 		// 0.设置消息内容
 		String content = msgContent;
 
 		// 1.创建文本消息对象
 		TextMessage message = new TextMessage();
-		
-		//消息接收者，具体人员为空，则发给指定的部门ID
-		if("".equals(toUser)) {
-			message.setToparty(toParty);	
-		}else {
+
+		// 消息接收者，具体人员为空，则发给指定的部门ID
+		if ("".equals(toUser)) {
+			message.setToparty(toParty);
+		} else {
 
 			message.setTouser(toUser); // 不区分大小写
 		}
-
 
 		// 1.2必需
 		message.setMsgtype("text");
@@ -749,13 +743,13 @@ public class WeiXinUtil {
 		text.setContent(content);
 		message.setText(text);
 
-    	// 3.发送消息：调用业务类，发送消息
+		// 3.发送消息：调用业务类，发送消息
 
 		sendMessageService.sendMessage(message);
 
 	}
 
-	public  String getTencentUserInfo(String code) {
+	public String getTencentUserInfo(String code) {
 
 		// 2.获取access_token:根据企业id和通讯录密钥获取access_token,并拼接请求url
 		String accessToken = getRedisToken();
@@ -764,7 +758,7 @@ public class WeiXinUtil {
 
 	}
 
-	public  void SendFileMessage(String media_id, String type, String accessToken, String toUser) {
+	public void SendFileMessage(String media_id, String type, String accessToken, String toUser) {
 		// 1.创建文件对象
 		FileMessage message = new FileMessage();
 		// 1.1非必需
@@ -788,15 +782,15 @@ public class WeiXinUtil {
 
 	}
 
-	public  boolean setRedisToken() {
+	public boolean setRedisToken() {
 		AccessToken accessToken = new AccessToken();
 		accessToken = WeiXinUtil.getAccessToken(WeiXinParamesUtil.corpId, WeiXinParamesUtil.agentSecret);
-		if(accessToken.getToken()==null ||"".equals(accessToken.getToken())) {
+		if (accessToken.getToken() == null || "".equals(accessToken.getToken())) {
 			logger.error("未能得到企业微信的token!");
 			return false;
 		}
 		logger.info("向企业微信申请token 放到redis 中【" + accessToken.getToken() + "】 获取时间【" + DateUtils.getDateTime() + "】");
-		redisUtilService.setRedisValue("token",  accessToken);
+		redisUtilService.setRedisValue("token", accessToken);
 		return true;
 
 	}
@@ -808,7 +802,7 @@ public class WeiXinUtil {
 		 * redisUtilService.getRedisValue("token")); logger.info("从redis中获取 token【" +
 		 * accessToken.getToken() + "】"); return accessToken.getToken();
 		 */
-		
+
 		return redisUtilService.getRedisValue("token");
 
 	}
