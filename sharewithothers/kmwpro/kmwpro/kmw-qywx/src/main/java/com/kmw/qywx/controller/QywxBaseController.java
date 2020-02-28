@@ -141,7 +141,7 @@ public class QywxBaseController  extends BaseController{
     @GetMapping("/reportview")
     public String reportview()
     {
-        return prefix + "/reportview";
+        return prefix + "/reportiew2";
     }
     /**
      *录入界面

@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh">
 <head>
-    <th:block th:include="include :: header('当天工作记录信息列表')" />
+    <th:block th:include="include :: header('查询日报记录')" />
 </head>
 <body class="gray-bg">
-     <div class="container-div">
+<div class="wrapper wrapper-content animated fadeIn">
+
+    <div class="container-div">
         <div class="row">
             <div class="col-sm-12 search-collapse">
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-                          <!--   <li>
-                                <p>所在项目组名称：</p>
-                                <input type="text" name="projectGroupId"/>
-                            </li> -->
-<!--                            <li>
-                                <p>完成比例：</p>
-                                <input type="text" name="finishPercent"/>
-                            </li>-->
+                            <!--   <li>
+                                  <p>所在项目组名称：</p>
+                                  <input type="text" name="projectGroupId"/>
+                              </li> -->
+                            <!--                            <li>
+                                                            <p>完成比例：</p>
+                                                            <input type="text" name="finishPercent"/>
+                                                        </li>-->
                             <li>
                                 <p>姓名：</p>
                                 <input type="text" name="remarks"/>
@@ -62,26 +64,26 @@
                                 <span>-</span>
                                 <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endLoginDate]"/>
                             </li> -->
-                           <!--  <li>
-                                <p>创建人：</p>
-                                <input type="text" name="createBy"/>
-                            </li>
-                            <li class="select-time">
-                                <p>创建时间：</p>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginCreateDate]"/>
-                                <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endCreateDate]"/>
-                            </li>
-                            <li>
-                                <p>最近修改人：</p>
-                                <input type="text" name="updateBy"/>
-                            </li>
-                            <li class="select-time">
-                                <p>最近修改时间：</p>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginUpdateDate]"/>
-                                <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endUpdateDate]"/>
-                            </li> -->
+                            <!--  <li>
+                                 <p>创建人：</p>
+                                 <input type="text" name="createBy"/>
+                             </li>
+                             <li class="select-time">
+                                 <p>创建时间：</p>
+                                 <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginCreateDate]"/>
+                                 <span>-</span>
+                                 <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endCreateDate]"/>
+                             </li>
+                             <li>
+                                 <p>最近修改人：</p>
+                                 <input type="text" name="updateBy"/>
+                             </li>
+                             <li class="select-time">
+                                 <p>最近修改时间：</p>
+                                 <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginUpdateDate]"/>
+                                 <span>-</span>
+                                 <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endUpdateDate]"/>
+                             </li> -->
                             <li>
                                 <p>报告日期：</p>
                                 <input type="text" class="time-input" name="reportDate"/>
@@ -90,22 +92,22 @@
                                 <p>项目名称：</p>
                                 <input type="text" name="productName"/>
                             </li>
-                           <!--  <li>
-                                <p>报告人ID：</p>
-                                <input type="text" name="reporterId"/>
-                            </li>
-                            <li>
-                                <p>报告人名称：</p>
-                                <input type="text" name="reporterName"/>
-                            </li>
-                            <li>
-                                <p>录入内容序号：</p>
-                                <input type="text" name="inputOrder"/>
-                            </li> -->
-                            <li>
+                            <!--  <li>
+                                 <p>报告人ID：</p>
+                                 <input type="text" name="reporterId"/>
+                             </li>
+                             <li>
+                                 <p>报告人名称：</p>
+                                 <input type="text" name="reporterName"/>
+                             </li>
+                             <li>
+                                 <p>录入内容序号：</p>
+                                 <input type="text" name="inputOrder"/>
+                             </li> -->
+<!--                             <li>
                                 <p>是否补报：</p>
                                 <input type="text" name="isAfter"/>
-                            </li>
+                            </li> -->
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -114,186 +116,166 @@
                     </div>
                 </form>
             </div>
-
-            <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="qywx:work:add">
-                    <i class="fa fa-plus"></i> 添加
-                </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="qywx:work:edit">
-                    <i class="fa fa-edit"></i> 修改
-                </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="qywx:work:remove">
-                    <i class="fa fa-remove"></i> 删除
-                </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="qywx:work:export">
-                    <i class="fa fa-download"></i> 导出
-                 </a>
-            </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
             </div>
         </div>
     </div>
-    <th:block th:include="include :: footer" />
-    <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('qywx:work:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('qywx:work:remove')}]];
-        var prefix = ctx + "qywx/work";
 
-        $(function() {
-            var options = {
-                url: prefix + "/list",
-                createUrl: prefix + "/add",
-                updateUrl: prefix + "/edit/{id}",
-                removeUrl: prefix + "/remove",
-                exportUrl: prefix + "/export",
-                modalName: "当天工作记录信息",
-                sortable: true,                     //是否启用排序
-                sortOrder: "asc",                   //排序方式                
-                columns: [{
-                    checkbox: true
-                },
+    </div>
+    <th:block th:include="include :: footer" />
+<script th:inline="javascript">
+    var prefix = ctx + "qywx/work";
+    $(function() {
+        var options = {
+            url: prefix + "/qywxlist",
+            modalName: "工作记录信息",
+            sortable: true,                     //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            columns: [{
+                checkbox: true
+            },
                 {
-                    field : 'remarks', 
+                    field : 'remarks',
                     title : '姓名',
                     sortable:true
                 },
                 {
-                    field : 'reportDate', 
+                    field : 'reportDate',
                     title : '报告日期',
                     sortable:true
                 },
                 {
-                    field : 'productName', 
-                    title : '产品名称'
+                    field : 'productName',
+                    title : '项目名称'
                 },
                 {
-                    field : 'projectGroupId', 
-                    title : '所在项目组名称', 
+                    field : 'projectGroupId',
+                    title : '所在项目组名称',
                     visible:false
-               
+
                 },
                 {
-                    field : 'projectId', 
-                    title : '项目名称', 
-                    visible:false
-                },
-                {
-                    field : 'productId', 
-                    title : '对应产品', 
+                    field : 'projectId',
+                    title : '项目ID',
                     visible:false
                 },
                 {
-                    field : 'workContents', 
+                    field : 'productId',
+                    title : '对应产品',
+                    visible:false
+                },
+                {
+                    field : 'workContents',
                     title : '工作内容简写',
                     formatter: function(value, row, index) {
                         return $.table.tooltip(value);
                     }
                 },
                 {
-                    field : 'workDetail', 
+                    field : 'workDetail',
                     title : '工作内容详细描述',
                     formatter: function(value, row, index) {
                         return $.table.tooltip(value);
                     }
                 },
                 {
-                    field : 'finishPercent', 
+                    field : 'finishPercent',
                     title : '完成比例'
                 },
                 {
-                    field : 'delayReason', 
-                    title : '延迟原因', 
+                    field : 'delayReason',
+                    title : '延迟原因',
                     visible:false
                 },
                 {
-                    field : 'accordYesterday', 
-                    title : '对应计划', 
+                    field : 'accordYesterday',
+                    title : '对应计划',
                     visible:false
                 },
                 {
-                    field : 'isImportant', 
-                    title : '是否重要', 
+                    field : 'isImportant',
+                    title : '是否重要',
                     visible:false
                 },
                 {
-                    field : 'isEmergency', 
-                    title : '是否紧急', 
+                    field : 'isEmergency',
+                    title : '是否紧急',
                     visible:false
                 },
                 {
-                    field : 'impoLevel', 
-                    title : '重要级别', 
+                    field : 'impoLevel',
+                    title : '重要级别',
                     visible:false
                 },
                 {
-                    field : 'id', 
+                    field : 'id',
                     title : '主键',
                     visible: false
                 },
                 {
-                    field : 'delFlag', 
-                    title : '逻辑删除标记(0.正常，1.删除)', 
+                    field : 'delFlag',
+                    title : '逻辑删除标记(0.正常，1.删除)',
                     visible:false
                 },
                 {
-                    field : 'status', 
-                    title : '状态', 
+                    field : 'status',
+                    title : '状态',
                     visible:false
                 },
                 {
-                    field : 'instId', 
-                    title : '机构ID', 
+                    field : 'instId',
+                    title : '机构ID',
                     visible:false
                 },
                 {
-                    field : 'loginIp', 
-                    title : '登录IP', 
+                    field : 'loginIp',
+                    title : '登录IP',
                     visible:false
                 },
                 {
-                    field : 'loginDate', 
-                    title : '登录日期', 
+                    field : 'loginDate',
+                    title : '登录日期',
                     visible:false
                 },
                 {
-                    field : 'createBy', 
-                    title : '创建人', 
+                    field : 'createBy',
+                    title : '创建人',
                     visible:false
                 },
                 {
-                    field : 'createDate', 
-                    title : '创建时间', 
+                    field : 'createDate',
+                    title : '创建时间',
                     visible:false
                 },
                 {
-                    field : 'updateBy', 
-                    title : '最近修改人', 
+                    field : 'updateBy',
+                    title : '最近修改人',
                     visible:false
                 },
                 {
-                    field : 'updateDate', 
-                    title : '最近修改时间', 
+                    field : 'updateDate',
+                    title : '最近修改时间',
                     visible:false
                 },
 
                 {
-                    field : 'reporterId', 
-                    title : '报告人ID', 
+                    field : 'reporterId',
+                    title : '报告人ID',
                     visible:false
                 },
                 {
-                    field : 'reporterName', 
-                    title : '报告人名称', 
+                    field : 'reporterName',
+                    title : '报告人名称',
                     visible:false
                 },
                 {
-                    field : 'inputOrder', 
-                    title : '录入内容序号', 
+                    field : 'inputOrder',
+                    title : '录入内容序号',
                     visible:false
                 },
                 {
-                    field : 'isAfter', 
+                    field : 'isAfter',
                     title : '是否补报',
                     formatter: function(value,row,index) {
                         //通过判断单元格的值，来格式化单元格，返回的值即为格式化后包含的元素
@@ -309,7 +291,7 @@
                         }
                         return a;
                     }
-                },
+                }/*,
                 {
                     title: '操作',
                     align: 'center',
@@ -319,31 +301,33 @@
                         actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
                         return actions.join('');
                     }
-                }]
+                }
+                */
+                ]
+        };
+        $.table.init(options);
+    });
+
+
+    /* 通过map带参调用后台的方法Demo
+      function openDemo(){
+          var url1 =  prefix+"/tableDataInfo";
+          var url2 =  prefix+"/queryPageInfo";
+          var url3 =  prefix+"/queryOneEntity";
+          var	data = $('#formId').serialize();
+            var config = {
+                url: url3,
+                type: "post",
+                dataType: "json",
+                data: data,
+                beforeSend: function () {
+                //	$.modal.loading("正在处理中，请稍后...");
+                },
+                success: function(result) {
+                }
             };
-            $.table.init(options);
-        });
-        
-        
-        /* 通过map带参调用后台的方法Demo       
-          function openDemo(){
-        	  var url1 =  prefix+"/tableDataInfo";
-        	  var url2 =  prefix+"/queryPageInfo";
-        	  var url3 =  prefix+"/queryOneEntity";
-              var	data = $('#formId').serialize();
-          	  var config = {
-        	        url: url3,
-        	        type: "post",
-        	        dataType: "json",
-        	        data: data,
-        	        beforeSend: function () {
-        	        //	$.modal.loading("正在处理中，请稍后...");
-        	        },
-        	        success: function(result) {
-        	        }
-        	    };
-        	    $.ajax(config)
-        } */
-    </script>
+            $.ajax(config)
+    } */
+</script>
 </body>
 </html>

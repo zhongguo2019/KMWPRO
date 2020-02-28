@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmw.qywx.mapper.WxUserGroupRelationMapper">
+	<!-- 表字段 声明 -->
+	<sql id="WxUserGroupRelationColumns">
+		 ID, group_GUSERCODE, group_GUSERNAME, GROUP_GCODE, GROUP_GCNAME, user_uaccount, user_UNAME, DEL_FLAG, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, INST_ID, INST_NAME, REMARKS	</sql>
+	<!-- 实体与表字段映身声明，返回值 -->
+    <resultMap type="WxUserGroupRelation" id="WxUserGroupRelationResult">
+		<result property="id"    column="ID"    />
+		<result property="groupGusercode"    column="group_GUSERCODE"    />
+		<result property="groupGusername"    column="group_GUSERNAME"    />
+		<result property="groupGcode"    column="GROUP_GCODE"    />
+		<result property="groupGcname"    column="GROUP_GCNAME"    />
+		<result property="userUaccount"    column="user_uaccount"    />
+		<result property="userUname"    column="user_UNAME"    />
+		<result property="delFlag"    column="DEL_FLAG"    />
+		<result property="createBy"    column="CREATE_BY"    />
+		<result property="createDate"    column="CREATE_DATE"    />
+		<result property="updateBy"    column="UPDATE_BY"    />
+		<result property="updateDate"    column="UPDATE_DATE"    />
+		<result property="instId"    column="INST_ID"    />
+		<result property="instName"    column="INST_NAME"    />
+		<result property="remarks"    column="REMARKS"    />
+    </resultMap>
+    
+	<!-- 定义查询整张表的SQL -->
+    <sql id="selectWxUserGroupRelationVo">
+        select
+			 ID, group_GUSERCODE, group_GUSERNAME, GROUP_GCODE, GROUP_GCNAME, user_uaccount, user_UNAME, DEL_FLAG, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, INST_ID, INST_NAME, REMARKS        from wx_user_group_relation
+    </sql>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryPageInfo" resultType="com.kmw.common.CommonEntity">
+        select
+			<include refid="WxUserGroupRelationColumns" /> 
+        from	wx_user_group_relation t
+        <where>  
+			1=1
+            <if test="groupGusercode != null  and groupGusercode != ''"> and t.group_GUSERCODE = #{groupGusercode}</if>
+            <if test="groupGusername != null  and groupGusername != ''"> and t.group_GUSERNAME like concat('%', #{groupGusername}, '%')</if>
+            <if test="groupGcode != null  and groupGcode != ''"> and t.GROUP_GCODE = #{groupGcode}</if>
+            <if test="groupGcname != null  and groupGcname != ''"> and t.GROUP_GCNAME like concat('%', #{groupGcname}, '%')</if>
+            <if test="userUaccount != null  and userUaccount != ''"> and t.user_uaccount = #{userUaccount}</if>
+            <if test="userUname != null  and userUname != ''"> and t.user_UNAME like concat('%', #{userUname}, '%')</if>
+            <if test="delFlag != null  and delFlag != ''"> and t.DEL_FLAG = #{delFlag}</if>
+            <if test="createBy != null  and createBy != ''"> and t.CREATE_BY = #{createBy}</if>
+            <if test="createDate != null "> and t.CREATE_DATE = #{createDate}</if>
+            <if test="updateBy != null  and updateBy != ''"> and t.UPDATE_BY = #{updateBy}</if>
+            <if test="updateDate != null "> and t.UPDATE_DATE = #{updateDate}</if>
+            <if test="instId != null "> and t.INST_ID = #{instId}</if>
+            <if test="instName != null "> and t.INST_NAME like concat('%', #{instName}, '%')</if>
+            <if test="remarks != null  and remarks != ''"> and t.REMARKS = #{remarks}</if>
+        </where>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''"> ORDER BY t.${sortC} ${order}
+			</if>
+    </select>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryEntityList" resultType="com.kmw.common.CommonEntity">
+        select
+       	<include refid="WxUserGroupRelationColumns" /> 
+        from wx_user_group_relation t
+        <where>  
+        1=1
+            <if test="groupGusercode != null  and groupGusercode != ''"> and t.group_GUSERCODE = #{groupGusercode}</if>
+            <if test="groupGusername != null  and groupGusername != ''"> and t.group_GUSERNAME like concat('%', #{groupGusername}, '%')</if>
+            <if test="groupGcode != null  and groupGcode != ''"> and t.GROUP_GCODE = #{groupGcode}</if>
+            <if test="groupGcname != null  and groupGcname != ''"> and t.GROUP_GCNAME like concat('%', #{groupGcname}, '%')</if>
+            <if test="userUaccount != null  and userUaccount != ''"> and t.user_uaccount = #{userUaccount}</if>
+            <if test="userUname != null  and userUname != ''"> and t.user_UNAME like concat('%', #{userUname}, '%')</if>
+            <if test="delFlag != null  and delFlag != ''"> and t.DEL_FLAG = #{delFlag}</if>
+            <if test="createBy != null  and createBy != ''"> and t.CREATE_BY = #{createBy}</if>
+            <if test="createDate != null "> and t.CREATE_DATE = #{createDate}</if>
+            <if test="updateBy != null  and updateBy != ''"> and t.UPDATE_BY = #{updateBy}</if>
+            <if test="updateDate != null "> and t.UPDATE_DATE = #{updateDate}</if>
+            <if test="instId != null "> and t.INST_ID = #{instId}</if>
+            <if test="instName != null "> and t.INST_NAME like concat('%', #{instName}, '%')</if>
+            <if test="remarks != null  and remarks != ''"> and t.REMARKS = #{remarks}</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		</where>
+
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''">ORDER BY t.${sortC} ${order}</if>
+    </select>   
+    
+	<!-- 按map参数查询后台的数据， 查询单条数据,返回的是通用实体，不受实体属性限制，相当于map -->
+    <select id="queryOneCommon"	resultType="com.kmw.common.CommonEntity">
+        select
+		<include refid="WxUserGroupRelationColumns" />
+        from wx_user_group_relation t
+		<where>
+        where id = #{id}
+		</where>
+    </select>    
+    
+    
+	<!-- 按实体参数来查询后台的数据 -->
+    <select id="selectWxUserGroupRelationList" parameterType="WxUserGroupRelation" resultMap="WxUserGroupRelationResult">
+        <include refid="selectWxUserGroupRelationVo"/>
+        <where>  
+            <if test="groupGusercode != null  and groupGusercode != ''"> and group_GUSERCODE = #{groupGusercode}</if>
+            <if test="groupGusername != null  and groupGusername != ''"> and group_GUSERNAME like concat('%', #{groupGusername}, '%')</if>
+            <if test="groupGcode != null  and groupGcode != ''"> and GROUP_GCODE = #{groupGcode}</if>
+            <if test="groupGcname != null  and groupGcname != ''"> and GROUP_GCNAME like concat('%', #{groupGcname}, '%')</if>
+            <if test="userUaccount != null  and userUaccount != ''"> and user_uaccount = #{userUaccount}</if>
+            <if test="userUname != null  and userUname != ''"> and user_UNAME like concat('%', #{userUname}, '%')</if>
+            <if test="delFlag != null  and delFlag != ''"> and DEL_FLAG = #{delFlag}</if>
+            <if test="createBy != null  and createBy != ''"> and CREATE_BY = #{createBy}</if>
+            <if test="createDate != null "> and CREATE_DATE = #{createDate}</if>
+            <if test="updateBy != null  and updateBy != ''"> and UPDATE_BY = #{updateBy}</if>
+            <if test="updateDate != null "> and UPDATE_DATE = #{updateDate}</if>
+            <if test="instId != null "> and INST_ID = #{instId}</if>
+            <if test="instName != null "> and INST_NAME like concat('%', #{instName}, '%')</if>
+            <if test="remarks != null  and remarks != ''"> and REMARKS = #{remarks}</if>
+        </where>
+    </select>
+ 
+ 	<!-- 按主键来查询后台的数据 -->   
+    <select id="selectWxUserGroupRelationById" parameterType="String" resultMap="WxUserGroupRelationResult">
+        <include refid="selectWxUserGroupRelationVo"/>
+        where ID = #{id}
+    </select>
+    
+ 	<!-- 插入数据库一条数据 -->       
+    <insert id="insertWxUserGroupRelation" parameterType="WxUserGroupRelation">
+        insert into wx_user_group_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''">ID,</if>
+            <if test="groupGusercode != null  and groupGusercode != ''">group_GUSERCODE,</if>
+            <if test="groupGusername != null  and groupGusername != ''">group_GUSERNAME,</if>
+            <if test="groupGcode != null  and groupGcode != ''">GROUP_GCODE,</if>
+            <if test="groupGcname != null  and groupGcname != ''">GROUP_GCNAME,</if>
+            <if test="userUaccount != null  and userUaccount != ''">user_uaccount,</if>
+            <if test="userUname != null  and userUname != ''">user_UNAME,</if>
+            <if test="delFlag != null  and delFlag != ''">DEL_FLAG,</if>
+            <if test="createBy != null  and createBy != ''">CREATE_BY,</if>
+            <if test="createDate != null ">CREATE_DATE,</if>
+            <if test="updateBy != null  and updateBy != ''">UPDATE_BY,</if>
+            <if test="updateDate != null ">UPDATE_DATE,</if>
+            <if test="instId != null ">INST_ID,</if>
+            <if test="instName != null ">INST_NAME,</if>
+            <if test="remarks != null  and remarks != ''">REMARKS,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''">#{id},</if>
+            <if test="groupGusercode != null  and groupGusercode != ''">#{groupGusercode},</if>
+            <if test="groupGusername != null  and groupGusername != ''">#{groupGusername},</if>
+            <if test="groupGcode != null  and groupGcode != ''">#{groupGcode},</if>
+            <if test="groupGcname != null  and groupGcname != ''">#{groupGcname},</if>
+            <if test="userUaccount != null  and userUaccount != ''">#{userUaccount},</if>
+            <if test="userUname != null  and userUname != ''">#{userUname},</if>
+            <if test="delFlag != null  and delFlag != ''">#{delFlag},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createDate != null ">#{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateDate != null ">#{updateDate},</if>
+            <if test="instId != null ">#{instId},</if>
+            <if test="instName != null ">#{instName},</if>
+            <if test="remarks != null  and remarks != ''">#{remarks},</if>
+         </trim>
+    </insert>
+	<!-- 按主键更新数据库一条数据 -->
+    <update id="updateWxUserGroupRelation" parameterType="WxUserGroupRelation">
+        update wx_user_group_relation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="groupGusercode != null  and groupGusercode != ''">group_GUSERCODE = #{groupGusercode},</if>
+            <if test="groupGusername != null  and groupGusername != ''">group_GUSERNAME = #{groupGusername},</if>
+            <if test="groupGcode != null  and groupGcode != ''">GROUP_GCODE = #{groupGcode},</if>
+            <if test="groupGcname != null  and groupGcname != ''">GROUP_GCNAME = #{groupGcname},</if>
+            <if test="userUaccount != null  and userUaccount != ''">user_uaccount = #{userUaccount},</if>
+            <if test="userUname != null  and userUname != ''">user_UNAME = #{userUname},</if>
+            <if test="delFlag != null  and delFlag != ''">DEL_FLAG = #{delFlag},</if>
+            <if test="createBy != null  and createBy != ''">CREATE_BY = #{createBy},</if>
+            <if test="createDate != null ">CREATE_DATE = #{createDate},</if>
+            <if test="updateBy != null  and updateBy != ''">UPDATE_BY = #{updateBy},</if>
+            <if test="updateDate != null ">UPDATE_DATE = #{updateDate},</if>
+            <if test="instId != null ">INST_ID = #{instId},</if>
+            <if test="instName != null ">INST_NAME = #{instName},</if>
+            <if test="remarks != null  and remarks != ''">REMARKS = #{remarks},</if>
+        </trim>
+        where ID = #{id}
+    </update>
+	<!-- 按主键删除数据库中一条数据 -->
+    <delete id="deleteWxUserGroupRelationById" parameterType="String">
+        delete from wx_user_group_relation where ID = #{id}
+    </delete>
+	<!-- 按主键列表字符串用逗号分隔， 删除数据库中多条数据 -->
+    <delete id="deleteWxUserGroupRelationByIds" parameterType="String">
+        delete from wx_user_group_relation where ID in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+       <!-- 根据不同条件删除数据，条件可组合 -->
+	<delete id="deleteByParams" parameterType="java.util.Map">
+		delete from wx_user_group_relation t
+		<where>
+		        
+            <if test="groupGusercode != null  and groupGusercode != ''"> and t.group_GUSERCODE = #{groupGusercode}</if>
+            <if test="groupGusername != null  and groupGusername != ''"> and t.group_GUSERNAME like concat('%', #{groupGusername}, '%')</if>
+            <if test="groupGcode != null  and groupGcode != ''"> and t.GROUP_GCODE = #{groupGcode}</if>
+            <if test="groupGcname != null  and groupGcname != ''"> and t.GROUP_GCNAME like concat('%', #{groupGcname}, '%')</if>
+            <if test="userUaccount != null  and userUaccount != ''"> and t.user_uaccount = #{userUaccount}</if>
+            <if test="userUname != null  and userUname != ''"> and t.user_UNAME like concat('%', #{userUname}, '%')</if>
+            <if test="delFlag != null  and delFlag != ''"> and t.DEL_FLAG = #{delFlag}</if>
+            <if test="createBy != null  and createBy != ''"> and t.CREATE_BY = #{createBy}</if>
+            <if test="createDate != null "> and t.CREATE_DATE = #{createDate}</if>
+            <if test="updateBy != null  and updateBy != ''"> and t.UPDATE_BY = #{updateBy}</if>
+            <if test="updateDate != null "> and t.UPDATE_DATE = #{updateDate}</if>
+            <if test="instId != null "> and t.INST_ID = #{instId}</if>
+            <if test="instName != null "> and t.INST_NAME like concat('%', #{instName}, '%')</if>
+            <if test="remarks != null  and remarks != ''"> and t.REMARKS = #{remarks}</if>
+			</where>
+	</delete>
+	
+    <!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="entityList" resultMap="WxUserGroupRelationResult">
+        select
+       	<include refid="WxUserGroupRelationColumns" /> 
+        from wx_user_group_relation t
+        <where>  
+        1=1
+            <if test="groupGusercode != null  and groupGusercode != ''"> and t.group_GUSERCODE = #{groupGusercode}</if>
+            <if test="groupGusername != null  and groupGusername != ''"> and t.group_GUSERNAME like concat('%', #{groupGusername}, '%')</if>
+            <if test="groupGcode != null  and groupGcode != ''"> and t.GROUP_GCODE = #{groupGcode}</if>
+            <if test="groupGcname != null  and groupGcname != ''"> and t.GROUP_GCNAME like concat('%', #{groupGcname}, '%')</if>
+            <if test="userUaccount != null  and userUaccount != ''"> and t.user_uaccount = #{userUaccount}</if>
+            <if test="userUname != null  and userUname != ''"> and t.user_UNAME like concat('%', #{userUname}, '%')</if>
+            <if test="delFlag != null  and delFlag != ''"> and t.DEL_FLAG = #{delFlag}</if>
+            <if test="createBy != null  and createBy != ''"> and t.CREATE_BY = #{createBy}</if>
+            <if test="createDate != null "> and t.CREATE_DATE = #{createDate}</if>
+            <if test="updateBy != null  and updateBy != ''"> and t.UPDATE_BY = #{updateBy}</if>
+            <if test="updateDate != null "> and t.UPDATE_DATE = #{updateDate}</if>
+            <if test="instId != null "> and t.INST_ID = #{instId}</if>
+            <if test="instName != null "> and t.INST_NAME like concat('%', #{instName}, '%')</if>
+            <if test="remarks != null  and remarks != ''"> and t.REMARKS = #{remarks}</if>
+        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+        </where>
+
+		<if
+			test="sortC != null  and sortC != '' and order != null  and order != ''">
+			ORDER BY t.${sortC} ${order}
+		</if>
+    </select>     
+    <!-- 批量插入数据 -->
+	<insert id="insertBatch">
+		insert into wx_user_group_relation(<include refid="WxUserGroupRelationColumns" />) values 
+		<foreach collection="list" item="item" separator="," >
+		(
+            #{item.id} ,
+            #{item.groupGusercode} ,
+            #{item.groupGusername} ,
+            #{item.groupGcode} ,
+            #{item.groupGcname} ,
+            #{item.userUaccount} ,
+            #{item.userUname} ,
+            #{item.delFlag} ,
+            #{item.createBy} ,
+            #{item.createDate} ,
+            #{item.updateBy} ,
+            #{item.updateDate} ,
+            #{item.instId} ,
+            #{item.instName} ,
+            #{item.remarks} 		)
+		</foreach>
+	</insert>  
+  	<!-- 根据不同条件删除数据，条件可组合 -->
+	<update id="updateBatchEntity" >
+		<foreach collection="list" item="item" separator=",">
+        update wx_user_group_relation
+        set
+            ID = #{id} ,
+            group_GUSERCODE = #{groupGusercode} ,
+            group_GUSERNAME = #{groupGusername} ,
+            GROUP_GCODE = #{groupGcode} ,
+            GROUP_GCNAME = #{groupGcname} ,
+            user_uaccount = #{userUaccount} ,
+            user_UNAME = #{userUname} ,
+            DEL_FLAG = #{delFlag} ,
+            CREATE_BY = #{createBy} ,
+            CREATE_DATE = #{createDate} ,
+            UPDATE_BY = #{updateBy} ,
+            UPDATE_DATE = #{updateDate} ,
+            INST_ID = #{instId} ,
+            INST_NAME = #{instName} ,
+            REMARKS = #{remarks}     <where>
+			ID = #{id}
+        </where>
+		</foreach>
+	</update>
+    
+</mapper>

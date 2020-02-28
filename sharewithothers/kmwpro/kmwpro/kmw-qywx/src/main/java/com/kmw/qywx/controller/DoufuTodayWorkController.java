@@ -305,12 +305,12 @@ public class DoufuTodayWorkController extends BaseController {
 		String queryUser = "";
 
 		if ("".equals(map.get("query_name")) || null == map.get("query_name")) {
-			queryUser = wxUser.getName();
+			queryUser = wxUser.getAccount();
 		} else {
 			if ("*".equals(map.get("query_name"))) {
 				queryUser = "all";
 			} else {
-				queryUser = weiXinUtil.getUserInfo(queryUser, "ACCOUNT").getName();
+				queryUser = weiXinUtil.getUserInfo(queryUser, "ACCOUNT").getAccount();
 			}
 		}
 
@@ -563,4 +563,19 @@ public class DoufuTodayWorkController extends BaseController {
 		}
 		return result;
 	}
+	
+	
+	@PostMapping("/qywxlist")
+	@ResponseBody
+	public TableDataInfo qywxList(@RequestParam Map<String, Object> params) {
+		startPage();
+		//List<DoufuTodayWork> list = doufuTodayWorkService.selectDoufuTodayWorkList(doufuTodayWork);
+	//	Map<String, Object> params = new HashMap<>();
+		params.put("sortC","reporter_Name,report_date");
+		params.put("order","desc");
+		
+		List<DoufuTodayWork> list =doufuTodayWorkService.entityList(params);
+		return getDataTable(list);
+	}
+
 }

@@ -208,7 +208,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
 	 * @param params
 	 * @return List<${className}>
 	 */
-	public List<${className}> entityList(Map<String, Object> params) {
+	public List<${ClassName}> entityList(Map<String, Object> params) {
 		logger.info("#=================开始根据不同条件查询【【${functionName}】列表数据，返回通用对象========================#");
 		List<${ClassName}> list =  ${className}Mapper.entityList(params);
 		return list;
