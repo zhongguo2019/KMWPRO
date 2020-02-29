@@ -73,7 +73,9 @@ public class InforQuaterz {
 		
 	}
 	
-	
+	/**
+	 * 根据用户分组通知的INSTID发通知消息
+	 */
 	public void queryNotCommitByGroupNameV1() {
 
 		String reportToday = DateUtils.DateToStr8(new Date());
@@ -93,7 +95,31 @@ public class InforQuaterz {
 		    weiXinUtil.SendTextcardMessage("",wxUserGroup.getInstId(),infoMsgString);
 		}
 	}
+	
+	/**
+	 * 根据用户分组通知的INSTID发通知消息
+	 */
+	public void queryNotCommitByGroupNameV2() {
 
+		String reportToday = DateUtils.DateToStr8(new Date());
+		String reportPreday = DateUtils.getPreDateByDate8(reportToday);
+		
+		// 得到分组信息表中所有要通知到的小组信息
+		List<WxUserGroup> listGroutGroups = queryAllGroup();
+ 		if (null == listGroutGroups || listGroutGroups.size() == 0)
+			return;
+		// 得到所有组里的用户信息
+		for (int i = 0; i < listGroutGroups.size(); i++) {
+			WxUserGroup wxUserGroup = listGroutGroups.get(i);
+			WxUser wxUser = new WxUser();
+			wxUser.setDept(wxUserGroup.getGroupCname());
+		    String infoMsgString=queryNotCommitUser(wxUserGroup.getGroupCname(),reportPreday);
+		    logger.info("根据各项目组查询后台未提交的用户得到的通知消息：\n"+infoMsgString);
+//		    weiXinUtil.SendTextcardMessage("",wxUserGroup.getInstId(),infoMsgString);
+		    weiXinUtil.SendTextcardMessage(wxUserGroup.getUserCode(),"",infoMsgString);
+		    
+		}
+	}
 
 	// 所有分组信息
 	public List<WxUserGroup> queryAllGroup() {

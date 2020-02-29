@@ -357,11 +357,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateDate != null "> and t.UPDATE_DATE = #{updateDate}</if>
             <if test="remarks != null  and remarks != ''"> and t.REMARKS = #{remarks}</if>
             <if test="reportDate != null  and reportDate != ''"> and t.REPORT_DATE = #{reportDate}</if>
+           <if test="beginReportDate != null and beginReportDate != '' and endReportDate != null and endReportDate != ''"> and t.REPORT_DATE &gt;= #{beginReportDate} and t.REPORT_DATE &lt;=#{endReportDate}</if>
             <if test="productName != null  and productName != ''"> and t.PRODUCT_NAME like concat('%', #{productName}, '%')</if>
             <if test="reporterId != null  and reporterId != ''"> and t.REPORTER_ID = #{reporterId}</if>
             <if test="reporterName != null  and reporterName != '' and reporterName !='all'"> and t.REPORTER_NAME like concat('%', #{reporterName}, '%')</if>
   			<if test=" reporterName == 'all'">and t.REPORTER_NAME  like "%%" </if>
            <if test="inputOrder != null "> and t.INPUT_ORDER = #{inputOrder}</if>
+           
             <if test="isAfter != null  and isAfter != ''"> and t.IS_AFTER = #{isAfter}</if>
 		    <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
 

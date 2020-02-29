@@ -21,8 +21,8 @@ Spring Boot Version: ${spring-boot.version}
 //                           `=---='                              //
 //      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        //
 //             佛祖保佑       永不宕机      永无BUG                             //
-// 升级时注意：                                                                                     E                   //
-// 1、修改application.yml中                          上传文件配置       E                   //
+// 升级时注意：                                                                                     E                      //
+// 1、修改application.yml中                          上传文件配置、DEMO配置       E           //
 // 2、修改application-druid.yml中          数据库连接配置   E                   //
 // 3、修改WeiXinParamesUtil中      微信应用ID,密钥配置      E                   //
 ////////////////////////////////////////////////////////////////////

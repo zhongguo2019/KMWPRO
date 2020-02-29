@@ -20,10 +20,7 @@
                                                             <p>完成比例：</p>
                                                             <input type="text" name="finishPercent"/>
                                                         </li>-->
-                            <li>
-                                <p>姓名：</p>
-                                <input type="text" name="remarks"/>
-                            </li>
+
                             <!-- <li>
                                 <p>对应计划：</p>
                                 <input type="text" name="accordYesterday"/>
@@ -84,14 +81,25 @@
                                  <span>-</span>
                                  <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endUpdateDate]"/>
                              </li> -->
+
                             <li>
+                                <p>项目组：</p>
+                                <select name="manageBusinessDepartment" th:with="type=${@dict.getType('qywx_dept_team')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+                            </li>
+                            <li>
+                                <p>姓名：</p>
+                                <input type="text" name="remarks"/>
+                            </li>
+                            <li class="select-time">
                                 <p>报告日期：</p>
-                                <input type="text" class="time-input" name="reportDate"/>
+                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="beginReportDate"/>
+                                <span>-</span>
+                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="endReportDate"/>
                             </li>
-                            <li>
-                                <p>项目名称：</p>
-                                <input type="text" name="productName"/>
-                            </li>
+
                             <!--  <li>
                                  <p>报告人ID：</p>
                                  <input type="text" name="reporterId"/>
@@ -147,7 +155,8 @@
                 },
                 {
                     field : 'productName',
-                    title : '项目名称'
+                    title : '项目名称',
+                    visible:false
                 },
                 {
                     field : 'projectGroupId',
@@ -283,9 +292,9 @@
                         if(value == "0") {
                             var a = '<span style="color:#0000ff">'+'正常提交'+'</span>';
                         }else if(value == "1"){
-                            var a = '<span style="color:#FF0000">'+'补报日报'+'</span>';
+                            var a = '<span style="color:#FF0000">'+'补报提交'+'</span>';
                         }else if(value == "2") {
-                            var a = '<span style="color:#00ff00">'+'计划工作'+'</span>';
+                            var a = '<span style="color:#00ff00">'+'提交计划'+'</span>';
                         }else{
                             var a = '<span>'+value+'</span>';
                         }
@@ -307,6 +316,98 @@
         };
         $.table.init(options);
     });
+
+
+
+
+
+    $(document).ready(function (){
+
+      if(judgeIEType()== false)        return;
+        //获取当前用户用户userId
+        //以下两行代码调试时注掉
+        var urlCode = location.href.split("code=")[1].split('&')[0];
+        var userCode = getcookie("userId");
+       // console.log("地址ID"+urlCode);
+       // console.log("用户ID"+userCode);
+        //以下代码调试时打开
+       // userCode = 'Zhaozulong';  //置上默认的用户名
+      // var urlCode ='P1iJnyb-09zdfDiAVt6LOAP24DQJOQViJ873bAJIWEQ'; //置上默认的微信传来的参数code=P1iJnyb-09zdfDiAVt6LOAP24DQJOQViJ873bAJIWEQ&state=STATE
+        if (userCode == "") {
+            $.ajax({
+                url: "http://krmsoft.natapp1.cc/qywx/main/wxgetJSSUser",
+                data: {
+                    data: urlCode
+                },
+                type: "POST",
+                success: function (result) {
+                    console.log(result);
+                    addcookie("userId", result);
+                    showTable();//显示table
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                }
+            });
+        }
+        var userCodeLog = getcookie("userId");
+        console.log(userCodeLog);
+    });
+
+/*function judgeIEType() {
+    var ua = window.navigator.userAgent.toLowerCase();
+    if ((ua.match(/MicroMessenger/i) == 'micromessenger') && (ua.match(/wxwork/i) == 'wxwork')) {
+    // 企业微信客户端
+        return true;
+    } else if (ua.match(/micromessenger/i) == 'micromessenger') {
+     // 微信客户端
+    // window.location.replace('../pages/error.html')
+        return true
+    } else {
+        // 浏览器
+        alert("请用企业微信客户端来打开网页！");
+      window.location.replace('../error.html')
+        return false;
+    }
+}*/
+    //存Cookie的值 仅同级文件可用
+    function addcookie(name, value, expireHours) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() + expireHours);
+        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+    }
+
+
+    //存Cookie的值 加了cookie作用域 会产生全局有效的cookie
+    function ADDcookie(name, value, expireHours) {
+        var exp = new Date();
+        exp.setTime(exp.getTime() + expireHours);
+        document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + "; path=/";
+    }
+
+    function GetCookies(offset) {
+        var endstr = document.cookie.indexOf(";", offset);
+        if (endstr == -1) endstr = document.cookie.length;
+        return unescape(document.cookie.substring(offset, endstr));
+    }
+
+
+    //取Cookie的值
+    function getcookie(name) {
+        var arg = name + "=";
+        var alen = arg.length;
+        var clen = document.cookie.length;
+        var i = 0;
+        while (i < clen) {
+            var j = i + alen;
+            if (document.cookie.substring(i, j) == arg) return GetCookies(j);
+            i = document.cookie.indexOf(" ", i) + 1;
+            if (i == 0) break;
+        }
+        return "";
+    }
 
 
     /* 通过map带参调用后台的方法Demo

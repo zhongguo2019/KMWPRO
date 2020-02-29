@@ -10,7 +10,7 @@ import java.util.Date;
  * 分组信息与用户对应关系对象 wx_user_group_relation
  * 
  * @author kmw
- * @date 2020-02-27
+ * @date 2020-02-29
  */
 public class WxUserGroupRelation extends BaseEntity
 {
@@ -66,6 +66,10 @@ public class WxUserGroupRelation extends BaseEntity
     /** 描述 */
     @Excel(name = "描述")
     private String remarks;
+
+    /** 汇报给的人员账号，中间用|分隔 */
+    @Excel(name = "汇报给的人员账号，中间用|分隔")
+    private String reportTo;
 
     public void setId(String id) 
     {
@@ -184,6 +188,15 @@ public class WxUserGroupRelation extends BaseEntity
     {
         return remarks;
     }
+    public void setReportTo(String reportTo) 
+    {
+        this.reportTo = reportTo;
+    }
+
+    public String getReportTo() 
+    {
+        return reportTo;
+    }
 
     @Override
     public String toString() {
@@ -203,6 +216,7 @@ public class WxUserGroupRelation extends BaseEntity
             .append("instId", getInstId())
             .append("instName", getInstName())
             .append("remarks", getRemarks())
+            .append("reportTo", getReportTo())
             .toString();
     }
 }

@@ -9,7 +9,7 @@ import java.util.Map;
  * 分组信息与用户对应关系Mapper接口
  * 
  * @author kmw
- * @date 2020-02-27
+ * @date 2020-02-29
  */
 public interface WxUserGroupRelationMapper 
 {

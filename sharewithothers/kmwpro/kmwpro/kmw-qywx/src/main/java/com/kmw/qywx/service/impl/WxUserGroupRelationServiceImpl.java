@@ -20,7 +20,7 @@ import com.github.pagehelper.PageInfo;
  * 分组信息与用户对应关系Service业务层处理
  * 
  * @author kmw
- * @date 2020-02-27
+ * @date 2020-02-29
  */
 @Service
 public class WxUserGroupRelationServiceImpl implements IWxUserGroupRelationService 

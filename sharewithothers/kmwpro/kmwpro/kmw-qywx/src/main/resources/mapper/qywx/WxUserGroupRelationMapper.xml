@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.kmw.qywx.mapper.WxUserGroupRelationMapper">
 	<!-- 表字段 声明 -->
 	<sql id="WxUserGroupRelationColumns">
-		 ID, group_GUSERCODE, group_GUSERNAME, GROUP_GCODE, GROUP_GCNAME, user_uaccount, user_UNAME, DEL_FLAG, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, INST_ID, INST_NAME, REMARKS	</sql>
+		 ID, group_GUSERCODE, group_GUSERNAME, GROUP_GCODE, GROUP_GCNAME, user_uaccount, user_UNAME, DEL_FLAG, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, INST_ID, INST_NAME, REMARKS, REPORT_TO	</sql>
 	<!-- 实体与表字段映身声明，返回值 -->
     <resultMap type="WxUserGroupRelation" id="WxUserGroupRelationResult">
 		<result property="id"    column="ID"    />
@@ -23,12 +23,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="instId"    column="INST_ID"    />
 		<result property="instName"    column="INST_NAME"    />
 		<result property="remarks"    column="REMARKS"    />
+		<result property="reportTo"    column="REPORT_TO"    />
     </resultMap>
     
 	<!-- 定义查询整张表的SQL -->
     <sql id="selectWxUserGroupRelationVo">
         select
-			 ID, group_GUSERCODE, group_GUSERNAME, GROUP_GCODE, GROUP_GCNAME, user_uaccount, user_UNAME, DEL_FLAG, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, INST_ID, INST_NAME, REMARKS        from wx_user_group_relation
+			 ID, group_GUSERCODE, group_GUSERNAME, GROUP_GCODE, GROUP_GCNAME, user_uaccount, user_UNAME, DEL_FLAG, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, INST_ID, INST_NAME, REMARKS, REPORT_TO        from wx_user_group_relation
     </sql>
     
 	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
@@ -52,6 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="instId != null "> and t.INST_ID = #{instId}</if>
             <if test="instName != null "> and t.INST_NAME like concat('%', #{instName}, '%')</if>
             <if test="remarks != null  and remarks != ''"> and t.REMARKS = #{remarks}</if>
+            <if test="reportTo != null  and reportTo != ''"> and t.REPORT_TO = #{reportTo}</if>
         </where>
 			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
 			<if	test="sortC != null  and sortC != '' and order != null  and order != ''"> ORDER BY t.${sortC} ${order}
@@ -79,6 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="instId != null "> and t.INST_ID = #{instId}</if>
             <if test="instName != null "> and t.INST_NAME like concat('%', #{instName}, '%')</if>
             <if test="remarks != null  and remarks != ''"> and t.REMARKS = #{remarks}</if>
+            <if test="reportTo != null  and reportTo != ''"> and t.REPORT_TO = #{reportTo}</if>
 			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
 		</where>
 
@@ -114,6 +117,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="instId != null "> and INST_ID = #{instId}</if>
             <if test="instName != null "> and INST_NAME like concat('%', #{instName}, '%')</if>
             <if test="remarks != null  and remarks != ''"> and REMARKS = #{remarks}</if>
+            <if test="reportTo != null  and reportTo != ''"> and REPORT_TO = #{reportTo}</if>
         </where>
     </select>
  
@@ -142,6 +146,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="instId != null ">INST_ID,</if>
             <if test="instName != null ">INST_NAME,</if>
             <if test="remarks != null  and remarks != ''">REMARKS,</if>
+            <if test="reportTo != null  and reportTo != ''">REPORT_TO,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null  and id != ''">#{id},</if>
@@ -159,6 +164,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="instId != null ">#{instId},</if>
             <if test="instName != null ">#{instName},</if>
             <if test="remarks != null  and remarks != ''">#{remarks},</if>
+            <if test="reportTo != null  and reportTo != ''">#{reportTo},</if>
          </trim>
     </insert>
 	<!-- 按主键更新数据库一条数据 -->
@@ -179,6 +185,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="instId != null ">INST_ID = #{instId},</if>
             <if test="instName != null ">INST_NAME = #{instName},</if>
             <if test="remarks != null  and remarks != ''">REMARKS = #{remarks},</if>
+            <if test="reportTo != null  and reportTo != ''">REPORT_TO = #{reportTo},</if>
         </trim>
         where ID = #{id}
     </update>
@@ -213,6 +220,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="instId != null "> and t.INST_ID = #{instId}</if>
             <if test="instName != null "> and t.INST_NAME like concat('%', #{instName}, '%')</if>
             <if test="remarks != null  and remarks != ''"> and t.REMARKS = #{remarks}</if>
+            <if test="reportTo != null  and reportTo != ''"> and t.REPORT_TO = #{reportTo}</if>
 			</where>
 	</delete>
 	
@@ -237,6 +245,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="instId != null "> and t.INST_ID = #{instId}</if>
             <if test="instName != null "> and t.INST_NAME like concat('%', #{instName}, '%')</if>
             <if test="remarks != null  and remarks != ''"> and t.REMARKS = #{remarks}</if>
+            <if test="reportTo != null  and reportTo != ''"> and t.REPORT_TO = #{reportTo}</if>
         <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
         </where>
 
@@ -264,7 +273,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{item.updateDate} ,
             #{item.instId} ,
             #{item.instName} ,
-            #{item.remarks} 		)
+            #{item.remarks} ,
+            #{item.reportTo} 		)
 		</foreach>
 	</insert>  
   	<!-- 根据不同条件删除数据，条件可组合 -->
@@ -286,7 +296,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             UPDATE_DATE = #{updateDate} ,
             INST_ID = #{instId} ,
             INST_NAME = #{instName} ,
-            REMARKS = #{remarks}     <where>
+            REMARKS = #{remarks} ,
+            REPORT_TO = #{reportTo}     <where>
 			ID = #{id}
         </where>
 		</foreach>

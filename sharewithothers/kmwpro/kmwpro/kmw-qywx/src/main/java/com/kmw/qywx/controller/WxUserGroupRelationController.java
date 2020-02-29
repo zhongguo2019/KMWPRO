@@ -34,7 +34,7 @@ import com.kmw.common.core.page.TableDataInfo;
  * 分组信息与用户对应关系Controller
  * 
  * @author kmw
- * @date 2020-02-27
+ * @date 2020-02-29
  */
 @Controller
 @RequestMapping("/qywx/relation")
