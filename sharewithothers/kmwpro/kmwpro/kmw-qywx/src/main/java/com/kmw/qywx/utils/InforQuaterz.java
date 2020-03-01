@@ -90,14 +90,15 @@ public class InforQuaterz {
 			WxUserGroup wxUserGroup = listGroutGroups.get(i);
 			WxUser wxUser = new WxUser();
 			wxUser.setDept(wxUserGroup.getGroupCname());
-		    String infoMsgString=queryNotCommitUser(wxUserGroup.getGroupCname(),reportPreday);
+		    String infoMsgString=queryNotCommitUser(wxUserGroup.getGroupCode(),wxUserGroup.getGroupCname(),wxUserGroup.getUserCode(),reportPreday);
+		    if(infoMsgString == null ) continue;
 		    logger.info("根据各项目组查询后台未提交的用户得到的通知消息：\n"+infoMsgString);
 		    weiXinUtil.SendTextcardMessage("",wxUserGroup.getInstId(),infoMsgString);
 		}
 	}
 	
 	/**
-	 * 根据用户分组通知的INSTID发通知消息
+	 * 根据消息用户接收的人员进行通知
 	 */
 	public void queryNotCommitByGroupNameV2() {
 
@@ -111,9 +112,12 @@ public class InforQuaterz {
 		// 得到所有组里的用户信息
 		for (int i = 0; i < listGroutGroups.size(); i++) {
 			WxUserGroup wxUserGroup = listGroutGroups.get(i);
+			if(wxUserGroup.getGroupCname()==null||wxUserGroup.getGroupCode()==null) continue;
 			WxUser wxUser = new WxUser();
 			wxUser.setDept(wxUserGroup.getGroupCname());
-		    String infoMsgString=queryNotCommitUser(wxUserGroup.getGroupCname(),reportPreday);
+			
+		    String infoMsgString=queryNotCommitUser(wxUserGroup.getGroupCode(),wxUserGroup.getGroupCname(),wxUserGroup.getUserCode(),reportPreday);
+		    if(infoMsgString == null ) continue;
 		    logger.info("根据各项目组查询后台未提交的用户得到的通知消息：\n"+infoMsgString);
 //		    weiXinUtil.SendTextcardMessage("",wxUserGroup.getInstId(),infoMsgString);
 		    weiXinUtil.SendTextcardMessage(wxUserGroup.getUserCode(),"",infoMsgString);
@@ -128,6 +132,7 @@ public class InforQuaterz {
 		 * WxUserGroup wxUserGroup = new WxUserGroup(); List<WxUserGroup> list =
 		 * wxUserGroupService.selectWxUserGroupList(wxUserGroup);
 		 */	
+		params.put("isMsg", "1");
 		List<WxUserGroup> list = wxUserGroupService.entityList(params);
 		return list;
 	}
@@ -181,13 +186,16 @@ public class InforQuaterz {
 
 	}
 
-	public String queryNotCommitUser(String groupname, String reportdate) {
+	public String queryNotCommitUser(String groupCode, String groupName,String reportTo,String reportdate) {
 		String strRtn = "";
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("groupName", groupname);
+		params.put("groupCode", groupCode);
+		params.put("reportTo", reportTo);
 		params.put("reportDate", reportdate);
 		List<CommonEntity> lst = doufuTodayWorkService.queryNotCommitUser(params);
 		String userName, userAccount;
+		if(lst ==null ) return null;
+		
 		if (lst.size() != 0) {
 			for (int i = 0; i < lst.size(); i++) {
 				Map<String, Object> mpGroupName = (Map<String, Object>) lst.get(i);
@@ -201,10 +209,10 @@ public class InforQuaterz {
 
 			}
 			if (!"".equals(strRtn)) {
-				strRtn = "项目组：【" + groupname + "】日期：【" + reportdate + "】\n未提交日报人员：\n" + strRtn + "\n请及时通知本人，尽快补上！";
+				strRtn = "项目组：【" + groupName + "】日期：【" + reportdate + "】\n未提交日报人员：\n" + strRtn + "\n请及时通知本人，尽快补上！";
 			}
 		} else {
-			strRtn = "项目组：【" + groupname + "】日期：【" + reportdate + "】 日报全部提交！";
+			strRtn = "项目组：【" + groupName + "】日期：【" + reportdate + "】 日报全部提交！";
 		}
 
 		return strRtn;

@@ -208,10 +208,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	<!-- 查询用户所属的组信息，一个用户可以属于多个小组，要求同一时间，这个人必须在指定的一个组里 -->
 	<select id="getWxUserGroup"
 		resultType="com.kmw.common.CommonEntity">
-            SELECT group_code as group_id ,group_cname as group_name FROM wx_user_group 
+ SELECT group_gcode AS group_id,group_gcname AS group_name FROM  wx_user_group_relation
 		<where>
             1=1
-			<if test=" username != null  and username != ''"> and  user_code  = #{username} </if>
+			<if test=" username != null  and username != ''"> and  user_uaccount  = #{username} </if>
 		</where>
 	</select>
 			<!-- 列表查询,返回的是实体-->

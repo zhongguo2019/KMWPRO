@@ -449,17 +449,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 查询提交的日报情况  查询未提交人员姓名 -->
 	<select id="queryNotCommitUser"
 		resultType="com.kmw.common.CommonEntity">
-         select
-         wx_user.account as account ,
-          wx_user.name   as name
-         from wx_user 
+        SELECT user_uaccount as account,user_uname as name FROM wx_user_group_relation
 		<where>
 		1=1
-		<if test="groupName != null  and groupName != ''"> and wx_user.dept like  CONCAT('%',#{groupName},'%') </if>
-        and  wx_user.account  not in (
+		<if test="reportTo != null  and reportTo != ''"> and wx_user_group_relation.report_to like  CONCAT('%',#{reportTo},'%') </if>
+		<if test="groupCode != null  and groupCode != ''"> and wx_user_group_relation.group_gcode = #{groupCode} </if>
+        and  wx_user_group_relation.user_uaccount  not in (
          select doufu_today_work.REPORTER_NAME  from doufu_today_work
          <if test="reportDate != null  and reportDate != ''"> where doufu_today_work.REPORT_DATE = #{reportDate}  </if>
-)
+          )
 		</where>
 	</select>
 	

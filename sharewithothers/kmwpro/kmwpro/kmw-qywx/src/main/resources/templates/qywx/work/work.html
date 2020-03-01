@@ -1,141 +1,80 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('当天工作记录信息列表')" />
+<th:block th:include="include :: header('当天工作记录信息列表')" />
 </head>
 <body class="gray-bg">
-     <div class="container-div">
-        <div class="row">
-            <div class="col-sm-12 search-collapse">
-                <form id="formId">
-                    <div class="select-list">
-                        <ul>
-                          <!--   <li>
-                                <p>所在项目组名称：</p>
-                                <input type="text" name="projectGroupId"/>
-                            </li> -->
-<!--                            <li>
-                                <p>完成比例：</p>
-                                <input type="text" name="finishPercent"/>
-                            </li>-->
-                            <li>
-                                <p>姓名：</p>
-                                <input type="text" name="remarks"/>
-                            </li>
-                            <!-- <li>
-                                <p>对应计划：</p>
-                                <input type="text" name="accordYesterday"/>
-                            </li>
-                            <li>
-                                <p>是否重要：</p>
-                                <input type="text" name="isImportant"/>
-                            </li>
-                            <li>
-                                <p>是否紧急：</p>
-                                <input type="text" name="isEmergency"/>
-                            </li>
-                            <li>
-                                <p>重要级别：</p>
-                                <input type="text" name="impoLevel"/>
-                            </li>
-                            <li>
-                                <p>逻辑删除标记(0.正常，1.删除)：</p>
-                                <input type="text" name="delFlag"/>
-                            </li>
-                            <li>
-                                <p>状态：</p>
-                                <select name="status">
-                                    <option value="">所有</option>
-                                </select>
-                            </li> -->
-                            <!-- <li>
-                                <p>机构ID：</p>
-                                <input type="text" name="instId"/>
-                            </li>
-                            <li>
-                                <p>登录IP：</p>
-                                <input type="text" name="loginIp"/>
-                            </li>
-                            <li class="select-time">
-                                <p>登录日期：</p>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginLoginDate]"/>
-                                <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endLoginDate]"/>
-                            </li> -->
-                           <!--  <li>
-                                <p>创建人：</p>
-                                <input type="text" name="createBy"/>
-                            </li>
-                            <li class="select-time">
-                                <p>创建时间：</p>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginCreateDate]"/>
-                                <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endCreateDate]"/>
-                            </li>
-                            <li>
-                                <p>最近修改人：</p>
-                                <input type="text" name="updateBy"/>
-                            </li>
-                            <li class="select-time">
-                                <p>最近修改时间：</p>
-                                <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginUpdateDate]"/>
-                                <span>-</span>
-                                <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endUpdateDate]"/>
-                            </li> -->
-                            <li>
-                                <p>报告日期：</p>
-                                <input type="text" class="time-input" name="reportDate"/>
-                            </li>
-                            <li>
-                                <p>项目名称：</p>
-                                <input type="text" name="productName"/>
-                            </li>
-                           <!--  <li>
-                                <p>报告人ID：</p>
-                                <input type="text" name="reporterId"/>
-                            </li>
-                            <li>
-                                <p>报告人名称：</p>
-                                <input type="text" name="reporterName"/>
-                            </li>
-                            <li>
-                                <p>录入内容序号：</p>
-                                <input type="text" name="inputOrder"/>
-                            </li> -->
-                            <li>
-                                <p>是否补报：</p>
-                                <input type="text" name="isAfter"/>
-                            </li>
-                            <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-                            </li>
-                        </ul>
-                    </div>
-                </form>
-            </div>
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+													<li>
+								<p>项目组：</p> <select name="projectGroupId"
+								th:with="type=${@dict.getType('qywx_dept_team')}">
+									<option value="">所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+										th:value="${dict.dictValue}"></option>
+							</select>
+							</li>
+							<li>
+								<p>姓名：</p> <input type="text" name="remarks" />
+							</li>
+							<li class="select-time">
+								<p>报告日期：</p> <input type="text" class="time-input"
+								id="startTime" placeholder="开始时间" name="beginReportDate" /> <span>-</span>
+								<input type="text" class="time-input" id="endTime"
+								placeholder="结束时间" name="endReportDate" />
+							</li>
+							<!-- 							<li>
+								<p>报告日期：</p> <input type="text" class="time-input"
+								name="reportDate" id="reportDate" />
+							</li> -->
 
-            <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="qywx:work:add">
-                    <i class="fa fa-plus"></i> 添加
-                </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="qywx:work:edit">
-                    <i class="fa fa-edit"></i> 修改
-                </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="qywx:work:remove">
-                    <i class="fa fa-remove"></i> 删除
-                </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="qywx:work:export">
-                    <i class="fa fa-download"></i> 导出
-                 </a>
-            </div>
-            <div class="col-sm-12 select-table table-striped">
-                <table id="bootstrap-table"></table>
-            </div>
-        </div>
-    </div>
-    <th:block th:include="include :: footer" />
-    <script th:inline="javascript">
+
+							<li>
+								<p>提交状态：</p> <select name="isAfter"
+								th:with="type=${@dict.getType('qywx_report_status')}">
+									<option value="">所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+										th:value="${dict.dictValue}"></option>
+							</select>
+							</li>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()"
+					shiro:hasPermission="qywx:work:add"> <i class="fa fa-plus"></i>
+					添加
+				</a> <a class="btn btn-primary single disabled"
+					onclick="$.operate.edit()" shiro:hasPermission="qywx:work:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a> <a class="btn btn-danger multiple disabled"
+					onclick="$.operate.removeAll()"
+					shiro:hasPermission="qywx:work:remove"> <i class="fa fa-remove"></i>
+					删除
+				</a> <a class="btn btn-warning" onclick="exportExcel()"
+					shiro:hasPermission="qywx:work:export"> <i
+					class="fa fa-download"></i> 导出
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('qywx:work:edit')}]];
         var removeFlag = [[${@permission.hasPermi('qywx:work:remove')}]];
         var prefix = ctx + "qywx/work";
@@ -294,7 +233,7 @@
                 },
                 {
                     field : 'isAfter', 
-                    title : '是否补报',
+                    title : '提交状态',
                     formatter: function(value,row,index) {
                         //通过判断单元格的值，来格式化单元格，返回的值即为格式化后包含的元素
                         var a = "";
@@ -324,7 +263,20 @@
             $.table.init(options);
         });
         
+
+        function  exportExcel(){
+        var strtTime = $("#startTime").val();
+        var endTime = $("#endTime").val();
+
+        //	$.table.exportExcel()
+        if(strtTime == null || strtTime==""||endTime == null || endTime==""){
+        	alert("请选择查询的起止日期！");
+        	return;
+        }
+        $.table.exportExcel();
         
+        } 
+
         /* 通过map带参调用后台的方法Demo       
           function openDemo(){
         	  var url1 =  prefix+"/tableDataInfo";

@@ -84,7 +84,7 @@
 
                             <li>
                                 <p>项目组：</p>
-                                <select name="manageBusinessDepartment" th:with="type=${@dict.getType('qywx_dept_team')}">
+                                <select name="projectGroupId" th:with="type=${@dict.getType('qywx_dept_team')}">
                                     <option value="">所有</option>
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
@@ -99,7 +99,13 @@
                                 <span>-</span>
                                 <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="endReportDate"/>
                             </li>
-
+<li>
+								<p>提交状态：</p> 
+							 <select name="isAfter" th:with="type=${@dict.getType('qywx_report_status')}">
+                                    <option value="">所有</option>
+                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                </select>
+							</li>
                             <!--  <li>
                                  <p>报告人ID：</p>
                                  <input type="text" name="reporterId"/>
@@ -285,7 +291,7 @@
                 },
                 {
                     field : 'isAfter',
-                    title : '是否补报',
+                    title : '提交状态',
                     formatter: function(value,row,index) {
                         //通过判断单元格的值，来格式化单元格，返回的值即为格式化后包含的元素
                         var a = "";

@@ -99,8 +99,11 @@ public class DoufuTodayWorkController extends BaseController {
 	@RequiresPermissions("qywx:work:export")
 	@PostMapping("/export")
 	@ResponseBody
-	public AjaxResult export(DoufuTodayWork doufuTodayWork) {
-		List<DoufuTodayWork> list = doufuTodayWorkService.selectDoufuTodayWorkList(doufuTodayWork);
+	public AjaxResult export(@RequestParam Map<String, Object> params) {
+		params.put("sortC","reporter_Name,report_date");
+		params.put("order","desc");
+		List<DoufuTodayWork> list =doufuTodayWorkService.entityList(params);	
+	//	List<DoufuTodayWork> list = doufuTodayWorkService.selectDoufuTodayWorkList(doufuTodayWork);
 		ExcelUtil<DoufuTodayWork> util = new ExcelUtil<DoufuTodayWork>(DoufuTodayWork.class);
 		return util.exportExcel(list, "work");
 	}

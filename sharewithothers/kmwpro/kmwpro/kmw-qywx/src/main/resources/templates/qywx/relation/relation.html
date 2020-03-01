@@ -10,12 +10,12 @@
                 <form id="formId">
                     <div class="select-list">
                         <ul>
-                            <li>
-                                <p>小组负责人代码：</p>
+<!--                             <li>
+                                <p>负责人代码：</p>
                                 <input type="text" name="groupGusercode"/>
-                            </li>
+                            </li> -->
                             <li>
-                                <p>用户名称：</p>
+                                <p>小组负责人：</p>
                                 <input type="text" name="groupGusername"/>
                             </li>
                             <li>
@@ -23,17 +23,18 @@
                                 <input type="text" name="groupGcode"/>
                             </li>
                             <li>
-                                <p>分组的中文组名：</p>
+                                <p>分组名称：</p>
                                 <input type="text" name="groupGcname"/>
                             </li>
-                            <li>
+                             <li>
+                                <p>用户名称：</p>
+                                <input type="text" name="userUname"/>
+                            </li>
+                           <!--  <li>
                                 <p>用户信息表中用户的代码：</p>
                                 <input type="text" name="userUaccount"/>
                             </li>
-                            <li>
-                                <p>用户信息表中用户的名称：</p>
-                                <input type="text" name="userUname"/>
-                            </li>
+
                             <li>
                                 <p>逻辑删除标记(0.正常，1.删除)：</p>
                                 <input type="text" name="delFlag"/>
@@ -69,7 +70,7 @@
                                 <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="params[beginInstName]"/>
                                 <span>-</span>
                                 <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="params[endInstName]"/>
-                            </li>
+                            </li> -->
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -121,64 +122,77 @@
                     visible: false
                 },
                 {
-                    field : 'groupGusercode', 
-                    title : '小组负责人代码'
-                },
-                {
-                    field : 'groupGusername', 
-                    title : '用户名称'
-                },
-                {
-                    field : 'groupGcode', 
-                    title : '分组代码'
-                },
-                {
-                    field : 'groupGcname', 
-                    title : '分组的中文组名'
-                },
-                {
                     field : 'userUaccount', 
-                    title : '用户信息表中用户的代码'
+                    title : '用户代码',
+                    visible: true
                 },
                 {
                     field : 'userUname', 
-                    title : '用户信息表中用户的名称'
+                    title : '用户名称',
+                    visible: true
+                },
+                {
+                    field : 'groupGusercode', 
+                    title : '负责人代码',
+                    visible: true
+                },
+                {
+                    field : 'groupGusername', 
+                    title : '负责人名称',
+                    visible: true
+                },
+                {
+                    field : 'groupGcode', 
+                    title : '分组代码',
+                    visible: true
+                },
+                {
+                    field : 'groupGcname', 
+                    title : '分组名称'
                 },
                 {
                     field : 'delFlag', 
-                    title : '逻辑删除标记(0.正常，1.删除)'
+                    title : '逻辑删除标记(0.正常，1.删除)',
+                    visible: false
                 },
                 {
                     field : 'createBy', 
-                    title : '创建人'
+                    title : '创建人',
+                    visible: false
                 },
                 {
                     field : 'createDate', 
-                    title : '创建时间'
+                    title : '创建时间',
+                    visible: false
                 },
                 {
                     field : 'updateBy', 
-                    title : '最近修改人'
+                    title : '最近修改人',
+                    visible: false
                 },
                 {
                     field : 'updateDate', 
-                    title : '最近修改时间'
+                    title : '最近修改时间',
+                    visible: false
                 },
                 {
                     field : 'instId', 
-                    title : 'SASS模式机构代码'
+                    title : 'SASS模式机构代码',
+                    visible: false
                 },
                 {
                     field : 'instName', 
-                    title : 'SASS模式机构名称'
+                    title : 'SASS模式机构名称',
+                    visible: false
                 },
                 {
                     field : 'remarks', 
-                    title : '描述'
+                    title : '描述',
+                    visible: false
                 },
                 {
                     field : 'reportTo', 
-                    title : '汇报给的人员账号，中间用|分隔'
+                    title : '报告接收人'
                 },
                 {
                     title: '操作',
