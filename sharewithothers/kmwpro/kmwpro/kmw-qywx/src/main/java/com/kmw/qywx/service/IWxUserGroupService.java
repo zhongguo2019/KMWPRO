@@ -89,4 +89,6 @@ public interface IWxUserGroupService
 	public CommonEntity queryOne(Map<String, Object> params);
 
 	public List<WxUserGroup> entityList(Map<String, Object> params);
+	
+
 }

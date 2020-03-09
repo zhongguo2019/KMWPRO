@@ -7,9 +7,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.omg.CORBA.DATA_CONVERSION;
 
 /**
  * 时间工具类
@@ -500,9 +502,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
 
 		Timestamp ts = new Timestamp(time.getTime());
 
-		
-
-		return (int) ((ts.getTime())/1000);
+			return (int) ((ts.getTime())/1000);
 
 	}    
     
@@ -516,12 +516,36 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils
 
 	 */
 
-	public static String DateToStr8(Date time){
-		
+	public static String DateToStr8(){
+		Date time = new Date();
 		SimpleDateFormat f=new SimpleDateFormat("yyyy-MM-dd");
 		return f.format(time).toString();
 
 	}    
+	/**
+
+	 * 得到8位的当前日期串20190903
+
+	 * @param time
+
+	 * @return
+
+	 */
+
+	public static String getNextDateToStr8(){
+		
+		Date date=new Date();//取时间
+		 Calendar calendar = new GregorianCalendar();
+		 calendar.setTime(date);
+		 calendar.add(calendar.DATE,1);//把日期往后增加一天.整数往后推,负数往前移动
+		 date=calendar.getTime(); //这个时间就是日期往后推一天的结果 
+		 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		 String dateString = formatter.format(date);
+		 return dateString;
+
+	}    	
+	
+	
 	/**
      * @Author：
      * @Description：更加输入日期，获取输入日期的前一天

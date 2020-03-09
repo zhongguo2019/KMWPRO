@@ -93,8 +93,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select
 		<include refid="WxUserGroupRelationColumns" />
         from wx_user_group_relation t
-		<where>
-        where id = #{id}
+        <where>  
+        1=1
+            <if test="groupGusercode != null  and groupGusercode != ''"> and t.group_GUSERCODE = #{groupGusercode}</if>
+            <if test="groupGusername != null  and groupGusername != ''"> and t.group_GUSERNAME like concat('%', #{groupGusername}, '%')</if>
+            <if test="groupGcode != null  and groupGcode != ''"> and t.GROUP_GCODE = #{groupGcode}</if>
+            <if test="groupGcname != null  and groupGcname != ''"> and t.GROUP_GCNAME like concat('%', #{groupGcname}, '%')</if>
+            <if test="userUaccount != null  and userUaccount != ''"> and t.user_uaccount = #{userUaccount}</if>
+            <if test="userUname != null  and userUname != ''"> and t.user_UNAME like concat('%', #{userUname}, '%')</if>
+            <if test="delFlag != null  and delFlag != ''"> and t.DEL_FLAG = #{delFlag}</if>
+            <if test="createBy != null  and createBy != ''"> and t.CREATE_BY = #{createBy}</if>
+            <if test="createDate != null "> and t.CREATE_DATE = #{createDate}</if>
+            <if test="updateBy != null  and updateBy != ''"> and t.UPDATE_BY = #{updateBy}</if>
+            <if test="updateDate != null "> and t.UPDATE_DATE = #{updateDate}</if>
+            <if test="instId != null "> and t.INST_ID = #{instId}</if>
+            <if test="instName != null "> and t.INST_NAME like concat('%', #{instName}, '%')</if>
+            <if test="remarks != null  and remarks != ''"> and t.REMARKS = #{remarks}</if>
+            <if test="reportTo != null  and reportTo != ''"> and t.REPORT_TO = #{reportTo}</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
 		</where>
     </select>    
     

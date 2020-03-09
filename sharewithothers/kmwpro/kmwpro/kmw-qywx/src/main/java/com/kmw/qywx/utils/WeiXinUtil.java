@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.poi.ss.formula.functions.Now;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,7 @@ import com.kmw.qywx.utils.SpringContextHolder;
 import com.kmw.qywx.domain.DoufuTodayWork;
 import com.kmw.qywx.domain.WxUser;
 import com.kmw.qywx.service.IDoufuTodayWorkService;
+import com.kmw.qywx.service.IQywxUserOperatelogService;
 import com.kmw.qywx.service.IRedisUtilService;
 import com.kmw.qywx.service.IWxUserService;
 import com.kmw.common.Constant;
@@ -60,6 +62,7 @@ import net.sf.json.JSONObject;
 import java.util.HashMap;
 
 import java.util.Map;
+import com.kmw.qywx.domain.QywxUserOperatelog;
 
 @Component
 public class WeiXinUtil {
@@ -77,10 +80,11 @@ public class WeiXinUtil {
 	@Autowired
 	IRedisUtilService redisUtilService;
 
-	// IWxUserService wxUserService =
-	// SpringContextHolder.getBean("wxUserServiceImpl");
 	@Autowired
 	SendMessageService sendMessageService;
+	@Autowired
+	IQywxUserOperatelogService qywxUserOperatelogService;
+	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	// RedisUtil redisUtil = SpringContextHolder.getBean("redisUtil");
@@ -501,11 +505,17 @@ public class WeiXinUtil {
 
 				strRtnMsgContent = WeiXinParamesUtil.msgHelp;
 				strMsgContent = root.getElementsByTagName("Content").item(0).getTextContent().toString();
-				logger.info("--------------用户提交的消息内容[\n" + strMsgContent + "\n]");
+				if (root.getElementsByTagName("Content").item(0).toString().equals("") ||root.getElementsByTagName("Content").item(0)==null) {
+					return strRtnMsgContent;
+				}
+				saveOperLog("text",strMsgContent, request) ;
+				
+				//logger.info("--------------用户提交的消息内容[\n" + strMsgContent + "\n]");
 				// 解析文本内容，字符开头以[日报]
 				if (justMsgTypeReport(strMsgContent, "[日报]") || justMsgTypeReport(strMsgContent, "【日报】")
 						|| justMsgTypeReport(strMsgContent, "日报") || justMsgTypeReport(strMsgContent, "(日报)")
 						|| justMsgTypeReport(strMsgContent, "（日报）")) {
+					doufuTodayWorkService.saveOperReportLog("text",strMsgContent, request);
 					strRtnMsgContent = doufuTodayWorkService.dealDayReportInsert(request, strMsgContent, strFromUser);
 				}
 
@@ -514,6 +524,7 @@ public class WeiXinUtil {
 						|| justMsgTypeReport(strMsgContent, "【补报】") || justMsgTypeReport(strMsgContent, "(补报)")
 						|| justMsgTypeReport(strMsgContent, "（补报）") || justMsgTypeReport(strMsgContent, "补报")) {
 					strRtnMsgContent = WeiXinParamesUtil.dayReportFormatAdd;
+					doufuTodayWorkService.saveOperReportLog("text",strMsgContent, request);
 					strRtnMsgContent = doufuTodayWorkService.dealDayReportAdd(request, strMsgContent, strFromUser);
 				}
 
@@ -578,6 +589,40 @@ public class WeiXinUtil {
 //			logger.info("回复串加密后:\n " + sEncryptMsg);
 		}
 		return sEncryptMsg;
+	}
+	
+	public String saveOperLog(String msgType,String content,HttpServletRequest request) {
+		String rtnString="";
+		QywxUserOperatelog qywxUserOperatelog = new QywxUserOperatelog();
+		qywxUserOperatelog.setId(UUID.randomUUID().toString());
+		qywxUserOperatelog.setMessType("text");
+		WxUser wxUserSession = (WxUser) request.getSession().getAttribute(Constant.SESSION_LOGIN_USER);
+		qywxUserOperatelog.setCreateBy(wxUserSession.getName());
+		qywxUserOperatelog.setCreateTime(new Date());
+		qywxUserOperatelog.setUpdateBy(wxUserSession.getName());
+		qywxUserOperatelog.setMessFromIp(wxUserSession.getLoginIp());
+		qywxUserOperatelog.setSubmitText(content);
+		qywxUserOperatelog.setUpdateTime(new Date());
+		qywxUserOperatelog.setReportDate(DateUtils.DateToStr8());
+		qywxUserOperatelog.setUserAccount(wxUserSession.getAccount());
+		qywxUserOperatelog.setGroupCode(wxUserSession.getProjectGroupId());
+		if(content.contains("日报")) {
+			qywxUserOperatelog.setReportType("0");
+		}else {
+		if(content.contains("补报")) {
+			qywxUserOperatelog.setReportType("2");
+		}else {
+			qywxUserOperatelog.setReportType("3");
+		}
+		}
+		Map<String, Object> params = new HashMap<String,Object>();
+		params.put("reportDate",DateUtils.DateToStr8() );
+		params.put("userAccount", wxUserSession.getAccount());
+		params.put("reportType", qywxUserOperatelog.getReportType());
+		params.put("submitText", content);
+		//qywxUserOperatelogService.deleteByParams(params);
+		qywxUserOperatelogService.insertQywxUserOperatelog(qywxUserOperatelog);
+		return rtnString;
 	}
 
 	/**
@@ -806,5 +851,6 @@ public class WeiXinUtil {
 		return redisUtilService.getRedisValue("token");
 
 	}
+	
 
 }

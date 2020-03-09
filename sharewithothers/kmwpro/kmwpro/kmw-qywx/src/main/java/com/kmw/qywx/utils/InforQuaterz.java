@@ -78,7 +78,7 @@ public class InforQuaterz {
 	 */
 	public void queryNotCommitByGroupNameV1() {
 
-		String reportToday = DateUtils.DateToStr8(new Date());
+		String reportToday = DateUtils.DateToStr8();
 		String reportPreday = DateUtils.getPreDateByDate8(reportToday);
 		
 		// 得到分组信息表中所有要通知到的小组信息
@@ -102,7 +102,7 @@ public class InforQuaterz {
 	 */
 	public void queryNotCommitByGroupNameV2() {
 
-		String reportToday = DateUtils.DateToStr8(new Date());
+		String reportToday = DateUtils.DateToStr8();
 		String reportPreday = DateUtils.getPreDateByDate8(reportToday);
 		
 		// 得到分组信息表中所有要通知到的小组信息

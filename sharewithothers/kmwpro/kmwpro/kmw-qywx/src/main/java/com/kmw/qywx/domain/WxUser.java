@@ -1,61 +1,29 @@
 package com.kmw.qywx.domain;
 
-import java.util.Date;
-
-import javax.persistence.Id;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.kmw.common.annotation.Excel;
 import com.kmw.common.core.domain.BaseEntity;
+import java.util.Date;
 
 /**
  * 企业微信用户信息对象 wx_user
  * 
  * @author kmw
- * @date 2020-02-20
+ * @date 2020-03-07
  */
 public class WxUser extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
-    private Date loginDate; //login_date <最后登陆时间>
-    private String loginIp; //login_ip <最后登陆IP>
-    private String  projectGroupId;      //所在项目组名称
-    @Id
-    private String id;                //主键
 
-
-    public Date getLoginDate() {
-		return loginDate;
-	}
-
-	public void setLoginDate(Date loginDate) {
-		this.loginDate = loginDate;
-	}
-
-	public String getLoginIp() {
-		return loginIp;
-	}
-
-	public void setLoginIp(String loginIp) {
-		this.loginIp = loginIp;
-	}
-
-	public String getProjectGroupId() {
-		return projectGroupId;
-	}
-
-	public void setProjectGroupId(String projectGroupId) {
-		this.projectGroupId = projectGroupId;
-	}
-
-	public String getId() {
+    public String getId() {
 		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
 	}
+
 
 	/** 姓名 */
     @Excel(name = "姓名")
@@ -112,6 +80,21 @@ public class WxUser extends BaseEntity
     /** 微工作台 */
     @Excel(name = "微工作台")
     private String wxplat;
+
+    /** 登录日期 */
+    @Excel(name = "登录日期", width = 30, dateFormat = "yyyy-MM-dd")
+    private Date loginDate;
+
+    /** 用户登录的机器IP */
+    @Excel(name = "用户登录的机器IP")
+    private String loginIp;
+
+    /** 用户所在项目组ID */
+    @Excel(name = "用户所在项目组ID")
+    private String projectGroupId;
+
+    /** 主键 */
+    private String id;
 
     public void setName(String name) 
     {
@@ -239,6 +222,34 @@ public class WxUser extends BaseEntity
     {
         return wxplat;
     }
+    public void setLoginDate(Date loginDate) 
+    {
+        this.loginDate = loginDate;
+    }
+
+    public Date getLoginDate() 
+    {
+        return loginDate;
+    }
+    public void setLoginIp(String loginIp) 
+    {
+        this.loginIp = loginIp;
+    }
+
+    public String getLoginIp() 
+    {
+        return loginIp;
+    }
+    public void setProjectGroupId(String projectGroupId) 
+    {
+        this.projectGroupId = projectGroupId;
+    }
+
+    public String getProjectGroupId() 
+    {
+        return projectGroupId;
+    }
+
 
     @Override
     public String toString() {
@@ -257,6 +268,10 @@ public class WxUser extends BaseEntity
             .append("isactive", getIsactive())
             .append("isforbidden", getIsforbidden())
             .append("wxplat", getWxplat())
+            .append("loginDate", getLoginDate())
+            .append("loginIp", getLoginIp())
+            .append("projectGroupId", getProjectGroupId())
+            .append("id", getId())
             .toString();
     }
 }

@@ -8,12 +8,13 @@ import net.sf.json.JSONObject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 
-
-public class Contacts_UserService {
-    private static Logger log = LoggerFactory.getLogger(Contacts_UserService.class);  
+@Component
+public class ContactsUserService {
+    private static Logger log = LoggerFactory.getLogger(ContactsUserService.class);  
 
     private  static  String createUser_url="https://qyapi.weixin.qq.com/cgi-bin/user/create?access_token=ACCESS_TOKEN";  
     private  static  String getUser_url="https://qyapi.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN&userid=USERID";  
@@ -25,7 +26,7 @@ public class Contacts_UserService {
 
     
     //1.创建成员
-    public void createUser(String accessToken,User user) {
+    public JSONObject createUser(String accessToken,User user) {
 
         //1.获取json字符串：将user对象转换为json字符串    
         Gson gson = new Gson(); 
@@ -46,6 +47,7 @@ public class Contacts_UserService {
                 log.error("创建成员失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));  
             }  
         }  
+        return jsonObject;
     }
 
     //2.获取成员
@@ -92,7 +94,7 @@ public class Contacts_UserService {
     }
 
     //4.删除成员
-    public void deleteUser(String accessToken,String userId) {    
+    public JSONObject  deleteUser(String accessToken,String userId) {    
 
         //1.获取请求的url  
         deleteUser_url=deleteUser_url.replace("ACCESS_TOKEN", accessToken)
@@ -108,6 +110,8 @@ public class Contacts_UserService {
                 log.error("删除成员失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));  
             }  
         }  
+        return jsonObject;
+        
     }
 
     //5.批量删除成员
@@ -137,7 +141,7 @@ public class Contacts_UserService {
 
 
     //6.获取部门成员
-    public void getDepartmentUser(String accessToken,String departmentId,String fetchChild) {
+    public JSONObject getDepartmentUser(String accessToken,String departmentId,String fetchChild) {
 
         //1.获取请求的url  
         getDepartmentUser_url=getDepartmentUser_url.replace("ACCESS_TOKEN", accessToken)
@@ -154,11 +158,12 @@ public class Contacts_UserService {
                 log.error("获取部门成员失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));  
             }  
         }  
+        return jsonObject;
     }
 
 
     //7.获取部门成员详情
-    public void getDepartmentUserDetails(String accessToken,String departmentId,String fetchChild) {
+    public JSONObject getDepartmentUserDetails(String accessToken,String departmentId,String fetchChild) {
         //1.获取请求的url  
         getDepartmentUserDetails_url=getDepartmentUserDetails_url.replace("ACCESS_TOKEN", accessToken)
                 .replace("DEPARTMENT_ID", departmentId)
@@ -174,6 +179,7 @@ public class Contacts_UserService {
                 log.error("获取部门成员详情失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));  
             }  
         }  
+        return jsonObject;
     }
 
 }

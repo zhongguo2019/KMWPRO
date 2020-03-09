@@ -19,14 +19,15 @@
                                 <input type="text" name="account"/>
                             </li>
                             <li>
-                                <p>别名：</p>
-                                <input type="text" name="alaisname"/>
+                                <p>部门：</p>
+                                <input type="text" name="dept"/>
                             </li>
-                            <li>
+                         <!--    <li>
                                 <p>职务：</p>
                                 <input type="text" name="duties"/>
                             </li>
-                           <!-- <li>
+                          -->  
+                          <!-- <li>
                                 <p>性别：</p>
                                 <select name="sex" th:with="type=${@dict.getType('')}">
                                     <option value="">所有</option>
@@ -87,6 +88,9 @@
                 <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="qywx:user:export">
                     <i class="fa fa-download"></i> 导出
                  </a>
+                                 <a class="btn btn-warning" onclick="synchronizeQywxUser();" shiro:hasPermission="qywx:user:export">
+                    <i class="fa fa-download"></i> 同步
+                 </a>
             </div>
             <div class="col-sm-12 select-table table-striped">
                 <table id="bootstrap-table"></table>
@@ -135,7 +139,21 @@
                 },
                 {
                     field : 'sex', 
-                    title : '性别'
+                    title : '性别',
+                    formatter: function(value,row,index) {
+                        //通过判断单元格的值，来格式化单元格，返回的值即为格式化后包含的元素
+                        var a = "";
+                        if(value == "0") {
+                            var a = '<span style="color:#0000ff">'+'未填'+'</span>';
+                        }else if(value == "1"){
+                            var a = '<span style="color:#FF0000">'+'男'+'</span>';
+                        }else if(value == "2") {
+                            var a = '<span style="color:#00ff00">'+'女'+'</span>';
+                        }else{
+                            var a = '<span>'+value+'</span>';
+                        }
+                        return a;
+                    }
                 },
                 {
                     field : 'mobile', 
@@ -144,6 +162,10 @@
                 {
                     field : 'phone', 
                     title : '座机'
+                },
+                {
+                    field : 'projectGroupId', 
+                    title : '用户分组'
                 },
                 {
                     field : 'email', 
@@ -163,11 +185,6 @@
                 {
                     field : 'isactive', 
                     title : '激活状态',
-                    visible: false
-                },
-                {
-                    field : 'isforbidden', 
-                    title : '禁用状态',
                     visible: false
                 },
                 {
@@ -209,6 +226,25 @@
         	    };
         	    $.ajax(config)
         } */
+        
+        
+        function synchronizeQywxUser(){
+      	  var url =  prefix+"/synchronizeQywxUser";
+            var	data = $('#formId').serialize();
+        	  var config = {
+      	        url: url,
+      	        type: "post",
+      	        dataType: "json",
+      	        data: data,
+      	        beforeSend: function () {
+      	        //	$.modal.loading("正在处理中，请稍后...");
+      	        },
+      	        success: function(result) {
+      	        	$.table.search();
+      	        }
+      	    };
+      	    $.ajax(config)
+      } 
     </script>
 </body>
 </html>

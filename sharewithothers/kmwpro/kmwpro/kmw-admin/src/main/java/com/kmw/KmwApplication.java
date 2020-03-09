@@ -40,10 +40,11 @@ public class KmwApplication extends SpringBootServletInitializer implements Comm
 	public void run(String... args) throws Exception {
 
 		// 开发过程为了可以打印应用启动的所有bean name
+		
 		/*
-		 * String[] beans = appContext.getBeanDefinitionNames(); Arrays.sort(beans); for
-		 * (String bean : beans) { System.out.println(bean + " of Type :: " +
-		 * appContext.getBean(bean).getClass()); }
+		  String[] beans = appContext.getBeanDefinitionNames(); Arrays.sort(beans); for
+		  (String bean : beans) { System.out.println(bean + " of Type :: " +
+		  appContext.getBean(bean).getClass()); }
 		 */
 
 	}

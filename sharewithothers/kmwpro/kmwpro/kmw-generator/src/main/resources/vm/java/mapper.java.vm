@@ -103,5 +103,10 @@ public interface ${ClassName}Mapper
 	/**
 	 * 批量更新
 	 */
-	int updateBatchEntity( List<${ClassName}> list);	
+	public int updateBatchEntity( List<${ClassName}> list);	
+	
+		/**
+	 * 删除所有表里数据
+	 */
+	 public int delete${ClassName}All();
 }

@@ -8,13 +8,15 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
 import com.google.gson.Gson;
 
 
 
-
-public class Contacts_DepartmentService {
-    private static Logger log = LoggerFactory.getLogger(Contacts_DepartmentService.class);  
+@Component
+public class ContactsDepartmentService {
+    private static Logger log = LoggerFactory.getLogger(ContactsDepartmentService.class);  
 
     private  static  String createDepartment_url="https://qyapi.weixin.qq.com/cgi-bin/department/create?access_token=ACCESS_TOKEN";  
     private  static  String updateDepartment_url="https://qyapi.weixin.qq.com/cgi-bin/department/update?access_token=ACCESS_TOKEN";  
@@ -23,7 +25,7 @@ public class Contacts_DepartmentService {
     private  static  String getDepartmentAll_url="https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=ACCESS_TOKEN";  
     
     //1.创建部门
-    public void createDepartment(String accessToken,Department department) {
+    public JSONObject createDepartment(String accessToken,Department department) {
 
         //1.获取json字符串：将Department对象转换为json字符串    
         Gson gson = new Gson(); 
@@ -41,10 +43,11 @@ public class Contacts_DepartmentService {
                 log.error("创建部门失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));  
             }  
         }  
+        return jsonObject;
     }
 
     //2.更新部门
-    public void updateDepartment(String accessToken,Department department) {
+    public JSONObject updateDepartment(String accessToken,Department department) {
 
         //1.获取json字符串：将Department对象转换为json字符串    
         Gson gson = new Gson(); 
@@ -62,11 +65,12 @@ public class Contacts_DepartmentService {
                 log.error("更新部门失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));  
             }  
         }  
+        return jsonObject;
     }
     
 
     //3.删除部门
-    public void deleteDepartment(String accessToken,String departmentId) {    
+    public JSONObject deleteDepartment(String accessToken,String departmentId) {    
 
         //1.获取请求的url  
         deleteDepartment_url=deleteDepartment_url.replace("ACCESS_TOKEN", accessToken)
@@ -82,12 +86,13 @@ public class Contacts_DepartmentService {
                 log.error("删除部门失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));  
             }  
         }  
+        return jsonObject;
     }
     
     
     
     //4.获取部门列表
-    public void getDepartmentList(String accessToken,String departmentId) {
+    public JSONObject getDepartmentList(String accessToken,String departmentId) {
 
         //1.获取请求的url  
         getDepartmentList_url=getDepartmentList_url.replace("ACCESS_TOKEN", accessToken)
@@ -103,6 +108,7 @@ public class Contacts_DepartmentService {
                 log.error("获取部门列表 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));  
             }  
         }  
+        return jsonObject;
     }
 
     /**

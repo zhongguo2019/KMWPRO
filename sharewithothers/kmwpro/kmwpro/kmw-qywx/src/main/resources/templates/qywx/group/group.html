@@ -18,18 +18,27 @@
                                 <p>负责人代码</p>
                                 <input type="text" name="userCode"/>
                             </li>-->
-                            <li>
+
+                            							<li>
+								<p>项目组：</p> <select name="groupCode"
+								th:with="type=${@dict.getType('qywx_dept_team')}">
+									<option value="">所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+										th:value="${dict.dictValue}"></option>
+							</select>
+							</li>
+							                            <li>
                                 <p>负责人名称</p>
                                 <input type="text" name="username"/>
                             </li>
-                            <li>
+                           <!--  <li>
                                 <p>分组编码：</p>
                                 <input type="text" name="groupCode"/>
                             </li>
                             <li>
                                 <p>小组名称：</p>
                                 <input type="text" name="groupCname"/>
-                            </li>
+                            </li> -->
                            <!-- <li>
                                 <p>是否要通知微信消息：</p>
                                 <input type="text" name="isMsg"/>
@@ -44,10 +53,10 @@
                                     <option value="">所有</option>
                                 </select>
                             </li>-->
-                            <li>
+<!--                             <li>
                                 <p>小组代号：</p>
                                 <input type="text" name="instId"/>
-                            </li>
+                            </li> -->
                            <!-- <li>
                                 <p>登录IP：</p>
                                 <input type="text" name="loginIp"/>

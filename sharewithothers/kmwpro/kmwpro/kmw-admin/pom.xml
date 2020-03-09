@@ -85,6 +85,12 @@
             <groupId>com.kmw</groupId>
             <artifactId>kmw-qywx</artifactId>
         </dependency> 
+         <!-- 企业微信管理  -->
+           <dependency>
+            <groupId>com.kmw</groupId>
+            <artifactId>kmw-etlsqlparase</artifactId>
+           </dependency> 
+
 
         
     </dependencies>

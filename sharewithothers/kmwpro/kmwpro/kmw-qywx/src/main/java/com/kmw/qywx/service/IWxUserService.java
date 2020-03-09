@@ -94,5 +94,17 @@ public interface IWxUserService
 	public String getWxProjectGroupId(Map<String, Object> userInfo);
 	public WxUser queryOneWxUser(Map<String, Object> params);
 	public WxUser queryOneWxUserByName(Map<String, Object> params);
+	/**
+	 * 批量保存操作 List<WxUser>
+	 * @param list
+	 * @return
+	 */
+	public int insertBatch(List<WxUser> list);
+	/**
+	 * 
+	 * 删除表中所有数据
+	 * @return int
+	 */
+	public int deleteAll();
 	
 }

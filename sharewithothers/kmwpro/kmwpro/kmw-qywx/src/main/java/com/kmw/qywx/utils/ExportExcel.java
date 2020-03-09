@@ -301,7 +301,7 @@ public class ExportExcel {
         // 写入各条记录,每条记录对应excel表中的一行
         Map<String, CellStyle> styles = new HashMap<String, CellStyle>();
         CellStyle style = wb.createCellStyle();
-        style.setAlignment(HorizontalAlignment.CENTER);
+        style.setAlignment(HorizontalAlignment.LEFT);
         style.setVerticalAlignment(VerticalAlignment.CENTER);
         style.setBorderRight(BorderStyle.THIN);
         style.setRightBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
@@ -311,6 +311,7 @@ public class ExportExcel {
         style.setTopBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
         style.setBorderBottom(BorderStyle.THIN);
         style.setBottomBorderColor(IndexedColors.GREY_50_PERCENT.getIndex());
+        style.setWrapText(true);
         Font dataFont = wb.createFont();
         dataFont.setFontName("Arial");
         dataFont.setFontHeightInPoints((short) 10);

@@ -4,38 +4,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kmw.qywx.mapper.WxUserMapper">
 	<!-- 表字段 声明 -->
-<sql id="WxUserColumns">
- name, account, alaisname, duties, dept, sex, mobile, phone, email, address, shortcorname, isactive, isforbidden, wxplat</sql>
+	<sql id="WxUserColumns">
+		 name, account, alaisname, duties, dept, sex, mobile, phone, email, address, shortcorname, isactive, isforbidden, wxplat, login_date, login_ip, project_group_id, id	</sql>
 	<!-- 实体与表字段映身声明，返回值 -->
     <resultMap type="WxUser" id="WxUserResult">
-        <result property="name"    column="name"    />
-        <result property="account"    column="account"    />
-        <result property="alaisname"    column="alaisname"    />
-        <result property="duties"    column="duties"    />
-        <result property="dept"    column="dept"    />
-        <result property="sex"    column="sex"    />
-        <result property="mobile"    column="mobile"    />
-        <result property="phone"    column="phone"    />
-        <result property="email"    column="email"    />
-        <result property="address"    column="address"    />
-        <result property="shortcorname"    column="shortcorname"    />
-        <result property="isactive"    column="isactive"    />
-        <result property="isforbidden"    column="isforbidden"    />
-        <result property="wxplat"    column="wxplat"    />
+		<result property="name"    column="name"    />
+		<result property="account"    column="account"    />
+		<result property="alaisname"    column="alaisname"    />
+		<result property="duties"    column="duties"    />
+		<result property="dept"    column="dept"    />
+		<result property="sex"    column="sex"    />
+		<result property="mobile"    column="mobile"    />
+		<result property="phone"    column="phone"    />
+		<result property="email"    column="email"    />
+		<result property="address"    column="address"    />
+		<result property="shortcorname"    column="shortcorname"    />
+		<result property="isactive"    column="isactive"    />
+		<result property="isforbidden"    column="isforbidden"    />
+		<result property="wxplat"    column="wxplat"    />
+		<result property="loginDate"    column="login_date"    />
+		<result property="loginIp"    column="login_ip"    />
+		<result property="projectGroupId"    column="project_group_id"    />
+		<result property="id"    column="id"    />
     </resultMap>
     
 	<!-- 定义查询整张表的SQL -->
     <sql id="selectWxUserVo">
-        select name, account, alaisname, duties, dept, sex, mobile, phone, email, address, shortcorname, isactive, isforbidden, wxplat from wx_user
+        select
+			 name, account, alaisname, duties, dept, sex, mobile, phone, email, address, shortcorname, isactive, isforbidden, wxplat, login_date, login_ip, project_group_id, id        from wx_user
     </sql>
     
 	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
     <select id="queryPageInfo" resultType="com.kmw.common.CommonEntity">
         select
-       	<include refid="WxUserColumns" /> 
-        from wx_user t
+			<include refid="WxUserColumns" /> 
+        from	wx_user t
         <where>  
-        1=1
+			1=1
             <if test="name != null  and name != ''"> and t.name like concat('%', #{name}, '%')</if>
             <if test="account != null  and account != ''"> and t.account = #{account}</if>
             <if test="alaisname != null  and alaisname != ''"> and t.alaisname like concat('%', #{alaisname}, '%')</if>
@@ -50,12 +55,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isactive != null  and isactive != ''"> and t.isactive = #{isactive}</if>
             <if test="isforbidden != null  and isforbidden != ''"> and t.isforbidden = #{isforbidden}</if>
             <if test="wxplat != null  and wxplat != ''"> and t.wxplat = #{wxplat}</if>
+            <if test="loginDate != null "> and t.login_date = #{loginDate}</if>
+            <if test="loginIp != null  and loginIp != ''"> and t.login_ip = #{loginIp}</if>
+            <if test="projectGroupId != null  and projectGroupId != ''"> and t.project_group_id = #{projectGroupId}</if>
         </where>
-        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
-		<if
-			test="sortC != null  and sortC != '' and order != null  and order != ''">
-			ORDER BY t.${sortC} ${order}
-		</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''"> ORDER BY t.${sortC} ${order}
+			</if>
     </select>
     
 	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
@@ -79,24 +85,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isactive != null  and isactive != ''"> and t.isactive = #{isactive}</if>
             <if test="isforbidden != null  and isforbidden != ''"> and t.isforbidden = #{isforbidden}</if>
             <if test="wxplat != null  and wxplat != ''"> and t.wxplat = #{wxplat}</if>
-        </where>
-        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
-		<if
-			test="sortC != null  and sortC != '' and order != null  and order != ''">
-			ORDER BY t.${sortC} ${order}
-		</if>
+            <if test="loginDate != null "> and t.login_date = #{loginDate}</if>
+            <if test="loginIp != null  and loginIp != ''"> and t.login_ip = #{loginIp}</if>
+            <if test="projectGroupId != null  and projectGroupId != ''"> and t.project_group_id = #{projectGroupId}</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		</where>
+
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''">ORDER BY t.${sortC} ${order}</if>
     </select>   
     
 	<!-- 按map参数查询后台的数据， 查询单条数据,返回的是通用实体，不受实体属性限制，相当于map -->
-	<select id="queryOneCommon"
-		resultType="com.kmw.common.CommonEntity">
-		select
+    <select id="queryOneCommon"	resultType="com.kmw.common.CommonEntity">
+        select
 		<include refid="WxUserColumns" />
-		  from wx_user t
+        from wx_user t
+        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+        
 		<where>
-			where id = #{id}
+        where id = #{id}
 		</where>
-	</select>    
+    </select>    
     
     
 	<!-- 按实体参数来查询后台的数据 -->
@@ -117,6 +125,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isactive != null  and isactive != ''"> and isactive = #{isactive}</if>
             <if test="isforbidden != null  and isforbidden != ''"> and isforbidden = #{isforbidden}</if>
             <if test="wxplat != null  and wxplat != ''"> and wxplat = #{wxplat}</if>
+            <if test="loginDate != null "> and login_date = #{loginDate}</if>
+            <if test="loginIp != null  and loginIp != ''"> and login_ip = #{loginIp}</if>
+            <if test="projectGroupId != null  and projectGroupId != ''"> and project_group_id = #{projectGroupId}</if>
         </where>
     </select>
  
@@ -144,6 +155,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isactive != null  and isactive != ''">isactive,</if>
             <if test="isforbidden != null  and isforbidden != ''">isforbidden,</if>
             <if test="wxplat != null  and wxplat != ''">wxplat,</if>
+            <if test="loginDate != null ">login_date,</if>
+            <if test="loginIp != null  and loginIp != ''">login_ip,</if>
+            <if test="projectGroupId != null  and projectGroupId != ''">project_group_id,</if>
+            <if test="id != null ">id,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null  and name != ''">#{name},</if>
@@ -160,6 +175,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isactive != null  and isactive != ''">#{isactive},</if>
             <if test="isforbidden != null  and isforbidden != ''">#{isforbidden},</if>
             <if test="wxplat != null  and wxplat != ''">#{wxplat},</if>
+            <if test="loginDate != null ">#{loginDate},</if>
+            <if test="loginIp != null  and loginIp != ''">#{loginIp},</if>
+            <if test="projectGroupId != null  and projectGroupId != ''">#{projectGroupId},</if>
+            <if test="id != null ">#{id},</if>
          </trim>
     </insert>
 	<!-- 按主键更新数据库一条数据 -->
@@ -179,6 +198,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isactive != null  and isactive != ''">isactive = #{isactive},</if>
             <if test="isforbidden != null  and isforbidden != ''">isforbidden = #{isforbidden},</if>
             <if test="wxplat != null  and wxplat != ''">wxplat = #{wxplat},</if>
+            <if test="loginDate != null ">login_date = #{loginDate},</if>
+            <if test="loginIp != null  and loginIp != ''">login_ip = #{loginIp},</if>
+            <if test="projectGroupId != null  and projectGroupId != ''">project_group_id = #{projectGroupId},</if>
+            <if test="id != null ">id = #{id},</if>
         </trim>
         where name = #{name}
     </update>
@@ -193,7 +216,119 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{name}
         </foreach>
     </delete>
-    
+        	<!-- 删除表中所有数据 -->
+    <delete id="deleteWxUserAll">
+        delete from wx_user 
+    </delete>
+       <!-- 根据不同条件删除数据，条件可组合 -->
+	<delete id="deleteByParams" parameterType="java.util.Map">
+		delete from wx_user 
+		<where>
+		        
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="account != null  and account != ''"> and account = #{account}</if>
+            <if test="alaisname != null  and alaisname != ''"> and alaisname like concat('%', #{alaisname}, '%')</if>
+            <if test="duties != null  and duties != ''"> and duties = #{duties}</if>
+            <if test="dept != null  and dept != ''"> and dept = #{dept}</if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="mobile != null  and mobile != ''"> and mobile = #{mobile}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="shortcorname != null  and shortcorname != ''"> and shortcorname like concat('%', #{shortcorname}, '%')</if>
+            <if test="isactive != null  and isactive != ''"> and isactive = #{isactive}</if>
+            <if test="isforbidden != null  and isforbidden != ''"> and isforbidden = #{isforbidden}</if>
+            <if test="wxplat != null  and wxplat != ''"> and wxplat = #{wxplat}</if>
+            <if test="loginDate != null "> and login_date = #{loginDate}</if>
+            <if test="loginIp != null  and loginIp != ''"> and login_ip = #{loginIp}</if>
+            <if test="projectGroupId != null  and projectGroupId != ''"> and project_group_id = #{projectGroupId}</if>
+			</where>
+	</delete>
+	
+    <!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="entityList" resultMap="WxUserResult">
+        select
+       	<include refid="WxUserColumns" /> 
+        from wx_user t
+        <where>  
+        1=1
+            <if test="name != null  and name != ''"> and t.name like concat('%', #{name}, '%')</if>
+            <if test="account != null  and account != ''"> and t.account = #{account}</if>
+            <if test="alaisname != null  and alaisname != ''"> and t.alaisname like concat('%', #{alaisname}, '%')</if>
+            <if test="duties != null  and duties != ''"> and t.duties = #{duties}</if>
+            <if test="dept != null  and dept != ''"> and t.dept = #{dept}</if>
+            <if test="sex != null  and sex != ''"> and t.sex = #{sex}</if>
+            <if test="mobile != null  and mobile != ''"> and t.mobile = #{mobile}</if>
+            <if test="phone != null  and phone != ''"> and t.phone = #{phone}</if>
+            <if test="email != null  and email != ''"> and t.email = #{email}</if>
+            <if test="address != null  and address != ''"> and t.address = #{address}</if>
+            <if test="shortcorname != null  and shortcorname != ''"> and t.shortcorname like concat('%', #{shortcorname}, '%')</if>
+            <if test="isactive != null  and isactive != ''"> and t.isactive = #{isactive}</if>
+            <if test="isforbidden != null  and isforbidden != ''"> and t.isforbidden = #{isforbidden}</if>
+            <if test="wxplat != null  and wxplat != ''"> and t.wxplat = #{wxplat}</if>
+            <if test="loginDate != null "> and t.login_date = #{loginDate}</if>
+            <if test="loginIp != null  and loginIp != ''"> and t.login_ip = #{loginIp}</if>
+            <if test="projectGroupId != null  and projectGroupId != ''"> and t.project_group_id = #{projectGroupId}</if>
+        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+        </where>
+
+		<if
+			test="sortC != null  and sortC != '' and order != null  and order != ''">
+			ORDER BY t.${sortC} ${order}
+		</if>
+    </select>     
+    <!-- 批量插入数据 -->
+	<insert id="insertBatch">
+		insert into wx_user(<include refid="WxUserColumns" />) values 
+		<foreach collection="list" item="item" separator="," >
+		(
+            #{item.name} ,
+            #{item.account} ,
+            #{item.alaisname} ,
+            #{item.duties} ,
+            #{item.dept} ,
+            #{item.sex} ,
+            #{item.mobile} ,
+            #{item.phone} ,
+            #{item.email} ,
+            #{item.address} ,
+            #{item.shortcorname} ,
+            #{item.isactive} ,
+            #{item.isforbidden} ,
+            #{item.wxplat} ,
+            #{item.loginDate} ,
+            #{item.loginIp} ,
+            #{item.projectGroupId} ,
+            #{item.id} 		)
+		</foreach>
+	</insert>  
+  	<!-- 根据不同条件删除数据，条件可组合 -->
+	<update id="updateBatchEntity" >
+		<foreach collection="list" item="item" separator=",">
+        update wx_user
+        set
+            name = #{name} ,
+            account = #{account} ,
+            alaisname = #{alaisname} ,
+            duties = #{duties} ,
+            dept = #{dept} ,
+            sex = #{sex} ,
+            mobile = #{mobile} ,
+            phone = #{phone} ,
+            email = #{email} ,
+            address = #{address} ,
+            shortcorname = #{shortcorname} ,
+            isactive = #{isactive} ,
+            isforbidden = #{isforbidden} ,
+            wxplat = #{wxplat} ,
+            login_date = #{loginDate} ,
+            login_ip = #{loginIp} ,
+            project_group_id = #{projectGroupId} ,
+            id = #{id}     <where>
+			name = #{name}
+        </where>
+		</foreach>
+	</update>
     	
 	<!-- 查询单条记录 -->
 	<select id="selectWxUser"

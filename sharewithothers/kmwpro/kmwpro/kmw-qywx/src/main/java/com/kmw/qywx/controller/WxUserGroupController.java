@@ -20,7 +20,11 @@ import com.kmw.common.annotation.Log;
 import com.kmw.common.enums.BusinessType;
 import com.kmw.qywx.domain.WxUserGroup;
 import com.kmw.qywx.service.IWxUserGroupService;
-import com.kmw.utils.StringConvert;
+import com.kmw.qywx.utils.ContactsUserService;
+import com.kmw.qywx.utils.RedisUtil;
+import com.kmw.qywx.utils.WeiXinParamesUtil;
+import com.kmw.qywx.utils.WeiXinUtil;
+import com.kmw.common.utils.StringConvert;
 import com.kmw.common.core.controller.BaseController;
 import com.kmw.common.core.domain.AjaxResult;
 import com.kmw.common.utils.poi.ExcelUtil;
@@ -44,6 +48,7 @@ public class WxUserGroupController extends BaseController
 
     @Autowired
     private IWxUserGroupService wxUserGroupService;
+
     protected Logger logger = LoggerFactory.getLogger(getClass());
     @RequiresPermissions("qywx:group:view")
     @GetMapping()
@@ -188,4 +193,9 @@ public class WxUserGroupController extends BaseController
     {
         return toAjax(wxUserGroupService.deleteWxUserGroupByIds(ids));
     }
+    
+   
+
+    
+
 }

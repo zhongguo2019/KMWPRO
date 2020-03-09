@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -32,12 +33,14 @@ import com.kmw.common.CommonEntity;
 import com.kmw.common.Constant;
 import com.kmw.common.annotation.Log;
 import com.kmw.common.enums.BusinessType;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.kmw.qywx.domain.DoufuTodayWork;
 import com.kmw.qywx.domain.WxUser;
 import com.kmw.qywx.service.IDoufuTodayWorkService;
 import com.kmw.qywx.utils.Result;
 import com.kmw.qywx.utils.WeiXinUtil;
-import com.kmw.utils.StringConvert;
+import com.kmw.common.utils.StringConvert;
 
 import com.kmw.common.core.controller.BaseController;
 import com.kmw.common.core.domain.AjaxResult;
@@ -84,12 +87,13 @@ public class DoufuTodayWorkController extends BaseController {
 	@ResponseBody
 	public TableDataInfo list(@RequestParam Map<String, Object> params) {
 		startPage();
-		//List<DoufuTodayWork> list = doufuTodayWorkService.selectDoufuTodayWorkList(doufuTodayWork);
-	//	Map<String, Object> params = new HashMap<>();
-		params.put("sortC","reporter_Name,report_date");
-		params.put("order","desc");
-		
-		List<DoufuTodayWork> list =doufuTodayWorkService.entityList(params);
+		// List<DoufuTodayWork> list =
+		// doufuTodayWorkService.selectDoufuTodayWorkList(doufuTodayWork);
+		// Map<String, Object> params = new HashMap<>();
+		params.put("sortC", "reporter_Name,report_date,INPUT_ORDER");
+		params.put("order", "desc");
+
+		List<DoufuTodayWork> list = doufuTodayWorkService.entityList(params);
 		return getDataTable(list);
 	}
 
@@ -100,10 +104,11 @@ public class DoufuTodayWorkController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(@RequestParam Map<String, Object> params) {
-		params.put("sortC","reporter_Name,report_date");
-		params.put("order","desc");
-		List<DoufuTodayWork> list =doufuTodayWorkService.entityList(params);	
-	//	List<DoufuTodayWork> list = doufuTodayWorkService.selectDoufuTodayWorkList(doufuTodayWork);
+		params.put("sortC", "reporter_Name,report_date,INPUT_ORDER");
+		params.put("order", "desc");
+		List<DoufuTodayWork> list = doufuTodayWorkService.entityList(params);
+		// List<DoufuTodayWork> list =
+		// doufuTodayWorkService.selectDoufuTodayWorkList(doufuTodayWork);
 		ExcelUtil<DoufuTodayWork> util = new ExcelUtil<DoufuTodayWork>(DoufuTodayWork.class);
 		return util.exportExcel(list, "work");
 	}
@@ -252,11 +257,11 @@ public class DoufuTodayWorkController extends BaseController {
 		}
 
 		if ("".equals(queyrStartDate) || null == queyrStartDate) {
-			queyrStartDate = DateUtils.DateToStr8(new Date());
+			queyrStartDate = DateUtils.DateToStr8();
 		}
 
 		if ("".equals(queyrEndDate) || null == queyrEndDate) {
-			queyrEndDate = DateUtils.DateToStr8(new Date());
+			queyrEndDate = DateUtils.DateToStr8();
 		}
 
 		weiXinUtil.userInit(request, strUserCode);
@@ -345,16 +350,17 @@ public class DoufuTodayWorkController extends BaseController {
 		Result result = new Result();
 		JSONObject jsonValue = new JSONObject();
 		JSONObject jsonValueRtn = new JSONObject();
-		
+		result.setCode(0);
 		if (jsonParam.isEmpty()) {
 			result.setMsg("前台传入的查询参数为空！");
- 			return result.errorResult();		
-			}
+
+			return result;
+		}
 
 		if (null == jsonParam.getString("userCode") || "".equals(jsonParam.getString("userCode"))) {
-			
+
 			result.setMsg("前台传入的用户代码为空！");
- 			return result.errorResult();		
+			return result;
 		}
 
 		weiXinUtil.userInit(request, jsonParam.getString("userCode"));
@@ -384,8 +390,8 @@ public class DoufuTodayWorkController extends BaseController {
 			jsonValueRtn.put("lists", JSON.toJSON(ListRptDateList));
 
 		}
-    logger.info(jsonValueRtn.toString());
-		return 	 result.successResult(jsonValueRtn.toString());
+		logger.info(jsonValueRtn.toString());
+		return result.successResult(jsonValueRtn.toString());
 	}
 
 	/**
@@ -400,8 +406,9 @@ public class DoufuTodayWorkController extends BaseController {
 	@RequestMapping(value = "wxqueryRptList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
 	public Result wxqueryRptList(@RequestBody JSONObject jsonParam, HttpServletRequest request) {
-		Result  result = new Result();
-		
+		Result result = new Result();
+		result.setCode(0);
+
 		JSONObject jsonValue = new JSONObject();
 		JSONObject jsonValueRtn = new JSONObject();
 		String returnMsg = "";
@@ -409,23 +416,23 @@ public class DoufuTodayWorkController extends BaseController {
 		if (jsonParam.isEmpty()) {
 			result.setMsg("调用后台方法时，传入的参数为空!");
 
-			return result.errorResult();
-		    	
+			return result;
+
 		}
 		String strUserCode = jsonParam.getString("userCode");
 		String strqueryDate = jsonParam.getString("queryDate");
 
 		if (null == strUserCode || "".equals(strUserCode)) {
 			result.setMsg("前台传过来的查询条件：用户代码为空！");
-			return result.errorResult();
+			return result;
 		}
 		if (null == strqueryDate || "".equals(strqueryDate)) {
 			result.setMsg("前台传过来的查询条件：查询时间为空！");
-			return result.errorResult();
+			return result;
 		}
-		
+
 		if ("今天".equals(strqueryDate)) {
-			strqueryDate = DateUtils.DateToStr8(new Date());
+			strqueryDate = DateUtils.DateToStr8();
 		}
 		weiXinUtil.userInit(request, strUserCode);
 
@@ -438,7 +445,8 @@ public class DoufuTodayWorkController extends BaseController {
 
 		if (lstRtn == null || lstRtn.size() == 0) {
 			result.setMsg("查询信息：查询到的结果为空！");
-			return result.errorResult();
+
+			return result;
 		} else {
 
 			int i = 1;
@@ -461,7 +469,7 @@ public class DoufuTodayWorkController extends BaseController {
 				}
 			}
 			jsonValueRtn.put("lists", JSON.toJSON(lstJson));
-		    return result.successResult(jsonValueRtn.toString());
+			return result.successResult(jsonValueRtn.toString());
 		}
 	}
 
@@ -476,7 +484,7 @@ public class DoufuTodayWorkController extends BaseController {
 	@ResponseBody
 	public Result wxWorkSave(@RequestBody JSONObject jsonParam, HttpServletRequest request)
 			throws UnsupportedEncodingException {
-		
+
 		Result result = new Result();
 		logger.info("开始保存当天工作记录信息表");
 		int count = 1;
@@ -566,19 +574,113 @@ public class DoufuTodayWorkController extends BaseController {
 		}
 		return result;
 	}
-	
-	
+
 	@PostMapping("/qywxlist")
 	@ResponseBody
 	public TableDataInfo qywxList(@RequestParam Map<String, Object> params) {
 		startPage();
-		//List<DoufuTodayWork> list = doufuTodayWorkService.selectDoufuTodayWorkList(doufuTodayWork);
-	//	Map<String, Object> params = new HashMap<>();
-		params.put("sortC","reporter_Name,report_date");
-		params.put("order","desc");
-		
-		List<DoufuTodayWork> list =doufuTodayWorkService.entityList(params);
+		// List<DoufuTodayWork> list =
+		// doufuTodayWorkService.selectDoufuTodayWorkList(doufuTodayWork);
+		// Map<String, Object> params = new HashMap<>();
+		params.put("sortC", "reporter_Name,report_date");
+		params.put("order", "desc");
+
+		List<DoufuTodayWork> list = doufuTodayWorkService.entityList(params);
 		return getDataTable(list);
+	}
+
+	/**
+	 * 添加或更新
+	 * 
+	 * @param params
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	@RequestMapping(value = "wxworksaveV2", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Result wxWorkSaveV2(@RequestBody JSONObject jsonParam, HttpServletRequest request)
+			throws UnsupportedEncodingException {
+
+		Result result = new Result();
+		logger.info("开始保存当天工作记录信息表");
+		int count = 1;
+		if (jsonParam.isEmpty()) {
+			result.setMsg("传入的保存数据内容为空！");
+			return result.errorResult();
+		}
+		String data = jsonParam.toJSONString();
+		logger.info("前台传入的data为【" + data + "】");
+
+		String strUserCode = jsonParam.getString("userCode");
+		if ("".equals(strUserCode)) {
+			result.setMsg("前台传用的用户code为空！");
+			result.setCode(0);
+			return result;
+		}
+		weiXinUtil.userInit(request, strUserCode);
+		JSONArray todayObjectlst = jsonParam.getJSONArray("todaywork");
+		JSONArray tomorObjectlst = jsonParam.getJSONArray("tomorrowwork");
+		Object submitObject = jsonParam.get("submitwork");
+
+		if (todayObjectlst == null && tomorObjectlst == null && submitObject == null) {
+			result.setCode(0);
+			result.setMsg("提交的日报内容为空！");
+			return result;
+
+		}
+		List<String> lstReptList = new ArrayList<>();
+		lstReptList.add("[日报]\n");
+		if (todayObjectlst == null || todayObjectlst.size() == 0) {
+			lstReptList.add("今天\n");
+			lstReptList.add("无工作\n");
+
+		} else {
+			lstReptList.add("今天\n");
+
+			for (int ii = 0; ii < todayObjectlst.size(); ii++) {
+
+				JSONObject jsonOneJsonObject = todayObjectlst.getJSONObject(ii);
+
+				lstReptList.add("[" + jsonOneJsonObject.get("projectId").toString() + "]\n");
+				lstReptList.add(jsonOneJsonObject.get("workcontent").toString() + "["
+						+ jsonOneJsonObject.get("finishPercent").toString() + "]\n");
+			}
+		}
+
+		if (tomorObjectlst == null || tomorObjectlst.size() == 0) {
+			lstReptList.add("明天\n");
+			lstReptList.add("无工作\n");
+
+		} else {
+			lstReptList.add("明天\n");
+
+			for (int ii = 0; ii < tomorObjectlst.size(); ii++) {
+				JSONObject jsonOneJsonObject = tomorObjectlst.getJSONObject(ii);
+
+				;
+				lstReptList.add("[" + jsonOneJsonObject.get("projectId").toString() + "]\n");
+				lstReptList.add(jsonOneJsonObject.get("workcontent").toString() + "["
+						+ jsonOneJsonObject.get("finishPercent").toString() + "]\n");
+			}
+		}
+
+		if (submitObject == null) {
+			result.setCode(0);
+			result.setMsg("总结内容录入不符合");
+
+		} else {
+			lstReptList.add("总结\n");
+			lstReptList.add(submitObject.toString());
+		}
+		String strLastCommitString = "";
+		for (int j = 0; j < lstReptList.size(); j++) {
+			strLastCommitString = strLastCommitString + lstReptList.get(j);
+		}
+		logger.info("提交的内容转为报文后:\n" + strLastCommitString);
+		doufuTodayWorkService.saveOperReportLog("text", strLastCommitString, request);
+		result.setMsg(doufuTodayWorkService.dealDayReportInsert(request, strLastCommitString, strUserCode));
+		result.setCode(0);
+		return result;
 	}
 
 }

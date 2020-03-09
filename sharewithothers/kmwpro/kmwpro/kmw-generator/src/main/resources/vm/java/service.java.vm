@@ -104,6 +104,13 @@ public interface I${ClassName}Service
 	public int deleteByParams(Map<String, Object> params);
 	
 	/**
+	 * 
+	 * 删除表中所有数据
+	 * @return int
+	 */
+	public int deleteAll();
+	
+	/**
 	 * 批量保存操作 List<${ClassName}>
 	 * @param list
 	 * @return

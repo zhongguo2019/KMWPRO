@@ -149,7 +149,7 @@ public class QywxBaseController  extends BaseController{
     @GetMapping("/reportinput")
     public String reportinput()
     {
-        return prefix + "/reportinput";
+        return prefix + "/reportinput2";
     }
     /**
      *查看自己录入日报

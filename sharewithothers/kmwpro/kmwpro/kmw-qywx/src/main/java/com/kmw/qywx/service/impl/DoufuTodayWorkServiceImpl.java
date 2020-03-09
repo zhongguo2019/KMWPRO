@@ -24,13 +24,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.kmw.qywx.mapper.DoufuTodayWorkMapper;
 import com.kmw.qywx.domain.DoufuTodayWork;
+import com.kmw.qywx.domain.QywxUserOperatelog;
 import com.kmw.qywx.service.IDoufuTodayWorkService;
+import com.kmw.qywx.service.IQywxUserOperatelogService;
 import com.kmw.qywx.utils.ExportExcel;
 import com.kmw.qywx.utils.Result;
 import com.kmw.qywx.utils.WeiXinParamesUtil;
 import com.kmw.qywx.utils.WeiXinUtil;
 import com.kmw.common.core.text.Convert;
 import com.kmw.common.utils.DateUtils;
+import com.kmw.common.utils.StringUtils;
 import com.kmw.common.utils.file.FileUtils;
 import com.kmw.common.CommonEntity;
 import com.kmw.common.Constant;
@@ -57,7 +60,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
 	private String reportError = "0";
-	private String report_date = DateUtils.DateToStr8(new Date());
+	private String report_date = DateUtils.DateToStr8();
 	private String next_date = DateUtils.getNextDateByDate8(report_date);
 	private String query_start_date = "";
 	private String query_end_date = "";
@@ -66,7 +69,9 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 
 	@Autowired
 	WeiXinUtil weiXinUtil;
-
+	
+	@Autowired
+	IQywxUserOperatelogService qywxUserOperatelogService;
 	/**
 	 * 查询当天工作记录信息
 	 * 
@@ -301,6 +306,9 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 		return reportTmplate;
 	}
 
+	
+	
+	
 	/**
 	 * 
 	 * 当天日报的提交处理流程
@@ -314,9 +322,9 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 		String strRtnMsgContent = "";
 
 		// 用户发来的消息放到Map中
-		Map<String, Map<String, List<String>>> work = (Map<String, Map<String, List<String>>>) siftWorkContent1(
+		Map<String, Map<String, List<String>>> work = (Map<String, Map<String, List<String>>>) siftWorkContentV2(
 				strMsgContent);
-		if (reportError.equals("0")) {
+		if (reportError.equals("0") && null != work) {
 			// 根据用户发的信息内容进行解析
 			ReportTmplate reportTmplate = initTemp(work);
 			// 初始化全局的发消息的用户信息
@@ -439,7 +447,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 
 		if (reportError.equals("0")) {
 			List<String> lstHeader = getHeaderListDayReport();
-			List<Map<String, Object>> lstData = getDataListDayReport(request, queryDate);
+			List<Map<String, Object>> lstData = getDataListDayReportV2(request, queryDate);
 			String filename = getDownLoadFilneName(username);
 			String createFlag = exportExcel(filename, lstHeader, lstData, username);
 			if ("sucuss".equals(createFlag)) {
@@ -451,7 +459,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 				String accessToken = "";
 
 				// 2.调用业务类，上传临时素材
-				JSONObject upload = weiXinUtil.uploadTempMaterial(type, filename,accessTokenString);
+				JSONObject upload = weiXinUtil.uploadTempMaterial(type, filename, accessTokenString);
 				String media_id = upload.getString("media_id");
 				String errmsg = upload.getString("errmsg");
 				if ("ok".equals(errmsg)) {
@@ -489,7 +497,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 		String strRtnMsgContent = "";
 		query_start_date = "";
 		query_end_date = "";
-        String accessTokenString = weiXinUtil.getRedisToken();
+		String accessTokenString = weiXinUtil.getRedisToken();
 		// siftWorkContent2方法会将补报的时间从报文中得到。
 		Map<String, Object> queryParam = siftWorkContent4(strMsgContent);
 
@@ -506,7 +514,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 			String downLoadFilename = getDownLoadFilneName(userNameFlag);
 
 			List<String> lstHeader = getHeaderListDayReport();
-			List<Map<String, Object>> lstData = getDataListDayReport(request, queryParam);
+			List<Map<String, Object>> lstData = getDataListDayReportV2(request, queryParam);
 
 			String createFlag = exportExcel(downLoadFilename, lstHeader, lstData, userNameFlag);
 
@@ -514,19 +522,19 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 				String type = "file";
 
 				String accessToken = "";
-				logger.info("调阅个人日报，准备向服务器传文件！");
+			//	logger.info("调阅个人日报，准备向服务器传文件！");
 
 				// 2.调用业务类，上传临时素材
-				JSONObject upload = weiXinUtil.uploadTempMaterial(type, downLoadFilename,accessTokenString);
-				logger.info("调阅个人日报，结束向服务器传文件！");
-							 
-				logger.info("调阅个人日报，开始根据上传的文件得到服务器上的media_id后推送给前台用户！");
-				if ("ok".equals( upload.getString("errmsg"))) {
-				weiXinUtil.SendFileMessage(upload.getString("media_id"), type, accessToken, strFromUser);
+				JSONObject upload = weiXinUtil.uploadTempMaterial(type, downLoadFilename, accessTokenString);
+			//	logger.info("调阅个人日报，结束向服务器传文件！");
+
+			//	logger.info("调阅个人日报，开始根据上传的文件得到服务器上的media_id后推送给前台用户！");
+				if ("ok".equals(upload.getString("errmsg"))) {
+					weiXinUtil.SendFileMessage(upload.getString("media_id"), type, accessToken, strFromUser);
 				} else {
-					strRtnMsgContent="生成后台文件上传到服务器失败，可能原因企业微信网速问题！";
+					strRtnMsgContent = "生成后台文件上传到服务器失败，可能原因企业微信网速问题！";
 				}
-				logger.info("调阅个人日报，结束根据上传的文件得到服务器上的media_id后推送给前台用户！");
+		//		logger.info("调阅个人日报，结束根据上传的文件得到服务器上的media_id后推送给前台用户！");
 
 			}
 
@@ -556,16 +564,14 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 		ExportExcel ee = new ExportExcel("个人日报", lstHeader, strFromUser);
 		for (int i = 0; i < lstData.size(); i++) {
 			Row row = ee.addRow();
+			row.setHeightInPoints(200);
+			
 			Map<String, Object> mapcolu = lstData.get(i);
 			ee.addCell(row, 0, mapcolu.get("order"));
 			ee.addCell(row, 1, mapcolu.get("remarks"));
 			ee.addCell(row, 2, mapcolu.get("reportDate"));
-			ee.addCell(row, 3, mapcolu.get("productName"));
 			ee.addCell(row, 4, mapcolu.get("workContents"));
-			/*
-			 * for (int j = 0; j < lstData.get(i).size(); j++) { Map<String,Object> mapcolu
-			 * = lstData.get(i); ee.addCell(row, j, lstData.get(i).get(j)); }
-			 */
+			ee.addCell(row, 3, mapcolu.get("yqzt"));
 		}
 		ee.writeFile(fileName);
 		ee.dispose();
@@ -582,7 +588,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 		headerList.add("序号");
 		headerList.add("姓名");
 		headerList.add("日期");
-		headerList.add("项目名称");
+		headerList.add("工作状态");
 		headerList.add("工作内容");
 		return headerList;
 	}
@@ -598,31 +604,57 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 		return lstmp;
 	}
 
+	
+	
 	/*
 	 * 构造日报的数据内容
 	 * 
 	 */
 	public List<Map<String, Object>> getDataListDayReport(HttpServletRequest request, Map<String, Object> map)
 			throws ParseException {
+
 		List<DoufuTodayWork> listDayWork = queryMsgList(request, map);
 
 		List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
-
 		if (null == listDayWork) {
 			return null;
 		}
-		// 遍历所有行。
+		String oldNameString = "";
+		String oldReportDateString = "";
+		Map<String, Object> mpOneMsg = new HashMap<String, Object>();
+		int ii = 0;
 		for (int i = 0; i < listDayWork.size(); i++) {
 			DoufuTodayWork dufuTodayWork = listDayWork.get(i);
-			Map<String, Object> mpcolumn = new HashMap<String, Object>();
-			mpcolumn.put("order", String.valueOf(i + 1));
-			mpcolumn.put("remarks", dufuTodayWork.getRemarks());
-			mpcolumn.put("reportDate", dufuTodayWork.getReportDate());
-			mpcolumn.put("productName", dufuTodayWork.getProductName());
-			mpcolumn.put("workContents", dufuTodayWork.getWorkContents());
 
-			dataList.add(mpcolumn);
+			if (dufuTodayWork.getReporterName() != oldNameString
+					&& dufuTodayWork.getReportDate() != oldReportDateString) {
+				if (mpOneMsg != null) {
+					dataList.add(mpOneMsg);
+				}
+
+				mpOneMsg.put("order", String.valueOf(ii + 1));
+				mpOneMsg.clear();
+				oldNameString = dufuTodayWork.getReporterName();
+				oldReportDateString = dufuTodayWork.getReportDate();
+				mpOneMsg.put("reportDate", dufuTodayWork.getReportDate());
+				mpOneMsg.put("remarks", dufuTodayWork.getRemarks());
+				mpOneMsg.put("workContents", dufuTodayWork.getWorkContents());
+			} else {
+				mpOneMsg.put("workContents", mpOneMsg.get("workContents") + "\n" + dufuTodayWork.getWorkContents());
+			}
 		}
+		
+		  // 遍历所有行。
+		for (int i = 0; i < listDayWork.size(); i++) { DoufuTodayWork
+		  dufuTodayWork = listDayWork.get(i); Map<String, Object> mpcolumn = new
+		  HashMap<String, Object>(); mpcolumn.put("order", String.valueOf(i + 1));
+		  mpcolumn.put("remarks", dufuTodayWork.getRemarks());
+		  mpcolumn.put("reportDate", dufuTodayWork.getReportDate());
+		  mpcolumn.put("productName", dufuTodayWork.getProductName());
+		  mpcolumn.put("workContents", dufuTodayWork.getWorkContents());
+		  
+		  dataList.add(mpcolumn); }
+		 
 
 		return dataList;
 	}
@@ -711,7 +743,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 			if (productWorkContent == null) {
 				productWorkContent = new ArrayList<String>();
 				if (null == productName) {
-					productName = "总结";
+					productName = "";
 				}
 				result.put(productName, productWorkContent);
 			}
@@ -800,6 +832,94 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 		result.put("query_name", strQueryName);
 		result.put("query_end_date", query_end_date);
 		reportError = "0";
+		return result;
+	}
+
+	/**
+	 * 分拣任务。返回Map
+	 * 
+	 * @param text
+	 * @return
+	 */
+	public Map<String, Map<String, List<String>>> siftWorkContentV2(String text) {
+
+		// 把传入的字符串按行解析放到List中
+		List<String> lstStrings = StringUtils.readLine(text);
+		if (lstStrings == null) {
+			logger.info("提交的文本不合法！\n" + text);
+			return null;
+		}
+		if (!lstStrings.get(0).contains("日报")) {
+			logger.info("提交的文本不合法！\n" + text);
+			return null;
+		}
+
+		int iStartToday = 0;
+		int iStartTomorrow = 0;
+		int iStartSubmit = 0;
+		for (int i = 0; i < lstStrings.size(); i++) {
+			if (lstStrings.get(i).trim().equals("今天")) {
+				iStartToday = i;
+			}
+			if (lstStrings.get(i).trim().equals("明天")) {
+				iStartTomorrow = i;
+
+			}
+			if (lstStrings.get(i).trim().equals("总结")) {
+				iStartSubmit = i;
+			}
+		}
+		if (iStartTomorrow <= 0 || iStartSubmit <= 0) {
+			logger.info("提交的日报格式不符合要求");
+			return null;
+		}
+		// 得到今天到明天之间的位置
+
+		// 得到明天到总结之间的位置
+		String stodayString = "";
+		String stomorrowString = "";
+		String sSubmitString = "";
+		if (lstStrings.get(iStartToday++) != null) {
+			for (int i = iStartToday; i < iStartTomorrow; i++) {
+				stodayString = stodayString + lstStrings.get(i) + "\n";
+			}
+		}
+		if (lstStrings.get(iStartTomorrow++) != null) {
+			for (int i = iStartTomorrow; i < iStartSubmit; i++) {
+				stomorrowString = stomorrowString + lstStrings.get(i) + "\n";
+			}
+		}
+		if (lstStrings.get(iStartSubmit++) != null) {
+			for (int i = iStartSubmit; i < lstStrings.size(); i++) {
+				sSubmitString = sSubmitString + lstStrings.get(i) + "\n";
+			}
+		}
+
+		if (stodayString.equals("") || stodayString == null) {
+			return null;
+		}
+		if (stomorrowString.equals("") || stomorrowString == null) {
+			return null;
+		}
+		if (sSubmitString.equals("") || sSubmitString == null) {
+			return null;
+		}
+		if (sSubmitString.contains("老家隔离")  || sSubmitString.contains("项目地隔离")|| sSubmitString.contains("隔离结束-正常上班") || sSubmitString.contains("隔离结束-等待入场")  || sSubmitString.contains("隔离结束-间歇入场")) {
+
+		}else {
+			return null;	
+		}
+		
+		if (sSubmitString.contains("工作性质项目")  || sSubmitString.contains("工作性质运维")|| sSubmitString.contains("工作性质其它") ) {
+
+		}else {
+			return null;	
+		}	
+
+		Map<String, Map<String, List<String>>> result = new LinkedHashMap<String, Map<String, List<String>>>();
+		result.put("today", buildMap(stodayString));
+		result.put("towarrow", buildMap(stomorrowString));
+		result.put("summary", buildMap(sSubmitString));
 		return result;
 	}
 
@@ -1149,7 +1269,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 		}
 		queryMap.put("reporterName", queryUser);
 		queryMap.put("dynamicSQL", dynamicSQL);
-		queryMap.put("sortC", "reporter_name,create_date,input_order,PRODUCT_NAME");
+		queryMap.put("sortC", "reporter_name,input_order,create_date");
 		queryMap.put("order", "asc");
 		List<DoufuTodayWork> lstQuery = entityList(queryMap);
 		if (null == lstQuery) {
@@ -1181,18 +1301,18 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 		List<DoufuTodayWork> listEntyInsert = new ArrayList<DoufuTodayWork>();
 
 		if (null != reportTmplate.getTodaywork() && reportTmplate.getTodaywork().length > 0) {
-
-			listEntytoday = putString2Enty(reportTmplate.getTodaywork(), wxUser, report_date);
+			logger.info("当天的日报日期【" + report_date + "】");
+			listEntytoday = putString2Enty(reportTmplate.getTodaywork(), wxUser, DateUtils.DateToStr8());
 		}
 
 		if (null != reportTmplate.getTmorrowwork() && reportTmplate.getTmorrowwork().length > 0) {
 
-			listEntytomorrow = putString2Enty(reportTmplate.getTmorrowwork(), wxUser, next_date);
+			listEntytomorrow = putString2Enty(reportTmplate.getTmorrowwork(), wxUser, DateUtils.getNextDateToStr8());
 		}
 
 		if (null != reportTmplate.getSummary() && reportTmplate.getSummary().length > 0) {
 
-			listEntysummary = putString2Enty(reportTmplate.getSummary(), wxUser, report_date);
+			listEntysummary = putString2Enty(reportTmplate.getSummary(), wxUser, DateUtils.DateToStr8());
 		}
 
 		if (null != reportTmplate.getBydate() && reportTmplate.getBydate().length > 0) {
@@ -1207,11 +1327,11 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 			// 判断by_date 是否为空，如果是补报的形式直接插入数据库，否则按当前用户及时间删除后台指定的数据。
 			if (by_date.equals("")) {
 				Map<String, Object> params = new HashMap();
-				params.put("reportDate", report_date);
-				params.put("reporterName", wxUser.getName());
+				params.put("reportDate", DateUtils.DateToStr8());
+				params.put("reporterName", wxUser.getAccount());
 				deleteByParams(params);
-				params.put("reportDate", next_date);
-				params.put("reporterName", wxUser.getName());
+				params.put("reportDate", DateUtils.getNextDateToStr8());
+				params.put("reporterName", wxUser.getAccount());
 				deleteByParams(params);
 
 			}
@@ -1259,4 +1379,195 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 		logger.info("#=================根据条件查询提交日报的日期列表========================#");
 		return doufuTodayWorkMapper.getReportDateList(params);
 	}
+	
+	public String saveOperReportLog(String msgType,String content,HttpServletRequest request) {
+		// 把传入的字符串按行解析放到List中
+		String yqztString=""; //疫情工作状态
+				List<String> lstStrings = StringUtils.readLine(content);
+				if (lstStrings == null) {
+					logger.info("提交的文本不合法！\n" + content);
+					return null;
+				}
+				if (!lstStrings.get(0).contains("日报")) {
+					logger.info("提交的文本不合法！\n" + content);
+					return null;
+				}
+
+				int iStartToday = 0;
+				int iStartTomorrow = 0;
+				int iStartSubmit = 0;
+				for (int i = 0; i < lstStrings.size(); i++) {
+					if (lstStrings.get(i).trim().equals("今天")) {
+						iStartToday = i;
+					}
+					if (lstStrings.get(i).equals("明天")) {
+						iStartTomorrow = i;
+
+					}
+					if (lstStrings.get(i).trim().equals("总结")) {
+						iStartSubmit = i;
+					}
+				}
+				if (iStartTomorrow <= 0 || iStartSubmit <= 0) {
+					logger.info("提交的日报格式不符合要求");
+					return null;
+				}
+				// 得到今天到明天之间的位置
+
+				// 得到明天到总结之间的位置
+				String stodayString = "";
+				String stomorrowString = "";
+				String sSubmitString = "";
+				if (lstStrings.get(iStartToday++) != null) {
+					for (int i = iStartToday; i < iStartTomorrow; i++) {
+						stodayString = stodayString + lstStrings.get(i) + "\n";
+					}
+				}
+				if (lstStrings.get(iStartTomorrow++) != null) {
+					for (int i = iStartTomorrow; i < iStartSubmit; i++) {
+						stomorrowString = stomorrowString + lstStrings.get(i) + "\n";
+					}
+				}
+				if (lstStrings.get(iStartSubmit++) != null) {
+					for (int i = iStartSubmit; i < lstStrings.size(); i++) {
+						sSubmitString = sSubmitString + lstStrings.get(i) + "\n";
+					}
+				}
+
+				if (stodayString.equals("") || stodayString == null) {
+					return null;
+				}
+				if (stomorrowString.equals("") || stomorrowString == null) {
+					return null;
+				}
+				if (sSubmitString.equals("") || sSubmitString == null) {
+					return null;
+				}
+				if (sSubmitString.contains("老家隔离")  || sSubmitString.contains("项目地隔离")|| sSubmitString.contains("隔离结束-正常上班") || sSubmitString.contains("隔离结束-等待入场")  || sSubmitString.contains("隔离结束-间歇入场")) {
+
+				}else {
+					return null;	
+				}
+				if (sSubmitString.contains("工作性质项目")  || sSubmitString.contains("工作性质运维")|| sSubmitString.contains("工作性质其它") ) {
+
+				}else {
+					return null;	
+				}	
+				
+				if (sSubmitString.contains("老家隔离")) {
+					yqztString = "老家隔离";
+				} 
+				if (sSubmitString.contains("项目地隔离")) {
+					yqztString = "项目地隔离";
+				} 
+				if (sSubmitString.contains("隔离结束-正常上班")) {
+					yqztString = "隔离结束-正常上班";
+				} 
+				
+				if (sSubmitString.contains("隔离结束-等待入场")) {
+					yqztString = "隔离结束-等待入场";
+				} 
+				if (sSubmitString.contains("隔离结束-间歇入场")) {
+					yqztString = "隔离结束-间歇入场";
+				} 
+			    String gzxString="工作性质其它";
+				if (sSubmitString.contains("工作性质项目")) {
+					gzxString = "工作性质项目";
+				}				
+				if (sSubmitString.contains("工作性质运维")) {
+					gzxString = "工作性质运维";
+				}				
+				if (sSubmitString.contains("工作性质其它")) {
+					gzxString = "工作性质其它";
+				}				
+		String rtnString="";
+		QywxUserOperatelog qywxUserOperatelog = new QywxUserOperatelog();
+		qywxUserOperatelog.setId(UUID.randomUUID().toString());
+		qywxUserOperatelog.setMessType("text");
+		WxUser wxUserSession = (WxUser) request.getSession().getAttribute(Constant.SESSION_LOGIN_USER);
+		qywxUserOperatelog.setCreateBy(wxUserSession.getName());
+		qywxUserOperatelog.setCreateTime(new Date());
+		qywxUserOperatelog.setUpdateBy(wxUserSession.getName());
+		qywxUserOperatelog.setMessFromIp(wxUserSession.getLoginIp());
+		qywxUserOperatelog.setSubmitText(content);
+		qywxUserOperatelog.setUpdateTime(new Date());
+		qywxUserOperatelog.setReportDate(DateUtils.DateToStr8());
+		qywxUserOperatelog.setUserAccount(wxUserSession.getAccount());
+		qywxUserOperatelog.setGroupCode(wxUserSession.getProjectGroupId());
+		qywxUserOperatelog.setRemark(yqztString);
+		qywxUserOperatelog.setOperType("1");
+		qywxUserOperatelog.setReportType(gzxString);
+
+		Map<String, Object> params = new HashMap<String,Object>();
+		params.put("operType","1" );
+		params.put("reportDate",DateUtils.DateToStr8() );
+		params.put("userAccount", wxUserSession.getAccount());
+		params.put("reportType", qywxUserOperatelog.getReportType());
+		params.put("submitText", content);
+		qywxUserOperatelogService.deleteByParams(params);
+		qywxUserOperatelogService.insertQywxUserOperatelog(qywxUserOperatelog);
+		return rtnString;
+	}	
+	
+	/*
+	 * 构造日报的数据内容
+	 * 
+	 */
+	public List<Map<String, Object>> getDataListDayReportV2(HttpServletRequest request, Map<String, Object> map)
+			throws ParseException {
+
+		List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
+		String queryResult = null;
+		String dynamicSQL = "";
+		WxUser wxUserSession = (WxUser) request.getSession().getAttribute(Constant.SESSION_LOGIN_USER);
+		Map<String, Object> queryMap = new HashMap<String, Object>();
+		if ("".equals(map.get("query_start_date")) || null == map.get("query_start_date")) {
+			return null;
+		} else {
+
+		}
+
+		if ("".equals(map.get("query_end_date")) || null == map.get("query_end_date")) {
+			dynamicSQL = "t.REPORT_DATE ='" + query_start_date + "'";
+		} else {
+			dynamicSQL = "t.REPORT_DATE >='" + map.get("query_start_date").toString() + "' and t.REPORT_DATE <='"
+					+ map.get("query_end_date").toString() + "'";
+		}
+		String queryUser = "";
+
+		if ("".equals(map.get("query_name")) || null == map.get("query_name")) {
+			queryUser = wxUserSession.getAccount();
+		} else {
+			if ("*".equals(map.get("query_name"))) {
+				queryUser = "all";
+			} else {
+				WxUser wxUser2Query = weiXinUtil.getUserInfo(map.get("query_name").toString(), "NAME");
+				if (null != wxUser2Query) {
+					queryUser = wxUser2Query.getAccount();
+				} else {
+					logger.info("当前查询的用户【" + map.get("query_name").toString() + "】未在用户信息表中注册！");
+
+				}
+
+			}
+		}
+		queryMap.put("userAccount", queryUser);
+		queryMap.put("operType", "1");
+		queryMap.put("dynamicSQL", dynamicSQL);
+		queryMap.put("sortC", "create_by,report_date");
+		queryMap.put("order", "asc");
+	List<QywxUserOperatelog>	listDayWork= qywxUserOperatelogService.entityList(queryMap);
+		  // 遍历所有行。
+		for (int i = 0; i < listDayWork.size(); i++) {
+			QywxUserOperatelog		qywxUserOperatelog = listDayWork.get(i);
+		    Map<String, Object> mpcolumn = new		  HashMap<String, Object>(); 
+		    mpcolumn.put("order", String.valueOf(i + 1));
+		    mpcolumn.put("remarks", qywxUserOperatelog.getUpdateBy());
+		    mpcolumn.put("reportDate", qywxUserOperatelog.getReportDate());
+		    mpcolumn.put("yqzt", qywxUserOperatelog.getRemark());
+			
+		    mpcolumn.put("workContents", qywxUserOperatelog.getSubmitText());
+		  dataList.add(mpcolumn); }
+		return dataList;
+	}	
 }

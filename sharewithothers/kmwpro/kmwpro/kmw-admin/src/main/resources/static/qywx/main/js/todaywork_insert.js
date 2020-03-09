@@ -85,31 +85,54 @@ function formStarted() {
 
 
 
-
+        function isEmptyObject(obj){  
+        	  
+            for(var key in obj){  
+                 break;  return false  
+            };  
+            return true  
+       };  
 
 
         form.on('submit(formDemo)', function (data) {
             var formTodayData = new FormData($("#formToday")[0]);
-
+            var formTomorrowData = new FormData($("#formTomorrow")[0]);
+            var formSubmitData = new FormData($("#formSubmit")[0]);
             var jsonData01 = {};
             formTodayData.forEach((value, key) => jsonData01[key] = value);
-            jsonData01.worktype = 'today';
-
-            var formTomorrowData = new FormData($("#formTomorrow")[0]);
             var jsonData02 = {};
             formTomorrowData.forEach((value, key) => jsonData02[key] = value);
-            jsonData02.worktype = 'tomorrow';
-
-            var formSubmitData = new FormData($("#formSubmit")[0]);
             var jsonData03 = {};
-            formSubmitData.forEach((value, key) => jsonData03[key] = value);
+            formSubmitData.forEach((value, key) => jsonData03[key] = value);            
+        
+            if($.isEmptyObject(jsonData01)||$.isEmptyObject(jsonData02)||$.isEmptyObject(jsonData03)){
+                var error_msg = "今天工作内容、明天计划内容、今天的工作总结都要录入内容！";
+                layer.msg("<em style='color:red'>" + error_msg + "</em>", {time: 1200, icon: 5});
+            	return;
+            }
+            if(jsonData01.projectName_0==""||projectMessage_0==""){
+                var error_msg = "今天工作内容没有录入！";
+                layer.msg("<em style='color:red'>" + error_msg + "</em>", {time: 1200, icon: 5});
+            	return;	
+            }
+            if(jsonData02.tomorrow_projectName_0==""||tomorrow_projectMessage_0==""){
+                var error_msg = "明天计划内容没有录入！";
+                layer.msg("<em style='color:red'>" + error_msg + "</em>", {time: 1200, icon: 5});
+
+                return;
+            }
+            if(jsonData03.projectSummary==""){
+                var error_msg = "今天工作总结没有录入！";
+                layer.msg("<em style='color:red'>" + error_msg + "</em>", {time: 1200, icon: 5});
+            	return;
+            }
+            
+            jsonData01.worktype = 'today';
+            jsonData02.worktype = 'tomorrow';
             jsonData03.worktype = 'submit';
             var jsonCommit = {};
             var jsonUserInfo = {};
-
             var saveUrl = "http://krmsoft.natapp1.cc/qywx/work/wxworksave";
-
-
             var loading = layer.msg('正在保存', {icon: 16, shade: 0.3, time: 0});
 
             jsonUserInfo.userCode = getcookie("userId");

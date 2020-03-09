@@ -20,7 +20,7 @@ import com.kmw.common.annotation.Log;
 import com.kmw.common.enums.BusinessType;
 import ${packageName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
-import com.kmw.utils.StringConvert;
+import com.kmw.common.utils.StringConvert;
 import com.kmw.common.core.controller.BaseController;
 import com.kmw.common.core.domain.AjaxResult;
 import com.kmw.common.utils.poi.ExcelUtil;

@@ -10,7 +10,7 @@
 
     <name>kmwsoft</name>
 	<url>http://www.kmwsoft.com</url>
-    <description>若依管理系统</description>
+    <description>快速开发框架构</description>
     
     <properties>
 	    <kmw.version>4.1.0</kmw.version>
@@ -216,7 +216,12 @@
 	            <artifactId>kmw-qywx</artifactId>
 	            <version>${kmw.version}</version>
 	        </dependency>		
-	                       
+ 			<!-- ETLSQL解析工具 -->	
+	        <dependency>
+	            <groupId>com.kmw</groupId>
+	            <artifactId>kmw-etlsqlparase</artifactId>
+	            <version>${kmw.version}</version>
+	        </dependency>	                        
         </dependencies>
     </dependencyManagement>
 
@@ -228,10 +233,21 @@
 		<module>kmw-generator</module>
         <module>kmw-common</module>
         <module>kmw-metadata</module>        
-        <module>kmw-qywx</module>         
-    </modules>
+        <module>kmw-qywx</module> 
+        <module>kmw-etlsqlparase</module>
+        </modules>
     <packaging>pom</packaging>
 	<dependencies>
+	<dependency>
+		<groupId>com.github.pagehelper</groupId>
+		<artifactId>pagehelper-spring-boot-starter</artifactId>
+		<exclusions>
+			<exclusion>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-to-slf4j</artifactId>
+			</exclusion>
+		</exclusions>
+	</dependency>
 	</dependencies>
 	<build>
         <plugins>

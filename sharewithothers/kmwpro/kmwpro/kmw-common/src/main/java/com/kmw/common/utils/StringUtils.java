@@ -1,6 +1,14 @@
 package com.kmw.common.utils;
 
+
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import com.kmw.common.core.text.StrFormatter;
@@ -396,4 +404,55 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils
         }
         return sb.toString();
     }
+    /**
+     * 驼峰式命名法 例如：user_name->userName
+     */
+    public static List<String> readLine(String s)
+    {
+        if(null ==s ||s.equals("")) return null;
+        
+    	List<String> lstStrings = new ArrayList<String>();
+    	 BufferedReader br = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(s.getBytes(Charset.forName("utf8"))), Charset.forName("utf8")));  
+		 String line;  
+		 StringBuffer strbuf=new StringBuffer();
+		 try {
+			while ( (line = br.readLine()) != null ) {  
+			     if(!line.trim().equals("")){
+			    	 lstStrings.add(line);
+			     }       		    	 
+			 }
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+    
+       return lstStrings;
+    
+    }
+    
+    
+    public static void main(String[] args) throws IOException{
+		 String s="[日报]\r\n" + 
+		 		"今天\r\n" + 
+		 		"[江苏农信年终升级]\r\n" + 
+		 		"1、报表S72手动跑数、落数，并导入到oracle库。[100]\r\n" + 
+		 		"2、编写客户风险导数脚本，等待ODS出数。[100]\r\n" + 
+		 		"3、报表S72手动跑数、落数，并导入到oracle库。（去生产导临时表tmp_data.tmp_G33_01、tmp_data.tmp_G33_02表结构，在测试库新建并添加字段）[80]\r\n" + 
+		 		"明天\r\n" + 
+		 		"[江苏农信年终升级]\r\n" + 
+		 		"1、江苏农信年终升级报表数据库测试。\r\n" + 
+		 		"2、等客户风险2月数据出数，入库。\r\n" + 
+		 		"总结：隔离结束，正常上班。";
+		 BufferedReader br = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(s.getBytes(Charset.forName("utf8"))), Charset.forName("utf8")));  
+		 String line;  
+		 StringBuffer strbuf=new StringBuffer();
+		 while ( (line = br.readLine()) != null ) {  
+		     if(!line.trim().equals("")){
+		    	 line="<br>"+line;//每行可以做加工
+		    	 strbuf.append(line+"\r\n");
+		     }       		    	 
+		 } 
+	     System.out.println(strbuf.toString());
+	}
+  
 }

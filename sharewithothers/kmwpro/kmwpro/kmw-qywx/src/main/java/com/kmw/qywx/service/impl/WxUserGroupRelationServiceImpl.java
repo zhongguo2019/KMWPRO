@@ -145,12 +145,12 @@ public class WxUserGroupRelationServiceImpl implements IWxUserGroupRelationServi
 	 */
 	public CommonEntity queryOne(Map<String, Object> params){
 		logger.info("#=================开始根据不同条件查询一条【分组信息与用户对应关系】数据，返回实体对象========================#");
-		if(params.containsKey("id")) {
+		//if(params.containsKey("id")) {
 		return wxUserGroupRelationMapper.queryOneCommon(params);
-		}else {
-			logger.info("#=================按主键查询【分组信息与用户对应关系】一条，Map参数中 id不能为空========================#");
-	 return null;
-		}
+		//}else {
+		//	logger.info("#=================按主键查询【分组信息与用户对应关系】一条，Map参数中 id不能为空========================#");
+	 //return null;
+	//	}
 	}
         
   	/**

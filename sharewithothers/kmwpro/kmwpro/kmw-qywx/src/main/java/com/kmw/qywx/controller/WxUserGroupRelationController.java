@@ -2,6 +2,8 @@ package com.kmw.qywx.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +22,7 @@ import com.kmw.common.annotation.Log;
 import com.kmw.common.enums.BusinessType;
 import com.kmw.qywx.domain.WxUserGroupRelation;
 import com.kmw.qywx.service.IWxUserGroupRelationService;
-import com.kmw.utils.StringConvert;
+import com.kmw.common.utils.StringConvert;
 import com.kmw.common.core.controller.BaseController;
 import com.kmw.common.core.domain.AjaxResult;
 import com.kmw.common.utils.poi.ExcelUtil;
@@ -96,6 +98,7 @@ public class WxUserGroupRelationController extends BaseController
     @ResponseBody
     public AjaxResult addSave(WxUserGroupRelation wxUserGroupRelation)
     {
+    	wxUserGroupRelation.setId(UUID.randomUUID().toString());
         return toAjax(wxUserGroupRelationService.insertWxUserGroupRelation(wxUserGroupRelation));
     }
 

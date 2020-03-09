@@ -165,12 +165,9 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
 	 */
 	public CommonEntity queryOne(Map<String, Object> params){
 		logger.info("#=================开始根据不同条件查询一条【${functionName}】数据，返回实体对象========================#");
-		if(params.containsKey("id")) {
+	
 		return ${className}Mapper.queryOneCommon(params);
-		}else {
-			logger.info("#=================按主键查询【${functionName}】一条，Map参数中 id不能为空========================#");
-	 return null;
-		}
+
 	}
         
   	/**
@@ -201,7 +198,15 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
 	public int insertBatch(List<${ClassName}> list){
 		return  ${className}Mapper.insertBatch(list);
 	}
-    
+    /**
+	 * 删除表中所有数据
+	 *  
+	 * @return int
+	 */
+	public int deleteAll(){
+		logger.info("#=================删除表【${functionName}】所有数据========================#");
+		return  ${className}Mapper.delete${ClassName}All();
+	}
 	/**
 	 * 列表(可带条件查询) 当天工作记录信息信息
 	 * 通用实体查询，Map参数 返回的是通用实体，不受实体属性限制，相当于map

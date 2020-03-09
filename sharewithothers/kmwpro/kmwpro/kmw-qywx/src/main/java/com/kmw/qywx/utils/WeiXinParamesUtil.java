@@ -22,12 +22,12 @@ public class WeiXinParamesUtil {
 
 
 // 生产中配置--我的日报---应用的凭证密钥
+//企业应用的id，整型。可在应用的设置页面查看    
    public final static String agentSecret = "tAgAYMMHqEtNs1OX5GC4Z3c-lntzwcw2nY9XiX7HX80"; 
-    //企业应用的id，整型。可在应用的设置页面查看
-    public final static int agentId = 1000002;
+   public final static int agentId = 1000002;
     
 // 测试中配置---我的半月报--应用的凭证密钥
-//    public final static String agentSecret = "76Dt4OVopES0rE5yOYmNjDuIO8SNGBkUT4DxSEMMwR0";
+//   public final static String agentSecret = "76Dt4OVopES0rE5yOYmNjDuIO8SNGBkUT4DxSEMMwR0";
 //    public final static int agentId = 1000005;
 
 	/**
@@ -117,11 +117,11 @@ public class WeiXinParamesUtil {
     		"1、XXXX。[XX%]\r\n" + 
     		"2、XXXX。[XX%]\r\n" + 
     		"明天\r\n" + 
-    		"[[XXXX]\r\n" + 
+    		"[XXXX]\r\n" + 
     		"1、XXXX。[XX%]\r\n" + 
     		"2、XXXX。[XX%]\r\n" + 
     		"总结\r\n" + 
-    		"XXXXXXX 内容不超200字。\r\n" + 
+			"注意工作状态是“老家隔离、项目地隔离、隔离结束-正常上班、隔离结束-等待入场、隔离结束-间歇入场”描述之一;\n要用工作性质描述：“工作性质项目、工作性质运维护、工作性质其它”描述之一;\n内容描述，不超过200字。"+
     		"\r\n" + 
     		"-------------补报格式-------------\r\n" + 
     		"[补报]\r\n" + 
@@ -153,7 +153,7 @@ public class WeiXinParamesUtil {
     		"姓名\r\n" + 
     		"YYYY-MM-DD";
     //测试使用结束
-    public final static String dayReportFormat = "亲，格式不对，模版如下：\r\n" + 
+    public final static String dayReportFormat = "亲，格式不对，模版如下#注意换行#：\r\n" + 
 			"[日报]\r\n" + 
 			"今天\r\n" + 
 			"[系统名称一(或写其它)]\r\n" + 
@@ -170,10 +170,10 @@ public class WeiXinParamesUtil {
 			"1、工作内容描述一。[完成比例]\r\n" + 
 			"2、工作内容描述二。[完成比例]\r\n" + 
 			"总结\r\n" + 
-			"内容描述，不超过200字。";
+			"注意工作状态是“老家隔离、项目地隔离、隔离结束-正常上班、隔离结束-等待入场、隔离结束-间歇入场”描述之一;\n要用工作性质描述：“工作性质项目、工作性质运维护、工作性质其它”描述之一;\n内容描述，不超过200字。";
     
     //测试使用结束
-    public final static String dayReportFormatAdd = "亲，格式不对，补报的模版如下：\r\n" + 
+    public final static String dayReportFormatAdd = "亲，格式不对，补报的模版如下#注意换行#：\r\n" + 
 			"[补报]\r\n" + 
 			"2019-09-01---补报的日期\r\n" + 
 			"[人行统计报送]\r\n" + 
@@ -185,7 +185,7 @@ public class WeiXinParamesUtil {
 			"[其它]\r\n" + 
 			"1、其它工作内容描述一。[完成比例]\r\n" + 
 			"2、其它工作内容描述二。[完成比例]";
-    public final static String dayReportFormatQuery = "亲，命令格式不对，查询操作的命令格式：\r\n" + 
+    public final static String dayReportFormatQuery = "亲，命令格式不对，查询操作的命令格式#注意换行#：\r\n" + 
     		"查询 ---关键字及格式\r\n" + 
     		"日期 ---关键字及格式\r\n" + 
     		"或是以下格式：\r\n" + 
@@ -197,7 +197,7 @@ public class WeiXinParamesUtil {
     		"或\r\n" + 
     		"查询\r\n" + 
     		"2019-09-18至2019-09-20"; 
-    public final static String dayReportFormatDownload = "亲，命令格式不对，报告下载操作的命令格式：\r\n" + 
+    public final static String dayReportFormatDownload = "亲，命令格式不对，报告下载操作的命令格式#注意换行#：\r\n" + 
     		"报告下载 ---关键字及格式\r\n" + 
     		"日期 ---关键字及格式\r\n" + 
     		"或是以下格式：\r\n" + 
@@ -209,7 +209,7 @@ public class WeiXinParamesUtil {
     		"或\r\n" + 
     		"报告下载\r\n" + 
     		"2019-09-18至2019-09-20"; 
-    public final static String dayReportQueryDownload = "亲，命令格式不对，报告下载操作的命令格式：\r\n" + 
+    public final static String dayReportQueryDownload = "亲，命令格式不对，报告下载操作的命令格式#注意换行#：\r\n" + 
     		"调阅成员---关键字及格式\r\n" + 
     		"姓名---关键字及格式\r\n" + 
     		"日期 ---关键字及格式\r\n" + 

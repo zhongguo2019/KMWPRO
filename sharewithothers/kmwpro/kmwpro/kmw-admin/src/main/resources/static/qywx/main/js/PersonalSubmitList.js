@@ -16,9 +16,9 @@ jQuery(function () {
      
 
     // 以下两行代码调试时打开
-    // var urlCode ='P1iJnyb-09zdfDiAVt6LOAP24DQJOQViJ873bAJIWEQ';
+//    var urlCode ='P1iJnyb-09zdfDiAVt6LOAP24DQJOQViJ873bAJIWEQ';
 	// //置上默认的微信传来的参数code=P1iJnyb-09zdfDiAVt6LOAP24DQJOQViJ873bAJIWEQ&state=STATE
-    // var userCode = 'Zhaozulong'; //置上默认的用户名
+//    var userCode = 'Zhaozulong'; //置上默认的用户名
     
     
     
@@ -48,7 +48,7 @@ jQuery(function () {
         // 以下一行代码调试时注掉
     	var data = { userCode:getcookie("userId")};
     	// 以下一行代码调试时注打开
-        // var data={"userCode": "ZhaoZulong" };
+//         var data={"userCode": "ZhaoZulong" };
                
         $.ajax({
 
@@ -62,7 +62,7 @@ jQuery(function () {
             counter++;
             pageEnd = num * counter;
             pageStart = pageEnd - num;
-/*            console.log(resultValue.data);
+/*            console.log(Value.data);
             console.log(resultValue.msg);
             console.log(resultValue.code);*/
 
@@ -143,35 +143,46 @@ jQuery(function () {
             dataType: 'json',
             data: JSON.stringify(data),
             success: function (resultValue) {
-            	
+            	var result="";
                 if(resultValue.code==0){
-                    alert(resultValue.msg);	
-                    return ;
+                     result = '<div style="border-bottom: 1px solid #a2a2a2;">\
+                      <div style="display: flex;margin-top:10px;">\
+                        <div style="height:35px">项目名称：</div>\
+                        <div>暂无数据</div>\
+                      </div>\
+                      <div style="margin-top:10px;">\
+                        <div style="display: flex;height: 30px;">\
+                                                        工作内容：</div>\
+                        <div>暂无数据</div>\
+                      </div>\
+                    </div>';
+                    }else{
+                        var dataValueJSON=eval("("+resultValue.data+")");
+                       for (var i = 0; i < dataValueJSON.lists.length; i++) {
+                          var dataSet = eval("("+dataValueJSON.lists[i] +")");
+                          var nameValue = dataSet.productName;
+                          var workValue = dataSet.workDetail;
+                          if(nameValue == ""){
+                            nameValue = '暂无数据';
+                          }
+                          if(workValue == ""){
+                            workValue = '暂无数据';
+                          }
+                          result += '<div style="border-bottom: 1px solid #a2a2a2;">\
+                            <div style="display: flex;margin-top:10px;">\
+                              <div style="height:35px">项目名称：</div>\
+                              <div>'+ nameValue + '</div>\
+                            </div>\
+                            <div style="margin-top:10px;">\
+                              <div style="display: flex;height: 30px;">\
+                                工作内容：</div>\
+                              <div>'+ workValue + '</div>\
+                            </div>\
+                          </div>';
+                        }
+                    	
                     }
-              var dataValueJSON=eval("("+resultValue.data+")");
-              
-              for (var i = 0; i < dataValueJSON.lists.length; i++) {
-                var dataSet = eval("("+dataValueJSON.lists[i] +")");
-                var nameValue = dataSet.productName;
-                var workValue = dataSet.workDetail;
-                if(nameValue == ""){
-                  nameValue = '暂无数据';
-                }
-                if(workValue == ""){
-                  workValue = '暂无数据';
-                }
-                result += '<div style="border-bottom: 1px solid #a2a2a2;">\
-                  <div style="display: flex;margin-top:10px;">\
-                    <div style="height:35px">项目名称：</div>\
-                    <div>'+ nameValue + '</div>\
-                  </div>\
-                  <div style="margin-top:10px;">\
-                    <div style="display: flex;height: 30px;">\
-                      工作内容：</div>\
-                    <div>'+ workValue + '</div>\
-                  </div>\
-                </div>';
-              }
+
               $('#showDetail_' + e.target.dataset.value).html("");
               $('#showDetail_' + e.target.dataset.value).append(result);
               // 箭头翻转
