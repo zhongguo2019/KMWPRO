@@ -23,12 +23,12 @@ public class WeiXinParamesUtil {
 
 // 生产中配置--我的日报---应用的凭证密钥
 //企业应用的id，整型。可在应用的设置页面查看    
-   public final static String agentSecret = "tAgAYMMHqEtNs1OX5GC4Z3c-lntzwcw2nY9XiX7HX80"; 
-   public final static int agentId = 1000002;
+//   public final static String agentSecret = "tAgAYMMHqEtNs1OX5GC4Z3c-lntzwcw2nY9XiX7HX80"; 
+//   public final static int agentId = 1000002;
     
 // 测试中配置---我的半月报--应用的凭证密钥
-//   public final static String agentSecret = "76Dt4OVopES0rE5yOYmNjDuIO8SNGBkUT4DxSEMMwR0";
-//    public final static int agentId = 1000005;
+   public final static String agentSecret = "76Dt4OVopES0rE5yOYmNjDuIO8SNGBkUT4DxSEMMwR0";
+   public final static int agentId = 1000005;
 
 	/**
 	 * 获取企业微信token地址及对应参数

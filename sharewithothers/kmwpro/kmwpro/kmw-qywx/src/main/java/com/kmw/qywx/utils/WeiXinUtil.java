@@ -47,12 +47,14 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import com.kmw.qywx.utils.Result;
 import com.kmw.qywx.utils.SpringContextHolder;
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import com.kmw.qywx.domain.DoufuTodayWork;
 import com.kmw.qywx.domain.WxUser;
 import com.kmw.qywx.service.IDoufuTodayWorkService;
 import com.kmw.qywx.service.IQywxUserOperatelogService;
 import com.kmw.qywx.service.IRedisUtilService;
 import com.kmw.qywx.service.IWxUserService;
+import com.google.common.collect.Maps;
 import com.kmw.common.Constant;
 import com.kmw.common.utils.DateUtils;
 
@@ -790,6 +792,40 @@ public class WeiXinUtil {
 
 	}
 
+	// 2.发送文本卡片消息
+
+		public void SendTextcardMessageV2(String toUser, String toParty, String msgContent) {
+		
+			// 0.设置消息内容
+			String title = "日报提醒";
+			String description = "<div class=\"gray\">"+"2020-03-11"+"</div> <div class=\"normal\">"
+					+ "</div><div class=\"highlight\">" +msgContent+  "</div>";
+			String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=ww8249590afca6f785&redirect_uri=http://krmsoft.natapp1.cc/qywx/main/reportinput&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
+
+
+			// 1.创建文本卡片消息对象
+			TextcardMessage message1 = new TextcardMessage();
+			// 1.1非必需
+			message1.setTouser("ZhaoZuLong"); // 不区分大小写
+			// message.setToparty("1");
+			// message.setTotag(totag);
+			// message.setSafe(0);
+
+			// 1.2必需
+			message1.setMsgtype("textcard");
+			message1.setAgentid(WeiXinParamesUtil.agentId);
+
+			Textcard textcard = new Textcard();
+			textcard.setTitle(title);
+			textcard.setDescription(description);
+			textcard.setUrl(url);
+			message1.setTextcard(textcard);
+			// 3.发送消息：调用业务类，发送消息
+
+			sendMessageService.sendMessage(message1);
+
+		}
+	
 	public String getTencentUserInfo(String code) {
 
 		// 2.获取access_token:根据企业id和通讯录密钥获取access_token,并拼接请求url
@@ -837,16 +873,11 @@ public class WeiXinUtil {
 	}
 
 	public String getRedisToken() {
-
-		/*
-		 * AccessToken accessToken = new AccessToken(); accessToken.setToken(
-		 * redisUtilService.getRedisValue("token")); logger.info("从redis中获取 token【" +
-		 * accessToken.getToken() + "】"); return accessToken.getToken();
-		 */
-
 		return redisUtilService.getRedisValue("token");
 
 	}
 	
+	
+ 
 
 }
