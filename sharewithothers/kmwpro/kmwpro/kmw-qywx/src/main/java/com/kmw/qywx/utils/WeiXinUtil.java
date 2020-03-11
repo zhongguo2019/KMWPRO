@@ -524,7 +524,7 @@ public class WeiXinUtil {
 						|| justMsgTypeReport(strMsgContent, "【补报】") || justMsgTypeReport(strMsgContent, "(补报)")
 						|| justMsgTypeReport(strMsgContent, "（补报）") || justMsgTypeReport(strMsgContent, "补报")) {
 					strRtnMsgContent = WeiXinParamesUtil.dayReportFormatAdd;
-					doufuTodayWorkService.saveOperReportLog("text",strMsgContent, request);
+					doufuTodayWorkService.saveOperReportLogBB("text",strMsgContent, request);
 					strRtnMsgContent = doufuTodayWorkService.dealDayReportAdd(request, strMsgContent, strFromUser);
 				}
 
@@ -595,7 +595,7 @@ public class WeiXinUtil {
 		String rtnString="";
 		QywxUserOperatelog qywxUserOperatelog = new QywxUserOperatelog();
 		qywxUserOperatelog.setId(UUID.randomUUID().toString());
-		qywxUserOperatelog.setMessType("text");
+		qywxUserOperatelog.setMessType(msgType);
 		WxUser wxUserSession = (WxUser) request.getSession().getAttribute(Constant.SESSION_LOGIN_USER);
 		qywxUserOperatelog.setCreateBy(wxUserSession.getName());
 		qywxUserOperatelog.setCreateTime(new Date());
@@ -603,22 +603,18 @@ public class WeiXinUtil {
 		qywxUserOperatelog.setMessFromIp(wxUserSession.getLoginIp());
 		qywxUserOperatelog.setSubmitText(content);
 		qywxUserOperatelog.setUpdateTime(new Date());
-		qywxUserOperatelog.setReportDate(DateUtils.DateToStr8());
+//		qywxUserOperatelog.setReportDate(DateUtils.DateToStr8());
 		qywxUserOperatelog.setUserAccount(wxUserSession.getAccount());
 		qywxUserOperatelog.setGroupCode(wxUserSession.getProjectGroupId());
-		if(content.contains("日报")) {
-			qywxUserOperatelog.setReportType("0");
-		}else {
-		if(content.contains("补报")) {
-			qywxUserOperatelog.setReportType("2");
-		}else {
-			qywxUserOperatelog.setReportType("3");
-		}
-		}
+		/*
+		 * if(content.contains("日报")) { qywxUserOperatelog.setReportType("0"); }else {
+		 * if(content.contains("补报")) { qywxUserOperatelog.setReportType("1"); }else {
+		 * qywxUserOperatelog.setReportType("3"); } }
+		 */
 		Map<String, Object> params = new HashMap<String,Object>();
 		params.put("reportDate",DateUtils.DateToStr8() );
 		params.put("userAccount", wxUserSession.getAccount());
-		params.put("reportType", qywxUserOperatelog.getReportType());
+		params.put("reportType", "");
 		params.put("submitText", content);
 		//qywxUserOperatelogService.deleteByParams(params);
 		qywxUserOperatelogService.insertQywxUserOperatelog(qywxUserOperatelog);

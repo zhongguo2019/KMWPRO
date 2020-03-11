@@ -132,4 +132,5 @@ public interface IDoufuTodayWorkService
 	public String dealDayReportDownLoad(HttpServletRequest request, String strMsgContent, String strFromUser) throws FileNotFoundException, IOException, ParseException;
 	public List<CommonEntity>  getReportDateList(Map<String, Object> params);
 	public String saveOperReportLog(String msgType,String content,HttpServletRequest request);
+	public String saveOperReportLogBB(String msgType,String content,HttpServletRequest request);
 }

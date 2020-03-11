@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改解析ETL加工过程的SQL语法得到中文解释')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-etlsql-edit" th:object="${paraseEtlsql}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">
+                <label class="col-sm-3 control-label">目标表表名英文：</label>
+                <div class="col-sm-8">
+                    <textarea name="targetTblenname" class="form-control">[[*{targetTblenname}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">目标表表名中文：</label>
+                <div class="col-sm-8">
+                    <textarea name="targetTblcnname" class="form-control">[[*{targetTblcnname}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">来源表表名英文：</label>
+                <div class="col-sm-8">
+                    <textarea name="sourceTblenname" class="form-control">[[*{sourceTblenname}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">来源表表名中文：</label>
+                <div class="col-sm-8">
+                    <textarea name="sourceTblcnname" class="form-control">[[*{sourceTblcnname}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">目标表字段名英文：</label>
+                <div class="col-sm-8">
+                    <textarea name="targetColenname" class="form-control">[[*{targetColenname}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">目标表字段名中文：</label>
+                <div class="col-sm-8">
+                    <textarea name="targetColcnname" class="form-control">[[*{targetColcnname}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">来源表字段名英文：</label>
+                <div class="col-sm-8">
+                    <textarea name="sourceColenname" class="form-control">[[*{sourceColenname}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">来源表字段名中文：</label>
+                <div class="col-sm-8">
+                    <textarea name="sourceColcnname" class="form-control">[[*{sourceColcnname}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">字段英文关系：</label>
+                <div class="col-sm-8">
+                    <textarea name="columEnrelations" class="form-control">[[*{columEnrelations}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">字段中文关系：</label>
+                <div class="col-sm-8">
+                    <textarea name="columCnrelations" class="form-control">[[*{columCnrelations}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">SQL类型：</label>
+                <div class="col-sm-8">
+                    <select name="etlSqlType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">数据库类型：</label>
+                <div class="col-sm-8">
+                    <select name="etlDbType" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">SQL中的通配符：</label>
+                <div class="col-sm-8">
+                    <textarea name="etlWildcards" class="form-control">[[*{etlWildcards}]]</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">解析的SQL：</label>
+                <div class="col-sm-8">
+                    <textarea name="etlSql" class="form-control">[[*{etlSql}]]</textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script type="text/javascript">
+        var prefix = ctx + "etlsqlparase/etlsql";
+        $("#form-etlsql-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-etlsql-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmw.etlsqlparase.mapper.ParaseEtlsqlMapper">
+	<!-- 表字段 声明 -->
+	<sql id="ParaseEtlsqlColumns">
+		 id, target_tblenname, target_tblcnname, source_tblenname, source_tblcnname, target_colenname, target_colcnname, source_colenname, source_colcnname, colum_enrelations, colum_cnrelations, etl_sql_type, etl_db_type, create_by, create_time, update_by, update_time, remark, etl_wildcards, etl_sql	</sql>
+	<!-- 实体与表字段映身声明，返回值 -->
+    <resultMap type="ParaseEtlsql" id="ParaseEtlsqlResult">
+		<result property="id"    column="id"    />
+		<result property="targetTblenname"    column="target_tblenname"    />
+		<result property="targetTblcnname"    column="target_tblcnname"    />
+		<result property="sourceTblenname"    column="source_tblenname"    />
+		<result property="sourceTblcnname"    column="source_tblcnname"    />
+		<result property="targetColenname"    column="target_colenname"    />
+		<result property="targetColcnname"    column="target_colcnname"    />
+		<result property="sourceColenname"    column="source_colenname"    />
+		<result property="sourceColcnname"    column="source_colcnname"    />
+		<result property="columEnrelations"    column="colum_enrelations"    />
+		<result property="columCnrelations"    column="colum_cnrelations"    />
+		<result property="etlSqlType"    column="etl_sql_type"    />
+		<result property="etlDbType"    column="etl_db_type"    />
+		<result property="createBy"    column="create_by"    />
+		<result property="createTime"    column="create_time"    />
+		<result property="updateBy"    column="update_by"    />
+		<result property="updateTime"    column="update_time"    />
+		<result property="remark"    column="remark"    />
+		<result property="etlWildcards"    column="etl_wildcards"    />
+		<result property="etlSql"    column="etl_sql"    />
+    </resultMap>
+    
+	<!-- 定义查询整张表的SQL -->
+    <sql id="selectParaseEtlsqlVo">
+        select
+			 id, target_tblenname, target_tblcnname, source_tblenname, source_tblcnname, target_colenname, target_colcnname, source_colenname, source_colcnname, colum_enrelations, colum_cnrelations, etl_sql_type, etl_db_type, create_by, create_time, update_by, update_time, remark, etl_wildcards, etl_sql        from parase_etlsql
+    </sql>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryPageInfo" resultType="com.kmw.common.CommonEntity">
+        select
+			<include refid="ParaseEtlsqlColumns" /> 
+        from	parase_etlsql t
+        <where>  
+			1=1
+            <if test="targetTblenname != null  and targetTblenname != ''"> and t.target_tblenname like concat('%', #{targetTblenname}, '%')</if>
+            <if test="targetTblcnname != null  and targetTblcnname != ''"> and t.target_tblcnname like concat('%', #{targetTblcnname}, '%')</if>
+            <if test="sourceTblenname != null  and sourceTblenname != ''"> and t.source_tblenname like concat('%', #{sourceTblenname}, '%')</if>
+            <if test="sourceTblcnname != null  and sourceTblcnname != ''"> and t.source_tblcnname like concat('%', #{sourceTblcnname}, '%')</if>
+            <if test="targetColenname != null  and targetColenname != ''"> and t.target_colenname like concat('%', #{targetColenname}, '%')</if>
+            <if test="targetColcnname != null  and targetColcnname != ''"> and t.target_colcnname like concat('%', #{targetColcnname}, '%')</if>
+            <if test="sourceColenname != null  and sourceColenname != ''"> and t.source_colenname like concat('%', #{sourceColenname}, '%')</if>
+            <if test="sourceColcnname != null  and sourceColcnname != ''"> and t.source_colcnname like concat('%', #{sourceColcnname}, '%')</if>
+            <if test="columEnrelations != null  and columEnrelations != ''"> and t.colum_enrelations like concat('%', #{columEnrelations}, '%')</if>
+            <if test="columCnrelations != null  and columCnrelations != ''"> and t.colum_cnrelations like concat('%', #{columCnrelations}, '%')</if>
+            <if test="etlSqlType != null  and etlSqlType != ''"> and t.etl_sql_type = #{etlSqlType}</if>
+            <if test="etlDbType != null  and etlDbType != ''"> and t.etl_db_type = #{etlDbType}</if>
+            <if test="etlWildcards != null  and etlWildcards != ''"> and t.etl_wildcards = #{etlWildcards}</if>
+            <if test="etlSql != null  and etlSql != ''"> and t.etl_sql = #{etlSql}</if>
+        </where>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''"> ORDER BY t.${sortC} ${order}
+			</if>
+    </select>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryEntityList" resultType="com.kmw.common.CommonEntity">
+        select
+       	<include refid="ParaseEtlsqlColumns" /> 
+        from parase_etlsql t
+        <where>  
+        1=1
+            <if test="targetTblenname != null  and targetTblenname != ''"> and t.target_tblenname like concat('%', #{targetTblenname}, '%')</if>
+            <if test="targetTblcnname != null  and targetTblcnname != ''"> and t.target_tblcnname like concat('%', #{targetTblcnname}, '%')</if>
+            <if test="sourceTblenname != null  and sourceTblenname != ''"> and t.source_tblenname like concat('%', #{sourceTblenname}, '%')</if>
+            <if test="sourceTblcnname != null  and sourceTblcnname != ''"> and t.source_tblcnname like concat('%', #{sourceTblcnname}, '%')</if>
+            <if test="targetColenname != null  and targetColenname != ''"> and t.target_colenname like concat('%', #{targetColenname}, '%')</if>
+            <if test="targetColcnname != null  and targetColcnname != ''"> and t.target_colcnname like concat('%', #{targetColcnname}, '%')</if>
+            <if test="sourceColenname != null  and sourceColenname != ''"> and t.source_colenname like concat('%', #{sourceColenname}, '%')</if>
+            <if test="sourceColcnname != null  and sourceColcnname != ''"> and t.source_colcnname like concat('%', #{sourceColcnname}, '%')</if>
+            <if test="columEnrelations != null  and columEnrelations != ''"> and t.colum_enrelations like concat('%', #{columEnrelations}, '%')</if>
+            <if test="columCnrelations != null  and columCnrelations != ''"> and t.colum_cnrelations like concat('%', #{columCnrelations}, '%')</if>
+            <if test="etlSqlType != null  and etlSqlType != ''"> and t.etl_sql_type = #{etlSqlType}</if>
+            <if test="etlDbType != null  and etlDbType != ''"> and t.etl_db_type = #{etlDbType}</if>
+            <if test="etlWildcards != null  and etlWildcards != ''"> and t.etl_wildcards = #{etlWildcards}</if>
+            <if test="etlSql != null  and etlSql != ''"> and t.etl_sql = #{etlSql}</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		</where>
+
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''">ORDER BY t.${sortC} ${order}</if>
+    </select>   
+    
+	<!-- 按map参数查询后台的数据， 查询单条数据,返回的是通用实体，不受实体属性限制，相当于map -->
+    <select id="queryOneCommon"	resultType="com.kmw.common.CommonEntity">
+        select
+		<include refid="ParaseEtlsqlColumns" />
+        from parase_etlsql t
+		<where>
+        where id = #{id}
+		</where>
+    </select>    
+    
+    
+	<!-- 按实体参数来查询后台的数据 -->
+    <select id="selectParaseEtlsqlList" parameterType="ParaseEtlsql" resultMap="ParaseEtlsqlResult">
+        <include refid="selectParaseEtlsqlVo"/>
+        <where>  
+            <if test="targetTblenname != null  and targetTblenname != ''"> and target_tblenname like concat('%', #{targetTblenname}, '%')</if>
+            <if test="targetTblcnname != null  and targetTblcnname != ''"> and target_tblcnname like concat('%', #{targetTblcnname}, '%')</if>
+            <if test="sourceTblenname != null  and sourceTblenname != ''"> and source_tblenname like concat('%', #{sourceTblenname}, '%')</if>
+            <if test="sourceTblcnname != null  and sourceTblcnname != ''"> and source_tblcnname like concat('%', #{sourceTblcnname}, '%')</if>
+            <if test="targetColenname != null  and targetColenname != ''"> and target_colenname like concat('%', #{targetColenname}, '%')</if>
+            <if test="targetColcnname != null  and targetColcnname != ''"> and target_colcnname like concat('%', #{targetColcnname}, '%')</if>
+            <if test="sourceColenname != null  and sourceColenname != ''"> and source_colenname like concat('%', #{sourceColenname}, '%')</if>
+            <if test="sourceColcnname != null  and sourceColcnname != ''"> and source_colcnname like concat('%', #{sourceColcnname}, '%')</if>
+            <if test="columEnrelations != null  and columEnrelations != ''"> and colum_enrelations like concat('%', #{columEnrelations}, '%')</if>
+            <if test="columCnrelations != null  and columCnrelations != ''"> and colum_cnrelations like concat('%', #{columCnrelations}, '%')</if>
+            <if test="etlSqlType != null  and etlSqlType != ''"> and etl_sql_type = #{etlSqlType}</if>
+            <if test="etlDbType != null  and etlDbType != ''"> and etl_db_type = #{etlDbType}</if>
+            <if test="etlWildcards != null  and etlWildcards != ''"> and etl_wildcards = #{etlWildcards}</if>
+            <if test="etlSql != null  and etlSql != ''"> and etl_sql = #{etlSql}</if>
+        </where>
+    </select>
+ 
+ 	<!-- 按主键来查询后台的数据 -->   
+    <select id="selectParaseEtlsqlById" parameterType="String" resultMap="ParaseEtlsqlResult">
+        <include refid="selectParaseEtlsqlVo"/>
+        where id = #{id}
+    </select>
+    
+ 	<!-- 插入数据库一条数据 -->       
+    <insert id="insertParaseEtlsql" parameterType="ParaseEtlsql">
+        insert into parase_etlsql
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''">id,</if>
+            <if test="targetTblenname != null  and targetTblenname != ''">target_tblenname,</if>
+            <if test="targetTblcnname != null  and targetTblcnname != ''">target_tblcnname,</if>
+            <if test="sourceTblenname != null  and sourceTblenname != ''">source_tblenname,</if>
+            <if test="sourceTblcnname != null  and sourceTblcnname != ''">source_tblcnname,</if>
+            <if test="targetColenname != null  and targetColenname != ''">target_colenname,</if>
+            <if test="targetColcnname != null  and targetColcnname != ''">target_colcnname,</if>
+            <if test="sourceColenname != null  and sourceColenname != ''">source_colenname,</if>
+            <if test="sourceColcnname != null  and sourceColcnname != ''">source_colcnname,</if>
+            <if test="columEnrelations != null  and columEnrelations != ''">colum_enrelations,</if>
+            <if test="columCnrelations != null  and columCnrelations != ''">colum_cnrelations,</if>
+            <if test="etlSqlType != null  and etlSqlType != ''">etl_sql_type,</if>
+            <if test="etlDbType != null  and etlDbType != ''">etl_db_type,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+            <if test="etlWildcards != null  and etlWildcards != ''">etl_wildcards,</if>
+            <if test="etlSql != null  and etlSql != ''">etl_sql,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''">#{id},</if>
+            <if test="targetTblenname != null  and targetTblenname != ''">#{targetTblenname},</if>
+            <if test="targetTblcnname != null  and targetTblcnname != ''">#{targetTblcnname},</if>
+            <if test="sourceTblenname != null  and sourceTblenname != ''">#{sourceTblenname},</if>
+            <if test="sourceTblcnname != null  and sourceTblcnname != ''">#{sourceTblcnname},</if>
+            <if test="targetColenname != null  and targetColenname != ''">#{targetColenname},</if>
+            <if test="targetColcnname != null  and targetColcnname != ''">#{targetColcnname},</if>
+            <if test="sourceColenname != null  and sourceColenname != ''">#{sourceColenname},</if>
+            <if test="sourceColcnname != null  and sourceColcnname != ''">#{sourceColcnname},</if>
+            <if test="columEnrelations != null  and columEnrelations != ''">#{columEnrelations},</if>
+            <if test="columCnrelations != null  and columCnrelations != ''">#{columCnrelations},</if>
+            <if test="etlSqlType != null  and etlSqlType != ''">#{etlSqlType},</if>
+            <if test="etlDbType != null  and etlDbType != ''">#{etlDbType},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+            <if test="etlWildcards != null  and etlWildcards != ''">#{etlWildcards},</if>
+            <if test="etlSql != null  and etlSql != ''">#{etlSql},</if>
+         </trim>
+    </insert>
+	<!-- 按主键更新数据库一条数据 -->
+    <update id="updateParaseEtlsql" parameterType="ParaseEtlsql">
+        update parase_etlsql
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="targetTblenname != null  and targetTblenname != ''">target_tblenname = #{targetTblenname},</if>
+            <if test="targetTblcnname != null  and targetTblcnname != ''">target_tblcnname = #{targetTblcnname},</if>
+            <if test="sourceTblenname != null  and sourceTblenname != ''">source_tblenname = #{sourceTblenname},</if>
+            <if test="sourceTblcnname != null  and sourceTblcnname != ''">source_tblcnname = #{sourceTblcnname},</if>
+            <if test="targetColenname != null  and targetColenname != ''">target_colenname = #{targetColenname},</if>
+            <if test="targetColcnname != null  and targetColcnname != ''">target_colcnname = #{targetColcnname},</if>
+            <if test="sourceColenname != null  and sourceColenname != ''">source_colenname = #{sourceColenname},</if>
+            <if test="sourceColcnname != null  and sourceColcnname != ''">source_colcnname = #{sourceColcnname},</if>
+            <if test="columEnrelations != null  and columEnrelations != ''">colum_enrelations = #{columEnrelations},</if>
+            <if test="columCnrelations != null  and columCnrelations != ''">colum_cnrelations = #{columCnrelations},</if>
+            <if test="etlSqlType != null  and etlSqlType != ''">etl_sql_type = #{etlSqlType},</if>
+            <if test="etlDbType != null  and etlDbType != ''">etl_db_type = #{etlDbType},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="etlWildcards != null  and etlWildcards != ''">etl_wildcards = #{etlWildcards},</if>
+            <if test="etlSql != null  and etlSql != ''">etl_sql = #{etlSql},</if>
+        </trim>
+        where id = #{id}
+    </update>
+	<!-- 按主键删除数据库中一条数据 -->
+    <delete id="deleteParaseEtlsqlById" parameterType="String">
+        delete from parase_etlsql where id = #{id}
+    </delete>
+	<!-- 按主键列表字符串用逗号分隔， 删除数据库中多条数据 -->
+    <delete id="deleteParaseEtlsqlByIds" parameterType="String">
+        delete from parase_etlsql where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+       <!-- 根据不同条件删除数据，条件可组合 -->
+	<delete id="deleteByParams" parameterType="java.util.Map">
+		delete from parase_etlsql t
+		<where>
+		        
+            <if test="targetTblenname != null  and targetTblenname != ''"> and t.target_tblenname like concat('%', #{targetTblenname}, '%')</if>
+            <if test="targetTblcnname != null  and targetTblcnname != ''"> and t.target_tblcnname like concat('%', #{targetTblcnname}, '%')</if>
+            <if test="sourceTblenname != null  and sourceTblenname != ''"> and t.source_tblenname like concat('%', #{sourceTblenname}, '%')</if>
+            <if test="sourceTblcnname != null  and sourceTblcnname != ''"> and t.source_tblcnname like concat('%', #{sourceTblcnname}, '%')</if>
+            <if test="targetColenname != null  and targetColenname != ''"> and t.target_colenname like concat('%', #{targetColenname}, '%')</if>
+            <if test="targetColcnname != null  and targetColcnname != ''"> and t.target_colcnname like concat('%', #{targetColcnname}, '%')</if>
+            <if test="sourceColenname != null  and sourceColenname != ''"> and t.source_colenname like concat('%', #{sourceColenname}, '%')</if>
+            <if test="sourceColcnname != null  and sourceColcnname != ''"> and t.source_colcnname like concat('%', #{sourceColcnname}, '%')</if>
+            <if test="columEnrelations != null  and columEnrelations != ''"> and t.colum_enrelations like concat('%', #{columEnrelations}, '%')</if>
+            <if test="columCnrelations != null  and columCnrelations != ''"> and t.colum_cnrelations like concat('%', #{columCnrelations}, '%')</if>
+            <if test="etlSqlType != null  and etlSqlType != ''"> and t.etl_sql_type = #{etlSqlType}</if>
+            <if test="etlDbType != null  and etlDbType != ''"> and t.etl_db_type = #{etlDbType}</if>
+            <if test="etlWildcards != null  and etlWildcards != ''"> and t.etl_wildcards = #{etlWildcards}</if>
+            <if test="etlSql != null  and etlSql != ''"> and t.etl_sql = #{etlSql}</if>
+			</where>
+	</delete>
+	
+    <!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="entityList" resultMap="ParaseEtlsqlResult">
+        select
+       	<include refid="ParaseEtlsqlColumns" /> 
+        from parase_etlsql t
+        <where>  
+        1=1
+            <if test="targetTblenname != null  and targetTblenname != ''"> and t.target_tblenname like concat('%', #{targetTblenname}, '%')</if>
+            <if test="targetTblcnname != null  and targetTblcnname != ''"> and t.target_tblcnname like concat('%', #{targetTblcnname}, '%')</if>
+            <if test="sourceTblenname != null  and sourceTblenname != ''"> and t.source_tblenname like concat('%', #{sourceTblenname}, '%')</if>
+            <if test="sourceTblcnname != null  and sourceTblcnname != ''"> and t.source_tblcnname like concat('%', #{sourceTblcnname}, '%')</if>
+            <if test="targetColenname != null  and targetColenname != ''"> and t.target_colenname like concat('%', #{targetColenname}, '%')</if>
+            <if test="targetColcnname != null  and targetColcnname != ''"> and t.target_colcnname like concat('%', #{targetColcnname}, '%')</if>
+            <if test="sourceColenname != null  and sourceColenname != ''"> and t.source_colenname like concat('%', #{sourceColenname}, '%')</if>
+            <if test="sourceColcnname != null  and sourceColcnname != ''"> and t.source_colcnname like concat('%', #{sourceColcnname}, '%')</if>
+            <if test="columEnrelations != null  and columEnrelations != ''"> and t.colum_enrelations like concat('%', #{columEnrelations}, '%')</if>
+            <if test="columCnrelations != null  and columCnrelations != ''"> and t.colum_cnrelations like concat('%', #{columCnrelations}, '%')</if>
+            <if test="etlSqlType != null  and etlSqlType != ''"> and t.etl_sql_type = #{etlSqlType}</if>
+            <if test="etlDbType != null  and etlDbType != ''"> and t.etl_db_type = #{etlDbType}</if>
+            <if test="etlWildcards != null  and etlWildcards != ''"> and t.etl_wildcards = #{etlWildcards}</if>
+            <if test="etlSql != null  and etlSql != ''"> and t.etl_sql = #{etlSql}</if>
+        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+        </where>
+
+		<if
+			test="sortC != null  and sortC != '' and order != null  and order != ''">
+			ORDER BY t.${sortC} ${order}
+		</if>
+    </select>     
+    <!-- 批量插入数据 -->
+	<insert id="insertBatch">
+		insert into parase_etlsql(<include refid="ParaseEtlsqlColumns" />) values 
+		<foreach collection="list" item="item" separator="," >
+		(
+            #{item.id} ,
+            #{item.targetTblenname} ,
+            #{item.targetTblcnname} ,
+            #{item.sourceTblenname} ,
+            #{item.sourceTblcnname} ,
+            #{item.targetColenname} ,
+            #{item.targetColcnname} ,
+            #{item.sourceColenname} ,
+            #{item.sourceColcnname} ,
+            #{item.columEnrelations} ,
+            #{item.columCnrelations} ,
+            #{item.etlSqlType} ,
+            #{item.etlDbType} ,
+            #{item.createBy} ,
+            #{item.createTime} ,
+            #{item.updateBy} ,
+            #{item.updateTime} ,
+            #{item.remark} ,
+            #{item.etlWildcards} ,
+            #{item.etlSql} 		)
+		</foreach>
+	</insert>  
+  	<!-- 根据不同条件删除数据，条件可组合 -->
+	<update id="updateBatchEntity" >
+		<foreach collection="list" item="item" separator=",">
+        update parase_etlsql
+        set
+            id = #{id} ,
+            target_tblenname = #{targetTblenname} ,
+            target_tblcnname = #{targetTblcnname} ,
+            source_tblenname = #{sourceTblenname} ,
+            source_tblcnname = #{sourceTblcnname} ,
+            target_colenname = #{targetColenname} ,
+            target_colcnname = #{targetColcnname} ,
+            source_colenname = #{sourceColenname} ,
+            source_colcnname = #{sourceColcnname} ,
+            colum_enrelations = #{columEnrelations} ,
+            colum_cnrelations = #{columCnrelations} ,
+            etl_sql_type = #{etlSqlType} ,
+            etl_db_type = #{etlDbType} ,
+            create_by = #{createBy} ,
+            create_time = #{createTime} ,
+            update_by = #{updateBy} ,
+            update_time = #{updateTime} ,
+            remark = #{remark} ,
+            etl_wildcards = #{etlWildcards} ,
+            etl_sql = #{etlSql}     <where>
+			id = #{id}
+        </where>
+		</foreach>
+	</update>
+    
+</mapper>

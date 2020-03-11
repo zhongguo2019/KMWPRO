@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh">
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<head>
+<th:block th:include="include :: header('日报录入')" />
+</head>
+<body class="gray-bg">
+
+	<div class="wrapper wrapper-content animated fadeIn">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="tabs-container">
+					<ul class="nav nav-tabs">
+						<li class="active"><a data-toggle="tab" href="#tab-1"
+							aria-expanded="true">今天工作</a></li>
+						<li class=""><a data-toggle="tab" href="#tab-2"
+							aria-expanded="false">明天计划</a></li>
+						<li class=""><a data-toggle="tab" href="#tab-3"
+							aria-expanded="true">总结思考</a></li>
+
+					</ul>
+					<div class="tab-content">
+						<div id="tab-1" class="tab-pane active">
+							<div class="panel-body" style="height: 550px">
+
+								<div class="ibox">
+									<div class="ibox-content">
+										<div class="form-group">
+											<textarea class="form-control" rows="3"
+												placeholder="录入今天完成的工作内容" id="workContent"></textarea>
+										</div>
+										<div class="input-group">
+											<select id="projectGroupId"
+												th:with="type=${@dict.getType('qywx_sys_projectlist')}"
+												style="height: 29px; width: 100px;">
+												<option value="">项目名称</option>
+												<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+													th:value="${dict.dictLabel}"></option>
+											</select> <select id="finishPercent"
+												style="height: 29px; width: 50px;">
+												<option value="100%">100</option>
+												<option value="90%">90</option>
+												<option value="70%">70</option>
+												<option value="50%">50</option>
+												<option value="30%">30</option>
+												<option value="10%">10</option>
+											</select> <span class="input-group-btn">
+												<button id="todayOptionAdd" class="btn btn-sm btn-white">
+													<i class="fa fa-plus"></i> 添加
+												</button>
+											</span>
+										</div>
+
+										<div class="row pre-scrollable">
+											<hr class="simple" color="#6f5499">
+											</hr>
+											<ul class="sortable-list connectList agile-list"
+												id="todayWork" style="height: 300px">
+
+											</ul>
+										</div>
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+						<div id="tab-2" class="tab-pane">
+							<div class="panel-body" style="height: 550px">
+
+								<div class="ibox">
+									<div class="ibox-content">
+										<div class="form-group">
+											<textarea class="form-control" rows="3"
+												placeholder="录入明天工作计划" id="tomorrow_workContent"></textarea>
+										</div>
+										<div class="input-group">
+											<select id="tomorrow_projectGroupId"
+												th:with="type=${@dict.getType('qywx_sys_projectlist')}"
+												style="height: 29px; width: 100px;">
+												<option value="">项目名称</option>
+												<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+													th:value="${dict.dictLabel}"></option>
+											</select> <select id="tomorrow_finishPercent"
+												style="height: 29px; width: 50px;">
+												<option value="100%">100</option>
+												<option value="90%">90</option>
+												<option value="70%">70</option>
+												<option value="50%">50</option>
+												<option value="30%">30</option>
+												<option value="10%">10</option>
+
+											</select> <span class="input-group-btn">
+												<button id="tomorrowOptionAdd" class="btn btn-sm btn-white">
+													<i class="fa fa-plus"></i> 添加
+												</button>
+											</span>
+										</div>
+										<div class="row pre-scrollable">
+											<hr class="simple" color="#6f5499">
+											</hr>
+											<ul class="sortable-list connectList agile-list"
+												id="tomorrowWork">
+
+											</ul>
+										</div>
+									</div>
+								</div>
+
+
+
+
+
+							</div>
+						</div>
+						<div id="tab-3" class="tab-pane">
+							<div class="panel-body" style="height: 550px">
+
+								<div class="ibox">
+									<div class="ibox-content">
+										<div class="form-group">
+											<div class="input-group">
+												<select id="submit_workState"
+													th:with="type=${@dict.getType('sys_qywx_glzt')}"
+													style="height: 29px; width: 100px;" placeholder="隔离状态" >
+														<option th:each="dict : ${type}"
+														th:text="${dict.dictLabel}" th:value="${dict.dictLabel}"></option>
+												</select> <select id="submit_workType"
+													style="height: 29px; width: 130px;" placeholder="工作性质">
+													<option value="工作性质项目">项目</option>
+													<option value="工作性质运维">运维</option>
+													<option value="工作性质其它">其它</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<textarea class="form-control" rows="20"
+												placeholder="当天的工作总结思考内容" id="submit_WorkContent"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+
+				</div>
+				<div>
+					<a id="reportSave" class="btn btn-primary btn-rounded btn-block"><i
+						class="fa fa-info-circle"></i> 提交日报</a>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<th:block th:include="include :: footer" />
+	<script th:src="@{/js/jquery-ui-1.10.4.min.js}"></script>
+	<script>
+		$(document).ready(function() {
+/* 			$(".sortable-list").sortable({
+				connectWith : ".connectList"
+			}).disableSelection(); */
+			// 获取当前用户用户userId
+			 var urlCode = location.href.split("code=")[1].split('&')[0];
+			var userId = "";
+			$.ajax({
+			    url: "http://krmsoft.natapp1.cc/qywx/main/wxgetJSSUser",
+			    data: {
+			        data: urlCode
+			    },
+			    type: "POST",
+			    success: function (result) {
+			        console.log(result);
+			        userId=result;
+			        addcookie("userId",userId);
+			    },
+			    error: function (jqXHR, textStatus, errorThrown) {
+			        alert(jqXHR.responseText);
+			    }
+			}); 
+
+			
+		});
+/* 		$(".success-element li").on('click',function() {
+			//获取选中的li里面的值
+			var v = $(this).text();
+			//把值放在span里面，显示
+			alert(v);
+			}); */
+		$('#todayWork').on('click','li a',function(){
+			$(this).parent().remove();
+		})
+		$('#tomorrowWork').on('click','li a',function(){
+			$(this).parent().remove();
+		})
+		$("#btnResetForm").on('click', function() {
+			$("#workContent").reset();
+			$("#projectGroupId").reset();
+			$("#finishPercent").reset();
+		});
+
+		var todayAddNum = "1"
+		$("#todayOptionAdd")
+				.on(
+						'click',
+						function() {
+
+							var workContent = $("#workContent").val();
+							var projectName = $("#projectGroupId").val();
+							var finishPercent = $("#finishPercent").val();
+
+							if ($.isEmptyObject(workContent)) {
+								var error_msg = "工作内容没有录入！";
+								layer.msg("<em style='color:red'>" + error_msg
+										+ "</em>", {
+									time : 1200,
+									icon : 5
+								});
+								return;
+							}
+							;
+							if ($.isEmptyObject(finishPercent)) {
+								var error_msg = "完成比例录入！";
+								layer.msg("<em style='color:red'>" + error_msg
+										+ "</em>", {
+									time : 1200,
+									icon : 5
+								});
+								return;
+							}
+							;
+							if ($.isEmptyObject(projectName)) {
+								var error_msg = "项目名称没有录入！";
+								layer.msg("<em style='color:red'>" + error_msg
+										+ "</em>", {
+									time : 1200,
+									icon : 5
+								});
+								return;
+							}
+							;
+
+							var todayOptionItem = '<li class="success-element"  id="todayworklist_'+todayAddNum+'">'
+									+ ' <span  id="" >项目名称：</span>'
+									+ '<span id="today_projectname">'+projectName+'</span><span id="" >    </span >'
+									+ '<span  id="" >完成比例：</span>'
+									+ '<span id="today_finishpercent">'+finishPercent+'</span><a class="pull-right btn btn-xs btn-primary">删除</a> <hr></hr></p>'
+									+ ' <span >工作内容：</span>'
+									+ '<span id="today_workcontent"  style="max-width: 100%;display: inline-block;overflow-wrap: break-word;    text-align: left;">'+workContent+'</span>'
+							    	+ '  </li>'
+							$("#todayWork").append(todayOptionItem);
+							    	$("#workContent").val("");
+							todayAddNum++;
+						});
+
+		var tomorrowAddNum = "1"
+		$("#tomorrowOptionAdd")
+				.on(
+						'click',
+						function() {
+
+							var workContent = $("#tomorrow_workContent").val();
+							var projectName = $("#tomorrow_projectGroupId")
+									.val();
+							var finishPercent = $("#tomorrow_finishPercent")
+									.val();
+							if ($.isEmptyObject(workContent)) {
+								var error_msg = "工作内容没有录入！";
+								layer.msg("<em style='color:red'>" + error_msg
+										+ "</em>", {
+									time : 1200,
+									icon : 5
+								});
+								return;
+							}
+							;
+							if ($.isEmptyObject(finishPercent)) {
+								var error_msg = "完成比例录入！";
+								layer.msg("<em style='color:red'>" + error_msg
+										+ "</em>", {
+									time : 1200,
+									icon : 5
+								});
+								return;
+							}
+							;
+							if ($.isEmptyObject(projectName)) {
+								var error_msg = "项目名称没有录入！";
+								layer.msg("<em style='color:red'>" + error_msg
+										+ "</em>", {
+									time : 1200,
+									icon : 5
+								});
+								return;
+							};
+			
+									var tomorrowOptionItem = '<li class="success-element"  id="tomorrowworklist_'+tomorrowAddNum+'">'
+									+ '<span  id="" >项目名称：</span>'
+									+ '<span id="tomorrow_projectname">'+projectName+'</span><span id="" >    </span >'
+									+ '<span id=""   >完成比例：</span>'
+									+ '<span id="tomorrow_finishpercent">'+finishPercent+'</span><a  class="pull-right btn btn-xs btn-primary">删除</a><hr></hr>'
+									+ '<span id=""  >工作内容：</span>'
+									+ '<span id="tomorrow_workcontent"  style="max-width: 100%;display: inline-block;overflow-wrap: break-word;    text-align: left;">'+workContent+'</span>'
+							    	+ ' </li>'
+							$("#tomorrowWork").append(tomorrowOptionItem);
+									
+									
+									$("#tomorrow_workContent").val("");
+							tomorrowAddNum++;
+						});
+
+		$("#reportSave").on('click',
+						function() {
+
+							var idtodayItem = "";
+							var idtomorrowItem = "";
+							var submitconteng = "无"
+							var jsonData01 = {};
+							var workstate = $("#submit_workState").val();
+							var worktype = $("#submit_workType").val();
+							var submitWorkContent = $("#submit_WorkContent")
+									.val();
+							if ($.isEmptyObject(workstate)) {
+								var error_msg = "工作状态没有录入！";
+								layer.msg("<em style='color:red'>" + error_msg
+										+ "</em>", {
+									time : 1200,
+									icon : 5
+								});
+								return;
+							}
+							;
+							if ($.isEmptyObject(worktype)) {
+								var error_msg = "工作性质没有录入！";
+								layer.msg("<em style='color:red'>" + error_msg
+										+ "</em>", {
+									time : 1200,
+									icon : 5
+								});
+								return;
+							}
+							;
+							if ($.isEmptyObject(submitWorkContent)) {
+								var error_msg = "工作总结没有录入！";
+								layer.msg("<em style='color:red'>" + error_msg
+										+ "</em>", {
+									time : 1200,
+									icon : 5
+								});
+								return;
+							}
+							;
+
+							submitconteng = workstate + '\n' + worktype + '\n'
+									+ submitWorkContent;
+
+							var todayArray = [];
+							var tomorrowArray = [];
+							$('ul').children('li').each(
+									function() {
+										var ids = $(this).attr("id");
+									
+										var spanid = ids;
+										//alert($(this).attr('id'));
+										var self = $(this).children('span');
+									//	var ids = $(this).parent().attr("id");
+											
+										
+										if ($.isEmptyObject(ids)) {
+										} else {
+											if (ids.indexOf('today') != -1) {
+												var jsonDataTmp = {};
+												jsonDataTmp.projectId = self
+														.eq(1).text();
+												jsonDataTmp.finishPercent = self
+														.eq(4).text();
+												jsonDataTmp.workcontent = self
+														.eq(6).text();
+												todayArray
+														.push(jsonDataTmp);
+												//console.log(jsonDataTmp);
+
+											}
+											if (ids.indexOf('tomorrow') != -1) {
+
+												var jsonDataTmp1 = {};
+												jsonDataTmp1.projectId = self
+														.eq(1).text();
+												jsonDataTmp1.finishPercent = self
+														.eq(4).text();
+												jsonDataTmp1.workcontent = self
+														.eq(6).text();
+												tomorrowArray
+														.push(jsonDataTmp1);
+												//console.log(jsonDataTmp1);
+
+											}
+										}
+										
+										
+										
+									});					
+							
+							
+							
+     						jsonData01.todaywork = todayArray;
+							jsonData01.tomorrowwork = tomorrowArray;
+							jsonData01.submitwork = submitconteng;
+								jsonData01.userCode = getcookie("userId");
+							//jsonData01.userCode = "ZhaoZuLong";
+							var saveUrl = "http://krmsoft.natapp1.cc/qywx/work/wxworksaveV2";
+
+							var jsonCommit = JSON.stringify(jsonData01);
+							console.log(jsonCommit);
+							var config = {
+								url : saveUrl,
+								type : "post",
+								contentType : "application/json;charset-UTF-8",
+								dataType : "json",
+								data : jsonCommit,
+								success : function(res) {
+									layer.msg(res.msg, {icon: 6});
+									$("#tomorrow_workContent").val("");
+									$("#workContent").val("");
+									$("#todayWork").reset();
+								}
+							};
+
+							$.ajax(config)
+						});
+		function deleteMyself() {
+			alert('aaaa');
+		}
+
+		// 存Cookie的值 仅同级文件可用
+		function addcookie(name, value, expireHours) {
+			var exp = new Date();
+			exp.setTime(exp.getTime() + expireHours);
+			document.cookie = name + "=" + escape(value) + ";expires="
+					+ exp.toGMTString();
+		}
+
+		// 存Cookie的值 加了cookie作用域 会产生全局有效的cookie
+		function ADDcookie(name, value, expireHours) {
+			var exp = new Date();
+			exp.setTime(exp.getTime() + expireHours);
+			document.cookie = name + "=" + escape(value) + ";expires="
+					+ exp.toGMTString() + "; path=/";
+		}
+
+		function GetCookies(offset) {
+			var endstr = document.cookie.indexOf(";", offset);
+			if (endstr == -1)
+				endstr = document.cookie.length;
+			return unescape(document.cookie.substring(offset, endstr));
+		}
+
+		// 取Cookie的值
+		function getcookie(name) {
+			var arg = name + "=";
+			var alen = arg.length;
+			var clen = document.cookie.length;
+			var i = 0;
+			while (i < clen) {
+				var j = i + alen;
+				if (document.cookie.substring(i, j) == arg)
+					return GetCookies(j);
+				i = document.cookie.indexOf(" ", i) + 1;
+				if (i == 0)
+					break;
+			}
+			return "";
+		}
+	</script>
+</body>
+</html>

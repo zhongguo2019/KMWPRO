@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmw.qywx.mapper.QywxUserOperatelogMapper">
+	<!-- 表字段 声明 -->
+	<sql id="QywxUserOperatelogColumns">
+		 id, oper_type, submit_text, mess_from_ip, mess_type, create_by, create_time, update_by, update_time, remark, report_date, report_type, group_code, user_account	</sql>
+	<!-- 实体与表字段映身声明，返回值 -->
+    <resultMap type="QywxUserOperatelog" id="QywxUserOperatelogResult">
+		<result property="id"    column="id"    />
+		<result property="operType"    column="oper_type"    />
+		<result property="submitText"    column="submit_text"    />
+		<result property="messFromIp"    column="mess_from_ip"    />
+		<result property="messType"    column="mess_type"    />
+		<result property="createBy"    column="create_by"    />
+		<result property="createTime"    column="create_time"    />
+		<result property="updateBy"    column="update_by"    />
+		<result property="updateTime"    column="update_time"    />
+		<result property="remark"    column="remark"    />
+		<result property="reportDate"    column="report_date"    />
+		<result property="reportType"    column="report_type"    />
+		<result property="groupCode"    column="group_code"    />
+		<result property="userAccount"    column="user_account"    />
+    </resultMap>
+    
+	<!-- 定义查询整张表的SQL -->
+    <sql id="selectQywxUserOperatelogVo">
+        select
+			 id, oper_type, submit_text, mess_from_ip, mess_type, create_by, create_time, update_by, update_time, remark, report_date, report_type, group_code, user_account        from qywx_user_operatelog
+    </sql>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryPageInfo" resultType="com.kmw.common.CommonEntity">
+        select
+			<include refid="QywxUserOperatelogColumns" /> 
+        from	qywx_user_operatelog t
+        <where>  
+			1=1
+            <if test="operType != null  and operType != ''"> and t.oper_type = #{operType}</if>
+            <if test="submitText != null  and submitText != ''"> and t.submit_text = #{submitText}</if>
+            <if test="messFromIp != null  and messFromIp != ''"> and t.mess_from_ip = #{messFromIp}</if>
+            <if test="messType != null  and messType != ''"> and t.mess_type = #{messType}</if>
+            <if test="reportDate != null  and reportDate != ''"> and t.report_date = #{reportDate}</if>
+            <if test="reportType != null  and reportType != ''"> and t.report_type = #{reportType}</if>
+            <if test="groupCode != null  and groupCode != ''"> and t.group_code = #{groupCode}</if>
+            <if test="userAccount != null  and userAccount != ''"> and t.user_account = #{userAccount}</if>
+        </where>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''"> ORDER BY t.${sortC} ${order}
+			</if>
+    </select>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryEntityList" resultType="com.kmw.common.CommonEntity">
+        select
+       	<include refid="QywxUserOperatelogColumns" /> 
+        from qywx_user_operatelog t
+        <where>  
+        1=1
+            <if test="operType != null  and operType != ''"> and t.oper_type = #{operType}</if>
+            <if test="submitText != null  and submitText != ''"> and t.submit_text = #{submitText}</if>
+            <if test="messFromIp != null  and messFromIp != ''"> and t.mess_from_ip = #{messFromIp}</if>
+            <if test="messType != null  and messType != ''"> and t.mess_type = #{messType}</if>
+            <if test="reportDate != null  and reportDate != ''"> and t.report_date = #{reportDate}</if>
+            <if test="reportType != null  and reportType != ''"> and t.report_type = #{reportType}</if>
+            <if test="groupCode != null  and groupCode != ''"> and t.group_code = #{groupCode}</if>
+            <if test="userAccount != null  and userAccount != ''"> and t.user_account = #{userAccount}</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		</where>
+
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''">ORDER BY t.${sortC} ${order}</if>
+    </select>   
+    
+	<!-- 按map参数查询后台的数据， 查询单条数据,返回的是通用实体，不受实体属性限制，相当于map -->
+    <select id="queryOneCommon"	resultType="com.kmw.common.CommonEntity">
+        select
+		<include refid="QywxUserOperatelogColumns" />
+        from qywx_user_operatelog t
+		<where>
+        where id = #{id}
+		</where>
+    </select>    
+    
+    
+	<!-- 按实体参数来查询后台的数据 -->
+    <select id="selectQywxUserOperatelogList" parameterType="QywxUserOperatelog" resultMap="QywxUserOperatelogResult">
+        <include refid="selectQywxUserOperatelogVo"/>
+        
+        <where>  
+        oper_type is not null
+          <!--   <if test="operType != null  and operType != ''"> and oper_type = #{operType}</if> -->
+            <if test="submitText != null  and submitText != ''"> and submit_text = #{submitText}</if>
+            <if test="messFromIp != null  and messFromIp != ''"> and mess_from_ip = #{messFromIp}</if>
+            <if test="messType != null  and messType != ''"> and mess_type = #{messType}</if>
+            <if test="reportDate != null  and reportDate != ''"> and report_date = #{reportDate}</if>
+            <if test="reportType != null  and reportType != ''"> and report_type = #{reportType}</if>
+            <if test="groupCode != null  and groupCode != ''"> and group_code = #{groupCode}</if>
+            <if test="userAccount != null  and userAccount != ''"> and user_account = #{userAccount}</if>
+        </where>
+    </select>
+ 
+ 	<!-- 按主键来查询后台的数据 -->   
+    <select id="selectQywxUserOperatelogById" parameterType="String" resultMap="QywxUserOperatelogResult">
+        <include refid="selectQywxUserOperatelogVo"/>
+        where id = #{id}
+    </select>
+    
+ 	<!-- 插入数据库一条数据 -->       
+    <insert id="insertQywxUserOperatelog" parameterType="QywxUserOperatelog">
+        insert into qywx_user_operatelog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''">id,</if>
+            <if test="operType != null  and operType != ''">oper_type,</if>
+            <if test="submitText != null  and submitText != ''">submit_text,</if>
+            <if test="messFromIp != null  and messFromIp != ''">mess_from_ip,</if>
+            <if test="messType != null  and messType != ''">mess_type,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+            <if test="reportDate != null  and reportDate != ''">report_date,</if>
+            <if test="reportType != null  and reportType != ''">report_type,</if>
+            <if test="groupCode != null  and groupCode != ''">group_code,</if>
+            <if test="userAccount != null  and userAccount != ''">user_account,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''">#{id},</if>
+            <if test="operType != null  and operType != ''">#{operType},</if>
+            <if test="submitText != null  and submitText != ''">#{submitText},</if>
+            <if test="messFromIp != null  and messFromIp != ''">#{messFromIp},</if>
+            <if test="messType != null  and messType != ''">#{messType},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+            <if test="reportDate != null  and reportDate != ''">#{reportDate},</if>
+            <if test="reportType != null  and reportType != ''">#{reportType},</if>
+            <if test="groupCode != null  and groupCode != ''">#{groupCode},</if>
+            <if test="userAccount != null  and userAccount != ''">#{userAccount},</if>
+         </trim>
+    </insert>
+	<!-- 按主键更新数据库一条数据 -->
+    <update id="updateQywxUserOperatelog" parameterType="QywxUserOperatelog">
+        update qywx_user_operatelog
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="operType != null  and operType != ''">oper_type = #{operType},</if>
+            <if test="submitText != null  and submitText != ''">submit_text = #{submitText},</if>
+            <if test="messFromIp != null  and messFromIp != ''">mess_from_ip = #{messFromIp},</if>
+            <if test="messType != null  and messType != ''">mess_type = #{messType},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+            <if test="reportDate != null  and reportDate != ''">report_date = #{reportDate},</if>
+            <if test="reportType != null  and reportType != ''">report_type = #{reportType},</if>
+            <if test="groupCode != null  and groupCode != ''">group_code = #{groupCode},</if>
+            <if test="userAccount != null  and userAccount != ''">user_account = #{userAccount},</if>
+        </trim>
+        where id = #{id}
+    </update>
+	<!-- 按主键删除数据库中一条数据 -->
+    <delete id="deleteQywxUserOperatelogById" parameterType="String">
+        delete from qywx_user_operatelog where id = #{id}
+    </delete>
+	<!-- 按主键列表字符串用逗号分隔， 删除数据库中多条数据 -->
+    <delete id="deleteQywxUserOperatelogByIds" parameterType="String">
+        delete from qywx_user_operatelog where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+       <!-- 根据不同条件删除数据，条件可组合 -->
+	<delete id="deleteByParams" parameterType="java.util.Map">
+		delete from qywx_user_operatelog 
+		<where>
+		        
+            <if test="operType != null  and operType != ''"> and oper_type = #{operType}</if>
+            <if test="submitText != null  and submitText != ''"> and submit_text = #{submitText}</if>
+            <if test="messFromIp != null  and messFromIp != ''"> and mess_from_ip = #{messFromIp}</if>
+            <if test="messType != null  and messType != ''"> and mess_type = #{messType}</if>
+            <if test="reportDate != null  and reportDate != ''"> and report_date = #{reportDate}</if>
+            <if test="reportType != null  and reportType != ''"> and report_type = #{reportType}</if>
+            <if test="groupCode != null  and groupCode != ''"> and group_code = #{groupCode}</if>
+            <if test="userAccount != null  and userAccount != ''"> and user_account = #{userAccount}</if>
+			</where>
+	</delete>
+	
+    <!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="entityList" resultMap="QywxUserOperatelogResult">
+        select
+       	<include refid="QywxUserOperatelogColumns" /> 
+        from qywx_user_operatelog t
+        <where>  
+        1=1
+            <if test="operType != null  and operType != ''"> and t.oper_type = #{operType}</if>
+            <if test="submitText != null  and submitText != ''"> and t.submit_text = #{submitText}</if>
+            <if test="messFromIp != null  and messFromIp != ''"> and t.mess_from_ip = #{messFromIp}</if>
+            <if test="messType != null  and messType != ''"> and t.mess_type = #{messType}</if>
+            <if test="reportDate != null  and reportDate != ''"> and t.report_date = #{reportDate}</if>
+            <if test="reportType != null  and reportType != ''"> and t.report_type = #{reportType}</if>
+            <if test="groupCode != null  and groupCode != ''"> and t.group_code = #{groupCode}</if>
+            <if test="userAccount != null  and userAccount != ''"> and t.user_account = #{userAccount}</if>
+        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+        </where>
+
+		<if
+			test="sortC != null  and sortC != '' and order != null  and order != ''">
+			ORDER BY t.${sortC} ${order}
+		</if>
+    </select>     
+    <!-- 批量插入数据 -->
+	<insert id="insertBatch">
+		insert into qywx_user_operatelog(<include refid="QywxUserOperatelogColumns" />) values 
+		<foreach collection="list" item="item" separator="," >
+		(
+            #{item.id} ,
+            #{item.operType} ,
+            #{item.submitText} ,
+            #{item.messFromIp} ,
+            #{item.messType} ,
+            #{item.createBy} ,
+            #{item.createTime} ,
+            #{item.updateBy} ,
+            #{item.updateTime} ,
+            #{item.remark} ,
+            #{item.reportDate} ,
+            #{item.reportType} ,
+            #{item.groupCode} ,
+            #{item.userAccount} 		)
+		</foreach>
+	</insert>  
+  	<!-- 根据不同条件删除数据，条件可组合 -->
+	<update id="updateBatchEntity" >
+		<foreach collection="list" item="item" separator=",">
+        update qywx_user_operatelog
+        set
+            id = #{id} ,
+            oper_type = #{operType} ,
+            submit_text = #{submitText} ,
+            mess_from_ip = #{messFromIp} ,
+            mess_type = #{messType} ,
+            create_by = #{createBy} ,
+            create_time = #{createTime} ,
+            update_by = #{updateBy} ,
+            update_time = #{updateTime} ,
+            remark = #{remark} ,
+            report_date = #{reportDate} ,
+            report_type = #{reportType} ,
+            group_code = #{groupCode} ,
+            user_account = #{userAccount}     <where>
+			id = #{id}
+        </where>
+		</foreach>
+	</update>
+    
+</mapper>

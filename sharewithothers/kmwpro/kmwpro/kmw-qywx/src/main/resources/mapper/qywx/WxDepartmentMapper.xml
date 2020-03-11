@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmw.qywx.mapper.WxDepartmentMapper">
+	<!-- 表字段 声明 -->
+	<sql id="WxDepartmentColumns">
+		 depart_id, depart_name, depart_parent_id, depart_order, id, create_by, create_time, update_by, update_time, remark	</sql>
+	<!-- 实体与表字段映身声明，返回值 -->
+    <resultMap type="WxDepartment" id="WxDepartmentResult">
+		<result property="departId"    column="depart_id"    />
+		<result property="departName"    column="depart_name"    />
+		<result property="departParentId"    column="depart_parent_id"    />
+		<result property="departOrder"    column="depart_order"    />
+		<result property="id"    column="id"    />
+		<result property="createBy"    column="create_by"    />
+		<result property="createTime"    column="create_time"    />
+		<result property="updateBy"    column="update_by"    />
+		<result property="updateTime"    column="update_time"    />
+		<result property="remark"    column="remark"    />
+    </resultMap>
+    
+	<!-- 定义查询整张表的SQL -->
+    <sql id="selectWxDepartmentVo">
+        select
+			 depart_id, depart_name, depart_parent_id, depart_order, id, create_by, create_time, update_by, update_time, remark        from wx_department
+    </sql>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryPageInfo" resultType="com.kmw.common.CommonEntity">
+        select
+			<include refid="WxDepartmentColumns" /> 
+        from	wx_department t
+        <where>  
+			1=1
+            <if test="departId != null  and departId != ''"> and t.depart_id = #{departId}</if>
+            <if test="departName != null  and departName != ''"> and t.depart_name like concat('%', #{departName}, '%')</if>
+            <if test="departParentId != null  and departParentId != ''"> and t.depart_parent_id = #{departParentId}</if>
+            <if test="departOrder != null  and departOrder != ''"> and t.depart_order = #{departOrder}</if>
+        </where>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''"> ORDER BY t.${sortC} ${order}
+			</if>
+    </select>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryEntityList" resultType="com.kmw.common.CommonEntity">
+        select
+       	<include refid="WxDepartmentColumns" /> 
+        from wx_department t
+        <where>  
+        1=1
+            <if test="departId != null  and departId != ''"> and t.depart_id = #{departId}</if>
+            <if test="departName != null  and departName != ''"> and t.depart_name like concat('%', #{departName}, '%')</if>
+            <if test="departParentId != null  and departParentId != ''"> and t.depart_parent_id = #{departParentId}</if>
+            <if test="departOrder != null  and departOrder != ''"> and t.depart_order = #{departOrder}</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		</where>
+
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''">ORDER BY t.${sortC} ${order}</if>
+    </select>   
+    
+	<!-- 按map参数查询后台的数据， 查询单条数据,返回的是通用实体，不受实体属性限制，相当于map -->
+    <select id="queryOneCommon"	resultType="com.kmw.common.CommonEntity">
+        select
+		<include refid="WxDepartmentColumns" />
+        from wx_department t
+        <where>  
+        1=1
+            <if test="departId != null  and departId != ''"> and t.depart_id = #{departId}</if>
+            <if test="departName != null  and departName != ''"> and t.depart_name like concat('%', #{departName}, '%')</if>
+            <if test="departParentId != null  and departParentId != ''"> and t.depart_parent_id = #{departParentId}</if>
+            <if test="departOrder != null  and departOrder != ''"> and t.depart_order = #{departOrder}</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		</where>
+    </select>    
+    
+    
+	<!-- 按实体参数来查询后台的数据 -->
+    <select id="selectWxDepartmentList" parameterType="WxDepartment" resultMap="WxDepartmentResult">
+        <include refid="selectWxDepartmentVo"/>
+        <where>  
+            <if test="departId != null  and departId != ''"> and depart_id = #{departId}</if>
+            <if test="departName != null  and departName != ''"> and depart_name like concat('%', #{departName}, '%')</if>
+            <if test="departParentId != null  and departParentId != ''"> and depart_parent_id = #{departParentId}</if>
+            <if test="departOrder != null  and departOrder != ''"> and depart_order = #{departOrder}</if>
+        </where>
+    </select>
+ 
+ 	<!-- 按主键来查询后台的数据 -->   
+    <select id="selectWxDepartmentById" parameterType="String" resultMap="WxDepartmentResult">
+        <include refid="selectWxDepartmentVo"/>
+        where depart_id = #{departId}
+    </select>
+    
+ 	<!-- 插入数据库一条数据 -->       
+    <insert id="insertWxDepartment" parameterType="WxDepartment">
+        insert into wx_department
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="departId != null  and departId != ''">depart_id,</if>
+            <if test="departName != null  and departName != ''">depart_name,</if>
+            <if test="departParentId != null  and departParentId != ''">depart_parent_id,</if>
+            <if test="departOrder != null  and departOrder != ''">depart_order,</if>
+            <if test="id != null  and id != ''">id,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="departId != null  and departId != ''">#{departId},</if>
+            <if test="departName != null  and departName != ''">#{departName},</if>
+            <if test="departParentId != null  and departParentId != ''">#{departParentId},</if>
+            <if test="departOrder != null  and departOrder != ''">#{departOrder},</if>
+            <if test="id != null  and id != ''">#{id},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+         </trim>
+    </insert>
+	<!-- 按主键更新数据库一条数据 -->
+    <update id="updateWxDepartment" parameterType="WxDepartment">
+        update wx_department
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="departName != null  and departName != ''">depart_name = #{departName},</if>
+            <if test="departParentId != null  and departParentId != ''">depart_parent_id = #{departParentId},</if>
+            <if test="departOrder != null  and departOrder != ''">depart_order = #{departOrder},</if>
+            <if test="id != null  and id != ''">id = #{id},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+        </trim>
+        where depart_id = #{departId}
+    </update>
+	<!-- 按主键删除数据库中一条数据 -->
+    <delete id="deleteWxDepartmentById" parameterType="String">
+        delete from wx_department where depart_id = #{departId}
+    </delete>
+    	<!-- 删除表中所有数据 -->
+    <delete id="deleteWxDepartmentAll">
+        delete from wx_department 
+    </delete>
+	<!-- 按主键列表字符串用逗号分隔， 删除数据库中多条数据 -->
+    <delete id="deleteWxDepartmentByIds" parameterType="String">
+        delete from wx_department where depart_id in 
+        <foreach item="departId" collection="array" open="(" separator="," close=")">
+            #{departId}
+        </foreach>
+    </delete>
+    
+       <!-- 根据不同条件删除数据，条件可组合 -->
+	<delete id="deleteByParams" parameterType="java.util.Map">
+		delete from wx_department 
+		<where>
+		        
+            <if test="departId != null  and departId != ''"> and depart_id = #{departId}</if>
+            <if test="departName != null  and departName != ''"> and depart_name like concat('%', #{departName}, '%')</if>
+            <if test="departParentId != null  and departParentId != ''"> and depart_parent_id = #{departParentId}</if>
+            <if test="departOrder != null  and departOrder != ''"> and depart_order = #{departOrder}</if>
+			</where>
+	</delete>
+	
+    <!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="entityList" resultMap="WxDepartmentResult">
+        select
+       	<include refid="WxDepartmentColumns" /> 
+        from wx_department t
+        <where>  
+        1=1
+            <if test="departId != null  and departId != ''"> and t.depart_id = #{departId}</if>
+            <if test="departName != null  and departName != ''"> and t.depart_name like concat('%', #{departName}, '%')</if>
+            <if test="departParentId != null  and departParentId != ''"> and t.depart_parent_id = #{departParentId}</if>
+            <if test="departOrder != null  and departOrder != ''"> and t.depart_order = #{departOrder}</if>
+        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+        </where>
+
+		<if
+			test="sortC != null  and sortC != '' and order != null  and order != ''">
+			ORDER BY t.${sortC} ${order}
+		</if>
+    </select>     
+    <!-- 批量插入数据 -->
+	<insert id="insertBatch">
+		insert into wx_department(<include refid="WxDepartmentColumns" />) values 
+		<foreach collection="list" item="item" separator="," >
+		(
+            #{item.departId} ,
+            #{item.departName} ,
+            #{item.departParentId} ,
+            #{item.departOrder} ,
+            #{item.id} ,
+            #{item.createBy} ,
+            #{item.createTime} ,
+            #{item.updateBy} ,
+            #{item.updateTime} ,
+            #{item.remark} 		)
+		</foreach>
+	</insert>  
+  	<!-- 根据不同条件删除数据，条件可组合 -->
+	<update id="updateBatchEntity" >
+		<foreach collection="list" item="item" separator=",">
+        update wx_department
+        set
+            depart_id = #{departId} ,
+            depart_name = #{departName} ,
+            depart_parent_id = #{departParentId} ,
+            depart_order = #{departOrder} ,
+            id = #{id} ,
+            create_by = #{createBy} ,
+            create_time = #{createTime} ,
+            update_by = #{updateBy} ,
+            update_time = #{updateTime} ,
+            remark = #{remark}     <where>
+			depart_id = #{departId}
+        </where>
+		</foreach>
+	</update>
+    
+</mapper>
