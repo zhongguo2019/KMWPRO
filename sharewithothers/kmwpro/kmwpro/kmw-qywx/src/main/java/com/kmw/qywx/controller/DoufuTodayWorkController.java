@@ -90,8 +90,8 @@ public class DoufuTodayWorkController extends BaseController {
 		// List<DoufuTodayWork> list =
 		// doufuTodayWorkService.selectDoufuTodayWorkList(doufuTodayWork);
 		// Map<String, Object> params = new HashMap<>();
-		params.put("sortC", "reporter_Name,report_date,INPUT_ORDER");
-		params.put("order", "desc");
+		params.put("sortC", "reporter_Name,report_date");
+		params.put("order", "asc");
 
 		List<DoufuTodayWork> list = doufuTodayWorkService.entityList(params);
 		return getDataTable(list);
@@ -104,7 +104,7 @@ public class DoufuTodayWorkController extends BaseController {
 	@PostMapping("/export")
 	@ResponseBody
 	public AjaxResult export(@RequestParam Map<String, Object> params) {
-		params.put("sortC", "reporter_Name,report_date,INPUT_ORDER");
+		params.put("sortC", "reporter_Name,report_date");
 		params.put("order", "desc");
 		List<DoufuTodayWork> list = doufuTodayWorkService.entityList(params);
 		// List<DoufuTodayWork> list =
