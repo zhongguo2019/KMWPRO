@@ -16,7 +16,7 @@ public class CdmKfpBussdefine extends BaseEntity
     private static final long serialVersionUID = 1L;
 
     /** 序号 */
-    private Long id;
+    private String id;
 
     /** 业务主题 */
     @Excel(name = "业务主题")
@@ -82,12 +82,12 @@ public class CdmKfpBussdefine extends BaseEntity
     @Excel(name = "使用部门")
     private String busNote;
 
-    public void setId(Long id) 
+    public void setId(String id) 
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public String getId() 
     {
         return id;
     }

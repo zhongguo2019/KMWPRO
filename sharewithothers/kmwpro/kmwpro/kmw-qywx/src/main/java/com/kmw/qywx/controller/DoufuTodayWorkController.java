@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.unit.DataUnit;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,8 +37,10 @@ import com.kmw.common.enums.BusinessType;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.kmw.qywx.domain.DoufuTodayWork;
+import com.kmw.qywx.domain.QywxUserOperatelog;
 import com.kmw.qywx.domain.WxUser;
 import com.kmw.qywx.service.IDoufuTodayWorkService;
+import com.kmw.qywx.service.IQywxUserOperatelogService;
 import com.kmw.qywx.utils.Result;
 import com.kmw.qywx.utils.WeiXinUtil;
 import com.kmw.common.utils.StringConvert;
@@ -51,7 +54,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.kmw.common.core.page.TableDataInfo;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -70,6 +72,8 @@ public class DoufuTodayWorkController extends BaseController {
 
 	@Autowired
 	WeiXinUtil weiXinUtil;
+	@Autowired
+	IQywxUserOperatelogService qywxUserOperatelogService;
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -683,4 +687,135 @@ public class DoufuTodayWorkController extends BaseController {
 		return result;
 	}
 
+	/**
+	 * 得到指定日期的某个人的报告列表
+	 *
+	 * 
+	 * @param params
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 * @throws ParseException
+	 */
+	@RequestMapping(value = "wxqueryRptListV2", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Result wxqueryRptListV2(@RequestBody JSONObject jsonParam, HttpServletRequest request) {
+		Result result = new Result();
+		result.setCode(1);
+
+		JSONObject jsonValue = new JSONObject();
+		JSONObject jsonValueRtn = new JSONObject();
+		String returnMsg = "";
+		List lstJson = new ArrayList<String>();
+		if (jsonParam.isEmpty()) {
+			result.setMsg("调用后台方法时，传入的参数为空!");
+
+			return result;
+
+		}
+		String strUserCode = jsonParam.getString("userCode");
+		String strqueryDate = jsonParam.getString("queryDate");
+
+		if (null == strUserCode || "".equals(strUserCode)) {
+			result.setMsg("前台传过来的查询条件：用户代码为空！");
+			return result;
+		}
+		if (null == strqueryDate || "".equals(strqueryDate)) {
+			result.setMsg("前台传过来的查询条件：查询时间为空！");
+			return result;
+		}
+
+		if ("今天".equals(strqueryDate)) {
+			strqueryDate = DateUtils.DateToStr8();
+		}
+		weiXinUtil.userInit(request, strUserCode);
+
+		Map<String, Object> queryMap = new HashMap<String, Object>();
+		queryMap.put("reporterName", strUserCode);
+		queryMap.put("reportDate", strqueryDate);
+
+		queryMap.put("sortC", "report_date,input_order");
+
+		queryMap.put("userAccount", strUserCode);
+		queryMap.put("operType", "1");
+		queryMap.put("reportDate", strqueryDate);
+		String queryResultString = doufuTodayWorkService.getPersonCommit(queryMap);
+		
+		if(queryResultString==null||queryResultString.equals("")) {
+			result.setCode(0);
+			result.setMsg("后台没有查到指定日期的日报信息");
+			return result;
+		}else {
+			return result.successResult(queryResultString);			
+		}
+
+	}
+
+	/**
+	 * A 到日志信息表中查询提交的时间
+	 * 
+	 * @param params
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 * @throws ParseException
+	 */
+	@RequestMapping(value = "wxgetRptDListV2", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+	@ResponseBody
+	public Result wxgetRptDListV2(@RequestBody JSONObject jsonParam, HttpServletRequest request) {
+
+		Result result = new Result();
+		JSONObject jsonValue = new JSONObject();
+		JSONObject jsonValueRtn = new JSONObject();
+		result.setCode(0);
+		if (jsonParam.isEmpty()) {
+			result.setMsg("前台传入的查询参数为空！");
+			return result;
+		}
+
+		if (null == jsonParam.getString("userCode") || "".equals(jsonParam.getString("userCode"))) {
+			result.setMsg("前台传入的用户代码为空！");
+			return result;
+		}
+
+		weiXinUtil.userInit(request, jsonParam.getString("userCode"));
+
+		Map<String, Object> queryMap = new HashMap();
+		// queryMap.put("reporterName", jsonParam.getString("userCode"));
+		queryMap.put("userAccount", jsonParam.getString("userCode"));
+		queryMap.put("operType", "1");
+		String dynamicSQL = "";
+		dynamicSQL="report_date<'"+DateUtils.DateToStr8()+"'";
+		queryMap.put("sortC", "report_date");
+		queryMap.put("order", "desc");
+		queryMap.put("dynamicSQL", dynamicSQL);
+		List<QywxUserOperatelog> lstRptDList = qywxUserOperatelogService.entityList(queryMap);
+
+		if (lstRptDList == null || lstRptDList.size() == 0) {
+			result.setMsg("没找到用户提交的日报信息！");
+			List ListRptDateList1 = new ArrayList<>();
+			jsonValue.put("reporterId", 0);
+			jsonValue.put("date", "今天");
+			ListRptDateList1.add(jsonValue.toString());
+
+    		jsonValueRtn.put("lists", JSON.toJSON(ListRptDateList1));
+			
+			
+			
+		} else {
+			List ListRptDateList = new ArrayList<>();
+			jsonValue.put("reporterId", 0);
+			jsonValue.put("date", "今天");
+			ListRptDateList.add(jsonValue.toString());
+			int i = 1;
+			for (Iterator<QywxUserOperatelog> iterator = lstRptDList.iterator(); iterator.hasNext();) {
+
+				jsonValue.put("reporterId", i++);
+				jsonValue.put("date", iterator.next().getReportDate());
+				ListRptDateList.add(jsonValue.toString());
+			}
+			jsonValueRtn.put("lists", JSON.toJSON(ListRptDateList));
+
+		}
+		logger.info(jsonValueRtn.toString());
+		return result.successResult(jsonValueRtn.toString());
+	}
 }

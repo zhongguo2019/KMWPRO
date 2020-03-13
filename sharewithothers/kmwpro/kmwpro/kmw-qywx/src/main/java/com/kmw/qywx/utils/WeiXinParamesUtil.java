@@ -1,5 +1,7 @@
 package com.kmw.qywx.utils;
 
+import com.kmw.common.utils.DateUtils;
+
 public class WeiXinParamesUtil {
 	/**
 	 * 微信参数
@@ -23,12 +25,12 @@ public class WeiXinParamesUtil {
 
 // 生产中配置--我的日报---应用的凭证密钥
 //企业应用的id，整型。可在应用的设置页面查看    
-//   public final static String agentSecret = "tAgAYMMHqEtNs1OX5GC4Z3c-lntzwcw2nY9XiX7HX80"; 
-//   public final static int agentId = 1000002;
+   public final static String agentSecret = "tAgAYMMHqEtNs1OX5GC4Z3c-lntzwcw2nY9XiX7HX80"; 
+   public final static int agentId = 1000002;
     
 // 测试中配置---我的半月报--应用的凭证密钥
-   public final static String agentSecret = "76Dt4OVopES0rE5yOYmNjDuIO8SNGBkUT4DxSEMMwR0";
-   public final static int agentId = 1000005;
+//   public final static String agentSecret = "76Dt4OVopES0rE5yOYmNjDuIO8SNGBkUT4DxSEMMwR0";
+//   public final static int agentId = 1000005;
 
 	/**
 	 * 获取企业微信token地址及对应参数
@@ -126,25 +128,27 @@ public class WeiXinParamesUtil {
     		"-------------补报格式-------------\r\n" + 
     		"[补报]\r\n" + 
     		"YYYY-MM-DD ----如：2019-09-10\r\n" + 
-    		"[XXXX]\r\n" + 
-    		"1、XXXX。[XX%]\r\n" + 
+    		"[项目名称]\r\n" + 
+    		"1、工作内容。[完成百分比%]\r\n" + 
     		"2、XXXX。[XX%]\r\n" + 
     		"[[XXXX]\r\n" + 
     		"1、XXXX。[XX%]\r\n" + 
     		"2、XXXX。[XX%]\r\n" + 
-    		"-------------查询格式-------------\r\n" + 
+    		"总结\r\n" + 
+			"注意工作状态是“老家隔离、项目地隔离、隔离结束-正常上班、隔离结束-等待入场、隔离结束-间歇入场”描述之一;\n要用工作性质描述：“工作性质项目、工作性质运维护、工作性质其它”描述之一;\n内容描述，不超过200字。"+
+    		"\\r\\n-------------查询格式-------------\r\n" + 
     		"查询\r\n" + 
     		"YYYY-MM-DD至YYYY-MM-DD\r\n" + 
     		"或\r\n" + 
     		"查询\r\n" + 
     		"YYYY-MM-DD\r\n" + 
-    		"-------------下载格式-------------\r\n" + 
+    		"\\r\\n-------------下载格式-------------\r\n" + 
     		"[报告下载]\r\n" + 
     		"YYYY-MM-DD至YYYY-MM-DD\r\n" + 
     		"或\r\n" + 
     		"[报告下载]\r\n" + 
     		"YYYY-MM-DD\r\n" + 
-    		"-------------调阅成员-------------\r\n" + 
+    		"\\r\\n-------------调阅成员-------------\r\n" + 
     		"[调阅成员]\r\n" + 
     		"姓名\r\n" + 
     		"YYYY-MM-DD至YYYY-MM-DD\r\n" + 
@@ -225,4 +229,10 @@ public class WeiXinParamesUtil {
     		"调阅成员\r\n" + 
     		"赵祖龙\r\n" +      		
     		"2019-09-18至2019-09-20"; 
+    
+    
+    public final static String msgTemplate01=  "<div class=\"gray\">"+DateUtils.getDate()+"</div> <div class=\"normal\">"
+			+ "</div><div class=\"highlight\">{content}</div>";
+    
+    
 }

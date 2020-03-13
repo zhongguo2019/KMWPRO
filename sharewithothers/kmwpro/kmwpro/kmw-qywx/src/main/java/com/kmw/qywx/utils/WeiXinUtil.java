@@ -517,8 +517,12 @@ public class WeiXinUtil {
 				if (justMsgTypeReport(strMsgContent, "[日报]") || justMsgTypeReport(strMsgContent, "【日报】")
 						|| justMsgTypeReport(strMsgContent, "日报") || justMsgTypeReport(strMsgContent, "(日报)")
 						|| justMsgTypeReport(strMsgContent, "（日报）")) {
-					doufuTodayWorkService.saveOperReportLog("text",strMsgContent, request);
-					strRtnMsgContent = doufuTodayWorkService.dealDayReportInsert(request, strMsgContent, strFromUser);
+				  if(null ==doufuTodayWorkService.saveOperReportLog("text",strMsgContent, request))	{
+					  strRtnMsgContent = WeiXinParamesUtil.helpInfor;
+				  }else {
+						strRtnMsgContent = doufuTodayWorkService.dealDayReportInsert(request, strMsgContent, strFromUser);					  
+				  }
+
 				}
 
 				// 解析文本内容，字符开头以[补报]
@@ -526,8 +530,11 @@ public class WeiXinUtil {
 						|| justMsgTypeReport(strMsgContent, "【补报】") || justMsgTypeReport(strMsgContent, "(补报)")
 						|| justMsgTypeReport(strMsgContent, "（补报）") || justMsgTypeReport(strMsgContent, "补报")) {
 					strRtnMsgContent = WeiXinParamesUtil.dayReportFormatAdd;
-					doufuTodayWorkService.saveOperReportLogBB("text",strMsgContent, request);
+					if(null ==doufuTodayWorkService.saveOperReportLogBB("text",strMsgContent, request)) {
+						strRtnMsgContent = WeiXinParamesUtil.helpInfor;
+					}else {
 					strRtnMsgContent = doufuTodayWorkService.dealDayReportAdd(request, strMsgContent, strFromUser);
+					}
 				}
 
 				// 解析文本内容，字符开头以[查询]
@@ -794,34 +801,42 @@ public class WeiXinUtil {
 
 	// 2.发送文本卡片消息
 
-		public void SendTextcardMessageV2(String toUser, String toParty, String msgContent) {
+		public void SendTextcardMessageV2(String toUser, String toParty, Textcard textcard) {
 		
-			// 0.设置消息内容
-			String title = "日报提醒";
-			String description = "<div class=\"gray\">"+"2020-03-11"+"</div> <div class=\"normal\">"
-					+ "</div><div class=\"highlight\">" +msgContent+  "</div>";
-			String url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=ww8249590afca6f785&redirect_uri=http://krmsoft.natapp1.cc/qywx/main/reportinput&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
+		/*
+		 * // 0.设置消息内容 String title = "日报提醒"; String description =
+		 * "<div class=\"gray\">"+"2020-03-11"+"</div> <div class=\"normal\">" +
+		 * "</div><div class=\"highlight\">" +msgContent+ "</div>";
+		 * WeiXinParamesUtil.msgTemplate01.replace("{content}", msgContent); String url
+		 * =
+		 * "https://open.weixin.qq.com/connect/oauth2/authorize?appid=ww8249590afca6f785&redirect_uri=http://krmsoft.natapp1.cc/qywx/main/reportinput&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
+		 * 
+		 */
 
-
-			// 1.创建文本卡片消息对象
-			TextcardMessage message1 = new TextcardMessage();
-			// 1.1非必需
-			message1.setTouser("ZhaoZuLong"); // 不区分大小写
 			// message.setToparty("1");
 			// message.setTotag(totag);
 			// message.setSafe(0);
-
+			
+			// 1.创建文本卡片消息对象
+			TextcardMessage message1 = new TextcardMessage();
+			// 1.1非必需
+			message1.setTouser(toUser); // 不区分大小写
+			message1.setToparty(toParty);
 			// 1.2必需
 			message1.setMsgtype("textcard");
 			message1.setAgentid(WeiXinParamesUtil.agentId);
 
-			Textcard textcard = new Textcard();
-			textcard.setTitle(title);
-			textcard.setDescription(description);
-			textcard.setUrl(url);
+		/*
+		 * Textcard textcard = new Textcard(); textcard.setTitle(title);
+		 * textcard.setDescription(description); textcard.setUrl(url);
+		 */
 			message1.setTextcard(textcard);
 			// 3.发送消息：调用业务类，发送消息
-
+			// 1.2必需
+			
+			
+			message1.setMsgtype("textcard");
+			message1.setAgentid(WeiXinParamesUtil.agentId);
 			sendMessageService.sendMessage(message1);
 
 		}

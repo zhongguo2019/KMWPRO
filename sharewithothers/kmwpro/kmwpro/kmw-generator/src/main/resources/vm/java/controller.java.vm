@@ -1,5 +1,5 @@
 package ${basePackage}.${moduleName}.controller;
-
+import java.util.UUID;
 import java.util.List;
 import java.util.Map;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -130,6 +130,8 @@ public class ${ClassName}Controller extends BaseController
     @ResponseBody
     public AjaxResult addSave(${ClassName} ${className})
     {
+        String uuid = UUID.randomUUID().toString().replaceAll("-","");
+    	${className}.setId(uuid);
         return toAjax(${className}Service.insert${ClassName}(${className}));
     }
 

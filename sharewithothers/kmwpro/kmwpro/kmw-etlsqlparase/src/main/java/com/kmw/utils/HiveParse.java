@@ -7,9 +7,12 @@ import org.apache.hadoop.hive.ql.parse.ParseDriver;
 import org.apache.hadoop.hive.ql.parse.ParseException;
 import org.apache.hadoop.hive.ql.parse.SemanticException;
 
+import com.kmw.etlsqlparase.domain.SqlParameter;
+
 import groovy.lang.ListWithDefault;
 
 import org.apache.hadoop.hive.ql.parse.HiveParser.nullOrdering_return;
+import org.apache.hadoop.hive.ql.parse.HiveParser_IdentifiersParser.booleanValue_return;
 import org.apache.hadoop.hive.ql.parse.HiveParser_IdentifiersParser.intervalExpression_return;
 
 import sun.tools.tree.ThisExpression;
@@ -304,6 +307,29 @@ public class HiveParse {
     
     /*
      * 
+     * 判断当前的SQL语法是否合法的查询语句
+     * 
+     * 
+     * */
+    public static Boolean isCheckSql(String sqlString) {
+    
+       
+       List<String> startKeyList=new ArrayList<String>();
+       startKeyList = Arrays.asList( SqlParameter.startKeyWord);
+      for(int ii=0;ii<startKeyList.size();ii++) {
+    	   String strCompareString  = startKeyList.get(ii).toUpperCase();
+    	  if(strCompareString.startsWith("select".toUpperCase())){
+    		  return true;
+    	  }
+      }
+    	return false;
+    	
+    }
+     
+    
+    
+    /*
+     * 
      * 对SQL后面的结束符处理
      * 
      * 
@@ -321,6 +347,7 @@ public class HiveParse {
     	List<String> list1 = new ArrayList<String>(list); //此集合可操作元素
     	return list1;
     }
+    
     
     /*
      * 
@@ -544,6 +571,7 @@ public class HiveParse {
         for(int ii=0;ii<lstStrings.size();ii++) {
 
         	System.out.println(lstStrings.get(ii));
+        	if(isCheckSql(lstStrings.get(ii))) {
         	String oneSqlString = replaceWildCards(lstStrings.get(ii),lstWildCards);
         	//System.out.println("==========================="+ii);
         	//System.out.println(oneSqlString);
@@ -551,6 +579,8 @@ public class HiveParse {
         	 ASTNode ast = pd.parse(oneSqlString.trim());
         	// System.out.println(ast.toStringTree());
         	 hp.parse(ast);
+        	}
+
         }
         
     }

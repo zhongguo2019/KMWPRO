@@ -38,7 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
 			1=1
             <if test="operType != null  and operType != ''"> and t.oper_type = #{operType}</if>
-            <if test="submitText != null  and submitText != ''"> and t.submit_text = #{submitText}</if>
+            <if test="submitText != null  and submitText != ''"> and t.submit_text like concat('%', #{submitText}, '%') </if>
             <if test="messFromIp != null  and messFromIp != ''"> and t.mess_from_ip = #{messFromIp}</if>
             <if test="messType != null  and messType != ''"> and t.mess_type = #{messType}</if>
             <if test="reportDate != null  and reportDate != ''"> and t.report_date = #{reportDate}</if>
@@ -59,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
         1=1
             <if test="operType != null  and operType != ''"> and t.oper_type = #{operType}</if>
-            <if test="submitText != null  and submitText != ''"> and t.submit_text = #{submitText}</if>
+            <if test="submitText != null  and submitText != ''"> and t.submit_text like concat('%', #{submitText}, '%')</if>
             <if test="messFromIp != null  and messFromIp != ''"> and t.mess_from_ip = #{messFromIp}</if>
             <if test="messType != null  and messType != ''"> and t.mess_type = #{messType}</if>
             <if test="reportDate != null  and reportDate != ''"> and t.report_date = #{reportDate}</if>
@@ -198,7 +198,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
         1=1
             <if test="operType != null  and operType != ''"> and t.oper_type = #{operType}</if>
-            <if test="submitText != null  and submitText != ''"> and t.submit_text = #{submitText}</if>
+            <if test="submitText != null  and submitText != ''"> and t.submit_text like concat('%', #{submitText}, '%')</if>
             <if test="messFromIp != null  and messFromIp != ''"> and t.mess_from_ip = #{messFromIp}</if>
             <if test="messType != null  and messType != ''"> and t.mess_type = #{messType}</if>
             <if test="reportDate != null  and reportDate != ''"> and t.report_date = #{reportDate}</if>

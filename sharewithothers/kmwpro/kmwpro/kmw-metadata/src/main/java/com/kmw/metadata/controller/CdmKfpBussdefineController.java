@@ -2,6 +2,8 @@ package com.kmw.metadata.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -96,6 +98,8 @@ public class CdmKfpBussdefineController extends BaseController
     @ResponseBody
     public AjaxResult addSave(CdmKfpBussdefine cdmKfpBussdefine)
     {
+    	 String uuid = UUID.randomUUID().toString().replaceAll("-","");
+    	cdmKfpBussdefine.setId(uuid);
         return toAjax(cdmKfpBussdefineService.insertCdmKfpBussdefine(cdmKfpBussdefine));
     }
 

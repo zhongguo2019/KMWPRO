@@ -12,17 +12,16 @@ jQuery(function () {
     // 获取当前用户用户userId
     // 以下两行代码调试时注掉
      var urlCode = location.href.split("code=")[1].split('&')[0];
-     var userCode = getcookie("userId");
-     
+     var userCode = getcookie("userId");//
 
     // 以下两行代码调试时打开
-//    var urlCode ='P1iJnyb-09zdfDiAVt6LOAP24DQJOQViJ873bAJIWEQ';
+    // var urlCode ='P1iJnyb-09zdfDiAVt6LOAP24DQJOQViJ873bAJIWEQ';
 	// //置上默认的微信传来的参数code=P1iJnyb-09zdfDiAVt6LOAP24DQJOQViJ873bAJIWEQ&state=STATE
-//    var userCode = 'Zhaozulong'; //置上默认的用户名
+    var userCode = 'KeDaduck'; //置上默认的用户名
     
     
     
-    if (userCode == "") {
+     if (userCode == "") {
       $.ajax({
         url: "http://krmsoft.natapp1.cc/qywx/main/wxgetJSSUser",
         data: {
@@ -40,7 +39,7 @@ jQuery(function () {
           console.log(errorThrown);
         }
       });
-    }
+    } 
     var dropload = $('.content').dropload({
       scrollArea: window,
       loadDownFn: function (me) {
@@ -48,13 +47,13 @@ jQuery(function () {
         // 以下一行代码调试时注掉
     	var data = { userCode:getcookie("userId")};
     	// 以下一行代码调试时注打开
-//         var data={"userCode": "ZhaoZulong" };
+//         var data={"userCode": "KeDaduck" };
                
         $.ajax({
 
           type: 'POST',
           contentType: "application/json;charset=UTF-8",
-          url: 'http://krmsoft.natapp1.cc/qywx/work/wxgetRptDList',
+          url: 'http://krmsoft.natapp1.cc/qywx/work/wxgetRptDListV2',
           dataType: 'json',
           data: JSON.stringify(data),
           success: function (resultValue) {
@@ -73,7 +72,7 @@ jQuery(function () {
             }
   
             var dataValueJSON=eval("("+resultValue.data+")");
-            console.log(dataValueJSON);
+            //console.log(dataValueJSON);
             
             if (pageStart <= dataValueJSON.lists.length) {
               for (var i = pageStart; i < pageEnd; i++) {
@@ -133,35 +132,36 @@ jQuery(function () {
           // 显示当天工作列表
           var data = {
             userCode: getcookie("userId"),
+//            userCode: "KeDaduck",            
             queryDate: e.target.dataset.date
           };
 
           $.ajax({
             type: 'POST',
             contentType: "application/json;charset=UTF-8",
-            url: 'http://krmsoft.natapp1.cc/qywx/work/wxqueryRptList',
+            url: 'http://krmsoft.natapp1.cc/qywx/work/wxqueryRptListV2',
             dataType: 'json',
             data: JSON.stringify(data),
             success: function (resultValue) {
             	var result="";
                 if(resultValue.code==0){
                      result = '<div style="border-bottom: 1px solid #a2a2a2;">\
-                      <div style="display: flex;margin-top:10px;">\
-                        <div style="height:35px">项目名称：</div>\
-                        <div>暂无数据</div>\
-                      </div>\
-                      <div style="margin-top:10px;">\
-                        <div style="display: flex;height: 30px;">\
-                                                        工作内容：</div>\
-                        <div>暂无数据</div>\
-                      </div>\
-                    </div>';
+                                    <div style="display: flex;margin-top:10px;color:#F00">\
+                                    <b>当日工作：</b> </div>\
+                                    <div style="color:#F00"">暂无数据</div>\
+                                    <div style="display: flex;margin-top:10px;color:#00F"">\
+                    	            <b>次日计划：</b> </div>\
+                                    <div style="color:#00F"">暂无数据</div>\
+                              </div>';
                     }else{
-                        var dataValueJSON=eval("("+resultValue.data+")");
-                       for (var i = 0; i < dataValueJSON.lists.length; i++) {
-                          var dataSet = eval("("+dataValueJSON.lists[i] +")");
-                          var nameValue = dataSet.productName;
-                          var workValue = dataSet.workDetail;
+                        var dataValueJSON=eval('('+resultValue.data+')');
+                        
+                        for (var i = 0; i < dataValueJSON.length; i++) {
+                          var dataSet = eval('('+dataValueJSON[i]+')');;
+
+                          var nameValue = dataSet.today.replace(/\n/gm,"</br>");
+                          var workValue =  dataSet.tomorrow.replace(/\n/gm,"</br>"); 
+                          var reporttype = dataSet.reporttype;
                           if(nameValue == ""){
                             nameValue = '暂无数据';
                           }
@@ -169,16 +169,12 @@ jQuery(function () {
                             workValue = '暂无数据';
                           }
                           result += '<div style="border-bottom: 1px solid #a2a2a2;">\
-                            <div style="display: flex;margin-top:10px;">\
-                              <div style="height:35px">项目名称：</div>\
-                              <div>'+ nameValue + '</div>\
-                            </div>\
-                            <div style="margin-top:10px;">\
-                              <div style="display: flex;height: 30px;">\
-                                工作内容：</div>\
-                              <div>'+ workValue + '</div>\
-                            </div>\
-                          </div>';
+                                        <div style="display: flex;height: 30px; color:#F00"><b>当日工作：</b>'+reporttype+'</div>\
+                                        <div style="color:#F00">'+ nameValue + '</div>\
+                                        <div style="margin-top:10px;">\
+                                         <div style="display: flex;height: 30px;color:#00F"><b>次日计划：</b>'+reporttype+'</div>\
+                                         <div style="color:#00F">'+ workValue + '</div>\
+                                     </div>';
                         }
                     	
                     }

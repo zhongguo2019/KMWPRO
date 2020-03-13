@@ -19,7 +19,9 @@ import com.kmw.common.CommonEntity;
 import com.kmw.common.utils.DateUtils;
 import com.kmw.qywx.domain.WxUser;
 import com.kmw.qywx.domain.WxUserGroup;
+import com.kmw.qywx.domain.WxUserGroupRelation;
 import com.kmw.qywx.service.IDoufuTodayWorkService;
+import com.kmw.qywx.service.IWxUserGroupRelationService;
 import com.kmw.qywx.service.IWxUserGroupService;
 import com.kmw.qywx.service.IWxUserService;
 
@@ -33,8 +35,10 @@ public class InforQuaterz {
 	IWxUserGroupService wxUserGroupService;
 	@Autowired
 	IWxUserService wxUserService;
-    @Autowired
-    WeiXinUtil weiXinUtil;
+	@Autowired
+	WeiXinUtil weiXinUtil;
+	@Autowired
+	IWxUserGroupRelationService wxUserGroupRelationService;
 	public InforQuaterz() {
 	}
 
@@ -45,7 +49,7 @@ public class InforQuaterz {
 		Map<String, Object> mpMap = new HashMap<>();
 		if (null == listGroutGroups || listGroutGroups.size() == 0)
 			return;
-		
+
 		// 得到所有组里的用户信息
 		for (int i = 0; i < listGroutGroups.size(); i++) {
 			WxUserGroup wxUserGroup = listGroutGroups.get(i);
@@ -58,7 +62,7 @@ public class InforQuaterz {
 		if (mpMap.size() == 0) {
 			return;
 		}
-		
+
 		// 按组分析日报的未提交情况
 		for (String key : mpMap.keySet()) {
 			List<WxUser> value = (List<WxUser>) mpMap.get(key);
@@ -66,13 +70,14 @@ public class InforQuaterz {
 		}
 
 	}
+
 //每隔一小时更新一下Redis中的token
 	public void changeRedisToken() {
 		logger.info("定时更新redis中的token!");
 		weiXinUtil.setRedisToken();
-		
+
 	}
-	
+
 	/**
 	 * 根据用户分组通知的INSTID发通知消息
 	 */
@@ -80,23 +85,25 @@ public class InforQuaterz {
 
 		String reportToday = DateUtils.DateToStr8();
 		String reportPreday = DateUtils.getPreDateByDate8(reportToday);
-		
+
 		// 得到分组信息表中所有要通知到的小组信息
 		List<WxUserGroup> listGroutGroups = queryAllGroup();
- 		if (null == listGroutGroups || listGroutGroups.size() == 0)
+		if (null == listGroutGroups || listGroutGroups.size() == 0)
 			return;
 		// 得到所有组里的用户信息
 		for (int i = 0; i < listGroutGroups.size(); i++) {
 			WxUserGroup wxUserGroup = listGroutGroups.get(i);
 			WxUser wxUser = new WxUser();
 			wxUser.setDept(wxUserGroup.getGroupCname());
-		    String infoMsgString=queryNotCommitUser(wxUserGroup.getGroupCode(),wxUserGroup.getGroupCname(),wxUserGroup.getUserCode(),reportPreday);
-		    if(infoMsgString == null ) continue;
-		    logger.info("根据各项目组查询后台未提交的用户得到的通知消息：\n"+infoMsgString);
-		    weiXinUtil.SendTextcardMessage("",wxUserGroup.getInstId(),infoMsgString);
+			String infoMsgString = queryNotCommitUser(wxUserGroup.getGroupCode(), wxUserGroup.getGroupCname(),
+					wxUserGroup.getUserCode(), reportPreday);
+			if (infoMsgString == null)
+				continue;
+			logger.info("根据各项目组查询后台未提交的用户得到的通知消息：\n" + infoMsgString);
+			weiXinUtil.SendTextcardMessage("", wxUserGroup.getInstId(), infoMsgString);
 		}
 	}
-	
+
 	/**
 	 * 根据消息用户接收的人员进行通知
 	 */
@@ -104,24 +111,27 @@ public class InforQuaterz {
 
 		String reportToday = DateUtils.DateToStr8();
 		String reportPreday = DateUtils.getPreDateByDate8(reportToday);
-		
+
 		// 得到分组信息表中所有要通知到的小组信息
 		List<WxUserGroup> listGroutGroups = queryAllGroup();
- 		if (null == listGroutGroups || listGroutGroups.size() == 0)
+		if (null == listGroutGroups || listGroutGroups.size() == 0)
 			return;
 		// 得到所有组里的用户信息
 		for (int i = 0; i < listGroutGroups.size(); i++) {
 			WxUserGroup wxUserGroup = listGroutGroups.get(i);
-			if(wxUserGroup.getGroupCname()==null||wxUserGroup.getGroupCode()==null) continue;
+			if (wxUserGroup.getGroupCname() == null || wxUserGroup.getGroupCode() == null)
+				continue;
 			WxUser wxUser = new WxUser();
 			wxUser.setDept(wxUserGroup.getGroupCname());
-			
-		    String infoMsgString=queryNotCommitUser(wxUserGroup.getGroupCode(),wxUserGroup.getGroupCname(),wxUserGroup.getUserCode(),reportPreday);
-		    if(infoMsgString == null ) continue;
-		    logger.info("根据各项目组查询后台未提交的用户得到的通知消息：\n"+infoMsgString);
+
+			String infoMsgString = queryNotCommitUser(wxUserGroup.getGroupCode(), wxUserGroup.getGroupCname(),
+					wxUserGroup.getUserCode(), reportPreday);
+			if (infoMsgString == null)
+				continue;
+			logger.info("根据各项目组查询后台未提交的用户得到的通知消息：\n" + infoMsgString);
 //		    weiXinUtil.SendTextcardMessage("",wxUserGroup.getInstId(),infoMsgString);
-		    weiXinUtil.SendTextcardMessage(wxUserGroup.getUserCode(),"",infoMsgString);
-		    
+			weiXinUtil.SendTextcardMessage(wxUserGroup.getUserCode(), "", infoMsgString);
+
 		}
 	}
 
@@ -131,7 +141,7 @@ public class InforQuaterz {
 		/*
 		 * WxUserGroup wxUserGroup = new WxUserGroup(); List<WxUserGroup> list =
 		 * wxUserGroupService.selectWxUserGroupList(wxUserGroup);
-		 */	
+		 */
 		params.put("isMsg", "1");
 		List<WxUserGroup> list = wxUserGroupService.entityList(params);
 		return list;
@@ -186,7 +196,7 @@ public class InforQuaterz {
 
 	}
 
-	public String queryNotCommitUser(String groupCode, String groupName,String reportTo,String reportdate) {
+	public String queryNotCommitUser(String groupCode, String groupName, String reportTo, String reportdate) {
 		String strRtn = "";
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("groupCode", groupCode);
@@ -194,8 +204,9 @@ public class InforQuaterz {
 		params.put("reportDate", reportdate);
 		List<CommonEntity> lst = doufuTodayWorkService.queryNotCommitUser(params);
 		String userName, userAccount;
-		if(lst ==null ) return null;
-		
+		if (lst == null)
+			return null;
+
 		if (lst.size() != 0) {
 			for (int i = 0; i < lst.size(); i++) {
 				Map<String, Object> mpGroupName = (Map<String, Object>) lst.get(i);
@@ -218,5 +229,42 @@ public class InforQuaterz {
 		return strRtn;
 
 	}
+
+	/**
+	 * 发消息提醒的卡片
+	 */
+	public void promptMsgV1(String title, String content, String url,String instid) {
+
+		 
+		String description = WeiXinParamesUtil.msgTemplate01.replace("{content}", content);
+ 
+		String[] strArrStrings = instid.split(";");
+		List<String> lstStrings =Arrays.asList(strArrStrings);
+		
+		if(lstStrings==null) {
+			return;
+		}else {
+			for(int jj=0;jj<lstStrings.size();jj++) {
+				
+				String toParty = lstStrings.get(jj);
+						Textcard textcard = new Textcard();
+						textcard.setDescription(description);
+						textcard.setTitle(title);
+						textcard.setUrl(url);
+						String toUuser = "";
+					if(instid.equals("")||instid==null) {
+					}else {
+						weiXinUtil.SendTextcardMessageV2(toUuser, toParty, textcard);
+					}
+			}
+			
+		}
+		
+
+		}
+		
+
+
+
 
 }

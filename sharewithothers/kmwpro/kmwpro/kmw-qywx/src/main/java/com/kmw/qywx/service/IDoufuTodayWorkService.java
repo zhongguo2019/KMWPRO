@@ -2,6 +2,8 @@ package com.kmw.qywx.service;
 
 import com.kmw.qywx.domain.DoufuTodayWork;
 
+import net.sf.json.JSONObject;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -133,4 +135,10 @@ public interface IDoufuTodayWorkService
 	public List<CommonEntity>  getReportDateList(Map<String, Object> params);
 	public String saveOperReportLog(String msgType,String content,HttpServletRequest request);
 	public String saveOperReportLogBB(String msgType,String content,HttpServletRequest request);
+
+/*
+ * 个人工作浏览查看个人提交数据
+ * 
+ */
+public 	 String getPersonCommit(  Map<String, Object> queryMap);
 }

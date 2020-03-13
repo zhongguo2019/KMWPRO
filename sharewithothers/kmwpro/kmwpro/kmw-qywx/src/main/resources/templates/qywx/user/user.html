@@ -1,44 +1,49 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org"
+	xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('企业微信用户信息列表')" />
+<th:block th:include="include :: header('企业微信用户信息列表')" />
 </head>
 <body class="gray-bg">
-     <div class="container-div">
-        <div class="row">
-            <div class="col-sm-12 search-collapse">
-                <form id="formId">
-                    <div class="select-list">
-                        <ul>
-                            <li>
-                                <p>姓名：</p>
-                                <input type="text" name="name"/>
-                            </li>
-                            <li>
-                                <p>帐号：</p>
-                                <input type="text" name="account"/>
-                            </li>
-                            <li>
-                                <p>部门：</p>
-                                <input type="text" name="dept"/>
-                            </li>
-                         <!--    <li>
+	<div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								<p>项目组：</p> <select name="groupCode"
+								th:with="type=${@dict.getType('qywx_dept_team')}">
+									<option value="">所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+										th:value="${dict.dictValue}"></option>
+							</select>
+							</li>
+							<li>
+								<p>姓名：</p> <input type="text" name="name" />
+							</li>
+							<li>
+								<p>帐号：</p> <input type="text" name="account" />
+							</li>
+							<li>
+								<p>部门：</p> <input type="text" name="dept" />
+							</li>
+							<!--    <li>
                                 <p>职务：</p>
                                 <input type="text" name="duties"/>
                             </li>
-                          -->  
-                          <!-- <li>
+                          -->
+							<!-- <li>
                                 <p>性别：</p>
                                 <select name="sex" th:with="type=${@dict.getType('')}">
                                     <option value="">所有</option>
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>-->
-                            <li>
-                                <p>手机：</p>
-                                <input type="text" name="mobile"/>
-                            </li>
-                           <!-- <li>
+							<li>
+								<p>手机：</p> <input type="text" name="mobile" />
+							</li>
+							<!-- <li>
                                 <p>座机：</p>
                                 <input type="text" name="phone"/>
                             </li>
@@ -66,39 +71,42 @@
                                 <p>微工作台：</p>
                                 <input type="text" name="wxplat"/>
                             </li>-->
-                            <li>
-                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
-                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
-                            </li>
-                        </ul>
-                    </div>
-                </form>
-            </div>
+							<li><a class="btn btn-primary btn-rounded btn-sm"
+								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm"
+								onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
 
-            <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="qywx:user:add">
-                    <i class="fa fa-plus"></i> 添加
-                </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="qywx:user:edit">
-                    <i class="fa fa-edit"></i> 修改
-                </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="qywx:user:remove">
-                    <i class="fa fa-remove"></i> 删除
-                </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="qywx:user:export">
-                    <i class="fa fa-download"></i> 导出
-                 </a>
-                                 <a class="btn btn-warning" onclick="synchronizeQywxUser();" shiro:hasPermission="qywx:user:export">
-                    <i class="fa fa-download"></i> 同步
-                 </a>
-            </div>
-            <div class="col-sm-12 select-table table-striped">
-                <table id="bootstrap-table"></table>
-            </div>
-        </div>
-    </div>
-    <th:block th:include="include :: footer" />
-    <script th:inline="javascript">
+			<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()"
+					shiro:hasPermission="qywx:user:add"> <i class="fa fa-plus"></i>
+					添加
+				</a> <a class="btn btn-primary single disabled"
+					onclick="$.operate.edit()" shiro:hasPermission="qywx:user:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a> <a class="btn btn-danger multiple disabled"
+					onclick="$.operate.removeAll()"
+					shiro:hasPermission="qywx:user:remove"> <i class="fa fa-remove"></i>
+					删除
+				</a> <a class="btn btn-warning" onclick="$.table.exportExcel()"
+					shiro:hasPermission="qywx:user:export"> <i
+					class="fa fa-download"></i> 导出
+				</a> <a class="btn btn-warning" onclick="synchronizeQywxUser();"
+					shiro:hasPermission="qywx:user:export"> <i
+					class="fa fa-download"></i> 同步
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table"></table>
+			</div>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script th:inline="javascript">
         var editFlag = [[${@permission.hasPermi('qywx:user:edit')}]];
         var removeFlag = [[${@permission.hasPermi('qywx:user:remove')}]];
         var prefix = ctx + "qywx/user";

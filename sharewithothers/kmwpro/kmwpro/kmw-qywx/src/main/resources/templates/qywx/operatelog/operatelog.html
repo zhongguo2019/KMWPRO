@@ -50,20 +50,22 @@
 								<p>报告日期：</p> <input type="text" class="time-input"
 								id="startTime" name="reportDate" />
 							</li>
-							<!--  <li>
-                                <p>补报、日报：</p>
-                                <select name="reportType" th:with="type=${@dict.getType('')}">
+							  <li>
+                                <p>提交状态：</p>
+                                <select name="reportType" >
                                     <option value="">所有</option>
-                                    <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+                                    <option value="0">正常提交</option>
+                                    <option value="1">补报提交</option>
+                                    </option>
                                 </select>
-                            </li> -->
+                            </li> 
 
 
 							<li>
-								<p>用户账号：</p> <input type="text" name="userAccount" />
+								<p>姓名：</p> <input type="text" name="createBy" />
 							</li>
 							<li>
-								<p>提交文本：</p> <input type="text" name="submitText" />
+								<p>提交内容：</p> <input type="text" name="submitText" />
 							</li>							
 							
 							<li><a class="btn btn-primary btn-rounded btn-sm"
@@ -155,7 +157,8 @@
                         }
                     },                {
                         field : 'groupCode', 
-                        title : '所在项目组'
+                        title : '所在项目组',
+                        visible: false
                     },
                     {
                         field : 'updateTime', 

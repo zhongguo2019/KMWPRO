@@ -42,6 +42,7 @@ import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
@@ -1544,7 +1545,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 			logger.info("提交的文本不合法！\n" + content);
 			return null;
 		}
-		if (!lstStrings.get(0).equals("[日报]")) {
+		if (!lstStrings.get(0).contains("日报")) {
 			logger.info("提交的文本不合法！\n" + content);
 			return null;
 		}
@@ -1929,6 +1930,42 @@ return mpRtn;
 }
 
 
+/*
+ * 个人工作浏览查看个人提交数据
+ * 
+ */
+public 	 String  getPersonCommit(Map<String, Object> queryMap) {
+	List<String> lstJson = new ArrayList<String>();
 
+	JSONObject jsonRJsonObject2= new JSONObject();
+	List<QywxUserOperatelog> listDayWork = qywxUserOperatelogService.entityList(queryMap);
+	
+	if(listDayWork==null||listDayWork.size()==0) {
+		return null;
+	}
+	// 遍历所有行。
+	for (int i = 0; i < listDayWork.size(); i++) {
+		QywxUserOperatelog qywxUserOperatelog = listDayWork.get(i);
+		JSONObject jsonRtnJsonObject = new JSONObject();
+		Map<String,Object> mpBlock  = new HashMap<String,Object>();
+		if(qywxUserOperatelog.getReportType().equals("0")) {
+			mpBlock= getBlockString01( qywxUserOperatelog.getSubmitText().toString());
+			jsonRtnJsonObject.put("reporttype", "正常提交");
+		}
+		if(qywxUserOperatelog.getReportType().equals("1")) {
+			mpBlock = getBlockString02( qywxUserOperatelog.getSubmitText().toString() );
+			jsonRtnJsonObject.put("reporttype", "补报提交");
+		}
+		if(mpBlock!=null) {
+			jsonRtnJsonObject.put("today", mpBlock.get("today"));
+			jsonRtnJsonObject.put("tomorrow",mpBlock.get("tomorrow"));
+		}else {
+			jsonRtnJsonObject.put("today", qywxUserOperatelog.getSubmitText().toString());
+		}
+		lstJson.add(jsonRtnJsonObject.toString());
+	}
+	
+	return JSON.toJSON(lstJson).toString();
+}
 
 }
