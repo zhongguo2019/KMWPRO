@@ -1,70 +1,70 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('修改解析ETL加工过程的SQL语法得到中文解释')" />
+    <th:block th:include="include :: header('修改解析ETL')" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-etlsql-edit" th:object="${paraseEtlsql}">
+        <form class="form-horizontal m" id="form-etlsql-edit" th:object="${paraseSqlEtlsql}">
             <input name="id" th:field="*{id}" type="hidden">
-            <div class="form-group">
-                <label class="col-sm-3 control-label">目标表表名英文：</label>
+ <!--            <div class="form-group">    
+                <label class="col-sm-3 control-label">目标表：</label>
                 <div class="col-sm-8">
-                    <textarea name="targetTblenname" class="form-control">[[*{targetTblenname}]]</textarea>
+                    <input name="targetTblenname" th:field="*{targetTblenname}" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">目标表表名中文：</label>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">目标表：</label>
                 <div class="col-sm-8">
-                    <textarea name="targetTblcnname" class="form-control">[[*{targetTblcnname}]]</textarea>
+                    <input name="targetTblcnname" th:field="*{targetTblcnname}" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">来源表表名英文：</label>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">来源表：</label>
                 <div class="col-sm-8">
-                    <textarea name="sourceTblenname" class="form-control">[[*{sourceTblenname}]]</textarea>
+                    <input name="sourceTblenname" th:field="*{sourceTblenname}" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">来源表表名中文：</label>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">来源表：</label>
                 <div class="col-sm-8">
-                    <textarea name="sourceTblcnname" class="form-control">[[*{sourceTblcnname}]]</textarea>
+                    <input name="sourceTblcnname" th:field="*{sourceTblcnname}" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">目标表字段名英文：</label>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">目标字段：</label>
                 <div class="col-sm-8">
-                    <textarea name="targetColenname" class="form-control">[[*{targetColenname}]]</textarea>
+                    <input name="targetColenname" th:field="*{targetColenname}" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">目标表字段名中文：</label>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">目标字段：</label>
                 <div class="col-sm-8">
-                    <textarea name="targetColcnname" class="form-control">[[*{targetColcnname}]]</textarea>
+                    <input name="targetColcnname" th:field="*{targetColcnname}" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">来源表字段名英文：</label>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">来源字段：</label>
                 <div class="col-sm-8">
-                    <textarea name="sourceColenname" class="form-control">[[*{sourceColenname}]]</textarea>
+                    <input name="sourceColenname" th:field="*{sourceColenname}" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">来源表字段名中文：</label>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">来源字段：</label>
                 <div class="col-sm-8">
-                    <textarea name="sourceColcnname" class="form-control">[[*{sourceColcnname}]]</textarea>
+                    <input name="sourceColcnname" th:field="*{sourceColcnname}" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">字段英文关系：</label>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">英文关系：</label>
                 <div class="col-sm-8">
-                    <textarea name="columEnrelations" class="form-control">[[*{columEnrelations}]]</textarea>
+                    <input name="columEnrelations" th:field="*{columEnrelations}" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">字段中文关系：</label>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">中文关系：</label>
                 <div class="col-sm-8">
-                    <textarea name="columCnrelations" class="form-control">[[*{columCnrelations}]]</textarea>
+                    <input name="columCnrelations" th:field="*{columCnrelations}" class="form-control" type="text">
                 </div>
             </div>
             <div class="form-group">    
@@ -84,17 +84,18 @@
                     </select>
                     <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
                 </div>
-            </div>
-            <div class="form-group">
+            </div> -->
+            <div class="form-group">    
                 <label class="col-sm-3 control-label">SQL中的通配符：</label>
                 <div class="col-sm-8">
-                    <textarea name="etlWildcards" class="form-control">[[*{etlWildcards}]]</textarea>
+                    <input name="etlWildcards" th:field="*{etlWildcards}" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group">    
                 <label class="col-sm-3 control-label">解析的SQL：</label>
                 <div class="col-sm-8">
-                    <textarea name="etlSql" class="form-control">[[*{etlSql}]]</textarea>
+        <!--             <input name="etlSql" th:field="*{etlSql}" class="form-control" type="text"> -->
+                     <textarea class="form-control" th:field="*{etlSql}"  id="etlSql" name="etlSql" rows="16" style="min-width: 90%"></textarea>
                 </div>
             </div>
         </form>

@@ -9,7 +9,7 @@ import java.util.Map;
  * 银行束语定义集Mapper接口
  * 
  * @author kmw
- * @date 2020-02-18
+ * @date 2020-03-13
  */
 public interface CdmKfpBussdefineMapper 
 {
@@ -19,7 +19,7 @@ public interface CdmKfpBussdefineMapper
      * @param id 银行束语定义集ID
      * @return 银行束语定义集
      */
-    public CdmKfpBussdefine selectCdmKfpBussdefineById(Long id);
+    public CdmKfpBussdefine selectCdmKfpBussdefineById(String id);
 
     /**
      * 查询银行束语定义集列表
@@ -51,7 +51,7 @@ public interface CdmKfpBussdefineMapper
      * @param id 银行束语定义集ID
      * @return 结果
      */
-    public int deleteCdmKfpBussdefineById(Long id);
+    public int deleteCdmKfpBussdefineById(String id);
 
     /**
      * 批量删除银行束语定义集
@@ -68,18 +68,45 @@ public interface CdmKfpBussdefineMapper
      * @return 结果
      */
     public List<CommonEntity> queryPageInfo(Map<String, Object> params);
-        /**
+    
+    /**
      * 通用实体查询，Map参数 列表查询,返回的是通用实体，不受实体属性限制，相当于map
      * 
      * @param Map<String, Object> params  查询条件以map形式
      * @return 结果
      */
     public List<CommonEntity> queryEntityList(Map<String, Object> params);
-        /**
+    
+    /**
      * 通用实体查询，Map参数 列表查询,返回的是通用实体，不受实体属性限制，相当于map
      * 
      * @param Map<String, Object> params  查询条件以map形式
      * @return 结果
      */
     public CommonEntity queryOneCommon(Map<String, Object> params);
+    
+    /**
+	 * 批量插入数据
+	 */
+	public int insertBatch(List<CdmKfpBussdefine> list);
+	
+	/**
+	 * 列表查询,返回的是实体
+	 */
+	public List<CdmKfpBussdefine> entityList(Map<String, Object> params);
+	
+	/**
+	 * 根据不同条件删除数据，条件可组合
+	 */
+    public int deleteByParams(Map<String, Object> params);
+	
+	/**
+	 * 批量更新
+	 */
+	public int updateBatchEntity( List<CdmKfpBussdefine> list);	
+	
+		/**
+	 * 删除所有表里数据
+	 */
+	 public int deleteCdmKfpBussdefineAll();
 }

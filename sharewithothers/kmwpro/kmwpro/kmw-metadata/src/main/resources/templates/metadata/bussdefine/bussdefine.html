@@ -98,13 +98,11 @@
                 },
                 {
                     field : 'busLeve2', 
-                    title : '二级分类',
-                    visible: false 
+                    title : '二级分类'
                 },
                 {
                     field : 'busLeve3', 
-                    title : '三级分类' ,
-                    visible: false 
+                    title : '三级分类'
                 },
                 {
                     field : 'busCode', 
@@ -120,78 +118,39 @@
                 },
                 {
                     field : 'busMean1', 
-                    title : '业务定义一',
-                    formatter: function(value, row, index) {
-                        return $.table.tooltip(value);
-                    }
-
+                    title : '业务定义一'
                 },
                 {
                     field : 'busMean2', 
-                    title : '业务定义二',
-                    formatter: function(value, row, index) {
-                        return $.table.tooltip(value);
-                    }                        
-
+                    title : '业务定义二'
                 },
                 {
                     field : 'busMean3', 
-                    title : '业务定义三',
-                    visible: false  ,                    
-                    formatter: function(value, row, index) {
-                        return $.table.tooltip(value);
-                    }                        
-
+                    title : '业务定义三'
                 },
                 {
                     field : 'busMean4', 
-                    title : '业务定义四',
-                    visible: false  ,                    
-                    formatter: function(value, row, index) {
-                        return $.table.tooltip(value);
-                    }                        
-
+                    title : '业务定义四'
                 },
                 {
                     field : 'busMean5', 
-                    title : '业务定义五',
-                    visible: false  ,                    
-                    formatter: function(value, row, index) {
-                        return $.table.tooltip(value);
-                    }                        
-
+                    title : '业务定义五'
                 },
                 {
                     field : 'busFitEnv', 
-                    title : '适用场景',
-                    visible: false  ,                    
-                    formatter: function(value, row, index) {
-                        return $.table.tooltip(value);
-                    }                        
-
+                    title : '适用场景'
                 },
                 {
                     field : 'busAccord', 
-                    title : '参考来源',
-                    visible: false  ,                    
-                    formatter: function(value, row, index) {
-                        return $.table.tooltip(value);
-                    }
+                    title : '参考来源'
                 },
                 {
                     field : 'busUseDept', 
-                    title : '使用部门',
-                    visible: false  ,
-                    formatter: function(value, row, index) {
-                        return $.table.tooltip(value);
-                    }
+                    title : '使用部门'
                 },
                 {
                     field : 'busNote', 
-                    title : '使用部门',
-                    formatter: function(value, row, index) {
-                        return $.table.tooltip(value);
-                    }
+                    title : '使用部门'
                 },
                 {
                     title: '操作',
@@ -206,6 +165,27 @@
             };
             $.table.init(options);
         });
+        
+        
+        /* 通过map带参调用后台的方法Demo       
+          function openDemo(){
+        	  var url1 =  prefix+"/tableDataInfo";
+        	  var url2 =  prefix+"/queryPageInfo";
+        	  var url3 =  prefix+"/queryOneEntity";
+              var	data = $('#formId').serialize();
+          	  var config = {
+        	        url: url3,
+        	        type: "post",
+        	        dataType: "json",
+        	        data: data,
+        	        beforeSend: function () {
+        	        //	$.modal.loading("正在处理中，请稍后...");
+        	        },
+        	        success: function(result) {
+        	        }
+        	    };
+        	    $.ajax(config)
+        } */
     </script>
 </body>
 </html>

@@ -9,7 +9,7 @@ import com.kmw.common.core.domain.BaseEntity;
  * 银行束语定义集对象 cdm_kfp_bussdefine
  * 
  * @author kmw
- * @date 2020-02-18
+ * @date 2020-03-13
  */
 public class CdmKfpBussdefine extends BaseEntity
 {

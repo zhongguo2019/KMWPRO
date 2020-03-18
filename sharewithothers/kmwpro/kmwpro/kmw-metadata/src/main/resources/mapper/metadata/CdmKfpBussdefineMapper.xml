@@ -4,41 +4,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kmw.metadata.mapper.CdmKfpBussdefineMapper">
 	<!-- 表字段 声明 -->
-<sql id="CdmKfpBussdefineColumns">
- id, bus_subject, bus_leve1, bus_leve2, bus_leve3, bus_code, bus_cnname, bus_enname, bus_mean1, bus_mean2, bus_mean3, bus_mean4, bus_mean5, bus_fit_env, bus_accord, bus_use_dept, bus_note</sql>
+	<sql id="CdmKfpBussdefineColumns">
+		 id, bus_subject, bus_leve1, bus_leve2, bus_leve3, bus_code, bus_cnname, bus_enname, bus_mean1, bus_mean2, bus_mean3, bus_mean4, bus_mean5, bus_fit_env, bus_accord, bus_use_dept, bus_note	</sql>
 	<!-- 实体与表字段映身声明，返回值 -->
     <resultMap type="CdmKfpBussdefine" id="CdmKfpBussdefineResult">
-        <result property="id"    column="id"    />
-        <result property="busSubject"    column="bus_subject"    />
-        <result property="busLeve1"    column="bus_leve1"    />
-        <result property="busLeve2"    column="bus_leve2"    />
-        <result property="busLeve3"    column="bus_leve3"    />
-        <result property="busCode"    column="bus_code"    />
-        <result property="busCnname"    column="bus_cnname"    />
-        <result property="busEnname"    column="bus_enname"    />
-        <result property="busMean1"    column="bus_mean1"    />
-        <result property="busMean2"    column="bus_mean2"    />
-        <result property="busMean3"    column="bus_mean3"    />
-        <result property="busMean4"    column="bus_mean4"    />
-        <result property="busMean5"    column="bus_mean5"    />
-        <result property="busFitEnv"    column="bus_fit_env"    />
-        <result property="busAccord"    column="bus_accord"    />
-        <result property="busUseDept"    column="bus_use_dept"    />
-        <result property="busNote"    column="bus_note"    />
+		<result property="id"    column="id"    />
+		<result property="busSubject"    column="bus_subject"    />
+		<result property="busLeve1"    column="bus_leve1"    />
+		<result property="busLeve2"    column="bus_leve2"    />
+		<result property="busLeve3"    column="bus_leve3"    />
+		<result property="busCode"    column="bus_code"    />
+		<result property="busCnname"    column="bus_cnname"    />
+		<result property="busEnname"    column="bus_enname"    />
+		<result property="busMean1"    column="bus_mean1"    />
+		<result property="busMean2"    column="bus_mean2"    />
+		<result property="busMean3"    column="bus_mean3"    />
+		<result property="busMean4"    column="bus_mean4"    />
+		<result property="busMean5"    column="bus_mean5"    />
+		<result property="busFitEnv"    column="bus_fit_env"    />
+		<result property="busAccord"    column="bus_accord"    />
+		<result property="busUseDept"    column="bus_use_dept"    />
+		<result property="busNote"    column="bus_note"    />
     </resultMap>
     
 	<!-- 定义查询整张表的SQL -->
     <sql id="selectCdmKfpBussdefineVo">
-        select id, bus_subject, bus_leve1, bus_leve2, bus_leve3, bus_code, bus_cnname, bus_enname, bus_mean1, bus_mean2, bus_mean3, bus_mean4, bus_mean5, bus_fit_env, bus_accord, bus_use_dept, bus_note from cdm_kfp_bussdefine
+        select
+			 id, bus_subject, bus_leve1, bus_leve2, bus_leve3, bus_code, bus_cnname, bus_enname, bus_mean1, bus_mean2, bus_mean3, bus_mean4, bus_mean5, bus_fit_env, bus_accord, bus_use_dept, bus_note        from cdm_kfp_bussdefine
     </sql>
     
 	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
     <select id="queryPageInfo" resultType="com.kmw.common.CommonEntity">
         select
-       	<include refid="CdmKfpBussdefineColumns" /> 
-        from cdm_kfp_bussdefine t
+			<include refid="CdmKfpBussdefineColumns" /> 
+        from	cdm_kfp_bussdefine t
         <where>  
-        1=1
+			1=1
             <if test="busSubject != null  and busSubject != ''"> and t.bus_subject = #{busSubject}</if>
             <if test="busLeve1 != null  and busLeve1 != ''"> and t.bus_leve1 = #{busLeve1}</if>
             <if test="busLeve2 != null  and busLeve2 != ''"> and t.bus_leve2 = #{busLeve2}</if>
@@ -46,21 +47,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="busCode != null  and busCode != ''"> and t.bus_code = #{busCode}</if>
             <if test="busCnname != null  and busCnname != ''"> and t.bus_cnname like concat('%', #{busCnname}, '%')</if>
             <if test="busEnname != null  and busEnname != ''"> and t.bus_enname like concat('%', #{busEnname}, '%')</if>
-            <if test="busMean1 != null  and busMean1 != ''"> and t.bus_mean1 = #{busMean1}</if>
-            <if test="busMean2 != null  and busMean2 != ''"> and t.bus_mean2 = #{busMean2}</if>
-            <if test="busMean3 != null  and busMean3 != ''"> and t.bus_mean3 = #{busMean3}</if>
-            <if test="busMean4 != null  and busMean4 != ''"> and t.bus_mean4 = #{busMean4}</if>
-            <if test="busMean5 != null  and busMean5 != ''"> and t.bus_mean5 = #{busMean5}</if>
-            <if test="busFitEnv != null  and busFitEnv != ''"> and t.bus_fit_env = #{busFitEnv}</if>
-            <if test="busAccord != null  and busAccord != ''"> and t.bus_accord = #{busAccord}</if>
-            <if test="busUseDept != null  and busUseDept != ''"> and t.bus_use_dept = #{busUseDept}</if>
-            <if test="busNote != null  and busNote != ''"> and t.bus_note = #{busNote}</if>
+            <if test="busMean1 != null  and busMean1 != ''"> and t.bus_mean1 like concat('%', #{busMean1}, '%')</if>
+            <if test="busMean2 != null  and busMean2 != ''"> and t.bus_mean2 like concat('%', #{busMean2}, '%')</if>
+            <if test="busMean3 != null  and busMean3 != ''"> and t.bus_mean3 like concat('%', #{busMean3}, '%')</if>
+            <if test="busMean4 != null  and busMean4 != ''"> and t.bus_mean4 like concat('%', #{busMean4}, '%')</if>
+            <if test="busMean5 != null  and busMean5 != ''"> and t.bus_mean5 like concat('%', #{busMean5}, '%')</if>
+            <if test="busFitEnv != null  and busFitEnv != ''"> and t.bus_fit_env like concat('%', #{busFitEnv}, '%')</if>
+            <if test="busAccord != null  and busAccord != ''"> and t.bus_accord like concat('%', #{busAccord}, '%')</if>
+            <if test="busUseDept != null  and busUseDept != ''"> and t.bus_use_dept like concat('%', #{busUseDept}, '%')</if>
+            <if test="busNote != null  and busNote != ''"> and t.bus_note like concat('%', #{busNote}, '%')</if>
         </where>
-        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
-		<if
-			test="sortC != null  and sortC != '' and order != null  and order != ''">
-			ORDER BY t.${sortC} ${order}
-		</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''"> ORDER BY t.${sortC} ${order}
+			</if>
     </select>
     
 	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
@@ -77,33 +76,47 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="busCode != null  and busCode != ''"> and t.bus_code = #{busCode}</if>
             <if test="busCnname != null  and busCnname != ''"> and t.bus_cnname like concat('%', #{busCnname}, '%')</if>
             <if test="busEnname != null  and busEnname != ''"> and t.bus_enname like concat('%', #{busEnname}, '%')</if>
-            <if test="busMean1 != null  and busMean1 != ''"> and t.bus_mean1 = #{busMean1}</if>
-            <if test="busMean2 != null  and busMean2 != ''"> and t.bus_mean2 = #{busMean2}</if>
-            <if test="busMean3 != null  and busMean3 != ''"> and t.bus_mean3 = #{busMean3}</if>
-            <if test="busMean4 != null  and busMean4 != ''"> and t.bus_mean4 = #{busMean4}</if>
-            <if test="busMean5 != null  and busMean5 != ''"> and t.bus_mean5 = #{busMean5}</if>
-            <if test="busFitEnv != null  and busFitEnv != ''"> and t.bus_fit_env = #{busFitEnv}</if>
-            <if test="busAccord != null  and busAccord != ''"> and t.bus_accord = #{busAccord}</if>
-            <if test="busUseDept != null  and busUseDept != ''"> and t.bus_use_dept = #{busUseDept}</if>
-            <if test="busNote != null  and busNote != ''"> and t.bus_note = #{busNote}</if>
-        </where>
-        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
-		<if
-			test="sortC != null  and sortC != '' and order != null  and order != ''">
-			ORDER BY t.${sortC} ${order}
-		</if>
+            <if test="busMean1 != null  and busMean1 != ''"> and t.bus_mean1 like concat('%', #{busMean1}, '%')</if>
+            <if test="busMean2 != null  and busMean2 != ''"> and t.bus_mean2 like concat('%', #{busMean2}, '%')</if>
+            <if test="busMean3 != null  and busMean3 != ''"> and t.bus_mean3 like concat('%', #{busMean3}, '%')</if>
+            <if test="busMean4 != null  and busMean4 != ''"> and t.bus_mean4 like concat('%', #{busMean4}, '%')</if>
+            <if test="busMean5 != null  and busMean5 != ''"> and t.bus_mean5 like concat('%', #{busMean5}, '%')</if>
+            <if test="busFitEnv != null  and busFitEnv != ''"> and t.bus_fit_env like concat('%', #{busFitEnv}, '%')</if>
+            <if test="busAccord != null  and busAccord != ''"> and t.bus_accord like concat('%', #{busAccord}, '%')</if>
+            <if test="busUseDept != null  and busUseDept != ''"> and t.bus_use_dept like concat('%', #{busUseDept}, '%')</if>
+            <if test="busNote != null  and busNote != ''"> and t.bus_note like concat('%', #{busNote}, '%')</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		</where>
+
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''">ORDER BY t.${sortC} ${order}</if>
     </select>   
     
 	<!-- 按map参数查询后台的数据， 查询单条数据,返回的是通用实体，不受实体属性限制，相当于map -->
-	<select id="queryOneCommon"
-		resultType="com.kmw.common.CommonEntity">
-		select
+    <select id="queryOneCommon"	resultType="com.kmw.common.CommonEntity">
+        select
 		<include refid="CdmKfpBussdefineColumns" />
-		  from cdm_kfp_bussdefine t
-		<where>
-			where id = #{id}
+        from cdm_kfp_bussdefine t
+        <where>  
+        1=1
+            <if test="busSubject != null  and busSubject != ''"> and t.bus_subject = #{busSubject}</if>
+            <if test="busLeve1 != null  and busLeve1 != ''"> and t.bus_leve1 = #{busLeve1}</if>
+            <if test="busLeve2 != null  and busLeve2 != ''"> and t.bus_leve2 = #{busLeve2}</if>
+            <if test="busLeve3 != null  and busLeve3 != ''"> and t.bus_leve3 = #{busLeve3}</if>
+            <if test="busCode != null  and busCode != ''"> and t.bus_code = #{busCode}</if>
+            <if test="busCnname != null  and busCnname != ''"> and t.bus_cnname like concat('%', #{busCnname}, '%')</if>
+            <if test="busEnname != null  and busEnname != ''"> and t.bus_enname like concat('%', #{busEnname}, '%')</if>
+            <if test="busMean1 != null  and busMean1 != ''"> and t.bus_mean1 like concat('%', #{busMean1}, '%')</if>
+            <if test="busMean2 != null  and busMean2 != ''"> and t.bus_mean2 like concat('%', #{busMean2}, '%')</if>
+            <if test="busMean3 != null  and busMean3 != ''"> and t.bus_mean3 like concat('%', #{busMean3}, '%')</if>
+            <if test="busMean4 != null  and busMean4 != ''"> and t.bus_mean4 like concat('%', #{busMean4}, '%')</if>
+            <if test="busMean5 != null  and busMean5 != ''"> and t.bus_mean5 like concat('%', #{busMean5}, '%')</if>
+            <if test="busFitEnv != null  and busFitEnv != ''"> and t.bus_fit_env like concat('%', #{busFitEnv}, '%')</if>
+            <if test="busAccord != null  and busAccord != ''"> and t.bus_accord like concat('%', #{busAccord}, '%')</if>
+            <if test="busUseDept != null  and busUseDept != ''"> and t.bus_use_dept like concat('%', #{busUseDept}, '%')</if>
+            <if test="busNote != null  and busNote != ''"> and t.bus_note like concat('%', #{busNote}, '%')</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
 		</where>
-	</select>    
+    </select>    
     
     
 	<!-- 按实体参数来查询后台的数据 -->
@@ -117,20 +130,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="busCode != null  and busCode != ''"> and bus_code = #{busCode}</if>
             <if test="busCnname != null  and busCnname != ''"> and bus_cnname like concat('%', #{busCnname}, '%')</if>
             <if test="busEnname != null  and busEnname != ''"> and bus_enname like concat('%', #{busEnname}, '%')</if>
-            <if test="busMean1 != null  and busMean1 != ''"> and bus_mean1 = #{busMean1}</if>
-            <if test="busMean2 != null  and busMean2 != ''"> and bus_mean2 = #{busMean2}</if>
-            <if test="busMean3 != null  and busMean3 != ''"> and bus_mean3 = #{busMean3}</if>
-            <if test="busMean4 != null  and busMean4 != ''"> and bus_mean4 = #{busMean4}</if>
-            <if test="busMean5 != null  and busMean5 != ''"> and bus_mean5 = #{busMean5}</if>
-            <if test="busFitEnv != null  and busFitEnv != ''"> and bus_fit_env = #{busFitEnv}</if>
-            <if test="busAccord != null  and busAccord != ''"> and bus_accord = #{busAccord}</if>
-            <if test="busUseDept != null  and busUseDept != ''"> and bus_use_dept = #{busUseDept}</if>
-            <if test="busNote != null  and busNote != ''"> and bus_note = #{busNote}</if>
+            <if test="busMean1 != null  and busMean1 != ''"> and bus_mean1 like concat('%', #{busMean1}, '%')</if>
+            <if test="busMean2 != null  and busMean2 != ''"> and bus_mean2 like concat('%', #{busMean2}, '%')</if>
+            <if test="busMean3 != null  and busMean3 != ''"> and bus_mean3 like concat('%', #{busMean3}, '%')</if>
+            <if test="busMean4 != null  and busMean4 != ''"> and bus_mean4 like concat('%', #{busMean4}, '%')</if>
+            <if test="busMean5 != null  and busMean5 != ''"> and bus_mean5 like concat('%', #{busMean5}, '%')</if>
+            <if test="busFitEnv != null  and busFitEnv != ''"> and bus_fit_env like concat('%', #{busFitEnv}, '%')</if>
+            <if test="busAccord != null  and busAccord != ''"> and bus_accord like concat('%', #{busAccord}, '%')</if>
+            <if test="busUseDept != null  and busUseDept != ''"> and bus_use_dept like concat('%', #{busUseDept}, '%')</if>
+            <if test="busNote != null  and busNote != ''"> and bus_note like concat('%', #{busNote}, '%')</if>
         </where>
     </select>
  
  	<!-- 按主键来查询后台的数据 -->   
-    <select id="selectCdmKfpBussdefineById" parameterType="Long" resultMap="CdmKfpBussdefineResult">
+    <select id="selectCdmKfpBussdefineById" parameterType="String" resultMap="CdmKfpBussdefineResult">
         <include refid="selectCdmKfpBussdefineVo"/>
         where id = #{id}
     </select>
@@ -139,7 +152,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="insertCdmKfpBussdefine" parameterType="CdmKfpBussdefine">
         insert into cdm_kfp_bussdefine
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null ">id,</if>
+            <if test="id != null  and id != ''">id,</if>
             <if test="busSubject != null  and busSubject != ''">bus_subject,</if>
             <if test="busLeve1 != null  and busLeve1 != ''">bus_leve1,</if>
             <if test="busLeve2 != null  and busLeve2 != ''">bus_leve2,</if>
@@ -158,7 +171,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="busNote != null  and busNote != ''">bus_note,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null ">#{id},</if>
+            <if test="id != null  and id != ''">#{id},</if>
             <if test="busSubject != null  and busSubject != ''">#{busSubject},</if>
             <if test="busLeve1 != null  and busLeve1 != ''">#{busLeve1},</if>
             <if test="busLeve2 != null  and busLeve2 != ''">#{busLeve2},</if>
@@ -201,8 +214,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id = #{id}
     </update>
 	<!-- 按主键删除数据库中一条数据 -->
-    <delete id="deleteCdmKfpBussdefineById" parameterType="Long">
+    <delete id="deleteCdmKfpBussdefineById" parameterType="String">
         delete from cdm_kfp_bussdefine where id = #{id}
+    </delete>
+    	<!-- 删除表中所有数据 -->
+    <delete id="deleteCdmKfpBussdefineAll">
+        delete from cdm_kfp_bussdefine 
     </delete>
 	<!-- 按主键列表字符串用逗号分隔， 删除数据库中多条数据 -->
     <delete id="deleteCdmKfpBussdefineByIds" parameterType="String">
@@ -211,5 +228,111 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+    
+       <!-- 根据不同条件删除数据，条件可组合 -->
+	<delete id="deleteByParams" parameterType="java.util.Map">
+		delete from cdm_kfp_bussdefine 
+		<where>
+		        
+            <if test="busSubject != null  and busSubject != ''"> and bus_subject = #{busSubject}</if>
+            <if test="busLeve1 != null  and busLeve1 != ''"> and bus_leve1 = #{busLeve1}</if>
+            <if test="busLeve2 != null  and busLeve2 != ''"> and bus_leve2 = #{busLeve2}</if>
+            <if test="busLeve3 != null  and busLeve3 != ''"> and bus_leve3 = #{busLeve3}</if>
+            <if test="busCode != null  and busCode != ''"> and bus_code = #{busCode}</if>
+            <if test="busCnname != null  and busCnname != ''"> and bus_cnname like concat('%', #{busCnname}, '%')</if>
+            <if test="busEnname != null  and busEnname != ''"> and bus_enname like concat('%', #{busEnname}, '%')</if>
+            <if test="busMean1 != null  and busMean1 != ''"> and bus_mean1 like concat('%', #{busMean1}, '%')</if>
+            <if test="busMean2 != null  and busMean2 != ''"> and bus_mean2 like concat('%', #{busMean2}, '%')</if>
+            <if test="busMean3 != null  and busMean3 != ''"> and bus_mean3 like concat('%', #{busMean3}, '%')</if>
+            <if test="busMean4 != null  and busMean4 != ''"> and bus_mean4 like concat('%', #{busMean4}, '%')</if>
+            <if test="busMean5 != null  and busMean5 != ''"> and bus_mean5 like concat('%', #{busMean5}, '%')</if>
+            <if test="busFitEnv != null  and busFitEnv != ''"> and bus_fit_env like concat('%', #{busFitEnv}, '%')</if>
+            <if test="busAccord != null  and busAccord != ''"> and bus_accord like concat('%', #{busAccord}, '%')</if>
+            <if test="busUseDept != null  and busUseDept != ''"> and bus_use_dept like concat('%', #{busUseDept}, '%')</if>
+            <if test="busNote != null  and busNote != ''"> and bus_note like concat('%', #{busNote}, '%')</if>
+			</where>
+	</delete>
+	
+    <!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="entityList" resultMap="CdmKfpBussdefineResult">
+        select
+       	<include refid="CdmKfpBussdefineColumns" /> 
+        from cdm_kfp_bussdefine t
+        <where>  
+        1=1
+            <if test="busSubject != null  and busSubject != ''"> and t.bus_subject = #{busSubject}</if>
+            <if test="busLeve1 != null  and busLeve1 != ''"> and t.bus_leve1 = #{busLeve1}</if>
+            <if test="busLeve2 != null  and busLeve2 != ''"> and t.bus_leve2 = #{busLeve2}</if>
+            <if test="busLeve3 != null  and busLeve3 != ''"> and t.bus_leve3 = #{busLeve3}</if>
+            <if test="busCode != null  and busCode != ''"> and t.bus_code = #{busCode}</if>
+            <if test="busCnname != null  and busCnname != ''"> and t.bus_cnname like concat('%', #{busCnname}, '%')</if>
+            <if test="busEnname != null  and busEnname != ''"> and t.bus_enname like concat('%', #{busEnname}, '%')</if>
+            <if test="busMean1 != null  and busMean1 != ''"> and t.bus_mean1 like concat('%', #{busMean1}, '%')</if>
+            <if test="busMean2 != null  and busMean2 != ''"> and t.bus_mean2 like concat('%', #{busMean2}, '%')</if>
+            <if test="busMean3 != null  and busMean3 != ''"> and t.bus_mean3 like concat('%', #{busMean3}, '%')</if>
+            <if test="busMean4 != null  and busMean4 != ''"> and t.bus_mean4 like concat('%', #{busMean4}, '%')</if>
+            <if test="busMean5 != null  and busMean5 != ''"> and t.bus_mean5 like concat('%', #{busMean5}, '%')</if>
+            <if test="busFitEnv != null  and busFitEnv != ''"> and t.bus_fit_env like concat('%', #{busFitEnv}, '%')</if>
+            <if test="busAccord != null  and busAccord != ''"> and t.bus_accord like concat('%', #{busAccord}, '%')</if>
+            <if test="busUseDept != null  and busUseDept != ''"> and t.bus_use_dept like concat('%', #{busUseDept}, '%')</if>
+            <if test="busNote != null  and busNote != ''"> and t.bus_note like concat('%', #{busNote}, '%')</if>
+        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+        </where>
+
+		<if
+			test="sortC != null  and sortC != '' and order != null  and order != ''">
+			ORDER BY t.${sortC} ${order}
+		</if>
+    </select>     
+    <!-- 批量插入数据 -->
+	<insert id="insertBatch">
+		insert into cdm_kfp_bussdefine(<include refid="CdmKfpBussdefineColumns" />) values 
+		<foreach collection="list" item="item" separator="," >
+		(
+            #{item.id} ,
+            #{item.busSubject} ,
+            #{item.busLeve1} ,
+            #{item.busLeve2} ,
+            #{item.busLeve3} ,
+            #{item.busCode} ,
+            #{item.busCnname} ,
+            #{item.busEnname} ,
+            #{item.busMean1} ,
+            #{item.busMean2} ,
+            #{item.busMean3} ,
+            #{item.busMean4} ,
+            #{item.busMean5} ,
+            #{item.busFitEnv} ,
+            #{item.busAccord} ,
+            #{item.busUseDept} ,
+            #{item.busNote} 		)
+		</foreach>
+	</insert>  
+  	<!-- 根据不同条件删除数据，条件可组合 -->
+	<update id="updateBatchEntity" >
+		<foreach collection="list" item="item" separator=",">
+        update cdm_kfp_bussdefine
+        set
+            id = #{id} ,
+            bus_subject = #{busSubject} ,
+            bus_leve1 = #{busLeve1} ,
+            bus_leve2 = #{busLeve2} ,
+            bus_leve3 = #{busLeve3} ,
+            bus_code = #{busCode} ,
+            bus_cnname = #{busCnname} ,
+            bus_enname = #{busEnname} ,
+            bus_mean1 = #{busMean1} ,
+            bus_mean2 = #{busMean2} ,
+            bus_mean3 = #{busMean3} ,
+            bus_mean4 = #{busMean4} ,
+            bus_mean5 = #{busMean5} ,
+            bus_fit_env = #{busFitEnv} ,
+            bus_accord = #{busAccord} ,
+            bus_use_dept = #{busUseDept} ,
+            bus_note = #{busNote}     <where>
+			id = #{id}
+        </where>
+		</foreach>
+	</update>
     
 </mapper>

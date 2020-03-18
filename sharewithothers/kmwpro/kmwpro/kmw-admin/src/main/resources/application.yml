@@ -7,11 +7,12 @@ kmw:
   # 版权年份
   copyrightYear: 2020
   # 实例演示开关
-  demoEnabled: false
+  demoEnabled: true
   # 文件路径 示例（ Windows配置D:/kmw/uploadPath，Linux配置 /home/kmw/uploadPath）
-  profile: /home/kmw/uploadPath
-#  profile: D:/kmw/uploadPath
+#  profile: /home/kmw/uploadPath
+  profile: D:/kmw/uploadPath
   addressEnabled: true
+  redistoken: true
 
 # 开发环境配置
 server:
@@ -127,3 +128,4 @@ xss:
   excludes: /system/notice/*
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+   

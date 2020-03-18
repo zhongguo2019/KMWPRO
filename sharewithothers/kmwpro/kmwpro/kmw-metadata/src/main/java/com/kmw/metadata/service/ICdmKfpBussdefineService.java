@@ -11,7 +11,7 @@ import com.kmw.common.CommonEntity;
  * 银行束语定义集Service接口
  * 
  * @author kmw
- * @date 2020-02-18
+ * @date 2020-03-13
  */
 public interface ICdmKfpBussdefineService 
 {
@@ -21,7 +21,7 @@ public interface ICdmKfpBussdefineService
      * @param id 银行束语定义集ID
      * @return 银行束语定义集
      */
-    public CdmKfpBussdefine selectCdmKfpBussdefineById(Long id);
+    public CdmKfpBussdefine selectCdmKfpBussdefineById(String id);
 
     /**
      * 查询银行束语定义集列表
@@ -61,32 +61,64 @@ public interface ICdmKfpBussdefineService
      * @param id 银行束语定义集ID
      * @return 结果
      */
-    public int deleteCdmKfpBussdefineById(Long id);
+    public int deleteCdmKfpBussdefineById(String id);
     
     /**
 	 * 分页展示(可带条件查询) 银行束语定义集
 	 * 返回的是通用实体，不受实体属性限制，相当于map
-	 * @param params
+	 * @param Map<String, Object> params
 	 * @return
 	 */
-    
-	public PageInfo<CommonEntity> queryPageInfoEntity(Map<String, Object> params);
+ 	public PageInfo<CommonEntity> queryPageInfoEntity(Map<String, Object> params);
 	
 	/**
 	 * 列表(可带条件查询)  银行束语定义集
 	 * 返回的是通用实体，不受实体属性限制，相当于map
-	 * @param params
+	 * @param Map<String, Object> params
 	 * @return List<CommonEntity>
 	 */
-	
 	public List<CommonEntity> commonList(Map<String, Object> params);
-	
+
 	/**
 	 * 根据不同条件查询一条数据 银行束语定义集
-	 * @param params
+	 * @param Map<String, Object> params
 	 * @return CommonEntity
 	 */
 	public CommonEntity queryOne(Map<String, Object> params);
 
+	/**
+	 * 根据map查询得到实体数据列表 银行束语定义集
+	 * @param Map<String, Object> params
+	 * @return List<CdmKfpBussdefine> 
+	 */
+	public List<CdmKfpBussdefine> entityList(Map<String, Object> params);
+
+	/**
+	 * 根据map内容删除表中字段与map值对应上的所有数据 银行束语定义集
+	 * @param Map<String, Object> params
+	 * @return int
+	 */
+	public int deleteByParams(Map<String, Object> params);
+	
+	/**
+	 * 
+	 * 删除表中所有数据
+	 * @return int
+	 */
+	public int deleteAll();
+	
+	/**
+	 * 批量保存操作 List<CdmKfpBussdefine>
+	 * @param list
+	 * @return
+	 */
+	public int insertBatch(List<CdmKfpBussdefine> list);
+
+  	/**
+	 * 更新操作
+	 * @param List<CdmKfpBussdefine>
+	 * @return
+	 */
+	public int updateBatch(List<CdmKfpBussdefine> list);
     
 }

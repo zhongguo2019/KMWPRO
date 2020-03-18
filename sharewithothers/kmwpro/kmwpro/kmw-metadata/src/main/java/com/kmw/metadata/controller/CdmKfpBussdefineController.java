@@ -1,9 +1,7 @@
 package com.kmw.metadata.controller;
-
+import java.util.UUID;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,7 +34,7 @@ import com.kmw.common.core.page.TableDataInfo;
  * 银行束语定义集Controller
  * 
  * @author kmw
- * @date 2020-02-18
+ * @date 2020-03-13
  */
 @Controller
 @RequestMapping("/metadata/bussdefine")
@@ -54,9 +52,9 @@ public class CdmKfpBussdefineController extends BaseController
         return prefix + "/bussdefine";
     }
 
-    /**
-     * 查询银行束语定义集列表
-     */
+ /**
+ *@function 查询银行束语定义集列表
+ */
     @RequiresPermissions("metadata:bussdefine:list")
     @PostMapping("/list")
     @ResponseBody
@@ -67,9 +65,9 @@ public class CdmKfpBussdefineController extends BaseController
         return getDataTable(list);
     }
 
-    /**
-     * 导出银行束语定义集列表
-     */
+/**
+*@function  导出银行束语定义集列表
+*/
     @RequiresPermissions("metadata:bussdefine:export")
     @PostMapping("/export")
     @ResponseBody
@@ -80,43 +78,43 @@ public class CdmKfpBussdefineController extends BaseController
         return util.exportExcel(list, "bussdefine");
     }
 
-    /**
-     * 新增银行束语定义集
-     */
+/**
+*@function  新增银行束语定义集
+*/
     @GetMapping("/add")
     public String add()
     {
         return prefix + "/add";
     }
 
-    /**
-     * 新增保存银行束语定义集
-     */
+/**
+*@function  新增保存银行束语定义集
+*/
     @RequiresPermissions("metadata:bussdefine:add")
     @Log(title = "银行束语定义集", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
     public AjaxResult addSave(CdmKfpBussdefine cdmKfpBussdefine)
     {
-    	 String uuid = UUID.randomUUID().toString().replaceAll("-","");
+        String uuid = UUID.randomUUID().toString().replaceAll("-","");
     	cdmKfpBussdefine.setId(uuid);
         return toAjax(cdmKfpBussdefineService.insertCdmKfpBussdefine(cdmKfpBussdefine));
     }
 
-    /**
-     * 修改银行束语定义集
-     */
+/**
+*@function 修改银行束语定义集
+*/
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, ModelMap mmap)
+    public String edit(@PathVariable("id") String id, ModelMap mmap)
     {
         CdmKfpBussdefine cdmKfpBussdefine = cdmKfpBussdefineService.selectCdmKfpBussdefineById(id);
         mmap.put("cdmKfpBussdefine", cdmKfpBussdefine);
         return prefix + "/edit";
     }
 
-    /**
-     * 修改保存银行束语定义集
-     */
+/**
+*@function 修改保存银行束语定义集
+*/
     @RequiresPermissions("metadata:bussdefine:edit")
     @Log(title = "银行束语定义集", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
@@ -125,16 +123,15 @@ public class CdmKfpBussdefineController extends BaseController
     {
         return toAjax(cdmKfpBussdefineService.updateCdmKfpBussdefine(cdmKfpBussdefine));
     }
-
-	/**
-	 *按Map参数据查询，得到公共实体后分页
-	 * 
-	 * @param params
-	 * @return
-	 */
+/**
+*@function 按Map参数据查询，得到公共实体后分页	 
+* 
+* @param params
+* @return
+ */
 	@RequestMapping(value = "queryPageInfo", method = RequestMethod.POST)
 	@ResponseBody
-	public PageInfo PageInfo(@RequestParam Map<String, Object> params, Model model) {
+	public PageInfo<CommonEntity> PageInfo(@RequestParam Map<String, Object> params, Model model) {
 		logger.info("【通用实体查询】 分页显示 银行束语定义集 ，Map参数：" + params.toString());
 		TableDataInfo tableDataInfo = new TableDataInfo();
 		params.put("pageNum", 0);
@@ -142,19 +139,17 @@ public class CdmKfpBussdefineController extends BaseController
 		if (params.containsKey("sortC")) { // 如果传过来的参数是驼峰式，这里需要将驼峰转成下划线式
 			params.put("sortC", StringConvert.camelhumpToUnderline(params.get("sortC").toString()));
 		}
-		
-		
 		PageInfo<CommonEntity> page = cdmKfpBussdefineService.queryPageInfoEntity(params);
 		return page;
 
 	}
 
-	/**
-	 * 前台分页显示
-	 * 
-	 * @param params
-	 * @return
-	 */
+/**
+* @function  前台分页显示
+* 
+* @param params
+* @return
+*/
 	@RequestMapping(value = "tableDataInfo", method = RequestMethod.POST)
 	@ResponseBody
 	public TableDataInfo tableDataInfo(@RequestParam Map<String, Object> params, Model model) {
@@ -164,12 +159,12 @@ public class CdmKfpBussdefineController extends BaseController
 
 	}
 
-	/**
-	 * 查询一条记录
-	 * 
-	 * @param params
-	 * @return
-	 */
+/**
+* @function 查询一条记录
+* 
+* @param params
+* @return
+*/
 	@RequestMapping(value = "queryOneEntity", method = RequestMethod.POST)
 	@ResponseBody
 	public CommonEntity queryOne(@RequestParam Map<String, Object> params, ModelMap mmap) {
@@ -181,9 +176,9 @@ public class CdmKfpBussdefineController extends BaseController
 
 
 
-    /**
-     * 删除银行束语定义集
-     */
+/**
+*  @function 删除银行束语定义集
+*/
     @RequiresPermissions("metadata:bussdefine:remove")
     @Log(title = "银行束语定义集", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
