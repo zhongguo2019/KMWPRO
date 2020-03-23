@@ -44,30 +44,37 @@
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
 										th:value="${dict.dictValue}"></option>
 							</select>
-							</li>							
-							
+							</li>
+
+							<li>
+								<p>姓名：</p> <select name="userAccount"
+								th:with="type=${@qywxdict.getWxUserName('')}">
+									<option value="">所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.name}"
+										th:value="${dict.account}"></option>
+							</select>
+							</li>
+
 							<li class="select-time">
 								<p>报告日期：</p> <input type="text" class="time-input"
-								id="startTime" name="reportDate" />
+								id="startTime" placeholder="开始时间" name="beginReportDate" /> <span>-</span>
+								<input type="text" class="time-input" id="endTime"
+								placeholder="结束时间" name="endReportDate" />
 							</li>
-							  <li>
-                                <p>提交状态：</p>
-                                <select name="reportType" >
-                                    <option value="">所有</option>
-                                    <option value="0">正常提交</option>
-                                    <option value="1">补报提交</option>
-                                    </option>
-                                </select>
-                            </li> 
 
 
-							<li>
-								<p>姓名：</p> <input type="text" name="createBy" />
-							</li>
 							<li>
 								<p>提交内容：</p> <input type="text" name="submitText" />
-							</li>							
-							
+							</li>
+							<li>
+								<p>提交状态：</p> <select name="reportType"
+								th:with="type=${@dict.getType('qywx_report_status')}">
+									<option value="">所有</option>
+									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+										th:value="${dict.dictValue}"></option>
+							</select>
+							</li>
+
 							<li><a class="btn btn-primary btn-rounded btn-sm"
 								onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
 								<a class="btn btn-warning btn-rounded btn-sm"
@@ -108,7 +115,7 @@
 
         $(function() {
             var options = {
-                url: prefix + "/list",
+                url: prefix + "/queryInfoList",
                 createUrl: prefix + "/add",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
@@ -135,7 +142,7 @@
                         field : 'submitText', 
                         title : '日报内容',
                         formatter: function(value, row, index) {
-                            return $.table.tooltip(value);
+                            return $.table.tooltip(value,60);
                         }
                     },
                     {

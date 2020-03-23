@@ -232,33 +232,52 @@ public class FileUploadUtils {
 		}
 	}
 
+	
+	/**
+	 * 过滤注释
+	 * @param sql
+	 * @return
+	 */
+	public static String filterSqlComment(String sql) {
+		StringBuilder result = new StringBuilder();
+		String[] lines = sql.split("\n");
+		for (int i = 0; i < lines.length; i++) {
+			String line = lines[i];
+			// 如果是空行或者trim后是以“--”开头，则跳过改行
+			if(line == null || line.equals("") || line.trim().startsWith("--")) {
+				continue;
+			} else {
+				result.append(line);
+			}
+		}
+		return result.toString();
+	}
+	
 	public static final String readTxtFileContent(MultipartFile file) throws IOException {
 
 		File f = null;
 		if (file.equals("") || file.getSize() <= 0) {
-			file = null;
+          return null;
 		} else {
 			InputStream ins = file.getInputStream();
 			f = new File(file.getOriginalFilename());
 			inputStreamToFile(ins, f);
 		}
 
-		/*
-		 * if (!desc.getParentFile().exists()) { desc.getParentFile().mkdirs(); } if
-		 * (!desc.exists()) { desc.createNewFile(); }
-		 */
+
 		InputStreamReader isr = new InputStreamReader(new FileInputStream(f), "UTF-8");
-		String contentString = "";
+ 
 		ArrayList<String> arrayList = new ArrayList<>();
 		BufferedReader reader = null;
-		StringBuffer sbf = new StringBuffer();
+ 
+		StringBuilder result = new StringBuilder();
 		try {
 			reader = new BufferedReader(isr );
 			String tempStr;
 			while ((tempStr = reader.readLine()) != null) {
 				arrayList.add(tempStr);
-				sbf.append(tempStr);
-			}
+				result.append(System.lineSeparator() + tempStr);
+ 			}
 			reader.close();
 
 		} catch (IOException e) {
@@ -273,16 +292,7 @@ public class FileUploadUtils {
 			}
 		}
 		
-		
-		// 对ArrayList中存储的字符串进行处理 
-				int length = arrayList.size();
-				for (int i = 0; i < length; i++) {
-					String s = arrayList.get(i);
-					System.out.println(s);
-					contentString = contentString+"\n"+	 s;
-					 
-				}
-		//		return sbf.toString();
-		return contentString;
+		return result.toString();
+ 
 	}
 }

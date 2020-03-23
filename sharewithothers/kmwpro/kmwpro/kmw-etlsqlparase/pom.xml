@@ -16,7 +16,12 @@
 	</description>
 
 	<dependencies>
-
+        <!-- 元数据-->
+        <dependency>
+            <groupId>com.kmw</groupId>
+            <artifactId>kmw-metadata</artifactId>
+        </dependency>
+        
 		<!-- 通用工具 -->
 		<dependency>
 			<groupId>com.kmw</groupId>

@@ -1,18 +1,14 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('修改解析ETL')" />
+<th:block th:include="include :: header('修改解析ETL')" />
 </head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-etlsql-edit" th:object="${paraseSqlEtlsql}">
-            <input name="id" th:field="*{id}" type="hidden">
- <!--            <div class="form-group">    
-                <label class="col-sm-3 control-label">目标表：</label>
-                <div class="col-sm-8">
-                    <input name="targetTblenname" th:field="*{targetTblenname}" class="form-control" type="text">
-                </div>
-            </div>
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-etlsql-edit"
+			th:object="${paraseSqlEtlsql}">
+			<input name="id" th:field="*{id}" type="hidden">
+			<!--      
             <div class="form-group">    
                 <label class="col-sm-3 control-label">目标表：</label>
                 <div class="col-sm-8">
@@ -61,12 +57,7 @@
                     <input name="columEnrelations" th:field="*{columEnrelations}" class="form-control" type="text">
                 </div>
             </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">中文关系：</label>
-                <div class="col-sm-8">
-                    <input name="columCnrelations" th:field="*{columCnrelations}" class="form-control" type="text">
-                </div>
-            </div>
+
             <div class="form-group">    
                 <label class="col-sm-3 control-label">SQL类型：</label>
                 <div class="col-sm-8">
@@ -84,34 +75,67 @@
                     </select>
                     <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
                 </div>
-            </div> -->
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">SQL中的通配符：</label>
-                <div class="col-sm-8">
-                    <input name="etlWildcards" th:field="*{etlWildcards}" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">解析的SQL：</label>
-                <div class="col-sm-8">
-        <!--             <input name="etlSql" th:field="*{etlSql}" class="form-control" type="text"> -->
-                     <textarea class="form-control" th:field="*{etlSql}"  id="etlSql" name="etlSql" rows="16" style="min-width: 90%"></textarea>
-                </div>
-            </div>
-        </form>
-    </div>
-    <th:block th:include="include :: footer" />
-    <script type="text/javascript">
-        var prefix = ctx + "etlsqlparase/etlsql";
-        $("#form-etlsql-edit").validate({
-            focusCleanup: true
-        });
+            </div> 
+			<div class="form-group">
+				<label class="col-sm-3 control-label">SQL中的通配符：</label>
+				<div class="col-sm-8">
+					<input name="etlWildcards" th:field="*{etlWildcards}"
+						class="form-control" type="text">
+				</div>
+			</div>-->
+			<div class="form-group">
+				<label class="col-sm-3 control-label">解析的SQL：</label>
+				<div class="col-sm-8">
 
-        function submitHandler() {
-            if ($.validate.form()) {
-                $.operate.save(prefix + "/edit", $('#form-etlsql-edit').serialize());
-            }
-        }
-    </script>
+					<textarea class="form-control" th:field="*{etlSql}" id="etlSql"
+						name="etlSql" rows="16" style="min-width: 90%"></textarea>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">来源表：</label>
+				<div class="col-sm-8">
+					<textarea class="form-control" th:field="*{sourceTblenname}"
+						id="sourceTblenname" name="sourceTblenname" rows="5"
+						style="min-width: 90%"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">目标表：</label>
+				<div class="col-sm-8">
+					<textarea class="form-control" th:field="*{targetTblenname}"
+						id="targetTblenname" name="targetTblenname" rows="3"
+						style="min-width: 90%"></textarea>
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">关系字段：</label>
+				<div class="col-sm-8">
+
+					<textarea class="form-control" th:field="*{columCnrelations}"
+						id="columCnrelations" name="columCnrelations" rows="10"
+						style="min-width: 90%"></textarea>
+
+				</div>
+			</div>
+		</form>
+	</div>
+	<th:block th:include="include :: footer" />
+	<script type="text/javascript">
+		var prefix = ctx + "etlsqlparase/etlsql";
+		$("#form-etlsql-edit").validate({
+			focusCleanup : true
+		});
+
+		function submitHandler() {
+			if ($.validate.form()) {
+				$.operate.save(prefix + "/edit", $('#form-etlsql-edit')
+						.serialize());
+			}
+		}
+	</script>
 </body>
 </html>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmw.etlsqlparase.mapper.SysFileInfoMapper">
+	<!-- 表字段 声明 -->
+	<sql id="SysFileInfoColumns">
+		 id, file_id, file_name, file_path	</sql>
+	<!-- 实体与表字段映身声明，返回值 -->
+    <resultMap type="SysFileInfo" id="SysFileInfoResult">
+		<result property="id"    column="id"    />
+		<result property="fileId"    column="file_id"    />
+		<result property="fileName"    column="file_name"    />
+		<result property="filePath"    column="file_path"    />
+    </resultMap>
+    
+	<!-- 定义查询整张表的SQL -->
+    <sql id="selectSysFileInfoVo">
+        select
+			 id, file_id, file_name, file_path        from sys_file_info
+    </sql>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryPageInfo" resultType="com.kmw.common.CommonEntity">
+        select
+			<include refid="SysFileInfoColumns" /> 
+        from	sys_file_info t
+        <where>  
+			1=1
+            <if test="fileId != null  and fileId != ''"> and t.file_id = #{fileId}</if>
+            <if test="fileName != null  and fileName != ''"> and t.file_name like concat('%', #{fileName}, '%')</if>
+            <if test="filePath != null  and filePath != ''"> and t.file_path = #{filePath}</if>
+        </where>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''"> ORDER BY t.${sortC} ${order}
+			</if>
+    </select>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryEntityList" resultType="com.kmw.common.CommonEntity">
+        select
+       	<include refid="SysFileInfoColumns" /> 
+        from sys_file_info t
+        <where>  
+        1=1
+            <if test="fileId != null  and fileId != ''"> and t.file_id = #{fileId}</if>
+            <if test="fileName != null  and fileName != ''"> and t.file_name like concat('%', #{fileName}, '%')</if>
+            <if test="filePath != null  and filePath != ''"> and t.file_path = #{filePath}</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		</where>
+
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''">ORDER BY t.${sortC} ${order}</if>
+    </select>   
+    
+	<!-- 按map参数查询后台的数据， 查询单条数据,返回的是通用实体，不受实体属性限制，相当于map -->
+    <select id="queryOneCommon"	resultType="com.kmw.common.CommonEntity">
+        select
+		<include refid="SysFileInfoColumns" />
+        from sys_file_info t
+        <where>  
+        1=1
+            <if test="fileId != null  and fileId != ''"> and t.file_id = #{fileId}</if>
+            <if test="fileName != null  and fileName != ''"> and t.file_name like concat('%', #{fileName}, '%')</if>
+            <if test="filePath != null  and filePath != ''"> and t.file_path = #{filePath}</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		</where>
+    </select>    
+    
+    
+	<!-- 按实体参数来查询后台的数据 -->
+    <select id="selectSysFileInfoList" parameterType="SysFileInfo" resultMap="SysFileInfoResult">
+        <include refid="selectSysFileInfoVo"/>
+        <where>  
+            <if test="fileId != null  and fileId != ''"> and file_id = #{fileId}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="filePath != null  and filePath != ''"> and file_path = #{filePath}</if>
+        </where>
+    </select>
+ 
+ 	<!-- 按主键来查询后台的数据 -->   
+    <select id="selectSysFileInfoById" parameterType="String" resultMap="SysFileInfoResult">
+        <include refid="selectSysFileInfoVo"/>
+        where id = #{id}
+    </select>
+    
+ 	<!-- 插入数据库一条数据 -->       
+    <insert id="insertSysFileInfo" parameterType="SysFileInfo">
+        insert into sys_file_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''">id,</if>
+            <if test="fileId != null  and fileId != ''">file_id,</if>
+            <if test="fileName != null  and fileName != ''">file_name,</if>
+            <if test="filePath != null  and filePath != ''">file_path,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''">#{id},</if>
+            <if test="fileId != null  and fileId != ''">#{fileId},</if>
+            <if test="fileName != null  and fileName != ''">#{fileName},</if>
+            <if test="filePath != null  and filePath != ''">#{filePath},</if>
+         </trim>
+    </insert>
+	<!-- 按主键更新数据库一条数据 -->
+    <update id="updateSysFileInfo" parameterType="SysFileInfo">
+        update sys_file_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fileId != null  and fileId != ''">file_id = #{fileId},</if>
+            <if test="fileName != null  and fileName != ''">file_name = #{fileName},</if>
+            <if test="filePath != null  and filePath != ''">file_path = #{filePath},</if>
+        </trim>
+        where id = #{id}
+    </update>
+	<!-- 按主键删除数据库中一条数据 -->
+    <delete id="deleteSysFileInfoById" parameterType="String">
+        delete from sys_file_info where id = #{id}
+    </delete>
+    	<!-- 删除表中所有数据 -->
+    <delete id="deleteSysFileInfoAll">
+        delete from sys_file_info 
+    </delete>
+	<!-- 按主键列表字符串用逗号分隔， 删除数据库中多条数据 -->
+    <delete id="deleteSysFileInfoByIds" parameterType="String">
+        delete from sys_file_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+       <!-- 根据不同条件删除数据，条件可组合 -->
+	<delete id="deleteByParams" parameterType="java.util.Map">
+		delete from sys_file_info 
+		<where>
+		        
+            <if test="fileId != null  and fileId != ''"> and file_id = #{fileId}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+            <if test="filePath != null  and filePath != ''"> and file_path = #{filePath}</if>
+			</where>
+	</delete>
+	
+    <!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="entityList" resultMap="SysFileInfoResult">
+        select
+       	<include refid="SysFileInfoColumns" /> 
+        from sys_file_info t
+        <where>  
+        1=1
+            <if test="fileId != null  and fileId != ''"> and t.file_id = #{fileId}</if>
+            <if test="fileName != null  and fileName != ''"> and t.file_name like concat('%', #{fileName}, '%')</if>
+            <if test="filePath != null  and filePath != ''"> and t.file_path = #{filePath}</if>
+        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+        </where>
+
+		<if
+			test="sortC != null  and sortC != '' and order != null  and order != ''">
+			ORDER BY t.${sortC} ${order}
+		</if>
+    </select>     
+    <!-- 批量插入数据 -->
+	<insert id="insertBatch">
+		insert into sys_file_info(<include refid="SysFileInfoColumns" />) values 
+		<foreach collection="list" item="item" separator="," >
+		(
+            #{item.id} ,
+            #{item.fileId} ,
+            #{item.fileName} ,
+            #{item.filePath} 		)
+		</foreach>
+	</insert>  
+  	<!-- 根据不同条件删除数据，条件可组合 -->
+	<update id="updateBatchEntity" >
+		<foreach collection="list" item="item" separator=",">
+        update sys_file_info
+        set
+            id = #{id} ,
+            file_id = #{fileId} ,
+            file_name = #{fileName} ,
+            file_path = #{filePath}     <where>
+			id = #{id}
+        </where>
+		</foreach>
+	</update>
+    
+</mapper>

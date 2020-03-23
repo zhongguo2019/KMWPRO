@@ -1529,7 +1529,7 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 		params.put("reportDate", DateUtils.DateToStr8());
 		params.put("userAccount", wxUserSession.getAccount());
 		params.put("reportType", qywxUserOperatelog.getReportType());
-		params.put("submitText", content);
+//		params.put("submitText", content);
 		qywxUserOperatelogService.deleteByParams(params);
 		qywxUserOperatelogService.insertQywxUserOperatelog(qywxUserOperatelog);
 		return rtnString;
@@ -1655,15 +1655,15 @@ public class DoufuTodayWorkServiceImpl implements IDoufuTodayWorkService {
 		qywxUserOperatelog.setRemark(yqztString + ";" + gzxString);
 		qywxUserOperatelog.setOperType("1");
 		qywxUserOperatelog.setReportType(isBuBaoFlag);
-
+//20200318 去掉按文本进行对比删除，保证当天只有一天是正常的日报。
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("operType", "1");
-		params.put("reportDate", DateUtils.DateToStr8());
-		params.put("userAccount", wxUserSession.getAccount());
+		params.put("reportDate", qywxUserOperatelog.getReportDate());
+		params.put("userAccount",qywxUserOperatelog.getUserAccount());
 		params.put("reportType", qywxUserOperatelog.getReportType());
-		params.put("submitText", content);
-		qywxUserOperatelogService.deleteByParams(params);
-		qywxUserOperatelogService.insertQywxUserOperatelog(qywxUserOperatelog);
+		//params.put("submitText", content);
+		int delcnt = qywxUserOperatelogService.deleteByParams(params);
+		int insrt = qywxUserOperatelogService.insertQywxUserOperatelog(qywxUserOperatelog);
 		return rtnString;
 	}
 

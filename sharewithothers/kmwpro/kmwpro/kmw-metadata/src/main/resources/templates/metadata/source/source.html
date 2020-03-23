@@ -1,0 +1,363 @@
+ 
+<!-- 公用 引入css js  -->
+@layout("/hAdmin/public.html"){} 
+	<div class="row wrapper border-bottom white-bg page-heading">
+		<div class="col-sm-12">
+
+			<ol class="breadcrumb">
+				<li><a calss="J_menuItem" href="#">主页</a></li>
+				<li><strong>数据源管理</strong></li>
+			</ol>
+		</div>
+	</div>
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row" style="margin:0 2px">
+			<div class="col-md-12">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content">
+						<form action="${ctxPath}/report/datasource/list" method="post"
+							id="datasource-select-form" target="list-page" class="clearfix form-horizontal">
+							<div class="row">
+								<div class="form-group col-sm-2 col-md-3">
+									<label class="col-sm-5 col-md-5 control-label" >类型：</label>
+									<div class="col-sm-7 col-md-7">
+										<select name="dstype" class="chosen-select" id="dstype-select"
+											data-placeholder="选择类型">
+											<option value="All">请选择</option> @for(datatype in datatypes){
+								<option value="${datatype.dicvalue!}">
+									${datatype.dicname!}</option> @}
+										</select>
+									</div>
+								</div>
+								<div class="form-group col-sm-2 col-md-2" id="queryOne" style="padding:0px 0px">
+									<label class="col-sm-5 col-md-5 control-label">名称：</label>
+									<div class="col-sm-7 col-md-7" style="padding:0px 0px">
+										<input type="text" class="form-control" name="dsname" />
+									</div>
+									
+								</div>
+							<div class="form-group col-sm-2 col-md-2" style="margin-left:10px">
+									<span class="btn  btn-primary btn-sm" id="ok">查询</span> <span class="btn  btn-primary btn-sm" id="moreOrreduce">更多过滤</span>
+								</div>	
+							</div>
+						</form>
+						<div class="hr-line-dashed"></div>
+						<div class="row row-lg">
+							<div class="col-sm-12 col-md-12 col-lg-12">
+								<!-- Example Events -->
+								<div class="example-wrap">
+									<div class="example" id="list-page">
+										<table id="datasource_table" style="white-space:nowrap;">
+
+										</table>
+									</div>
+								</div>
+								<!-- End Example Events -->
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+
+		</div>
+
+
+		<div id="datasource_toolbar">
+			<button type="button" class="btn btn-primary btn-sm"
+				id="add_datasource">
+				<i class="ace-icon fa fa-plus-circle middle-120"></i>新建数据源
+			</button>
+			<button type="button" class="btn btn-primary btn-sm"
+				id="export_datasource">
+				<i class="ace-icon fa fa-plus-circle middle-120"></i>批量导出
+			</button>
+			<button type="button" class="btn btn-primary btn-sm"
+				id="import_datasource">
+				<i class="ace-icon fa fa-plus-circle middle-120"></i>导入数据源
+			</button>
+			<form id="importDatasource"
+				method="post" enctype="multipart/form-data">
+				<input class="hidden" type="file" name="file" id="file" value="" accept=".dataSource">
+			</form>
+		</div>
+
+</div>
+
+<script>
+   $(".chosen-select").chosen({width: "100%",search_contains: true});
+   window.operateEvents1 = {  
+        'click .update-datasource': function(e, value, row, index) {  
+          $.cuslayer({
+				mode:"page",
+				url: $(this).data("url"),
+				title: $(this).data("title"),
+				formId:"datasource-update-form",
+				data: {"dscode":row.dscode},
+				width:"550px",
+				height:"600px",
+				btn:['<i class="ace-icon fa fa-floppy-o middle-120"></i>&nbsp;保存', '<i class="ace-icon fa fa-times-circle middle-180"></i>&nbsp;测试','<i class="ace-icon fa fa-times-circle middle-120"></i>&nbsp;关闭'],
+				btn2:function(){
+					//ajax测试请求
+					$("#datasource-update-form").ajaxSubmit({
+						type : 'post',
+						url : '${ctxPath}/report/datasource/check',
+						success : function(data) {
+							if (data.code == 1) {
+								successMsg("链接可用！");
+							} else {
+								failMsg(data.msg);
+							}
+						}
+					});
+					return false; //阻止窗口关闭
+				},
+				btn3:function(index, layero){
+					//关闭按钮
+					layer.closeAll('tips');
+				}
+			});  
+		/* 	var params={
+	                 type: 1,
+	                 title: $(this).data("title"),
+	                 data: {"dscode":$(this).data("data")},
+	                 shadeClose: true,
+	                 shade: false,
+	                 maxmin: true, //开启最大化最小化按钮
+	                 area: ['650px', '650px'],
+	                 btn: ['保存','取消'],  
+	                 content: ''};
+			$.ajax({
+				url: $(this).data("url"),
+				data: {"dscode":$(this).data("data")},
+				type: 'post',
+				dataType: 'html',
+			}).done(function(result) {
+				params.content = result;
+				var layerIndex = layer.open(params);
+				return layerIndex;
+			}).fail(function(err) {
+				failMsg("操作失败！");
+			}); */
+			 
+        	 
+        }
+    };  
+   
+ //导出公式数据
+	$("#export_datasource").click(function(){
+		var select = $('#datasource_table').bootstrapTable("getSelections");
+		if(select.length<1){
+			 failMsg("请至少选中一条数据集信息导出");
+			 return false;
+		}
+		//创建临时表单
+		var $tempForm = $("<form style='display:none;'></form>");
+		var $input = $("<input name='jsonString' type='hidden' value='" + JSON.stringify(select)
+					+ "'/>");
+		$tempForm.append($input);
+		var $input2 = $("<input name='fileName' type='hidden' value='导出数据源信息'/>");
+		$tempForm.append($input2);
+		$("body").append($tempForm);
+		$tempForm.attr("action", "${ctxPath}/report/datasource/exportDataSource");
+		$tempForm.attr("method", "post");
+		$tempForm.submit();
+	});
+ 
+ 	//导入公式
+ 	$("#import_datasource").click(function (){
+ 		$("#file").click();
+ 	})
+ 	
+ 	//选中文件 表单提交
+	$("#file").change(function(){
+		var fileName= $("#file").val().substring($("#file").val().lastIndexOf("\\")+1);
+		var suffix = fileName.substring(fileName.lastIndexOf(".")+1)
+		if(suffix!='dataSource'){
+			failMsg("该文件不是 datasouce 文件， 不能进行导入!");
+		    return;
+		}
+		$("#importDatasource").ajaxSubmit({
+	        type: 'post', // 提交方式 get/post
+	        url: '${ctxPath}/report/datasource/importDataSource', // 需要提交的 url
+	        success: function(data) { // data 保存提交后返回的数据，一般为 json 数据
+	            // 此处可对 data 作相关处理
+	           if (data.code == 1) {
+                    successMsg(data.msg,function() {
+                        layer.closeAll();
+                        location.reload();
+                    });
+               } else {
+                    failMsg(data.data);
+               }
+	        }
+	    });
+		$("#importDatasource").resetForm(); // 提交后重置表单
+	});
+ 	
+ 	
+ 	//数据源表格
+ 	$(function(){
+		var $table = $('#datasource_table');
+	    $table.bootstrapTable({
+	    	iconSize:'sm',
+			url : '${ctxPath}/report/datasource/list?r='+Math.random(),
+			toolbar:'#datasource_toolbar',
+			cache: false,
+			singleSelect:false,
+			clickToSelect:false,
+			striped : true,
+            showColumns: true,
+            showRefresh:true,
+			pagination : true, 
+			pageNumber : 1,//首页页码
+			pageSize : 10,//页面显示条数
+			pageList : [10, 25, 50, 100 ],
+			sidePagination : 'server',//服务器端分页
+			columns : [
+				{checkbox : true}, 
+			 	{field:"show_order",title : "序号",sortable : true,formatter: function(value, row, index){return index;}},
+			 	{field:"dscode",title : "编码"},
+				{field:"dsname",title : "名称"},
+				{field:"dstype",title:"类型", formatter: function(value, row, index){
+					var result = "";
+					var datatypes = [];
+					@for(datatype in datatypes){
+						datatypes.push({name:"${datatype.dicname!}	",value:"${datatype.dicvalue!}"});
+					@}
+					$(datatypes).each(function(i,type){
+						if(type.value == value){
+							result = type.name;	
+							return false;
+						}
+					})
+					return result;
+				}},
+				{field:"dsdriver",title:"驱动",sortable : false},
+				{field:"dsurl",title:"链接地址",sortable : false},
+				{field:"create_user",title:"创建人",sortable : false},
+				{field:"defaultschema",title:"schema",sortable : false},
+				{field:"",title : "操作",
+					events: operateEvents1,  
+					formatter : function(value, row, index) {
+						var str = '';		
+					    if('${createBy}' == row.create_user){
+					    	str += '<a class="green update-datasource" href="javascript:void(0);" title="编辑" ' +
+							'data-title="<'+row.dsname+'>编辑" '+
+							'data-url="${ctxPath}/report/datasource/edit/showlayer"'+
+							'data-data="{dscode:\''+row.dscode+'\'}" data-width="400px" data-height="600px" '+
+							'data-formId="datasource-update-form"'+ 
+							'><i class="ace-icon fa fa-pencil bigger-130"></i>&nbsp;编辑</a>'+
+							'&nbsp;&nbsp;&nbsp;&nbsp;';
+							str += '<a class="green" href="javascript:void(0);" title="分享"' +
+							'data-title="<'+row.dsname+'>分享" data-mode="page"'+
+							'data-url="${ctxPath}/report/datasource/share/showlayer"'+
+							'data-height=320px '+
+							'data-data="{dscode:\''+row.dscode+'\','+
+							'type:\'datasource\',dsname:\''+row.dsname+'\'}" '+
+							'><i class="glyphicon glyphicon-share"></i>&nbsp;分享</a>'+
+							'&nbsp;&nbsp;&nbsp;&nbsp;';
+							str += '<a class="red" href="javascript:void(0);" title="删除"' +
+							'data-title="<'+row.dsname+'>删除" data-mode="del"'+
+							'data-msg="你确定删除数据源<'+row.dsname+'>吗?"'+
+							'data-url="${ctxPath}/report/datasource/delete"'+
+							'data-data="{dscode:\''+row.dscode+'\'}">'+
+							'<i class="ace-icon fa fa-trash-o bigger-130"></i>&nbsp;删除</a>'+
+							'&nbsp;&nbsp;&nbsp;&nbsp;';
+							
+							str += '<a class="red" href="javascript:void(0);" title="表权限"' +
+							'data-title="<'+row.dsname+'>表权限" data-mode="page"'+
+							'data-url ="${ctxPath}/report/datasource/tablepower/showlayer"'+
+							'data-data="{dscode:\''+row.dscode+'\'}"'+
+							'data-width="100%" data-height="100%" '+
+							'>'+
+							'<i class="ace-icon fa fa-comment bigger-130"></i>&nbsp;表权限</a>';
+					    }
+						return str;
+					}
+				}
+				],
+				contentType : "application/x-www-form-urlencoded",
+				queryParamsType : "limit",
+				dataType : "json",
+				method : "post",
+				queryParams : function(params){
+					var json = $("#datasource-select-form").serializeJson();
+					$.extend(params,json);
+					return params;
+				}
+		});
+	   // $table.bootstrapTable('resetView', {height: $(window).height()-$(".bootstrap-table").offset().top-15});
+	    
+	})
+	 
+	$("#ok").click(function(){
+		var params = jQuery("#datasource-select-form").serializeJson();
+		$('#datasource_table').bootstrapTable("refresh", {query: params});
+	}); 
+	
+	$("#moreOrreduce").click(function(){
+		if($(this).text()=='减少过滤'){
+			$("#queryOne").next().next().remove();
+			$("#queryOne").next().remove();
+			$("#moreOrreduce").text("更多过滤");
+		}else{
+			var str = '';
+			str += '<div class="form-group col-sm-3 col-md-3" style="margin-left: 10px;"> '
+				   +'<label class="col-sm-5 col-md-5 control-label">数据源编码：</label> '
+				   +'<div class="col-sm-7 col-md-7"><input type="text" class="width-100 form-control"  name="dscode" /> '
+			       +'</div></div> ';
+			str += '<div class="form-group col-sm-2 col-md-2"> '
+				   +'<label class="col-sm-5 col-md-5 control-label">schema：</label> '
+				   +'<div class="col-sm-7 col-md-7" style="padding:0px 0px"><input type="text" class="width-100 form-control"  name="defaultschema"/> '
+				   +'</div></div> ';
+		    str += '';
+			$("#queryOne").after(str);
+		    $("#moreOrreduce").text("减少过滤");
+		}
+	});
+	
+	
+	function query(){
+		var params = jQuery("#datasource-select-form").serializeJson();
+		$('#datasource_table').bootstrapTable("refresh", {query: params});
+	}
+	
+	$("#add_datasource").click(function(){
+		$.cuslayer({
+			mode:"page",
+			url:"${ctxPath}/report/datasource/add/showlayer",
+			title:'新建数据源',
+			formId:'datasource-add-form',
+			width:'550px',
+			height:"600px",
+			btn:['<i class="ace-icon fa fa-floppy-o middle-120"></i>&nbsp;添加', '<i class="ace-icon fa fa-times-circle middle-180"></i>&nbsp;测试','<i class="ace-icon fa fa-times-circle middle-120"></i>&nbsp;关闭'],
+			btn2:function(){
+				//ajax测试请求
+				$("#datasource-add-form").ajaxSubmit({
+					type : 'post',
+					url : '${ctxPath}/report/datasource/check',
+					success : function(data) {
+						if (data.code == 1) {
+							successMsg("链接可用！");
+						} else {
+							failMsg(data.msg);
+						}
+					}
+				});
+				return false; //阻止窗口关闭
+			},
+			btn3:function(index, layero){
+				//关闭按钮
+				layer.closeAll('tips');
+			}
+		});
+	}); 
+	
+</script>
+ 
+
+@layout("/layout/footer.html"){}
+
+ 

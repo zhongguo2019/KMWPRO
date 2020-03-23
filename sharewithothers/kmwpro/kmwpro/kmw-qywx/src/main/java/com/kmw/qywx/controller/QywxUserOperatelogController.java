@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.pagehelper.PageInfo;
+import com.google.common.reflect.Parameter;
 import com.kmw.common.CommonEntity;
 import com.kmw.common.annotation.Log;
 import com.kmw.common.enums.BusinessType;
@@ -148,11 +149,16 @@ public class QywxUserOperatelogController extends BaseController
 * @param params
 * @return
 */
-	@RequestMapping(value = "tableDataInfo", method = RequestMethod.POST)
+	@RequestMapping(value = "queryInfoList", method = RequestMethod.POST)
 	@ResponseBody
 	public TableDataInfo tableDataInfo(@RequestParam Map<String, Object> params, Model model) {
+        startPage();
 		logger.info("【通用实体查询】 分页显示 保留用户每次提交的消息内容 ，Map参数：" + params.toString());
-		List<CommonEntity> listEntity = qywxUserOperatelogService.commonList(params);
+		params.put("operType", "1");
+		
+		params.put("sortC", "report_date");
+		params.put("order", "desc");
+		List<QywxUserOperatelog> listEntity = qywxUserOperatelogService.entityList(params);
 		return getDataTable(listEntity);
 
 	}

@@ -888,6 +888,10 @@ public class WeiXinUtil {
 	}
 
 	public String getRedisToken() {
+		//发现redis服务器中的token已经为空，申请一次服务器token
+		if(redisUtilService.getRedisValue("token")==null) {
+			setRedisToken();
+		} 
 		return redisUtilService.getRedisValue("token");
 
 	}

@@ -40,6 +40,9 @@ public class HiveParse {
 	private Map<String, String> cols = new TreeMap<String, String>();
 	private Map<String, String> colAlais = new TreeMap<String, String>();
 	private Set<String> tables = new HashSet<String>();
+
+	private Set<String> tabNameSet = new HashSet<String>();
+
 	private Stack<String> tableNameStack = new Stack<String>();
 	private Stack<Oper> operStack = new Stack<Oper>();
 	private String nowQueryTable = "";// 定义及处理不清晰，修改为query或from节点对应的table集合或许好点。目前正在查询处理的表可能不止一个。
@@ -89,6 +92,7 @@ public class HiveParse {
 						nowQueryTable = table;
 					}
 					tables.add(table + "\t" + oper);
+					tabNameSet.add(table);
 				}
 				break;
 
@@ -98,6 +102,7 @@ public class HiveParse {
 					nowQueryTable = tableTab;
 				}
 				tables.add(tableTab + "\t" + oper);
+				tabNameSet.add(tableTab);
 				break;
 			case HiveParser.TOK_TABREF:// inputTable
 				ASTNode tabTree = (ASTNode) ast.getChild(0);
@@ -114,6 +119,7 @@ public class HiveParse {
 					set.add(tableName);
 				}
 				tables.add(tableName + "\t" + oper);
+				tabNameSet.add(tableName);
 				if (ast.getChild(1) != null) {
 					String alia = ast.getChild(1).getText().toLowerCase();
 					alias.put(alia, tableName);// sql6 p别名在tabref只对应为一个表的别名。
@@ -199,6 +205,7 @@ public class HiveParse {
 			case HiveParser.TOK_ALTERTABLE_ADDCOLS:
 				ASTNode alterTableName = (ASTNode) ast.getChild(0);
 				tables.add(alterTableName.getText() + "\t" + oper);
+				tabNameSet.add(alterTableName.getText());
 				break;
 			}
 		}
@@ -293,7 +300,46 @@ public class HiveParse {
 		System.out.println("***************别名***************");
 		output(alias);
 	}
+	
+	public Map<String, Object> parse2Map(ASTNode ast) {
+		Map<String, Object> mprtnMap = new HashMap<String, Object>();
+		parseIteral(ast);
+		String  strTargetTabString = "";
+		String  strFomTabString="";
+		String  strColsString="";
+		String  strColAliasString="";
+		for (String table : tables) {
+			String[] taleString = table.split("\t");
+			if(taleString.length==2) {
+				if(taleString[1].toUpperCase().equals("SELECT")) {
+					strFomTabString = strFomTabString+taleString[0]+System.lineSeparator();
+				}else {
+					strTargetTabString = strTargetTabString+taleString[0]+System.lineSeparator();
+				}
+			}
+		}
 
+		for(Map.Entry<String, String> entry : cols.entrySet()){
+		    String mapKey = entry.getKey();
+		    String mapValue = entry.getValue();
+		    strColsString = strColsString+mapKey+System.lineSeparator();
+
+		}
+		
+		for(Map.Entry<String, String> entry : alias.entrySet()){
+		    String mapKey = entry.getKey();
+		    String mapValue = entry.getValue();
+		    strColAliasString  =strColAliasString+mapKey+"\t"+mapValue+System.lineSeparator();
+		}
+		
+		
+		mprtnMap.put("targetTable", strTargetTabString);
+		mprtnMap.put("sourceTable", strFomTabString);
+		mprtnMap.put("colname", strColsString);
+		mprtnMap.put("colnameAlias", strColAliasString);
+	   return mprtnMap;
+			  
+	}
 	/*
 	 * 
 	 * 判断当前的SQL语法是否合法的查询语句
@@ -306,7 +352,8 @@ public class HiveParse {
 		startKeyList = Arrays.asList(SqlParameter.startKeyWord);
 		for (int ii = 0; ii < startKeyList.size(); ii++) {
 			String strCompareString = startKeyList.get(ii).toUpperCase();
-			if (sqlString.startsWith(strCompareString)) {
+			if (sqlString.trim().startsWith(strCompareString)) {
+
 				return true;
 			}
 		}
@@ -343,186 +390,100 @@ public class HiveParse {
 	 */
 	public static String replaceWildCards(String sqlString, List<String> wildcardList) {
 		String afterString = "";
-        String stringTmp = sqlString;
+		String stringTmp = sqlString;
 		if (wildcardList == null || wildcardList.equals("")) {
 			afterString = sqlString;
 		} else {
 			for (int i = 0; i < wildcardList.size(); i++) {
-				stringTmp = stringTmp.replace(wildcardList.get(i).trim(), " not_define");
-				/*
-				 * Pattern p = Pattern.compile("\\$\\{(.*?)}"); // 匹配】 Matcher matcher =
-				 * p.matcher(wpp);
-				 */
+				if(wildcardList.get(i).trim()=="${hiveconf:query_condition}") {
+					stringTmp = stringTmp.replace(wildcardList.get(i).trim(), " 1=1 ");
+				}else if(wildcardList.get(i).trim()=="${hiveconf:crt_condition}"){
+				stringTmp = stringTmp.replace(wildcardList.get(i).trim(), "=''");
+				}else {
+					stringTmp = stringTmp.replace(wildcardList.get(i).trim(), "not_define");	
+				}
 			}
 		}
 		return stringTmp;
 	}
 
-	/*
-	 * public static void main(String[] args) throws IOException, ParseException,
-	 * SemanticException { ParseDriver pd = new ParseDriver(); String sql25 = "";
+	/**
+	 * 过滤注释
 	 * 
-	 * String parsesql = sql24; HiveParse hp = new HiveParse();
-	 * System.out.println(parsesql); ASTNode ast = pd.parse(parsesql);
-	 * System.out.println(ast.toStringTree()); hp.parse(ast);
-	 * 
-	 * 
-	 * 
-	 * // 待处理字符串 String wpp =
-	 * "jdbc:mysql://${wpp1}:${wpp2}/${wpp3}?&useSSL=false&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&zeroDateTimeBehavior=convertToNull";
-	 * //\u0024\u007B\u0028\u002E\u002A\u003F\u0029} // 匹配方式 Pattern p =
-	 * Pattern.compile("\\$\\{(.*?)}"); // 匹配】 Matcher matcher = p.matcher(wpp); //
-	 * 处理匹配到的值 while (matcher.find()) { System.out.println("woo: " +
-	 * matcher.group()); }
-	 * 
-	 * List<String> lstStrings = dealAfterString(sql25, ";"); List<String>
-	 * lstWildCards = new ArrayList<String>();
-	 * lstWildCards.add("${hiveconf:data_dt}");
-	 * lstWildCards.add("${hiveconf:part_condition}");
-	 * lstWildCards.add("${hiveconf:query_condition}"); for (int ii = 0; ii <
-	 * lstStrings.size(); ii++) { if(lstStrings.get(ii).trim().equals("")) {
-	 * continue; } System.out.println(lstStrings.get(ii).trim()); if
-	 * (isCheckSql(lstStrings.get(ii).toString().trim())) { String oneSqlString =
-	 * replaceWildCards(lstStrings.get(ii).trim(), lstWildCards); //
-	 * System.out.println("==========================="+ii); //
-	 * System.out.println(oneSqlString); HiveParse hp = new HiveParse(); ASTNode ast
-	 * = pd.parse(oneSqlString.trim()); // System.out.println(ast.toStringTree());
-	 * hp.parse(ast); }
-	 * 
-	 * } }
+	 * @param sql
+	 * @return
 	 */
-	
-	
-	/*
-	 * 
-	 * 对SQL语句中的注释进行处理。
-	 * 
-	 * 
-	 */
-	public String filterSqlComment(String sql) {
-		System.out.println("注释处理前"+sql);
-		String strAfterString = "";
-		String str[] = sql.split("\n");
-		List<String> lstLine = Arrays.asList(sql.split("\n"));
-
-		List<String> lstStartStrings = new ArrayList<>();
-		lstStartStrings.add("-");
-		lstStartStrings.add("--");
-		lstStartStrings.add(" -");
-		lstStartStrings.add(" --");
-		lstStartStrings.add("--");
-
-		for (int ii = 0; ii < lstLine.size(); ii++) {
-			if (lstLine.get(ii).equals(""))
+	public static String filterSqlComment(String sql) {
+		StringBuilder result = new StringBuilder();
+		String[] lines = sql.split("\n");
+		for (int i = 0; i < lines.length; i++) {
+			String line = lines[i];
+			// 如果是空行或者trim后是以“--”开头，则跳过改行
+			if (line == null || line.equals("") || line.trim().startsWith("--")) {
 				continue;
-
-			String linString = lstLine.get(ii).trim();
-			// System.out.println("字符串为【"+lstLine.get(ii).trim()+"】");
-			// System.out.println("TMD 分隔符为【"+lstLine.get(ii).trim().substring(0,1)+"】");
-	        Pattern r = Pattern.compile("-.*");
-	        // 创建 matcher 对象
-	        Matcher m = r.matcher(linString);
-	        while (m.find()) {   
-
-	            System.out.println("Found value: " + m.group().toString());
-	        	continue;
-	        }
-	        
-	        
-			if (linString.startsWith("-") 
-					|| linString.startsWith("--") 
-					|| linString.startsWith(" -")
-					|| linString.startsWith(" --") 
-					|| linString.toLowerCase().startsWith("set")
-					|| linString.toLowerCase().startsWith("use") 
-					|| linString.toLowerCase().startsWith("alter")) {
-				// System.out.println("开头是注释："+lstLine.get(ii).trim());
 			} else {
-				// System.out.println("开头不是注释："+lstLine.get(ii).trim());
-				strAfterString = strAfterString + "\n" + lstLine.get(ii);
+				result.append(line);
 			}
 		}
-		System.out.println("注释处理后"+strAfterString);
-		return strAfterString;
-
+		return result.toString();
 	}
 
-	public Map<String, Object> paraseSql(String etlsql, String wildcards)
+	public List<Map<String, Object>>  paraseSql(String etlsql, String wildcards)
 			throws IOException, ParseException, SemanticException {
+		List<Map<String, Object>>  lsrtRtnList = new ArrayList<>();
+				
 		ParseDriver pd = new ParseDriver();
-
 		List<String> lstStrings = dealAfterString(etlsql, ";");
 		List<String> lstWildCards = new ArrayList<String>();
 		lstWildCards.add("${hiveconf:data_dt}");
 		lstWildCards.add("${hiveconf:part_condition}");
 		lstWildCards.add("${hiveconf:query_condition}");
-
+		
+		lstWildCards.add("${hiveconf:crt_condition}");
 		for (int ii = 0; ii < lstStrings.size(); ii++) {
-
-			// String paraseSqlString = lstStrings.get(ii);
-			// System.out.println("待分解的SQL:" + lstStrings.get(ii));
-	
-			// if (isCheckSql(lstStrings.get(ii).replace("\n", ""))) {
-            if(lstStrings.get(ii).equals("")) {
-            	continue;
-            }
-            
-            
-    		String paraseSqlString = filterSqlComment(lstStrings.get(ii));
-            if(paraseSqlString.equals("")) {
-            	continue;
-            }    		
-			String oneSqlString = replaceWildCards(paraseSqlString.trim(), lstWildCards);
-			// System.out.println("替换符处理后的sql:" + oneSqlString);
-			System.out.println("要解析的sql:\n" + oneSqlString);
-			if (oneSqlString.equals("") || oneSqlString == null)
-				continue;
-			HiveParse hp = new HiveParse();
-
-			ASTNode ast = pd.parse(oneSqlString.trim());
-			hp.parse(ast);
-			// }
+			if (isCheckSql(lstStrings.get(ii))) {
+				if (lstStrings.get(ii).equals("")) {
+					continue;
+				}
+				String paraseSqlString = filterSqlComment(lstStrings.get(ii));
+				if (paraseSqlString.equals("")) {
+					continue;
+				}
+				String oneSqlString = replaceWildCards(paraseSqlString.trim(), lstWildCards);
+				
+				System.out.println("通配符替换后的sql"+oneSqlString);
+				if (oneSqlString.equals("") || oneSqlString == null)
+					continue;
+				HiveParse hp = new HiveParse();
+				ASTNode ast = pd.parse(oneSqlString.trim());
+				Map<String, Object> mprtnMap = hp.parse2Map(ast);
+				if(mprtnMap!=null) {
+					lsrtRtnList.add(mprtnMap);
+				}
+			}
 
 		}
-		Map<String, Object> mprtnMap = new HashMap<String, Object>();
-		/*
-		 * tablenamelist list<string> columnnamelist list<string>
-		 * 
-		 */
 
-		return mprtnMap;
+		return lsrtRtnList;
 
-	
 	}
-	
-	
-	
-	public static void main(String[] args) {    
-        // 查找的字符串
-        String line =
-        		"﻿-- METADATA BEGIN\r\n" + 
-        		"-- @DESC    个人客户关系\r\n" + 
-        		"-- @SRC     SDM_DATA.SDM_CMIS_BUSINESS_CONTRACT,SDM_DATA.SDM_CMIS_BUSINESS_TYPE,SDM_DATA.SDM_CMIS_FLOW_TASK\r\n" + 
-        		"-- @TGT     FDM_DATA.FDM_LOAN_CREDITLINE\r\n" + 
-        		"-- @AUTHOR  王超\r\n" + 
-        		"-- @EDIT_DATE  20180224\r\n" + 
-        		"---@EDIT_NOTE  个人客户关系\r\n" + 
-        		"---METADATA END\r\n" + 
-        		"-- 包括 个人-个人的婚姻、亲属、担保 关系\r\n"
-        		+ "-- asdfasdfsafa--";
-        //正则表达式
-        String pattern = "(-:)(.*?)"; //Java正则表达式以括号分组，第一个括号表示以"（乙方）:"开头，第三个括号表示以" "(空格)结尾，中间括号为目标值，
-        // 创建 Pattern 对象
-       // Pattern r = Pattern.compile(pattern);
-        Pattern r = Pattern.compile("--.* ");
-        // 创建 matcher 对象
-        Matcher m = r.matcher(line);
-        while (m.find()) {   
-            /*
-             自动遍历打印所有结果   group方法打印捕获的组内容，以正则的括号角标从1开始计算，我们这里要第2个括号里的            
-             值， 所以取 m.group(2)， m.group(0)取整个表达式的值，如果越界取m.group(4),则抛出异常
-           */
-            System.out.println("Found value: " + m.group().toString());
-        }
-	}
+
+	/*
+	 * public static void main(String[] args) { // 查找的字符串 String line =
+	 * "﻿-- METADATA BEGIN\r\n" + "-- @DESC    个人客户关系\r\n" +
+	 * "-- @SRC     SDM_DATA.SDM_CMIS_BUSINESS_CONTRACT,SDM_DATA.SDM_CMIS_BUSINESS_TYPE,SDM_DATA.SDM_CMIS_FLOW_TASK\r\n"
+	 * + "-- @TGT     FDM_DATA.FDM_LOAN_CREDITLINE\r\n" + "-- @AUTHOR  王超\r\n" +
+	 * "-- @EDIT_DATE  20180224\r\n" + "---@EDIT_NOTE  个人客户关系\r\n" +
+	 * "---METADATA END\r\n" + "-- 包括 个人-个人的婚姻、亲属、担保 关系\r\n" + "-- asdfasdfsafa--";
+	 * // 正则表达式 String pattern = "(-:)(.*?)"; //
+	 * Java正则表达式以括号分组，第一个括号表示以"（乙方）:"开头，第三个括号表示以" "(空格)结尾，中间括号为目标值， // 创建 Pattern 对象
+	 * // Pattern r = Pattern.compile(pattern); Pattern r =
+	 * Pattern.compile("--.* "); // 创建 matcher 对象 Matcher m = r.matcher(line); while
+	 * (m.find()) {
+	 * 
+	 * 自动遍历打印所有结果 group方法打印捕获的组内容，以正则的括号角标从1开始计算，我们这里要第2个括号里的 值， 所以取 m.group(2)，
+	 * m.group(0)取整个表达式的值，如果越界取m.group(4),则抛出异常
+	 * 
+	 * System.out.println("Found value: " + m.group().toString()); } }
+	 */
 }

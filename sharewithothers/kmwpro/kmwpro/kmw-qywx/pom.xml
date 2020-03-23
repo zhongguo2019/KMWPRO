@@ -29,7 +29,11 @@
 			<artifactId>kmw-common</artifactId>
 		</dependency>
 
-		
+			<!-- 通用工具 -->
+		<dependency>
+			<groupId>com.kmw</groupId>
+			<artifactId>kmw-framework</artifactId>
+		</dependency>	
 		
 		<!-- 通用工具 -->
 		<dependency>

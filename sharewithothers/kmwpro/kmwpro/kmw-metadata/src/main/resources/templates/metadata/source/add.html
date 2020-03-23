@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('新增数据源管理')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-source-add">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">数据源编码：</label>
+                <div class="col-sm-8">
+                    <input name="dscode" class="form-control" type="text" required>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">数据源名称：</label>
+                <div class="col-sm-8">
+                    <input name="dsname" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">数据源类型：</label>
+                <div class="col-sm-8">
+                    <select name="dstype" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">驱动类全名：</label>
+                <div class="col-sm-8">
+                    <input name="dsdriver" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">jdbc链接：</label>
+                <div class="col-sm-8">
+                    <input name="dsurl" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">用户名：</label>
+                <div class="col-sm-8">
+                    <input name="username" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">机构编码：</label>
+                <div class="col-sm-8">
+                    <input name="organCode" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">工具：</label>
+                <div class="col-sm-8">
+                    <input name="defaultschema" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">排序：</label>
+                <div class="col-sm-8">
+                    <input name="showOrder" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">创建机构：</label>
+                <div class="col-sm-8">
+                    <input name="createOrgan" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">创建用户：</label>
+                <div class="col-sm-8">
+                    <input name="createUser" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">密码：</label>
+                <div class="col-sm-8">
+                    <input name="userpwd" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">初始化链接大小：</label>
+                <div class="col-sm-8">
+                    <input name="initialsize" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">最小空闲链接：</label>
+                <div class="col-sm-8">
+                    <input name="minidle" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">最大空闲链接：</label>
+                <div class="col-sm-8">
+                    <input name="maxactive" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否进行链接遗漏检测：</label>
+                <div class="col-sm-8">
+                    <input name="removeabandoned" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">链接活动时间(超过该时间即被回收)：</label>
+                <div class="col-sm-8">
+                    <input name="removeabandonedtimeout" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">最大获取链接时间：</label>
+                <div class="col-sm-8">
+                    <input name="maxwait" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">遗漏检测间隔时间：</label>
+                <div class="col-sm-8">
+                    <input name="timebetweenevictionrunsmillis" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">是否缓存游标：</label>
+                <div class="col-sm-8">
+                    <input name="poolpreparedstatements" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script type="text/javascript">
+        var prefix = ctx + "metadata/source"
+        $("#form-source-add").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/add", $('#form-source-add').serialize());
+            }
+        }
+    </script>
+</body>
+</html>

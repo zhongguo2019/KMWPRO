@@ -1,0 +1,740 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmw.qywx.mapper.KrmEmployeesMapper">
+	<!-- 表字段 声明 -->
+	<sql id="KrmEmployeesColumns">
+		 ID, OA_CODE, EMP_BASE_ADDR, NAME, GENDER, EMP_DATE_, POSI_DATE, SRV_LENGTH, DEPARTMENT, DUTY, ID_CODE, BIR_DATE, AGE, TEL, QQ, PER_EMAIL, SALA_CARD, SHB_GJJ_LINE, SHB_BASE_LINE, GJJ_BASE_LINE, SHB_START_MON, GJJ_START_MON, JF_TYPE, HOME_ADDR, HT_DATE, IS_MARRY, NATION, GRADUATE, EDUCATION, SPECILIALITION, GRADUATE_TIME, WORK_LEVEL, NOW_ADDRESS, EMR_TEL, COM_EMAIL, RESR_FLD01, RESR_FLD02, RESR_FLD03, RESR_FLD04, RESR_FLD05, RESR_FLD06, RESR_FLD07, RESR_FLD08, RESR_FLD09, RESR_FLD10, RESR_FLD11, RESR_FLD12, RESR_FLD13, RESR_FLD14, RESR_FLD15	</sql>
+	<!-- 实体与表字段映身声明，返回值 -->
+    <resultMap type="KrmEmployees" id="KrmEmployeesResult">
+		<result property="id"    column="ID"    />
+		<result property="oaCode"    column="OA_CODE"    />
+		<result property="empBaseAddr"    column="EMP_BASE_ADDR"    />
+		<result property="name"    column="NAME"    />
+		<result property="gender"    column="GENDER"    />
+		<result property="empDate"    column="EMP_DATE_"    />
+		<result property="posiDate"    column="POSI_DATE"    />
+		<result property="srvLength"    column="SRV_LENGTH"    />
+		<result property="department"    column="DEPARTMENT"    />
+		<result property="duty"    column="DUTY"    />
+		<result property="idCode"    column="ID_CODE"    />
+		<result property="birDate"    column="BIR_DATE"    />
+		<result property="age"    column="AGE"    />
+		<result property="tel"    column="TEL"    />
+		<result property="qq"    column="QQ"    />
+		<result property="perEmail"    column="PER_EMAIL"    />
+		<result property="salaCard"    column="SALA_CARD"    />
+		<result property="shbGjjLine"    column="SHB_GJJ_LINE"    />
+		<result property="shbBaseLine"    column="SHB_BASE_LINE"    />
+		<result property="gjjBaseLine"    column="GJJ_BASE_LINE"    />
+		<result property="shbStartMon"    column="SHB_START_MON"    />
+		<result property="gjjStartMon"    column="GJJ_START_MON"    />
+		<result property="jfType"    column="JF_TYPE"    />
+		<result property="homeAddr"    column="HOME_ADDR"    />
+		<result property="htDate"    column="HT_DATE"    />
+		<result property="isMarry"    column="IS_MARRY"    />
+		<result property="nation"    column="NATION"    />
+		<result property="graduate"    column="GRADUATE"    />
+		<result property="education"    column="EDUCATION"    />
+		<result property="specilialition"    column="SPECILIALITION"    />
+		<result property="graduateTime"    column="GRADUATE_TIME"    />
+		<result property="workLevel"    column="WORK_LEVEL"    />
+		<result property="nowAddress"    column="NOW_ADDRESS"    />
+		<result property="emrTel"    column="EMR_TEL"    />
+		<result property="comEmail"    column="COM_EMAIL"    />
+		<result property="resrFld01"    column="RESR_FLD01"    />
+		<result property="resrFld02"    column="RESR_FLD02"    />
+		<result property="resrFld03"    column="RESR_FLD03"    />
+		<result property="resrFld04"    column="RESR_FLD04"    />
+		<result property="resrFld05"    column="RESR_FLD05"    />
+		<result property="resrFld06"    column="RESR_FLD06"    />
+		<result property="resrFld07"    column="RESR_FLD07"    />
+		<result property="resrFld08"    column="RESR_FLD08"    />
+		<result property="resrFld09"    column="RESR_FLD09"    />
+		<result property="resrFld10"    column="RESR_FLD10"    />
+		<result property="resrFld11"    column="RESR_FLD11"    />
+		<result property="resrFld12"    column="RESR_FLD12"    />
+		<result property="resrFld13"    column="RESR_FLD13"    />
+		<result property="resrFld14"    column="RESR_FLD14"    />
+		<result property="resrFld15"    column="RESR_FLD15"    />
+    </resultMap>
+    
+	<!-- 定义查询整张表的SQL -->
+    <sql id="selectKrmEmployeesVo">
+        select
+			 ID, OA_CODE, EMP_BASE_ADDR, NAME, GENDER, EMP_DATE_, POSI_DATE, SRV_LENGTH, DEPARTMENT, DUTY, ID_CODE, BIR_DATE, AGE, TEL, QQ, PER_EMAIL, SALA_CARD, SHB_GJJ_LINE, SHB_BASE_LINE, GJJ_BASE_LINE, SHB_START_MON, GJJ_START_MON, JF_TYPE, HOME_ADDR, HT_DATE, IS_MARRY, NATION, GRADUATE, EDUCATION, SPECILIALITION, GRADUATE_TIME, WORK_LEVEL, NOW_ADDRESS, EMR_TEL, COM_EMAIL, RESR_FLD01, RESR_FLD02, RESR_FLD03, RESR_FLD04, RESR_FLD05, RESR_FLD06, RESR_FLD07, RESR_FLD08, RESR_FLD09, RESR_FLD10, RESR_FLD11, RESR_FLD12, RESR_FLD13, RESR_FLD14, RESR_FLD15        from krm_employees
+    </sql>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryPageInfo" resultType="com.kmw.common.CommonEntity">
+        select
+			<include refid="KrmEmployeesColumns" /> 
+        from	krm_employees t
+        <where>  
+			1=1
+            <if test="id != null  and id != ''"> and t.ID = #{id}</if>
+            <if test="oaCode != null  and oaCode != ''"> and t.OA_CODE = #{oaCode}</if>
+            <if test="empBaseAddr != null  and empBaseAddr != ''"> and t.EMP_BASE_ADDR = #{empBaseAddr}</if>
+            <if test="name != null  and name != ''"> and t.NAME like concat('%', #{name}, '%')</if>
+            <if test="gender != null  and gender != ''"> and t.GENDER = #{gender}</if>
+            <if test="empDate != null  and empDate != ''"> and t.EMP_DATE_ = #{empDate}</if>
+            <if test="posiDate != null  and posiDate != ''"> and t.POSI_DATE = #{posiDate}</if>
+            <if test="srvLength != null  and srvLength != ''"> and t.SRV_LENGTH = #{srvLength}</if>
+            <if test="department != null  and department != ''"> and t.DEPARTMENT = #{department}</if>
+            <if test="duty != null  and duty != ''"> and t.DUTY = #{duty}</if>
+            <if test="idCode != null  and idCode != ''"> and t.ID_CODE = #{idCode}</if>
+            <if test="birDate != null  and birDate != ''"> and t.BIR_DATE = #{birDate}</if>
+            <if test="age != null  and age != ''"> and t.AGE = #{age}</if>
+            <if test="tel != null  and tel != ''"> and t.TEL = #{tel}</if>
+            <if test="qq != null  and qq != ''"> and t.QQ = #{qq}</if>
+            <if test="perEmail != null  and perEmail != ''"> and t.PER_EMAIL = #{perEmail}</if>
+            <if test="salaCard != null  and salaCard != ''"> and t.SALA_CARD = #{salaCard}</if>
+            <if test="shbGjjLine != null  and shbGjjLine != ''"> and t.SHB_GJJ_LINE = #{shbGjjLine}</if>
+            <if test="shbBaseLine != null  and shbBaseLine != ''"> and t.SHB_BASE_LINE = #{shbBaseLine}</if>
+            <if test="gjjBaseLine != null  and gjjBaseLine != ''"> and t.GJJ_BASE_LINE = #{gjjBaseLine}</if>
+            <if test="shbStartMon != null  and shbStartMon != ''"> and t.SHB_START_MON = #{shbStartMon}</if>
+            <if test="gjjStartMon != null  and gjjStartMon != ''"> and t.GJJ_START_MON = #{gjjStartMon}</if>
+            <if test="jfType != null  and jfType != ''"> and t.JF_TYPE = #{jfType}</if>
+            <if test="homeAddr != null  and homeAddr != ''"> and t.HOME_ADDR = #{homeAddr}</if>
+            <if test="htDate != null  and htDate != ''"> and t.HT_DATE = #{htDate}</if>
+            <if test="isMarry != null  and isMarry != ''"> and t.IS_MARRY = #{isMarry}</if>
+            <if test="nation != null  and nation != ''"> and t.NATION = #{nation}</if>
+            <if test="graduate != null  and graduate != ''"> and t.GRADUATE = #{graduate}</if>
+            <if test="education != null  and education != ''"> and t.EDUCATION = #{education}</if>
+            <if test="specilialition != null  and specilialition != ''"> and t.SPECILIALITION = #{specilialition}</if>
+            <if test="graduateTime != null  and graduateTime != ''"> and t.GRADUATE_TIME = #{graduateTime}</if>
+            <if test="workLevel != null  and workLevel != ''"> and t.WORK_LEVEL = #{workLevel}</if>
+            <if test="nowAddress != null  and nowAddress != ''"> and t.NOW_ADDRESS = #{nowAddress}</if>
+            <if test="emrTel != null  and emrTel != ''"> and t.EMR_TEL = #{emrTel}</if>
+            <if test="comEmail != null  and comEmail != ''"> and t.COM_EMAIL = #{comEmail}</if>
+            <if test="resrFld01 != null  and resrFld01 != ''"> and t.RESR_FLD01 = #{resrFld01}</if>
+            <if test="resrFld02 != null  and resrFld02 != ''"> and t.RESR_FLD02 = #{resrFld02}</if>
+            <if test="resrFld03 != null  and resrFld03 != ''"> and t.RESR_FLD03 = #{resrFld03}</if>
+            <if test="resrFld04 != null  and resrFld04 != ''"> and t.RESR_FLD04 = #{resrFld04}</if>
+            <if test="resrFld05 != null  and resrFld05 != ''"> and t.RESR_FLD05 = #{resrFld05}</if>
+            <if test="resrFld06 != null  and resrFld06 != ''"> and t.RESR_FLD06 = #{resrFld06}</if>
+            <if test="resrFld07 != null  and resrFld07 != ''"> and t.RESR_FLD07 = #{resrFld07}</if>
+            <if test="resrFld08 != null  and resrFld08 != ''"> and t.RESR_FLD08 = #{resrFld08}</if>
+            <if test="resrFld09 != null  and resrFld09 != ''"> and t.RESR_FLD09 = #{resrFld09}</if>
+            <if test="resrFld10 != null  and resrFld10 != ''"> and t.RESR_FLD10 = #{resrFld10}</if>
+            <if test="resrFld11 != null  and resrFld11 != ''"> and t.RESR_FLD11 = #{resrFld11}</if>
+            <if test="resrFld12 != null  and resrFld12 != ''"> and t.RESR_FLD12 = #{resrFld12}</if>
+            <if test="resrFld13 != null  and resrFld13 != ''"> and t.RESR_FLD13 = #{resrFld13}</if>
+            <if test="resrFld14 != null  and resrFld14 != ''"> and t.RESR_FLD14 = #{resrFld14}</if>
+            <if test="resrFld15 != null  and resrFld15 != ''"> and t.RESR_FLD15 = #{resrFld15}</if>
+        </where>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''"> ORDER BY t.${sortC} ${order}
+			</if>
+    </select>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryEntityList" resultType="com.kmw.common.CommonEntity">
+        select
+       	<include refid="KrmEmployeesColumns" /> 
+        from krm_employees t
+        <where>  
+        1=1
+            <if test="id != null  and id != ''"> and t.ID = #{id}</if>
+            <if test="oaCode != null  and oaCode != ''"> and t.OA_CODE = #{oaCode}</if>
+            <if test="empBaseAddr != null  and empBaseAddr != ''"> and t.EMP_BASE_ADDR = #{empBaseAddr}</if>
+            <if test="name != null  and name != ''"> and t.NAME like concat('%', #{name}, '%')</if>
+            <if test="gender != null  and gender != ''"> and t.GENDER = #{gender}</if>
+            <if test="empDate != null  and empDate != ''"> and t.EMP_DATE_ = #{empDate}</if>
+            <if test="posiDate != null  and posiDate != ''"> and t.POSI_DATE = #{posiDate}</if>
+            <if test="srvLength != null  and srvLength != ''"> and t.SRV_LENGTH = #{srvLength}</if>
+            <if test="department != null  and department != ''"> and t.DEPARTMENT = #{department}</if>
+            <if test="duty != null  and duty != ''"> and t.DUTY = #{duty}</if>
+            <if test="idCode != null  and idCode != ''"> and t.ID_CODE = #{idCode}</if>
+            <if test="birDate != null  and birDate != ''"> and t.BIR_DATE = #{birDate}</if>
+            <if test="age != null  and age != ''"> and t.AGE = #{age}</if>
+            <if test="tel != null  and tel != ''"> and t.TEL = #{tel}</if>
+            <if test="qq != null  and qq != ''"> and t.QQ = #{qq}</if>
+            <if test="perEmail != null  and perEmail != ''"> and t.PER_EMAIL = #{perEmail}</if>
+            <if test="salaCard != null  and salaCard != ''"> and t.SALA_CARD = #{salaCard}</if>
+            <if test="shbGjjLine != null  and shbGjjLine != ''"> and t.SHB_GJJ_LINE = #{shbGjjLine}</if>
+            <if test="shbBaseLine != null  and shbBaseLine != ''"> and t.SHB_BASE_LINE = #{shbBaseLine}</if>
+            <if test="gjjBaseLine != null  and gjjBaseLine != ''"> and t.GJJ_BASE_LINE = #{gjjBaseLine}</if>
+            <if test="shbStartMon != null  and shbStartMon != ''"> and t.SHB_START_MON = #{shbStartMon}</if>
+            <if test="gjjStartMon != null  and gjjStartMon != ''"> and t.GJJ_START_MON = #{gjjStartMon}</if>
+            <if test="jfType != null  and jfType != ''"> and t.JF_TYPE = #{jfType}</if>
+            <if test="homeAddr != null  and homeAddr != ''"> and t.HOME_ADDR = #{homeAddr}</if>
+            <if test="htDate != null  and htDate != ''"> and t.HT_DATE = #{htDate}</if>
+            <if test="isMarry != null  and isMarry != ''"> and t.IS_MARRY = #{isMarry}</if>
+            <if test="nation != null  and nation != ''"> and t.NATION = #{nation}</if>
+            <if test="graduate != null  and graduate != ''"> and t.GRADUATE = #{graduate}</if>
+            <if test="education != null  and education != ''"> and t.EDUCATION = #{education}</if>
+            <if test="specilialition != null  and specilialition != ''"> and t.SPECILIALITION = #{specilialition}</if>
+            <if test="graduateTime != null  and graduateTime != ''"> and t.GRADUATE_TIME = #{graduateTime}</if>
+            <if test="workLevel != null  and workLevel != ''"> and t.WORK_LEVEL = #{workLevel}</if>
+            <if test="nowAddress != null  and nowAddress != ''"> and t.NOW_ADDRESS = #{nowAddress}</if>
+            <if test="emrTel != null  and emrTel != ''"> and t.EMR_TEL = #{emrTel}</if>
+            <if test="comEmail != null  and comEmail != ''"> and t.COM_EMAIL = #{comEmail}</if>
+            <if test="resrFld01 != null  and resrFld01 != ''"> and t.RESR_FLD01 = #{resrFld01}</if>
+            <if test="resrFld02 != null  and resrFld02 != ''"> and t.RESR_FLD02 = #{resrFld02}</if>
+            <if test="resrFld03 != null  and resrFld03 != ''"> and t.RESR_FLD03 = #{resrFld03}</if>
+            <if test="resrFld04 != null  and resrFld04 != ''"> and t.RESR_FLD04 = #{resrFld04}</if>
+            <if test="resrFld05 != null  and resrFld05 != ''"> and t.RESR_FLD05 = #{resrFld05}</if>
+            <if test="resrFld06 != null  and resrFld06 != ''"> and t.RESR_FLD06 = #{resrFld06}</if>
+            <if test="resrFld07 != null  and resrFld07 != ''"> and t.RESR_FLD07 = #{resrFld07}</if>
+            <if test="resrFld08 != null  and resrFld08 != ''"> and t.RESR_FLD08 = #{resrFld08}</if>
+            <if test="resrFld09 != null  and resrFld09 != ''"> and t.RESR_FLD09 = #{resrFld09}</if>
+            <if test="resrFld10 != null  and resrFld10 != ''"> and t.RESR_FLD10 = #{resrFld10}</if>
+            <if test="resrFld11 != null  and resrFld11 != ''"> and t.RESR_FLD11 = #{resrFld11}</if>
+            <if test="resrFld12 != null  and resrFld12 != ''"> and t.RESR_FLD12 = #{resrFld12}</if>
+            <if test="resrFld13 != null  and resrFld13 != ''"> and t.RESR_FLD13 = #{resrFld13}</if>
+            <if test="resrFld14 != null  and resrFld14 != ''"> and t.RESR_FLD14 = #{resrFld14}</if>
+            <if test="resrFld15 != null  and resrFld15 != ''"> and t.RESR_FLD15 = #{resrFld15}</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		</where>
+
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''">ORDER BY t.${sortC} ${order}</if>
+    </select>   
+    
+	<!-- 按map参数查询后台的数据， 查询单条数据,返回的是通用实体，不受实体属性限制，相当于map -->
+    <select id="queryOneCommon"	resultType="com.kmw.common.CommonEntity">
+        select
+		<include refid="KrmEmployeesColumns" />
+        from krm_employees t
+        <where>  
+        1=1
+            <if test="id != null  and id != ''"> and t.ID = #{id}</if>
+            <if test="oaCode != null  and oaCode != ''"> and t.OA_CODE = #{oaCode}</if>
+            <if test="empBaseAddr != null  and empBaseAddr != ''"> and t.EMP_BASE_ADDR = #{empBaseAddr}</if>
+            <if test="name != null  and name != ''"> and t.NAME like concat('%', #{name}, '%')</if>
+            <if test="gender != null  and gender != ''"> and t.GENDER = #{gender}</if>
+            <if test="empDate != null  and empDate != ''"> and t.EMP_DATE_ = #{empDate}</if>
+            <if test="posiDate != null  and posiDate != ''"> and t.POSI_DATE = #{posiDate}</if>
+            <if test="srvLength != null  and srvLength != ''"> and t.SRV_LENGTH = #{srvLength}</if>
+            <if test="department != null  and department != ''"> and t.DEPARTMENT = #{department}</if>
+            <if test="duty != null  and duty != ''"> and t.DUTY = #{duty}</if>
+            <if test="idCode != null  and idCode != ''"> and t.ID_CODE = #{idCode}</if>
+            <if test="birDate != null  and birDate != ''"> and t.BIR_DATE = #{birDate}</if>
+            <if test="age != null  and age != ''"> and t.AGE = #{age}</if>
+            <if test="tel != null  and tel != ''"> and t.TEL = #{tel}</if>
+            <if test="qq != null  and qq != ''"> and t.QQ = #{qq}</if>
+            <if test="perEmail != null  and perEmail != ''"> and t.PER_EMAIL = #{perEmail}</if>
+            <if test="salaCard != null  and salaCard != ''"> and t.SALA_CARD = #{salaCard}</if>
+            <if test="shbGjjLine != null  and shbGjjLine != ''"> and t.SHB_GJJ_LINE = #{shbGjjLine}</if>
+            <if test="shbBaseLine != null  and shbBaseLine != ''"> and t.SHB_BASE_LINE = #{shbBaseLine}</if>
+            <if test="gjjBaseLine != null  and gjjBaseLine != ''"> and t.GJJ_BASE_LINE = #{gjjBaseLine}</if>
+            <if test="shbStartMon != null  and shbStartMon != ''"> and t.SHB_START_MON = #{shbStartMon}</if>
+            <if test="gjjStartMon != null  and gjjStartMon != ''"> and t.GJJ_START_MON = #{gjjStartMon}</if>
+            <if test="jfType != null  and jfType != ''"> and t.JF_TYPE = #{jfType}</if>
+            <if test="homeAddr != null  and homeAddr != ''"> and t.HOME_ADDR = #{homeAddr}</if>
+            <if test="htDate != null  and htDate != ''"> and t.HT_DATE = #{htDate}</if>
+            <if test="isMarry != null  and isMarry != ''"> and t.IS_MARRY = #{isMarry}</if>
+            <if test="nation != null  and nation != ''"> and t.NATION = #{nation}</if>
+            <if test="graduate != null  and graduate != ''"> and t.GRADUATE = #{graduate}</if>
+            <if test="education != null  and education != ''"> and t.EDUCATION = #{education}</if>
+            <if test="specilialition != null  and specilialition != ''"> and t.SPECILIALITION = #{specilialition}</if>
+            <if test="graduateTime != null  and graduateTime != ''"> and t.GRADUATE_TIME = #{graduateTime}</if>
+            <if test="workLevel != null  and workLevel != ''"> and t.WORK_LEVEL = #{workLevel}</if>
+            <if test="nowAddress != null  and nowAddress != ''"> and t.NOW_ADDRESS = #{nowAddress}</if>
+            <if test="emrTel != null  and emrTel != ''"> and t.EMR_TEL = #{emrTel}</if>
+            <if test="comEmail != null  and comEmail != ''"> and t.COM_EMAIL = #{comEmail}</if>
+            <if test="resrFld01 != null  and resrFld01 != ''"> and t.RESR_FLD01 = #{resrFld01}</if>
+            <if test="resrFld02 != null  and resrFld02 != ''"> and t.RESR_FLD02 = #{resrFld02}</if>
+            <if test="resrFld03 != null  and resrFld03 != ''"> and t.RESR_FLD03 = #{resrFld03}</if>
+            <if test="resrFld04 != null  and resrFld04 != ''"> and t.RESR_FLD04 = #{resrFld04}</if>
+            <if test="resrFld05 != null  and resrFld05 != ''"> and t.RESR_FLD05 = #{resrFld05}</if>
+            <if test="resrFld06 != null  and resrFld06 != ''"> and t.RESR_FLD06 = #{resrFld06}</if>
+            <if test="resrFld07 != null  and resrFld07 != ''"> and t.RESR_FLD07 = #{resrFld07}</if>
+            <if test="resrFld08 != null  and resrFld08 != ''"> and t.RESR_FLD08 = #{resrFld08}</if>
+            <if test="resrFld09 != null  and resrFld09 != ''"> and t.RESR_FLD09 = #{resrFld09}</if>
+            <if test="resrFld10 != null  and resrFld10 != ''"> and t.RESR_FLD10 = #{resrFld10}</if>
+            <if test="resrFld11 != null  and resrFld11 != ''"> and t.RESR_FLD11 = #{resrFld11}</if>
+            <if test="resrFld12 != null  and resrFld12 != ''"> and t.RESR_FLD12 = #{resrFld12}</if>
+            <if test="resrFld13 != null  and resrFld13 != ''"> and t.RESR_FLD13 = #{resrFld13}</if>
+            <if test="resrFld14 != null  and resrFld14 != ''"> and t.RESR_FLD14 = #{resrFld14}</if>
+            <if test="resrFld15 != null  and resrFld15 != ''"> and t.RESR_FLD15 = #{resrFld15}</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		</where>
+    </select>    
+    
+    
+	<!-- 按实体参数来查询后台的数据 -->
+    <select id="selectKrmEmployeesList" parameterType="KrmEmployees" resultMap="KrmEmployeesResult">
+        <include refid="selectKrmEmployeesVo"/>
+        <where>  
+            <if test="id != null  and id != ''"> and ID = #{id}</if>
+            <if test="oaCode != null  and oaCode != ''"> and OA_CODE = #{oaCode}</if>
+            <if test="empBaseAddr != null  and empBaseAddr != ''"> and EMP_BASE_ADDR = #{empBaseAddr}</if>
+            <if test="name != null  and name != ''"> and NAME like concat('%', #{name}, '%')</if>
+            <if test="gender != null  and gender != ''"> and GENDER = #{gender}</if>
+            <if test="empDate != null  and empDate != ''"> and EMP_DATE_ = #{empDate}</if>
+            <if test="posiDate != null  and posiDate != ''"> and POSI_DATE = #{posiDate}</if>
+            <if test="srvLength != null  and srvLength != ''"> and SRV_LENGTH = #{srvLength}</if>
+            <if test="department != null  and department != ''"> and DEPARTMENT = #{department}</if>
+            <if test="duty != null  and duty != ''"> and DUTY = #{duty}</if>
+            <if test="idCode != null  and idCode != ''"> and ID_CODE = #{idCode}</if>
+            <if test="birDate != null  and birDate != ''"> and BIR_DATE = #{birDate}</if>
+            <if test="age != null  and age != ''"> and AGE = #{age}</if>
+            <if test="tel != null  and tel != ''"> and TEL = #{tel}</if>
+            <if test="qq != null  and qq != ''"> and QQ = #{qq}</if>
+            <if test="perEmail != null  and perEmail != ''"> and PER_EMAIL = #{perEmail}</if>
+            <if test="salaCard != null  and salaCard != ''"> and SALA_CARD = #{salaCard}</if>
+            <if test="shbGjjLine != null  and shbGjjLine != ''"> and SHB_GJJ_LINE = #{shbGjjLine}</if>
+            <if test="shbBaseLine != null  and shbBaseLine != ''"> and SHB_BASE_LINE = #{shbBaseLine}</if>
+            <if test="gjjBaseLine != null  and gjjBaseLine != ''"> and GJJ_BASE_LINE = #{gjjBaseLine}</if>
+            <if test="shbStartMon != null  and shbStartMon != ''"> and SHB_START_MON = #{shbStartMon}</if>
+            <if test="gjjStartMon != null  and gjjStartMon != ''"> and GJJ_START_MON = #{gjjStartMon}</if>
+            <if test="jfType != null  and jfType != ''"> and JF_TYPE = #{jfType}</if>
+            <if test="homeAddr != null  and homeAddr != ''"> and HOME_ADDR = #{homeAddr}</if>
+            <if test="htDate != null  and htDate != ''"> and HT_DATE = #{htDate}</if>
+            <if test="isMarry != null  and isMarry != ''"> and IS_MARRY = #{isMarry}</if>
+            <if test="nation != null  and nation != ''"> and NATION = #{nation}</if>
+            <if test="graduate != null  and graduate != ''"> and GRADUATE = #{graduate}</if>
+            <if test="education != null  and education != ''"> and EDUCATION = #{education}</if>
+            <if test="specilialition != null  and specilialition != ''"> and SPECILIALITION = #{specilialition}</if>
+            <if test="graduateTime != null  and graduateTime != ''"> and GRADUATE_TIME = #{graduateTime}</if>
+            <if test="workLevel != null  and workLevel != ''"> and WORK_LEVEL = #{workLevel}</if>
+            <if test="nowAddress != null  and nowAddress != ''"> and NOW_ADDRESS = #{nowAddress}</if>
+            <if test="emrTel != null  and emrTel != ''"> and EMR_TEL = #{emrTel}</if>
+            <if test="comEmail != null  and comEmail != ''"> and COM_EMAIL = #{comEmail}</if>
+            <if test="resrFld01 != null  and resrFld01 != ''"> and RESR_FLD01 = #{resrFld01}</if>
+            <if test="resrFld02 != null  and resrFld02 != ''"> and RESR_FLD02 = #{resrFld02}</if>
+            <if test="resrFld03 != null  and resrFld03 != ''"> and RESR_FLD03 = #{resrFld03}</if>
+            <if test="resrFld04 != null  and resrFld04 != ''"> and RESR_FLD04 = #{resrFld04}</if>
+            <if test="resrFld05 != null  and resrFld05 != ''"> and RESR_FLD05 = #{resrFld05}</if>
+            <if test="resrFld06 != null  and resrFld06 != ''"> and RESR_FLD06 = #{resrFld06}</if>
+            <if test="resrFld07 != null  and resrFld07 != ''"> and RESR_FLD07 = #{resrFld07}</if>
+            <if test="resrFld08 != null  and resrFld08 != ''"> and RESR_FLD08 = #{resrFld08}</if>
+            <if test="resrFld09 != null  and resrFld09 != ''"> and RESR_FLD09 = #{resrFld09}</if>
+            <if test="resrFld10 != null  and resrFld10 != ''"> and RESR_FLD10 = #{resrFld10}</if>
+            <if test="resrFld11 != null  and resrFld11 != ''"> and RESR_FLD11 = #{resrFld11}</if>
+            <if test="resrFld12 != null  and resrFld12 != ''"> and RESR_FLD12 = #{resrFld12}</if>
+            <if test="resrFld13 != null  and resrFld13 != ''"> and RESR_FLD13 = #{resrFld13}</if>
+            <if test="resrFld14 != null  and resrFld14 != ''"> and RESR_FLD14 = #{resrFld14}</if>
+            <if test="resrFld15 != null  and resrFld15 != ''"> and RESR_FLD15 = #{resrFld15}</if>
+        </where>
+    </select>
+ 
+ 	<!-- 按主键来查询后台的数据 -->   
+    <select id="selectKrmEmployeesById" parameterType="String" resultMap="KrmEmployeesResult">
+        <include refid="selectKrmEmployeesVo"/>
+        where ID = #{id}
+    </select>
+    
+ 	<!-- 插入数据库一条数据 -->       
+    <insert id="insertKrmEmployees" parameterType="KrmEmployees">
+        insert into krm_employees
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''">ID,</if>
+            <if test="oaCode != null  and oaCode != ''">OA_CODE,</if>
+            <if test="empBaseAddr != null  and empBaseAddr != ''">EMP_BASE_ADDR,</if>
+            <if test="name != null  and name != ''">NAME,</if>
+            <if test="gender != null  and gender != ''">GENDER,</if>
+            <if test="empDate != null  and empDate != ''">EMP_DATE_,</if>
+            <if test="posiDate != null  and posiDate != ''">POSI_DATE,</if>
+            <if test="srvLength != null  and srvLength != ''">SRV_LENGTH,</if>
+            <if test="department != null  and department != ''">DEPARTMENT,</if>
+            <if test="duty != null  and duty != ''">DUTY,</if>
+            <if test="idCode != null  and idCode != ''">ID_CODE,</if>
+            <if test="birDate != null  and birDate != ''">BIR_DATE,</if>
+            <if test="age != null  and age != ''">AGE,</if>
+            <if test="tel != null  and tel != ''">TEL,</if>
+            <if test="qq != null  and qq != ''">QQ,</if>
+            <if test="perEmail != null  and perEmail != ''">PER_EMAIL,</if>
+            <if test="salaCard != null  and salaCard != ''">SALA_CARD,</if>
+            <if test="shbGjjLine != null  and shbGjjLine != ''">SHB_GJJ_LINE,</if>
+            <if test="shbBaseLine != null  and shbBaseLine != ''">SHB_BASE_LINE,</if>
+            <if test="gjjBaseLine != null  and gjjBaseLine != ''">GJJ_BASE_LINE,</if>
+            <if test="shbStartMon != null  and shbStartMon != ''">SHB_START_MON,</if>
+            <if test="gjjStartMon != null  and gjjStartMon != ''">GJJ_START_MON,</if>
+            <if test="jfType != null  and jfType != ''">JF_TYPE,</if>
+            <if test="homeAddr != null  and homeAddr != ''">HOME_ADDR,</if>
+            <if test="htDate != null  and htDate != ''">HT_DATE,</if>
+            <if test="isMarry != null  and isMarry != ''">IS_MARRY,</if>
+            <if test="nation != null  and nation != ''">NATION,</if>
+            <if test="graduate != null  and graduate != ''">GRADUATE,</if>
+            <if test="education != null  and education != ''">EDUCATION,</if>
+            <if test="specilialition != null  and specilialition != ''">SPECILIALITION,</if>
+            <if test="graduateTime != null  and graduateTime != ''">GRADUATE_TIME,</if>
+            <if test="workLevel != null  and workLevel != ''">WORK_LEVEL,</if>
+            <if test="nowAddress != null  and nowAddress != ''">NOW_ADDRESS,</if>
+            <if test="emrTel != null  and emrTel != ''">EMR_TEL,</if>
+            <if test="comEmail != null  and comEmail != ''">COM_EMAIL,</if>
+            <if test="resrFld01 != null  and resrFld01 != ''">RESR_FLD01,</if>
+            <if test="resrFld02 != null  and resrFld02 != ''">RESR_FLD02,</if>
+            <if test="resrFld03 != null  and resrFld03 != ''">RESR_FLD03,</if>
+            <if test="resrFld04 != null  and resrFld04 != ''">RESR_FLD04,</if>
+            <if test="resrFld05 != null  and resrFld05 != ''">RESR_FLD05,</if>
+            <if test="resrFld06 != null  and resrFld06 != ''">RESR_FLD06,</if>
+            <if test="resrFld07 != null  and resrFld07 != ''">RESR_FLD07,</if>
+            <if test="resrFld08 != null  and resrFld08 != ''">RESR_FLD08,</if>
+            <if test="resrFld09 != null  and resrFld09 != ''">RESR_FLD09,</if>
+            <if test="resrFld10 != null  and resrFld10 != ''">RESR_FLD10,</if>
+            <if test="resrFld11 != null  and resrFld11 != ''">RESR_FLD11,</if>
+            <if test="resrFld12 != null  and resrFld12 != ''">RESR_FLD12,</if>
+            <if test="resrFld13 != null  and resrFld13 != ''">RESR_FLD13,</if>
+            <if test="resrFld14 != null  and resrFld14 != ''">RESR_FLD14,</if>
+            <if test="resrFld15 != null  and resrFld15 != ''">RESR_FLD15,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''">#{id},</if>
+            <if test="oaCode != null  and oaCode != ''">#{oaCode},</if>
+            <if test="empBaseAddr != null  and empBaseAddr != ''">#{empBaseAddr},</if>
+            <if test="name != null  and name != ''">#{name},</if>
+            <if test="gender != null  and gender != ''">#{gender},</if>
+            <if test="empDate != null  and empDate != ''">#{empDate},</if>
+            <if test="posiDate != null  and posiDate != ''">#{posiDate},</if>
+            <if test="srvLength != null  and srvLength != ''">#{srvLength},</if>
+            <if test="department != null  and department != ''">#{department},</if>
+            <if test="duty != null  and duty != ''">#{duty},</if>
+            <if test="idCode != null  and idCode != ''">#{idCode},</if>
+            <if test="birDate != null  and birDate != ''">#{birDate},</if>
+            <if test="age != null  and age != ''">#{age},</if>
+            <if test="tel != null  and tel != ''">#{tel},</if>
+            <if test="qq != null  and qq != ''">#{qq},</if>
+            <if test="perEmail != null  and perEmail != ''">#{perEmail},</if>
+            <if test="salaCard != null  and salaCard != ''">#{salaCard},</if>
+            <if test="shbGjjLine != null  and shbGjjLine != ''">#{shbGjjLine},</if>
+            <if test="shbBaseLine != null  and shbBaseLine != ''">#{shbBaseLine},</if>
+            <if test="gjjBaseLine != null  and gjjBaseLine != ''">#{gjjBaseLine},</if>
+            <if test="shbStartMon != null  and shbStartMon != ''">#{shbStartMon},</if>
+            <if test="gjjStartMon != null  and gjjStartMon != ''">#{gjjStartMon},</if>
+            <if test="jfType != null  and jfType != ''">#{jfType},</if>
+            <if test="homeAddr != null  and homeAddr != ''">#{homeAddr},</if>
+            <if test="htDate != null  and htDate != ''">#{htDate},</if>
+            <if test="isMarry != null  and isMarry != ''">#{isMarry},</if>
+            <if test="nation != null  and nation != ''">#{nation},</if>
+            <if test="graduate != null  and graduate != ''">#{graduate},</if>
+            <if test="education != null  and education != ''">#{education},</if>
+            <if test="specilialition != null  and specilialition != ''">#{specilialition},</if>
+            <if test="graduateTime != null  and graduateTime != ''">#{graduateTime},</if>
+            <if test="workLevel != null  and workLevel != ''">#{workLevel},</if>
+            <if test="nowAddress != null  and nowAddress != ''">#{nowAddress},</if>
+            <if test="emrTel != null  and emrTel != ''">#{emrTel},</if>
+            <if test="comEmail != null  and comEmail != ''">#{comEmail},</if>
+            <if test="resrFld01 != null  and resrFld01 != ''">#{resrFld01},</if>
+            <if test="resrFld02 != null  and resrFld02 != ''">#{resrFld02},</if>
+            <if test="resrFld03 != null  and resrFld03 != ''">#{resrFld03},</if>
+            <if test="resrFld04 != null  and resrFld04 != ''">#{resrFld04},</if>
+            <if test="resrFld05 != null  and resrFld05 != ''">#{resrFld05},</if>
+            <if test="resrFld06 != null  and resrFld06 != ''">#{resrFld06},</if>
+            <if test="resrFld07 != null  and resrFld07 != ''">#{resrFld07},</if>
+            <if test="resrFld08 != null  and resrFld08 != ''">#{resrFld08},</if>
+            <if test="resrFld09 != null  and resrFld09 != ''">#{resrFld09},</if>
+            <if test="resrFld10 != null  and resrFld10 != ''">#{resrFld10},</if>
+            <if test="resrFld11 != null  and resrFld11 != ''">#{resrFld11},</if>
+            <if test="resrFld12 != null  and resrFld12 != ''">#{resrFld12},</if>
+            <if test="resrFld13 != null  and resrFld13 != ''">#{resrFld13},</if>
+            <if test="resrFld14 != null  and resrFld14 != ''">#{resrFld14},</if>
+            <if test="resrFld15 != null  and resrFld15 != ''">#{resrFld15},</if>
+         </trim>
+    </insert>
+	<!-- 按主键更新数据库一条数据 -->
+    <update id="updateKrmEmployees" parameterType="KrmEmployees">
+        update krm_employees
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="oaCode != null  and oaCode != ''">OA_CODE = #{oaCode},</if>
+            <if test="empBaseAddr != null  and empBaseAddr != ''">EMP_BASE_ADDR = #{empBaseAddr},</if>
+            <if test="name != null  and name != ''">NAME = #{name},</if>
+            <if test="gender != null  and gender != ''">GENDER = #{gender},</if>
+            <if test="empDate != null  and empDate != ''">EMP_DATE_ = #{empDate},</if>
+            <if test="posiDate != null  and posiDate != ''">POSI_DATE = #{posiDate},</if>
+            <if test="srvLength != null  and srvLength != ''">SRV_LENGTH = #{srvLength},</if>
+            <if test="department != null  and department != ''">DEPARTMENT = #{department},</if>
+            <if test="duty != null  and duty != ''">DUTY = #{duty},</if>
+            <if test="idCode != null  and idCode != ''">ID_CODE = #{idCode},</if>
+            <if test="birDate != null  and birDate != ''">BIR_DATE = #{birDate},</if>
+            <if test="age != null  and age != ''">AGE = #{age},</if>
+            <if test="tel != null  and tel != ''">TEL = #{tel},</if>
+            <if test="qq != null  and qq != ''">QQ = #{qq},</if>
+            <if test="perEmail != null  and perEmail != ''">PER_EMAIL = #{perEmail},</if>
+            <if test="salaCard != null  and salaCard != ''">SALA_CARD = #{salaCard},</if>
+            <if test="shbGjjLine != null  and shbGjjLine != ''">SHB_GJJ_LINE = #{shbGjjLine},</if>
+            <if test="shbBaseLine != null  and shbBaseLine != ''">SHB_BASE_LINE = #{shbBaseLine},</if>
+            <if test="gjjBaseLine != null  and gjjBaseLine != ''">GJJ_BASE_LINE = #{gjjBaseLine},</if>
+            <if test="shbStartMon != null  and shbStartMon != ''">SHB_START_MON = #{shbStartMon},</if>
+            <if test="gjjStartMon != null  and gjjStartMon != ''">GJJ_START_MON = #{gjjStartMon},</if>
+            <if test="jfType != null  and jfType != ''">JF_TYPE = #{jfType},</if>
+            <if test="homeAddr != null  and homeAddr != ''">HOME_ADDR = #{homeAddr},</if>
+            <if test="htDate != null  and htDate != ''">HT_DATE = #{htDate},</if>
+            <if test="isMarry != null  and isMarry != ''">IS_MARRY = #{isMarry},</if>
+            <if test="nation != null  and nation != ''">NATION = #{nation},</if>
+            <if test="graduate != null  and graduate != ''">GRADUATE = #{graduate},</if>
+            <if test="education != null  and education != ''">EDUCATION = #{education},</if>
+            <if test="specilialition != null  and specilialition != ''">SPECILIALITION = #{specilialition},</if>
+            <if test="graduateTime != null  and graduateTime != ''">GRADUATE_TIME = #{graduateTime},</if>
+            <if test="workLevel != null  and workLevel != ''">WORK_LEVEL = #{workLevel},</if>
+            <if test="nowAddress != null  and nowAddress != ''">NOW_ADDRESS = #{nowAddress},</if>
+            <if test="emrTel != null  and emrTel != ''">EMR_TEL = #{emrTel},</if>
+            <if test="comEmail != null  and comEmail != ''">COM_EMAIL = #{comEmail},</if>
+            <if test="resrFld01 != null  and resrFld01 != ''">RESR_FLD01 = #{resrFld01},</if>
+            <if test="resrFld02 != null  and resrFld02 != ''">RESR_FLD02 = #{resrFld02},</if>
+            <if test="resrFld03 != null  and resrFld03 != ''">RESR_FLD03 = #{resrFld03},</if>
+            <if test="resrFld04 != null  and resrFld04 != ''">RESR_FLD04 = #{resrFld04},</if>
+            <if test="resrFld05 != null  and resrFld05 != ''">RESR_FLD05 = #{resrFld05},</if>
+            <if test="resrFld06 != null  and resrFld06 != ''">RESR_FLD06 = #{resrFld06},</if>
+            <if test="resrFld07 != null  and resrFld07 != ''">RESR_FLD07 = #{resrFld07},</if>
+            <if test="resrFld08 != null  and resrFld08 != ''">RESR_FLD08 = #{resrFld08},</if>
+            <if test="resrFld09 != null  and resrFld09 != ''">RESR_FLD09 = #{resrFld09},</if>
+            <if test="resrFld10 != null  and resrFld10 != ''">RESR_FLD10 = #{resrFld10},</if>
+            <if test="resrFld11 != null  and resrFld11 != ''">RESR_FLD11 = #{resrFld11},</if>
+            <if test="resrFld12 != null  and resrFld12 != ''">RESR_FLD12 = #{resrFld12},</if>
+            <if test="resrFld13 != null  and resrFld13 != ''">RESR_FLD13 = #{resrFld13},</if>
+            <if test="resrFld14 != null  and resrFld14 != ''">RESR_FLD14 = #{resrFld14},</if>
+            <if test="resrFld15 != null  and resrFld15 != ''">RESR_FLD15 = #{resrFld15},</if>
+        </trim>
+        where ID = #{id}
+    </update>
+	<!-- 按主键删除数据库中一条数据 -->
+    <delete id="deleteKrmEmployeesById" parameterType="String">
+        delete from krm_employees where ID = #{id}
+    </delete>
+    	<!-- 删除表中所有数据 -->
+    <delete id="deleteKrmEmployeesAll">
+        delete from krm_employees 
+    </delete>
+	<!-- 按主键列表字符串用逗号分隔， 删除数据库中多条数据 -->
+    <delete id="deleteKrmEmployeesByIds" parameterType="String">
+        delete from krm_employees where ID in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+       <!-- 根据不同条件删除数据，条件可组合 -->
+	<delete id="deleteByParams" parameterType="java.util.Map">
+		delete from krm_employees 
+		<where>
+		        
+            <if test="id != null  and id != ''"> and ID = #{id}</if>
+            <if test="oaCode != null  and oaCode != ''"> and OA_CODE = #{oaCode}</if>
+            <if test="empBaseAddr != null  and empBaseAddr != ''"> and EMP_BASE_ADDR = #{empBaseAddr}</if>
+            <if test="name != null  and name != ''"> and NAME like concat('%', #{name}, '%')</if>
+            <if test="gender != null  and gender != ''"> and GENDER = #{gender}</if>
+            <if test="empDate != null  and empDate != ''"> and EMP_DATE_ = #{empDate}</if>
+            <if test="posiDate != null  and posiDate != ''"> and POSI_DATE = #{posiDate}</if>
+            <if test="srvLength != null  and srvLength != ''"> and SRV_LENGTH = #{srvLength}</if>
+            <if test="department != null  and department != ''"> and DEPARTMENT = #{department}</if>
+            <if test="duty != null  and duty != ''"> and DUTY = #{duty}</if>
+            <if test="idCode != null  and idCode != ''"> and ID_CODE = #{idCode}</if>
+            <if test="birDate != null  and birDate != ''"> and BIR_DATE = #{birDate}</if>
+            <if test="age != null  and age != ''"> and AGE = #{age}</if>
+            <if test="tel != null  and tel != ''"> and TEL = #{tel}</if>
+            <if test="qq != null  and qq != ''"> and QQ = #{qq}</if>
+            <if test="perEmail != null  and perEmail != ''"> and PER_EMAIL = #{perEmail}</if>
+            <if test="salaCard != null  and salaCard != ''"> and SALA_CARD = #{salaCard}</if>
+            <if test="shbGjjLine != null  and shbGjjLine != ''"> and SHB_GJJ_LINE = #{shbGjjLine}</if>
+            <if test="shbBaseLine != null  and shbBaseLine != ''"> and SHB_BASE_LINE = #{shbBaseLine}</if>
+            <if test="gjjBaseLine != null  and gjjBaseLine != ''"> and GJJ_BASE_LINE = #{gjjBaseLine}</if>
+            <if test="shbStartMon != null  and shbStartMon != ''"> and SHB_START_MON = #{shbStartMon}</if>
+            <if test="gjjStartMon != null  and gjjStartMon != ''"> and GJJ_START_MON = #{gjjStartMon}</if>
+            <if test="jfType != null  and jfType != ''"> and JF_TYPE = #{jfType}</if>
+            <if test="homeAddr != null  and homeAddr != ''"> and HOME_ADDR = #{homeAddr}</if>
+            <if test="htDate != null  and htDate != ''"> and HT_DATE = #{htDate}</if>
+            <if test="isMarry != null  and isMarry != ''"> and IS_MARRY = #{isMarry}</if>
+            <if test="nation != null  and nation != ''"> and NATION = #{nation}</if>
+            <if test="graduate != null  and graduate != ''"> and GRADUATE = #{graduate}</if>
+            <if test="education != null  and education != ''"> and EDUCATION = #{education}</if>
+            <if test="specilialition != null  and specilialition != ''"> and SPECILIALITION = #{specilialition}</if>
+            <if test="graduateTime != null  and graduateTime != ''"> and GRADUATE_TIME = #{graduateTime}</if>
+            <if test="workLevel != null  and workLevel != ''"> and WORK_LEVEL = #{workLevel}</if>
+            <if test="nowAddress != null  and nowAddress != ''"> and NOW_ADDRESS = #{nowAddress}</if>
+            <if test="emrTel != null  and emrTel != ''"> and EMR_TEL = #{emrTel}</if>
+            <if test="comEmail != null  and comEmail != ''"> and COM_EMAIL = #{comEmail}</if>
+            <if test="resrFld01 != null  and resrFld01 != ''"> and RESR_FLD01 = #{resrFld01}</if>
+            <if test="resrFld02 != null  and resrFld02 != ''"> and RESR_FLD02 = #{resrFld02}</if>
+            <if test="resrFld03 != null  and resrFld03 != ''"> and RESR_FLD03 = #{resrFld03}</if>
+            <if test="resrFld04 != null  and resrFld04 != ''"> and RESR_FLD04 = #{resrFld04}</if>
+            <if test="resrFld05 != null  and resrFld05 != ''"> and RESR_FLD05 = #{resrFld05}</if>
+            <if test="resrFld06 != null  and resrFld06 != ''"> and RESR_FLD06 = #{resrFld06}</if>
+            <if test="resrFld07 != null  and resrFld07 != ''"> and RESR_FLD07 = #{resrFld07}</if>
+            <if test="resrFld08 != null  and resrFld08 != ''"> and RESR_FLD08 = #{resrFld08}</if>
+            <if test="resrFld09 != null  and resrFld09 != ''"> and RESR_FLD09 = #{resrFld09}</if>
+            <if test="resrFld10 != null  and resrFld10 != ''"> and RESR_FLD10 = #{resrFld10}</if>
+            <if test="resrFld11 != null  and resrFld11 != ''"> and RESR_FLD11 = #{resrFld11}</if>
+            <if test="resrFld12 != null  and resrFld12 != ''"> and RESR_FLD12 = #{resrFld12}</if>
+            <if test="resrFld13 != null  and resrFld13 != ''"> and RESR_FLD13 = #{resrFld13}</if>
+            <if test="resrFld14 != null  and resrFld14 != ''"> and RESR_FLD14 = #{resrFld14}</if>
+            <if test="resrFld15 != null  and resrFld15 != ''"> and RESR_FLD15 = #{resrFld15}</if>
+			</where>
+	</delete>
+	
+    <!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="entityList" resultMap="KrmEmployeesResult">
+        select
+       	<include refid="KrmEmployeesColumns" /> 
+        from krm_employees t
+        <where>  
+        1=1
+            <if test="id != null  and id != ''"> and t.ID = #{id}</if>
+            <if test="oaCode != null  and oaCode != ''"> and t.OA_CODE = #{oaCode}</if>
+            <if test="empBaseAddr != null  and empBaseAddr != ''"> and t.EMP_BASE_ADDR = #{empBaseAddr}</if>
+            <if test="name != null  and name != ''"> and t.NAME like concat('%', #{name}, '%')</if>
+            <if test="gender != null  and gender != ''"> and t.GENDER = #{gender}</if>
+            <if test="empDate != null  and empDate != ''"> and t.EMP_DATE_ = #{empDate}</if>
+            <if test="posiDate != null  and posiDate != ''"> and t.POSI_DATE = #{posiDate}</if>
+            <if test="srvLength != null  and srvLength != ''"> and t.SRV_LENGTH = #{srvLength}</if>
+            <if test="department != null  and department != ''"> and t.DEPARTMENT = #{department}</if>
+            <if test="duty != null  and duty != ''"> and t.DUTY = #{duty}</if>
+            <if test="idCode != null  and idCode != ''"> and t.ID_CODE = #{idCode}</if>
+            <if test="birDate != null  and birDate != ''"> and t.BIR_DATE = #{birDate}</if>
+            <if test="age != null  and age != ''"> and t.AGE = #{age}</if>
+            <if test="tel != null  and tel != ''"> and t.TEL = #{tel}</if>
+            <if test="qq != null  and qq != ''"> and t.QQ = #{qq}</if>
+            <if test="perEmail != null  and perEmail != ''"> and t.PER_EMAIL = #{perEmail}</if>
+            <if test="salaCard != null  and salaCard != ''"> and t.SALA_CARD = #{salaCard}</if>
+            <if test="shbGjjLine != null  and shbGjjLine != ''"> and t.SHB_GJJ_LINE = #{shbGjjLine}</if>
+            <if test="shbBaseLine != null  and shbBaseLine != ''"> and t.SHB_BASE_LINE = #{shbBaseLine}</if>
+            <if test="gjjBaseLine != null  and gjjBaseLine != ''"> and t.GJJ_BASE_LINE = #{gjjBaseLine}</if>
+            <if test="shbStartMon != null  and shbStartMon != ''"> and t.SHB_START_MON = #{shbStartMon}</if>
+            <if test="gjjStartMon != null  and gjjStartMon != ''"> and t.GJJ_START_MON = #{gjjStartMon}</if>
+            <if test="jfType != null  and jfType != ''"> and t.JF_TYPE = #{jfType}</if>
+            <if test="homeAddr != null  and homeAddr != ''"> and t.HOME_ADDR = #{homeAddr}</if>
+            <if test="htDate != null  and htDate != ''"> and t.HT_DATE = #{htDate}</if>
+            <if test="isMarry != null  and isMarry != ''"> and t.IS_MARRY = #{isMarry}</if>
+            <if test="nation != null  and nation != ''"> and t.NATION = #{nation}</if>
+            <if test="graduate != null  and graduate != ''"> and t.GRADUATE = #{graduate}</if>
+            <if test="education != null  and education != ''"> and t.EDUCATION = #{education}</if>
+            <if test="specilialition != null  and specilialition != ''"> and t.SPECILIALITION = #{specilialition}</if>
+            <if test="graduateTime != null  and graduateTime != ''"> and t.GRADUATE_TIME = #{graduateTime}</if>
+            <if test="workLevel != null  and workLevel != ''"> and t.WORK_LEVEL = #{workLevel}</if>
+            <if test="nowAddress != null  and nowAddress != ''"> and t.NOW_ADDRESS = #{nowAddress}</if>
+            <if test="emrTel != null  and emrTel != ''"> and t.EMR_TEL = #{emrTel}</if>
+            <if test="comEmail != null  and comEmail != ''"> and t.COM_EMAIL = #{comEmail}</if>
+            <if test="resrFld01 != null  and resrFld01 != ''"> and t.RESR_FLD01 = #{resrFld01}</if>
+            <if test="resrFld02 != null  and resrFld02 != ''"> and t.RESR_FLD02 = #{resrFld02}</if>
+            <if test="resrFld03 != null  and resrFld03 != ''"> and t.RESR_FLD03 = #{resrFld03}</if>
+            <if test="resrFld04 != null  and resrFld04 != ''"> and t.RESR_FLD04 = #{resrFld04}</if>
+            <if test="resrFld05 != null  and resrFld05 != ''"> and t.RESR_FLD05 = #{resrFld05}</if>
+            <if test="resrFld06 != null  and resrFld06 != ''"> and t.RESR_FLD06 = #{resrFld06}</if>
+            <if test="resrFld07 != null  and resrFld07 != ''"> and t.RESR_FLD07 = #{resrFld07}</if>
+            <if test="resrFld08 != null  and resrFld08 != ''"> and t.RESR_FLD08 = #{resrFld08}</if>
+            <if test="resrFld09 != null  and resrFld09 != ''"> and t.RESR_FLD09 = #{resrFld09}</if>
+            <if test="resrFld10 != null  and resrFld10 != ''"> and t.RESR_FLD10 = #{resrFld10}</if>
+            <if test="resrFld11 != null  and resrFld11 != ''"> and t.RESR_FLD11 = #{resrFld11}</if>
+            <if test="resrFld12 != null  and resrFld12 != ''"> and t.RESR_FLD12 = #{resrFld12}</if>
+            <if test="resrFld13 != null  and resrFld13 != ''"> and t.RESR_FLD13 = #{resrFld13}</if>
+            <if test="resrFld14 != null  and resrFld14 != ''"> and t.RESR_FLD14 = #{resrFld14}</if>
+            <if test="resrFld15 != null  and resrFld15 != ''"> and t.RESR_FLD15 = #{resrFld15}</if>
+        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+        </where>
+
+		<if
+			test="sortC != null  and sortC != '' and order != null  and order != ''">
+			ORDER BY t.${sortC} ${order}
+		</if>
+    </select>     
+    <!-- 批量插入数据 -->
+	<insert id="insertBatch">
+		insert into krm_employees(<include refid="KrmEmployeesColumns" />) values 
+		<foreach collection="list" item="item" separator="," >
+		(
+            #{item.id} ,
+            #{item.oaCode} ,
+            #{item.empBaseAddr} ,
+            #{item.name} ,
+            #{item.gender} ,
+            #{item.empDate} ,
+            #{item.posiDate} ,
+            #{item.srvLength} ,
+            #{item.department} ,
+            #{item.duty} ,
+            #{item.idCode} ,
+            #{item.birDate} ,
+            #{item.age} ,
+            #{item.tel} ,
+            #{item.qq} ,
+            #{item.perEmail} ,
+            #{item.salaCard} ,
+            #{item.shbGjjLine} ,
+            #{item.shbBaseLine} ,
+            #{item.gjjBaseLine} ,
+            #{item.shbStartMon} ,
+            #{item.gjjStartMon} ,
+            #{item.jfType} ,
+            #{item.homeAddr} ,
+            #{item.htDate} ,
+            #{item.isMarry} ,
+            #{item.nation} ,
+            #{item.graduate} ,
+            #{item.education} ,
+            #{item.specilialition} ,
+            #{item.graduateTime} ,
+            #{item.workLevel} ,
+            #{item.nowAddress} ,
+            #{item.emrTel} ,
+            #{item.comEmail} ,
+            #{item.resrFld01} ,
+            #{item.resrFld02} ,
+            #{item.resrFld03} ,
+            #{item.resrFld04} ,
+            #{item.resrFld05} ,
+            #{item.resrFld06} ,
+            #{item.resrFld07} ,
+            #{item.resrFld08} ,
+            #{item.resrFld09} ,
+            #{item.resrFld10} ,
+            #{item.resrFld11} ,
+            #{item.resrFld12} ,
+            #{item.resrFld13} ,
+            #{item.resrFld14} ,
+            #{item.resrFld15} 		)
+		</foreach>
+	</insert>  
+  	<!-- 根据不同条件删除数据，条件可组合 -->
+	<update id="updateBatchEntity" >
+		<foreach collection="list" item="item" separator=",">
+        update krm_employees
+        set
+            ID = #{id} ,
+            OA_CODE = #{oaCode} ,
+            EMP_BASE_ADDR = #{empBaseAddr} ,
+            NAME = #{name} ,
+            GENDER = #{gender} ,
+            EMP_DATE_ = #{empDate} ,
+            POSI_DATE = #{posiDate} ,
+            SRV_LENGTH = #{srvLength} ,
+            DEPARTMENT = #{department} ,
+            DUTY = #{duty} ,
+            ID_CODE = #{idCode} ,
+            BIR_DATE = #{birDate} ,
+            AGE = #{age} ,
+            TEL = #{tel} ,
+            QQ = #{qq} ,
+            PER_EMAIL = #{perEmail} ,
+            SALA_CARD = #{salaCard} ,
+            SHB_GJJ_LINE = #{shbGjjLine} ,
+            SHB_BASE_LINE = #{shbBaseLine} ,
+            GJJ_BASE_LINE = #{gjjBaseLine} ,
+            SHB_START_MON = #{shbStartMon} ,
+            GJJ_START_MON = #{gjjStartMon} ,
+            JF_TYPE = #{jfType} ,
+            HOME_ADDR = #{homeAddr} ,
+            HT_DATE = #{htDate} ,
+            IS_MARRY = #{isMarry} ,
+            NATION = #{nation} ,
+            GRADUATE = #{graduate} ,
+            EDUCATION = #{education} ,
+            SPECILIALITION = #{specilialition} ,
+            GRADUATE_TIME = #{graduateTime} ,
+            WORK_LEVEL = #{workLevel} ,
+            NOW_ADDRESS = #{nowAddress} ,
+            EMR_TEL = #{emrTel} ,
+            COM_EMAIL = #{comEmail} ,
+            RESR_FLD01 = #{resrFld01} ,
+            RESR_FLD02 = #{resrFld02} ,
+            RESR_FLD03 = #{resrFld03} ,
+            RESR_FLD04 = #{resrFld04} ,
+            RESR_FLD05 = #{resrFld05} ,
+            RESR_FLD06 = #{resrFld06} ,
+            RESR_FLD07 = #{resrFld07} ,
+            RESR_FLD08 = #{resrFld08} ,
+            RESR_FLD09 = #{resrFld09} ,
+            RESR_FLD10 = #{resrFld10} ,
+            RESR_FLD11 = #{resrFld11} ,
+            RESR_FLD12 = #{resrFld12} ,
+            RESR_FLD13 = #{resrFld13} ,
+            RESR_FLD14 = #{resrFld14} ,
+            RESR_FLD15 = #{resrFld15}     <where>
+			ID = #{id}
+        </where>
+		</foreach>
+	</update>
+    
+</mapper>

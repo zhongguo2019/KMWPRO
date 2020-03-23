@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmw.metadata.mapper.CdmDataSourceMapper">
+	<!-- 表字段 声明 -->
+	<sql id="CdmDataSourceColumns">
+		 DSCODE, DSNAME, DSTYPE, DSDRIVER, DSURL, USERNAME, ORGAN_CODE, DEFAULTSCHEMA, SHOW_ORDER, CREATE_ORGAN, CREATE_USER, USERPWD, INITIALSIZE, MINIDLE, MAXACTIVE, REMOVEABANDONED, REMOVEABANDONEDTIMEOUT, MAXWAIT, TIMEBETWEENEVICTIONRUNSMILLIS, POOLPREPAREDSTATEMENTS, ID, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, REMARK	</sql>
+	<!-- 实体与表字段映身声明，返回值 -->
+    <resultMap type="CdmDataSource" id="CdmDataSourceResult">
+		<result property="dscode"    column="DSCODE"    />
+		<result property="dsname"    column="DSNAME"    />
+		<result property="dstype"    column="DSTYPE"    />
+		<result property="dsdriver"    column="DSDRIVER"    />
+		<result property="dsurl"    column="DSURL"    />
+		<result property="username"    column="USERNAME"    />
+		<result property="organCode"    column="ORGAN_CODE"    />
+		<result property="defaultschema"    column="DEFAULTSCHEMA"    />
+		<result property="showOrder"    column="SHOW_ORDER"    />
+		<result property="createOrgan"    column="CREATE_ORGAN"    />
+		<result property="createUser"    column="CREATE_USER"    />
+		<result property="userpwd"    column="USERPWD"    />
+		<result property="initialsize"    column="INITIALSIZE"    />
+		<result property="minidle"    column="MINIDLE"    />
+		<result property="maxactive"    column="MAXACTIVE"    />
+		<result property="removeabandoned"    column="REMOVEABANDONED"    />
+		<result property="removeabandonedtimeout"    column="REMOVEABANDONEDTIMEOUT"    />
+		<result property="maxwait"    column="MAXWAIT"    />
+		<result property="timebetweenevictionrunsmillis"    column="TIMEBETWEENEVICTIONRUNSMILLIS"    />
+		<result property="poolpreparedstatements"    column="POOLPREPAREDSTATEMENTS"    />
+		<result property="id"    column="ID"    />
+		<result property="createBy"    column="CREATE_BY"    />
+		<result property="createTime"    column="CREATE_TIME"    />
+		<result property="updateBy"    column="UPDATE_BY"    />
+		<result property="updateTime"    column="UPDATE_TIME"    />
+		<result property="remark"    column="REMARK"    />
+    </resultMap>
+    
+	<!-- 定义查询整张表的SQL -->
+    <sql id="selectCdmDataSourceVo">
+        select
+			 DSCODE, DSNAME, DSTYPE, DSDRIVER, DSURL, USERNAME, ORGAN_CODE, DEFAULTSCHEMA, SHOW_ORDER, CREATE_ORGAN, CREATE_USER, USERPWD, INITIALSIZE, MINIDLE, MAXACTIVE, REMOVEABANDONED, REMOVEABANDONEDTIMEOUT, MAXWAIT, TIMEBETWEENEVICTIONRUNSMILLIS, POOLPREPAREDSTATEMENTS, ID, CREATE_BY, CREATE_TIME, UPDATE_BY, UPDATE_TIME, REMARK        from cdm_data_source
+    </sql>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryPageInfo" resultType="com.kmw.common.CommonEntity">
+        select
+			<include refid="CdmDataSourceColumns" /> 
+        from	cdm_data_source t
+        <where>  
+			1=1
+            <if test="dscode != null  and dscode != ''"> and t.DSCODE = #{dscode}</if>
+            <if test="dsname != null  and dsname != ''"> and t.DSNAME like concat('%', #{dsname}, '%')</if>
+            <if test="dstype != null "> and t.DSTYPE = #{dstype}</if>
+            <if test="dsdriver != null  and dsdriver != ''"> and t.DSDRIVER = #{dsdriver}</if>
+            <if test="dsurl != null  and dsurl != ''"> and t.DSURL = #{dsurl}</if>
+            <if test="username != null  and username != ''"> and t.USERNAME like concat('%', #{username}, '%')</if>
+            <if test="organCode != null  and organCode != ''"> and t.ORGAN_CODE = #{organCode}</if>
+            <if test="defaultschema != null  and defaultschema != ''"> and t.DEFAULTSCHEMA = #{defaultschema}</if>
+            <if test="showOrder != null "> and t.SHOW_ORDER = #{showOrder}</if>
+            <if test="createOrgan != null  and createOrgan != ''"> and t.CREATE_ORGAN = #{createOrgan}</if>
+            <if test="createUser != null  and createUser != ''"> and t.CREATE_USER = #{createUser}</if>
+            <if test="userpwd != null  and userpwd != ''"> and t.USERPWD = #{userpwd}</if>
+            <if test="initialsize != null "> and t.INITIALSIZE = #{initialsize}</if>
+            <if test="minidle != null "> and t.MINIDLE = #{minidle}</if>
+            <if test="maxactive != null "> and t.MAXACTIVE = #{maxactive}</if>
+            <if test="removeabandoned != null "> and t.REMOVEABANDONED = #{removeabandoned}</if>
+            <if test="removeabandonedtimeout != null "> and t.REMOVEABANDONEDTIMEOUT = #{removeabandonedtimeout}</if>
+            <if test="maxwait != null "> and t.MAXWAIT = #{maxwait}</if>
+            <if test="timebetweenevictionrunsmillis != null "> and t.TIMEBETWEENEVICTIONRUNSMILLIS = #{timebetweenevictionrunsmillis}</if>
+            <if test="poolpreparedstatements != null "> and t.POOLPREPAREDSTATEMENTS = #{poolpreparedstatements}</if>
+            <if test="createBy != null  and createBy != ''"> and t.CREATE_BY = #{createBy}</if>
+            <if test="createTime != null "> and t.CREATE_TIME = #{createTime}</if>
+            <if test="updateBy != null "> and t.UPDATE_BY = #{updateBy}</if>
+            <if test="updateTime != null "> and t.UPDATE_TIME = #{updateTime}</if>
+            <if test="remark != null  and remark != ''"> and t.REMARK = #{remark}</if>
+        </where>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''"> ORDER BY t.${sortC} ${order}
+			</if>
+    </select>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryEntityList" resultType="com.kmw.common.CommonEntity">
+        select
+       	<include refid="CdmDataSourceColumns" /> 
+        from cdm_data_source t
+        <where>  
+        1=1
+            <if test="dscode != null  and dscode != ''"> and t.DSCODE = #{dscode}</if>
+            <if test="dsname != null  and dsname != ''"> and t.DSNAME like concat('%', #{dsname}, '%')</if>
+            <if test="dstype != null "> and t.DSTYPE = #{dstype}</if>
+            <if test="dsdriver != null  and dsdriver != ''"> and t.DSDRIVER = #{dsdriver}</if>
+            <if test="dsurl != null  and dsurl != ''"> and t.DSURL = #{dsurl}</if>
+            <if test="username != null  and username != ''"> and t.USERNAME like concat('%', #{username}, '%')</if>
+            <if test="organCode != null  and organCode != ''"> and t.ORGAN_CODE = #{organCode}</if>
+            <if test="defaultschema != null  and defaultschema != ''"> and t.DEFAULTSCHEMA = #{defaultschema}</if>
+            <if test="showOrder != null "> and t.SHOW_ORDER = #{showOrder}</if>
+            <if test="createOrgan != null  and createOrgan != ''"> and t.CREATE_ORGAN = #{createOrgan}</if>
+            <if test="createUser != null  and createUser != ''"> and t.CREATE_USER = #{createUser}</if>
+            <if test="userpwd != null  and userpwd != ''"> and t.USERPWD = #{userpwd}</if>
+            <if test="initialsize != null "> and t.INITIALSIZE = #{initialsize}</if>
+            <if test="minidle != null "> and t.MINIDLE = #{minidle}</if>
+            <if test="maxactive != null "> and t.MAXACTIVE = #{maxactive}</if>
+            <if test="removeabandoned != null "> and t.REMOVEABANDONED = #{removeabandoned}</if>
+            <if test="removeabandonedtimeout != null "> and t.REMOVEABANDONEDTIMEOUT = #{removeabandonedtimeout}</if>
+            <if test="maxwait != null "> and t.MAXWAIT = #{maxwait}</if>
+            <if test="timebetweenevictionrunsmillis != null "> and t.TIMEBETWEENEVICTIONRUNSMILLIS = #{timebetweenevictionrunsmillis}</if>
+            <if test="poolpreparedstatements != null "> and t.POOLPREPAREDSTATEMENTS = #{poolpreparedstatements}</if>
+            <if test="createBy != null  and createBy != ''"> and t.CREATE_BY = #{createBy}</if>
+            <if test="createTime != null "> and t.CREATE_TIME = #{createTime}</if>
+            <if test="updateBy != null "> and t.UPDATE_BY = #{updateBy}</if>
+            <if test="updateTime != null "> and t.UPDATE_TIME = #{updateTime}</if>
+            <if test="remark != null  and remark != ''"> and t.REMARK = #{remark}</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		</where>
+
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''">ORDER BY t.${sortC} ${order}</if>
+    </select>   
+    
+	<!-- 按map参数查询后台的数据， 查询单条数据,返回的是通用实体，不受实体属性限制，相当于map -->
+    <select id="queryOneCommon"	resultType="com.kmw.common.CommonEntity">
+        select
+		<include refid="CdmDataSourceColumns" />
+        from cdm_data_source t
+        <where>  
+        1=1
+            <if test="dscode != null  and dscode != ''"> and t.DSCODE = #{dscode}</if>
+            <if test="dsname != null  and dsname != ''"> and t.DSNAME like concat('%', #{dsname}, '%')</if>
+            <if test="dstype != null "> and t.DSTYPE = #{dstype}</if>
+            <if test="dsdriver != null  and dsdriver != ''"> and t.DSDRIVER = #{dsdriver}</if>
+            <if test="dsurl != null  and dsurl != ''"> and t.DSURL = #{dsurl}</if>
+            <if test="username != null  and username != ''"> and t.USERNAME like concat('%', #{username}, '%')</if>
+            <if test="organCode != null  and organCode != ''"> and t.ORGAN_CODE = #{organCode}</if>
+            <if test="defaultschema != null  and defaultschema != ''"> and t.DEFAULTSCHEMA = #{defaultschema}</if>
+            <if test="showOrder != null "> and t.SHOW_ORDER = #{showOrder}</if>
+            <if test="createOrgan != null  and createOrgan != ''"> and t.CREATE_ORGAN = #{createOrgan}</if>
+            <if test="createUser != null  and createUser != ''"> and t.CREATE_USER = #{createUser}</if>
+            <if test="userpwd != null  and userpwd != ''"> and t.USERPWD = #{userpwd}</if>
+            <if test="initialsize != null "> and t.INITIALSIZE = #{initialsize}</if>
+            <if test="minidle != null "> and t.MINIDLE = #{minidle}</if>
+            <if test="maxactive != null "> and t.MAXACTIVE = #{maxactive}</if>
+            <if test="removeabandoned != null "> and t.REMOVEABANDONED = #{removeabandoned}</if>
+            <if test="removeabandonedtimeout != null "> and t.REMOVEABANDONEDTIMEOUT = #{removeabandonedtimeout}</if>
+            <if test="maxwait != null "> and t.MAXWAIT = #{maxwait}</if>
+            <if test="timebetweenevictionrunsmillis != null "> and t.TIMEBETWEENEVICTIONRUNSMILLIS = #{timebetweenevictionrunsmillis}</if>
+            <if test="poolpreparedstatements != null "> and t.POOLPREPAREDSTATEMENTS = #{poolpreparedstatements}</if>
+            <if test="createBy != null  and createBy != ''"> and t.CREATE_BY = #{createBy}</if>
+            <if test="createTime != null "> and t.CREATE_TIME = #{createTime}</if>
+            <if test="updateBy != null "> and t.UPDATE_BY = #{updateBy}</if>
+            <if test="updateTime != null "> and t.UPDATE_TIME = #{updateTime}</if>
+            <if test="remark != null  and remark != ''"> and t.REMARK = #{remark}</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		</where>
+    </select>    
+    
+    
+	<!-- 按实体参数来查询后台的数据 -->
+    <select id="selectCdmDataSourceList" parameterType="CdmDataSource" resultMap="CdmDataSourceResult">
+        <include refid="selectCdmDataSourceVo"/>
+        <where>  
+            <if test="dscode != null  and dscode != ''"> and DSCODE = #{dscode}</if>
+            <if test="dsname != null  and dsname != ''"> and DSNAME like concat('%', #{dsname}, '%')</if>
+            <if test="dstype != null "> and DSTYPE = #{dstype}</if>
+            <if test="dsdriver != null  and dsdriver != ''"> and DSDRIVER = #{dsdriver}</if>
+            <if test="dsurl != null  and dsurl != ''"> and DSURL = #{dsurl}</if>
+            <if test="username != null  and username != ''"> and USERNAME like concat('%', #{username}, '%')</if>
+            <if test="organCode != null  and organCode != ''"> and ORGAN_CODE = #{organCode}</if>
+            <if test="defaultschema != null  and defaultschema != ''"> and DEFAULTSCHEMA = #{defaultschema}</if>
+            <if test="showOrder != null "> and SHOW_ORDER = #{showOrder}</if>
+            <if test="createOrgan != null  and createOrgan != ''"> and CREATE_ORGAN = #{createOrgan}</if>
+            <if test="createUser != null  and createUser != ''"> and CREATE_USER = #{createUser}</if>
+            <if test="userpwd != null  and userpwd != ''"> and USERPWD = #{userpwd}</if>
+            <if test="initialsize != null "> and INITIALSIZE = #{initialsize}</if>
+            <if test="minidle != null "> and MINIDLE = #{minidle}</if>
+            <if test="maxactive != null "> and MAXACTIVE = #{maxactive}</if>
+            <if test="removeabandoned != null "> and REMOVEABANDONED = #{removeabandoned}</if>
+            <if test="removeabandonedtimeout != null "> and REMOVEABANDONEDTIMEOUT = #{removeabandonedtimeout}</if>
+            <if test="maxwait != null "> and MAXWAIT = #{maxwait}</if>
+            <if test="timebetweenevictionrunsmillis != null "> and TIMEBETWEENEVICTIONRUNSMILLIS = #{timebetweenevictionrunsmillis}</if>
+            <if test="poolpreparedstatements != null "> and POOLPREPAREDSTATEMENTS = #{poolpreparedstatements}</if>
+            <if test="createBy != null  and createBy != ''"> and CREATE_BY = #{createBy}</if>
+            <if test="createTime != null "> and CREATE_TIME = #{createTime}</if>
+            <if test="updateBy != null "> and UPDATE_BY = #{updateBy}</if>
+            <if test="updateTime != null "> and UPDATE_TIME = #{updateTime}</if>
+            <if test="remark != null  and remark != ''"> and REMARK = #{remark}</if>
+        </where>
+    </select>
+ 
+ 	<!-- 按主键来查询后台的数据 -->   
+    <select id="selectCdmDataSourceById" parameterType="String" resultMap="CdmDataSourceResult">
+        <include refid="selectCdmDataSourceVo"/>
+        where ID = #{id}
+    </select>
+    
+ 	<!-- 插入数据库一条数据 -->       
+    <insert id="insertCdmDataSource" parameterType="CdmDataSource">
+        insert into cdm_data_source
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="dscode != null  and dscode != ''">DSCODE,</if>
+            <if test="dsname != null  and dsname != ''">DSNAME,</if>
+            <if test="dstype != null ">DSTYPE,</if>
+            <if test="dsdriver != null  and dsdriver != ''">DSDRIVER,</if>
+            <if test="dsurl != null  and dsurl != ''">DSURL,</if>
+            <if test="username != null  and username != ''">USERNAME,</if>
+            <if test="organCode != null  and organCode != ''">ORGAN_CODE,</if>
+            <if test="defaultschema != null  and defaultschema != ''">DEFAULTSCHEMA,</if>
+            <if test="showOrder != null ">SHOW_ORDER,</if>
+            <if test="createOrgan != null  and createOrgan != ''">CREATE_ORGAN,</if>
+            <if test="createUser != null  and createUser != ''">CREATE_USER,</if>
+            <if test="userpwd != null  and userpwd != ''">USERPWD,</if>
+            <if test="initialsize != null ">INITIALSIZE,</if>
+            <if test="minidle != null ">MINIDLE,</if>
+            <if test="maxactive != null ">MAXACTIVE,</if>
+            <if test="removeabandoned != null ">REMOVEABANDONED,</if>
+            <if test="removeabandonedtimeout != null ">REMOVEABANDONEDTIMEOUT,</if>
+            <if test="maxwait != null ">MAXWAIT,</if>
+            <if test="timebetweenevictionrunsmillis != null ">TIMEBETWEENEVICTIONRUNSMILLIS,</if>
+            <if test="poolpreparedstatements != null ">POOLPREPAREDSTATEMENTS,</if>
+            <if test="id != null  and id != ''">ID,</if>
+            <if test="createBy != null  and createBy != ''">CREATE_BY,</if>
+            <if test="createTime != null ">CREATE_TIME,</if>
+            <if test="updateBy != null ">UPDATE_BY,</if>
+            <if test="updateTime != null ">UPDATE_TIME,</if>
+            <if test="remark != null  and remark != ''">REMARK,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="dscode != null  and dscode != ''">#{dscode},</if>
+            <if test="dsname != null  and dsname != ''">#{dsname},</if>
+            <if test="dstype != null ">#{dstype},</if>
+            <if test="dsdriver != null  and dsdriver != ''">#{dsdriver},</if>
+            <if test="dsurl != null  and dsurl != ''">#{dsurl},</if>
+            <if test="username != null  and username != ''">#{username},</if>
+            <if test="organCode != null  and organCode != ''">#{organCode},</if>
+            <if test="defaultschema != null  and defaultschema != ''">#{defaultschema},</if>
+            <if test="showOrder != null ">#{showOrder},</if>
+            <if test="createOrgan != null  and createOrgan != ''">#{createOrgan},</if>
+            <if test="createUser != null  and createUser != ''">#{createUser},</if>
+            <if test="userpwd != null  and userpwd != ''">#{userpwd},</if>
+            <if test="initialsize != null ">#{initialsize},</if>
+            <if test="minidle != null ">#{minidle},</if>
+            <if test="maxactive != null ">#{maxactive},</if>
+            <if test="removeabandoned != null ">#{removeabandoned},</if>
+            <if test="removeabandonedtimeout != null ">#{removeabandonedtimeout},</if>
+            <if test="maxwait != null ">#{maxwait},</if>
+            <if test="timebetweenevictionrunsmillis != null ">#{timebetweenevictionrunsmillis},</if>
+            <if test="poolpreparedstatements != null ">#{poolpreparedstatements},</if>
+            <if test="id != null  and id != ''">#{id},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null ">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+         </trim>
+    </insert>
+	<!-- 按主键更新数据库一条数据 -->
+    <update id="updateCdmDataSource" parameterType="CdmDataSource">
+        update cdm_data_source
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="dscode != null  and dscode != ''">DSCODE = #{dscode},</if>
+            <if test="dsname != null  and dsname != ''">DSNAME = #{dsname},</if>
+            <if test="dstype != null ">DSTYPE = #{dstype},</if>
+            <if test="dsdriver != null  and dsdriver != ''">DSDRIVER = #{dsdriver},</if>
+            <if test="dsurl != null  and dsurl != ''">DSURL = #{dsurl},</if>
+            <if test="username != null  and username != ''">USERNAME = #{username},</if>
+            <if test="organCode != null  and organCode != ''">ORGAN_CODE = #{organCode},</if>
+            <if test="defaultschema != null  and defaultschema != ''">DEFAULTSCHEMA = #{defaultschema},</if>
+            <if test="showOrder != null ">SHOW_ORDER = #{showOrder},</if>
+            <if test="createOrgan != null  and createOrgan != ''">CREATE_ORGAN = #{createOrgan},</if>
+            <if test="createUser != null  and createUser != ''">CREATE_USER = #{createUser},</if>
+            <if test="userpwd != null  and userpwd != ''">USERPWD = #{userpwd},</if>
+            <if test="initialsize != null ">INITIALSIZE = #{initialsize},</if>
+            <if test="minidle != null ">MINIDLE = #{minidle},</if>
+            <if test="maxactive != null ">MAXACTIVE = #{maxactive},</if>
+            <if test="removeabandoned != null ">REMOVEABANDONED = #{removeabandoned},</if>
+            <if test="removeabandonedtimeout != null ">REMOVEABANDONEDTIMEOUT = #{removeabandonedtimeout},</if>
+            <if test="maxwait != null ">MAXWAIT = #{maxwait},</if>
+            <if test="timebetweenevictionrunsmillis != null ">TIMEBETWEENEVICTIONRUNSMILLIS = #{timebetweenevictionrunsmillis},</if>
+            <if test="poolpreparedstatements != null ">POOLPREPAREDSTATEMENTS = #{poolpreparedstatements},</if>
+            <if test="createBy != null  and createBy != ''">CREATE_BY = #{createBy},</if>
+            <if test="createTime != null ">CREATE_TIME = #{createTime},</if>
+            <if test="updateBy != null ">UPDATE_BY = #{updateBy},</if>
+            <if test="updateTime != null ">UPDATE_TIME = #{updateTime},</if>
+            <if test="remark != null  and remark != ''">REMARK = #{remark},</if>
+        </trim>
+        where ID = #{id}
+    </update>
+	<!-- 按主键删除数据库中一条数据 -->
+    <delete id="deleteCdmDataSourceById" parameterType="String">
+        delete from cdm_data_source where ID = #{id}
+    </delete>
+    	<!-- 删除表中所有数据 -->
+    <delete id="deleteCdmDataSourceAll">
+        delete from cdm_data_source 
+    </delete>
+	<!-- 按主键列表字符串用逗号分隔， 删除数据库中多条数据 -->
+    <delete id="deleteCdmDataSourceByIds" parameterType="String">
+        delete from cdm_data_source where ID in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+       <!-- 根据不同条件删除数据，条件可组合 -->
+	<delete id="deleteByParams" parameterType="java.util.Map">
+		delete from cdm_data_source 
+		<where>
+		        
+            <if test="dscode != null  and dscode != ''"> and DSCODE = #{dscode}</if>
+            <if test="dsname != null  and dsname != ''"> and DSNAME like concat('%', #{dsname}, '%')</if>
+            <if test="dstype != null "> and DSTYPE = #{dstype}</if>
+            <if test="dsdriver != null  and dsdriver != ''"> and DSDRIVER = #{dsdriver}</if>
+            <if test="dsurl != null  and dsurl != ''"> and DSURL = #{dsurl}</if>
+            <if test="username != null  and username != ''"> and USERNAME like concat('%', #{username}, '%')</if>
+            <if test="organCode != null  and organCode != ''"> and ORGAN_CODE = #{organCode}</if>
+            <if test="defaultschema != null  and defaultschema != ''"> and DEFAULTSCHEMA = #{defaultschema}</if>
+            <if test="showOrder != null "> and SHOW_ORDER = #{showOrder}</if>
+            <if test="createOrgan != null  and createOrgan != ''"> and CREATE_ORGAN = #{createOrgan}</if>
+            <if test="createUser != null  and createUser != ''"> and CREATE_USER = #{createUser}</if>
+            <if test="userpwd != null  and userpwd != ''"> and USERPWD = #{userpwd}</if>
+            <if test="initialsize != null "> and INITIALSIZE = #{initialsize}</if>
+            <if test="minidle != null "> and MINIDLE = #{minidle}</if>
+            <if test="maxactive != null "> and MAXACTIVE = #{maxactive}</if>
+            <if test="removeabandoned != null "> and REMOVEABANDONED = #{removeabandoned}</if>
+            <if test="removeabandonedtimeout != null "> and REMOVEABANDONEDTIMEOUT = #{removeabandonedtimeout}</if>
+            <if test="maxwait != null "> and MAXWAIT = #{maxwait}</if>
+            <if test="timebetweenevictionrunsmillis != null "> and TIMEBETWEENEVICTIONRUNSMILLIS = #{timebetweenevictionrunsmillis}</if>
+            <if test="poolpreparedstatements != null "> and POOLPREPAREDSTATEMENTS = #{poolpreparedstatements}</if>
+            <if test="createBy != null  and createBy != ''"> and CREATE_BY = #{createBy}</if>
+            <if test="createTime != null "> and CREATE_TIME = #{createTime}</if>
+            <if test="updateBy != null "> and UPDATE_BY = #{updateBy}</if>
+            <if test="updateTime != null "> and UPDATE_TIME = #{updateTime}</if>
+            <if test="remark != null  and remark != ''"> and REMARK = #{remark}</if>
+			</where>
+	</delete>
+	
+    <!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="entityList" resultMap="CdmDataSourceResult">
+        select
+       	<include refid="CdmDataSourceColumns" /> 
+        from cdm_data_source t
+        <where>  
+        1=1
+            <if test="dscode != null  and dscode != ''"> and t.DSCODE = #{dscode}</if>
+            <if test="dsname != null  and dsname != ''"> and t.DSNAME like concat('%', #{dsname}, '%')</if>
+            <if test="dstype != null "> and t.DSTYPE = #{dstype}</if>
+            <if test="dsdriver != null  and dsdriver != ''"> and t.DSDRIVER = #{dsdriver}</if>
+            <if test="dsurl != null  and dsurl != ''"> and t.DSURL = #{dsurl}</if>
+            <if test="username != null  and username != ''"> and t.USERNAME like concat('%', #{username}, '%')</if>
+            <if test="organCode != null  and organCode != ''"> and t.ORGAN_CODE = #{organCode}</if>
+            <if test="defaultschema != null  and defaultschema != ''"> and t.DEFAULTSCHEMA = #{defaultschema}</if>
+            <if test="showOrder != null "> and t.SHOW_ORDER = #{showOrder}</if>
+            <if test="createOrgan != null  and createOrgan != ''"> and t.CREATE_ORGAN = #{createOrgan}</if>
+            <if test="createUser != null  and createUser != ''"> and t.CREATE_USER = #{createUser}</if>
+            <if test="userpwd != null  and userpwd != ''"> and t.USERPWD = #{userpwd}</if>
+            <if test="initialsize != null "> and t.INITIALSIZE = #{initialsize}</if>
+            <if test="minidle != null "> and t.MINIDLE = #{minidle}</if>
+            <if test="maxactive != null "> and t.MAXACTIVE = #{maxactive}</if>
+            <if test="removeabandoned != null "> and t.REMOVEABANDONED = #{removeabandoned}</if>
+            <if test="removeabandonedtimeout != null "> and t.REMOVEABANDONEDTIMEOUT = #{removeabandonedtimeout}</if>
+            <if test="maxwait != null "> and t.MAXWAIT = #{maxwait}</if>
+            <if test="timebetweenevictionrunsmillis != null "> and t.TIMEBETWEENEVICTIONRUNSMILLIS = #{timebetweenevictionrunsmillis}</if>
+            <if test="poolpreparedstatements != null "> and t.POOLPREPAREDSTATEMENTS = #{poolpreparedstatements}</if>
+            <if test="createBy != null  and createBy != ''"> and t.CREATE_BY = #{createBy}</if>
+            <if test="createTime != null "> and t.CREATE_TIME = #{createTime}</if>
+            <if test="updateBy != null "> and t.UPDATE_BY = #{updateBy}</if>
+            <if test="updateTime != null "> and t.UPDATE_TIME = #{updateTime}</if>
+            <if test="remark != null  and remark != ''"> and t.REMARK = #{remark}</if>
+        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+        </where>
+
+		<if
+			test="sortC != null  and sortC != '' and order != null  and order != ''">
+			ORDER BY t.${sortC} ${order}
+		</if>
+    </select>     
+    <!-- 批量插入数据 -->
+	<insert id="insertBatch">
+		insert into cdm_data_source(<include refid="CdmDataSourceColumns" />) values 
+		<foreach collection="list" item="item" separator="," >
+		(
+            #{item.dscode} ,
+            #{item.dsname} ,
+            #{item.dstype} ,
+            #{item.dsdriver} ,
+            #{item.dsurl} ,
+            #{item.username} ,
+            #{item.organCode} ,
+            #{item.defaultschema} ,
+            #{item.showOrder} ,
+            #{item.createOrgan} ,
+            #{item.createUser} ,
+            #{item.userpwd} ,
+            #{item.initialsize} ,
+            #{item.minidle} ,
+            #{item.maxactive} ,
+            #{item.removeabandoned} ,
+            #{item.removeabandonedtimeout} ,
+            #{item.maxwait} ,
+            #{item.timebetweenevictionrunsmillis} ,
+            #{item.poolpreparedstatements} ,
+            #{item.id} ,
+            #{item.createBy} ,
+            #{item.createTime} ,
+            #{item.updateBy} ,
+            #{item.updateTime} ,
+            #{item.remark} 		)
+		</foreach>
+	</insert>  
+  	<!-- 根据不同条件删除数据，条件可组合 -->
+	<update id="updateBatchEntity" >
+		<foreach collection="list" item="item" separator=",">
+        update cdm_data_source
+        set
+            DSCODE = #{dscode} ,
+            DSNAME = #{dsname} ,
+            DSTYPE = #{dstype} ,
+            DSDRIVER = #{dsdriver} ,
+            DSURL = #{dsurl} ,
+            USERNAME = #{username} ,
+            ORGAN_CODE = #{organCode} ,
+            DEFAULTSCHEMA = #{defaultschema} ,
+            SHOW_ORDER = #{showOrder} ,
+            CREATE_ORGAN = #{createOrgan} ,
+            CREATE_USER = #{createUser} ,
+            USERPWD = #{userpwd} ,
+            INITIALSIZE = #{initialsize} ,
+            MINIDLE = #{minidle} ,
+            MAXACTIVE = #{maxactive} ,
+            REMOVEABANDONED = #{removeabandoned} ,
+            REMOVEABANDONEDTIMEOUT = #{removeabandonedtimeout} ,
+            MAXWAIT = #{maxwait} ,
+            TIMEBETWEENEVICTIONRUNSMILLIS = #{timebetweenevictionrunsmillis} ,
+            POOLPREPAREDSTATEMENTS = #{poolpreparedstatements} ,
+            ID = #{id} ,
+            CREATE_BY = #{createBy} ,
+            CREATE_TIME = #{createTime} ,
+            UPDATE_BY = #{updateBy} ,
+            UPDATE_TIME = #{updateTime} ,
+            REMARK = #{remark}     <where>
+			ID = #{id}
+        </where>
+		</foreach>
+	</update>
+    
+</mapper>

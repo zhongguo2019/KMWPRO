@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kmw.metadata.mapper.CdmKfpDataqualifyMapper">
+	<!-- 表字段 声明 -->
+	<sql id="CdmKfpDataqualifyColumns">
+		 id, checkpnt_tag_01, checkpnt_tag_02, checkpnt_tag_03, checkpnt_tag_04, checkpnt_tag_05, checkpnt_tag_06, checkpnt_tag_07, checkpnt_tag_08, checkpnt_tag_09, checkpnt_tag_10, checkpnt_tag_11, checkpnt_tag_12, checkpnt_tag_13, checkpnt_tag_14, checkpnt_tag_15, checkpnt_rul_cndesc, checkpnt_rul_endesc, checkpnt_chk_entity_cnname, checkpnt_chk_entity_enname, create_by, create_time, update_by, update_time, remark	</sql>
+	<!-- 实体与表字段映身声明，返回值 -->
+    <resultMap type="CdmKfpDataqualify" id="CdmKfpDataqualifyResult">
+		<result property="id"    column="id"    />
+		<result property="checkpntTag01"    column="checkpnt_tag_01"    />
+		<result property="checkpntTag02"    column="checkpnt_tag_02"    />
+		<result property="checkpntTag03"    column="checkpnt_tag_03"    />
+		<result property="checkpntTag04"    column="checkpnt_tag_04"    />
+		<result property="checkpntTag05"    column="checkpnt_tag_05"    />
+		<result property="checkpntTag06"    column="checkpnt_tag_06"    />
+		<result property="checkpntTag07"    column="checkpnt_tag_07"    />
+		<result property="checkpntTag08"    column="checkpnt_tag_08"    />
+		<result property="checkpntTag09"    column="checkpnt_tag_09"    />
+		<result property="checkpntTag10"    column="checkpnt_tag_10"    />
+		<result property="checkpntTag11"    column="checkpnt_tag_11"    />
+		<result property="checkpntTag12"    column="checkpnt_tag_12"    />
+		<result property="checkpntTag13"    column="checkpnt_tag_13"    />
+		<result property="checkpntTag14"    column="checkpnt_tag_14"    />
+		<result property="checkpntTag15"    column="checkpnt_tag_15"    />
+		<result property="checkpntRulCndesc"    column="checkpnt_rul_cndesc"    />
+		<result property="checkpntRulEndesc"    column="checkpnt_rul_endesc"    />
+		<result property="checkpntChkEntityCnname"    column="checkpnt_chk_entity_cnname"    />
+		<result property="checkpntChkEntityEnname"    column="checkpnt_chk_entity_enname"    />
+		<result property="createBy"    column="create_by"    />
+		<result property="createTime"    column="create_time"    />
+		<result property="updateBy"    column="update_by"    />
+		<result property="updateTime"    column="update_time"    />
+		<result property="remark"    column="remark"    />
+    </resultMap>
+    
+	<!-- 定义查询整张表的SQL -->
+    <sql id="selectCdmKfpDataqualifyVo">
+        select
+			 id, checkpnt_tag_01, checkpnt_tag_02, checkpnt_tag_03, checkpnt_tag_04, checkpnt_tag_05, checkpnt_tag_06, checkpnt_tag_07, checkpnt_tag_08, checkpnt_tag_09, checkpnt_tag_10, checkpnt_tag_11, checkpnt_tag_12, checkpnt_tag_13, checkpnt_tag_14, checkpnt_tag_15, checkpnt_rul_cndesc, checkpnt_rul_endesc, checkpnt_chk_entity_cnname, checkpnt_chk_entity_enname, create_by, create_time, update_by, update_time, remark        from cdm_kfp_dataqualify
+    </sql>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryPageInfo" resultType="com.kmw.common.CommonEntity">
+        select
+			<include refid="CdmKfpDataqualifyColumns" /> 
+        from	cdm_kfp_dataqualify t
+        <where>  
+			1=1
+            <if test="checkpntTag01 != null  and checkpntTag01 != ''"> and t.checkpnt_tag_01 = #{checkpntTag01}</if>
+            <if test="checkpntTag02 != null  and checkpntTag02 != ''"> and t.checkpnt_tag_02 = #{checkpntTag02}</if>
+            <if test="checkpntTag03 != null  and checkpntTag03 != ''"> and t.checkpnt_tag_03 = #{checkpntTag03}</if>
+            <if test="checkpntTag04 != null  and checkpntTag04 != ''"> and t.checkpnt_tag_04 = #{checkpntTag04}</if>
+            <if test="checkpntTag05 != null  and checkpntTag05 != ''"> and t.checkpnt_tag_05 = #{checkpntTag05}</if>
+            <if test="checkpntTag06 != null  and checkpntTag06 != ''"> and t.checkpnt_tag_06 = #{checkpntTag06}</if>
+            <if test="checkpntTag07 != null  and checkpntTag07 != ''"> and t.checkpnt_tag_07 = #{checkpntTag07}</if>
+            <if test="checkpntTag08 != null  and checkpntTag08 != ''"> and t.checkpnt_tag_08 = #{checkpntTag08}</if>
+            <if test="checkpntTag09 != null  and checkpntTag09 != ''"> and t.checkpnt_tag_09 = #{checkpntTag09}</if>
+            <if test="checkpntTag10 != null  and checkpntTag10 != ''"> and t.checkpnt_tag_10 = #{checkpntTag10}</if>
+            <if test="checkpntTag11 != null  and checkpntTag11 != ''"> and t.checkpnt_tag_11 = #{checkpntTag11}</if>
+            <if test="checkpntTag12 != null  and checkpntTag12 != ''"> and t.checkpnt_tag_12 = #{checkpntTag12}</if>
+            <if test="checkpntTag13 != null  and checkpntTag13 != ''"> and t.checkpnt_tag_13 = #{checkpntTag13}</if>
+            <if test="checkpntTag14 != null  and checkpntTag14 != ''"> and t.checkpnt_tag_14 = #{checkpntTag14}</if>
+            <if test="checkpntTag15 != null  and checkpntTag15 != ''"> and t.checkpnt_tag_15 = #{checkpntTag15}</if>
+            <if test="checkpntRulCndesc != null  and checkpntRulCndesc != ''"> and t.checkpnt_rul_cndesc = #{checkpntRulCndesc}</if>
+            <if test="checkpntRulEndesc != null  and checkpntRulEndesc != ''"> and t.checkpnt_rul_endesc = #{checkpntRulEndesc}</if>
+            <if test="checkpntChkEntityCnname != null  and checkpntChkEntityCnname != ''"> and t.checkpnt_chk_entity_cnname like concat('%', #{checkpntChkEntityCnname}, '%')</if>
+            <if test="checkpntChkEntityEnname != null  and checkpntChkEntityEnname != ''"> and t.checkpnt_chk_entity_enname like concat('%', #{checkpntChkEntityEnname}, '%')</if>
+        </where>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''"> ORDER BY t.${sortC} ${order}
+			</if>
+    </select>
+    
+	<!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="queryEntityList" resultType="com.kmw.common.CommonEntity">
+        select
+       	<include refid="CdmKfpDataqualifyColumns" /> 
+        from cdm_kfp_dataqualify t
+        <where>  
+        1=1
+            <if test="checkpntTag01 != null  and checkpntTag01 != ''"> and t.checkpnt_tag_01 = #{checkpntTag01}</if>
+            <if test="checkpntTag02 != null  and checkpntTag02 != ''"> and t.checkpnt_tag_02 = #{checkpntTag02}</if>
+            <if test="checkpntTag03 != null  and checkpntTag03 != ''"> and t.checkpnt_tag_03 = #{checkpntTag03}</if>
+            <if test="checkpntTag04 != null  and checkpntTag04 != ''"> and t.checkpnt_tag_04 = #{checkpntTag04}</if>
+            <if test="checkpntTag05 != null  and checkpntTag05 != ''"> and t.checkpnt_tag_05 = #{checkpntTag05}</if>
+            <if test="checkpntTag06 != null  and checkpntTag06 != ''"> and t.checkpnt_tag_06 = #{checkpntTag06}</if>
+            <if test="checkpntTag07 != null  and checkpntTag07 != ''"> and t.checkpnt_tag_07 = #{checkpntTag07}</if>
+            <if test="checkpntTag08 != null  and checkpntTag08 != ''"> and t.checkpnt_tag_08 = #{checkpntTag08}</if>
+            <if test="checkpntTag09 != null  and checkpntTag09 != ''"> and t.checkpnt_tag_09 = #{checkpntTag09}</if>
+            <if test="checkpntTag10 != null  and checkpntTag10 != ''"> and t.checkpnt_tag_10 = #{checkpntTag10}</if>
+            <if test="checkpntTag11 != null  and checkpntTag11 != ''"> and t.checkpnt_tag_11 = #{checkpntTag11}</if>
+            <if test="checkpntTag12 != null  and checkpntTag12 != ''"> and t.checkpnt_tag_12 = #{checkpntTag12}</if>
+            <if test="checkpntTag13 != null  and checkpntTag13 != ''"> and t.checkpnt_tag_13 = #{checkpntTag13}</if>
+            <if test="checkpntTag14 != null  and checkpntTag14 != ''"> and t.checkpnt_tag_14 = #{checkpntTag14}</if>
+            <if test="checkpntTag15 != null  and checkpntTag15 != ''"> and t.checkpnt_tag_15 = #{checkpntTag15}</if>
+            <if test="checkpntRulCndesc != null  and checkpntRulCndesc != ''"> and t.checkpnt_rul_cndesc = #{checkpntRulCndesc}</if>
+            <if test="checkpntRulEndesc != null  and checkpntRulEndesc != ''"> and t.checkpnt_rul_endesc = #{checkpntRulEndesc}</if>
+            <if test="checkpntChkEntityCnname != null  and checkpntChkEntityCnname != ''"> and t.checkpnt_chk_entity_cnname like concat('%', #{checkpntChkEntityCnname}, '%')</if>
+            <if test="checkpntChkEntityEnname != null  and checkpntChkEntityEnname != ''"> and t.checkpnt_chk_entity_enname like concat('%', #{checkpntChkEntityEnname}, '%')</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		</where>
+
+			<if	test="sortC != null  and sortC != '' and order != null  and order != ''">ORDER BY t.${sortC} ${order}</if>
+    </select>   
+    
+	<!-- 按map参数查询后台的数据， 查询单条数据,返回的是通用实体，不受实体属性限制，相当于map -->
+    <select id="queryOneCommon"	resultType="com.kmw.common.CommonEntity">
+        select
+		<include refid="CdmKfpDataqualifyColumns" />
+        from cdm_kfp_dataqualify t
+        <where>  
+        1=1
+            <if test="checkpntTag01 != null  and checkpntTag01 != ''"> and t.checkpnt_tag_01 = #{checkpntTag01}</if>
+            <if test="checkpntTag02 != null  and checkpntTag02 != ''"> and t.checkpnt_tag_02 = #{checkpntTag02}</if>
+            <if test="checkpntTag03 != null  and checkpntTag03 != ''"> and t.checkpnt_tag_03 = #{checkpntTag03}</if>
+            <if test="checkpntTag04 != null  and checkpntTag04 != ''"> and t.checkpnt_tag_04 = #{checkpntTag04}</if>
+            <if test="checkpntTag05 != null  and checkpntTag05 != ''"> and t.checkpnt_tag_05 = #{checkpntTag05}</if>
+            <if test="checkpntTag06 != null  and checkpntTag06 != ''"> and t.checkpnt_tag_06 = #{checkpntTag06}</if>
+            <if test="checkpntTag07 != null  and checkpntTag07 != ''"> and t.checkpnt_tag_07 = #{checkpntTag07}</if>
+            <if test="checkpntTag08 != null  and checkpntTag08 != ''"> and t.checkpnt_tag_08 = #{checkpntTag08}</if>
+            <if test="checkpntTag09 != null  and checkpntTag09 != ''"> and t.checkpnt_tag_09 = #{checkpntTag09}</if>
+            <if test="checkpntTag10 != null  and checkpntTag10 != ''"> and t.checkpnt_tag_10 = #{checkpntTag10}</if>
+            <if test="checkpntTag11 != null  and checkpntTag11 != ''"> and t.checkpnt_tag_11 = #{checkpntTag11}</if>
+            <if test="checkpntTag12 != null  and checkpntTag12 != ''"> and t.checkpnt_tag_12 = #{checkpntTag12}</if>
+            <if test="checkpntTag13 != null  and checkpntTag13 != ''"> and t.checkpnt_tag_13 = #{checkpntTag13}</if>
+            <if test="checkpntTag14 != null  and checkpntTag14 != ''"> and t.checkpnt_tag_14 = #{checkpntTag14}</if>
+            <if test="checkpntTag15 != null  and checkpntTag15 != ''"> and t.checkpnt_tag_15 = #{checkpntTag15}</if>
+            <if test="checkpntRulCndesc != null  and checkpntRulCndesc != ''"> and t.checkpnt_rul_cndesc = #{checkpntRulCndesc}</if>
+            <if test="checkpntRulEndesc != null  and checkpntRulEndesc != ''"> and t.checkpnt_rul_endesc = #{checkpntRulEndesc}</if>
+            <if test="checkpntChkEntityCnname != null  and checkpntChkEntityCnname != ''"> and t.checkpnt_chk_entity_cnname like concat('%', #{checkpntChkEntityCnname}, '%')</if>
+            <if test="checkpntChkEntityEnname != null  and checkpntChkEntityEnname != ''"> and t.checkpnt_chk_entity_enname like concat('%', #{checkpntChkEntityEnname}, '%')</if>
+			<if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+		</where>
+    </select>    
+    
+    
+	<!-- 按实体参数来查询后台的数据 -->
+    <select id="selectCdmKfpDataqualifyList" parameterType="CdmKfpDataqualify" resultMap="CdmKfpDataqualifyResult">
+        <include refid="selectCdmKfpDataqualifyVo"/>
+        <where>  
+            <if test="checkpntTag01 != null  and checkpntTag01 != ''"> and checkpnt_tag_01 = #{checkpntTag01}</if>
+            <if test="checkpntTag02 != null  and checkpntTag02 != ''"> and checkpnt_tag_02 = #{checkpntTag02}</if>
+            <if test="checkpntTag03 != null  and checkpntTag03 != ''"> and checkpnt_tag_03 = #{checkpntTag03}</if>
+            <if test="checkpntTag04 != null  and checkpntTag04 != ''"> and checkpnt_tag_04 = #{checkpntTag04}</if>
+            <if test="checkpntTag05 != null  and checkpntTag05 != ''"> and checkpnt_tag_05 = #{checkpntTag05}</if>
+            <if test="checkpntTag06 != null  and checkpntTag06 != ''"> and checkpnt_tag_06 = #{checkpntTag06}</if>
+            <if test="checkpntTag07 != null  and checkpntTag07 != ''"> and checkpnt_tag_07 = #{checkpntTag07}</if>
+            <if test="checkpntTag08 != null  and checkpntTag08 != ''"> and checkpnt_tag_08 = #{checkpntTag08}</if>
+            <if test="checkpntTag09 != null  and checkpntTag09 != ''"> and checkpnt_tag_09 = #{checkpntTag09}</if>
+            <if test="checkpntTag10 != null  and checkpntTag10 != ''"> and checkpnt_tag_10 = #{checkpntTag10}</if>
+            <if test="checkpntTag11 != null  and checkpntTag11 != ''"> and checkpnt_tag_11 = #{checkpntTag11}</if>
+            <if test="checkpntTag12 != null  and checkpntTag12 != ''"> and checkpnt_tag_12 = #{checkpntTag12}</if>
+            <if test="checkpntTag13 != null  and checkpntTag13 != ''"> and checkpnt_tag_13 = #{checkpntTag13}</if>
+            <if test="checkpntTag14 != null  and checkpntTag14 != ''"> and checkpnt_tag_14 = #{checkpntTag14}</if>
+            <if test="checkpntTag15 != null  and checkpntTag15 != ''"> and checkpnt_tag_15 = #{checkpntTag15}</if>
+            <if test="checkpntRulCndesc != null  and checkpntRulCndesc != ''"> and checkpnt_rul_cndesc = #{checkpntRulCndesc}</if>
+            <if test="checkpntRulEndesc != null  and checkpntRulEndesc != ''"> and checkpnt_rul_endesc = #{checkpntRulEndesc}</if>
+            <if test="checkpntChkEntityCnname != null  and checkpntChkEntityCnname != ''"> and checkpnt_chk_entity_cnname like concat('%', #{checkpntChkEntityCnname}, '%')</if>
+            <if test="checkpntChkEntityEnname != null  and checkpntChkEntityEnname != ''"> and checkpnt_chk_entity_enname like concat('%', #{checkpntChkEntityEnname}, '%')</if>
+        </where>
+    </select>
+ 
+ 	<!-- 按主键来查询后台的数据 -->   
+    <select id="selectCdmKfpDataqualifyById" parameterType="String" resultMap="CdmKfpDataqualifyResult">
+        <include refid="selectCdmKfpDataqualifyVo"/>
+        where id = #{id}
+    </select>
+    
+ 	<!-- 插入数据库一条数据 -->       
+    <insert id="insertCdmKfpDataqualify" parameterType="CdmKfpDataqualify">
+        insert into cdm_kfp_dataqualify
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''">id,</if>
+            <if test="checkpntTag01 != null  and checkpntTag01 != ''">checkpnt_tag_01,</if>
+            <if test="checkpntTag02 != null  and checkpntTag02 != ''">checkpnt_tag_02,</if>
+            <if test="checkpntTag03 != null  and checkpntTag03 != ''">checkpnt_tag_03,</if>
+            <if test="checkpntTag04 != null  and checkpntTag04 != ''">checkpnt_tag_04,</if>
+            <if test="checkpntTag05 != null  and checkpntTag05 != ''">checkpnt_tag_05,</if>
+            <if test="checkpntTag06 != null  and checkpntTag06 != ''">checkpnt_tag_06,</if>
+            <if test="checkpntTag07 != null  and checkpntTag07 != ''">checkpnt_tag_07,</if>
+            <if test="checkpntTag08 != null  and checkpntTag08 != ''">checkpnt_tag_08,</if>
+            <if test="checkpntTag09 != null  and checkpntTag09 != ''">checkpnt_tag_09,</if>
+            <if test="checkpntTag10 != null  and checkpntTag10 != ''">checkpnt_tag_10,</if>
+            <if test="checkpntTag11 != null  and checkpntTag11 != ''">checkpnt_tag_11,</if>
+            <if test="checkpntTag12 != null  and checkpntTag12 != ''">checkpnt_tag_12,</if>
+            <if test="checkpntTag13 != null  and checkpntTag13 != ''">checkpnt_tag_13,</if>
+            <if test="checkpntTag14 != null  and checkpntTag14 != ''">checkpnt_tag_14,</if>
+            <if test="checkpntTag15 != null  and checkpntTag15 != ''">checkpnt_tag_15,</if>
+            <if test="checkpntRulCndesc != null  and checkpntRulCndesc != ''">checkpnt_rul_cndesc,</if>
+            <if test="checkpntRulEndesc != null  and checkpntRulEndesc != ''">checkpnt_rul_endesc,</if>
+            <if test="checkpntChkEntityCnname != null  and checkpntChkEntityCnname != ''">checkpnt_chk_entity_cnname,</if>
+            <if test="checkpntChkEntityEnname != null  and checkpntChkEntityEnname != ''">checkpnt_chk_entity_enname,</if>
+            <if test="createBy != null  and createBy != ''">create_by,</if>
+            <if test="createTime != null ">create_time,</if>
+            <if test="updateBy != null  and updateBy != ''">update_by,</if>
+            <if test="updateTime != null ">update_time,</if>
+            <if test="remark != null  and remark != ''">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null  and id != ''">#{id},</if>
+            <if test="checkpntTag01 != null  and checkpntTag01 != ''">#{checkpntTag01},</if>
+            <if test="checkpntTag02 != null  and checkpntTag02 != ''">#{checkpntTag02},</if>
+            <if test="checkpntTag03 != null  and checkpntTag03 != ''">#{checkpntTag03},</if>
+            <if test="checkpntTag04 != null  and checkpntTag04 != ''">#{checkpntTag04},</if>
+            <if test="checkpntTag05 != null  and checkpntTag05 != ''">#{checkpntTag05},</if>
+            <if test="checkpntTag06 != null  and checkpntTag06 != ''">#{checkpntTag06},</if>
+            <if test="checkpntTag07 != null  and checkpntTag07 != ''">#{checkpntTag07},</if>
+            <if test="checkpntTag08 != null  and checkpntTag08 != ''">#{checkpntTag08},</if>
+            <if test="checkpntTag09 != null  and checkpntTag09 != ''">#{checkpntTag09},</if>
+            <if test="checkpntTag10 != null  and checkpntTag10 != ''">#{checkpntTag10},</if>
+            <if test="checkpntTag11 != null  and checkpntTag11 != ''">#{checkpntTag11},</if>
+            <if test="checkpntTag12 != null  and checkpntTag12 != ''">#{checkpntTag12},</if>
+            <if test="checkpntTag13 != null  and checkpntTag13 != ''">#{checkpntTag13},</if>
+            <if test="checkpntTag14 != null  and checkpntTag14 != ''">#{checkpntTag14},</if>
+            <if test="checkpntTag15 != null  and checkpntTag15 != ''">#{checkpntTag15},</if>
+            <if test="checkpntRulCndesc != null  and checkpntRulCndesc != ''">#{checkpntRulCndesc},</if>
+            <if test="checkpntRulEndesc != null  and checkpntRulEndesc != ''">#{checkpntRulEndesc},</if>
+            <if test="checkpntChkEntityCnname != null  and checkpntChkEntityCnname != ''">#{checkpntChkEntityCnname},</if>
+            <if test="checkpntChkEntityEnname != null  and checkpntChkEntityEnname != ''">#{checkpntChkEntityEnname},</if>
+            <if test="createBy != null  and createBy != ''">#{createBy},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">#{updateBy},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+         </trim>
+    </insert>
+	<!-- 按主键更新数据库一条数据 -->
+    <update id="updateCdmKfpDataqualify" parameterType="CdmKfpDataqualify">
+        update cdm_kfp_dataqualify
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="checkpntTag01 != null  and checkpntTag01 != ''">checkpnt_tag_01 = #{checkpntTag01},</if>
+            <if test="checkpntTag02 != null  and checkpntTag02 != ''">checkpnt_tag_02 = #{checkpntTag02},</if>
+            <if test="checkpntTag03 != null  and checkpntTag03 != ''">checkpnt_tag_03 = #{checkpntTag03},</if>
+            <if test="checkpntTag04 != null  and checkpntTag04 != ''">checkpnt_tag_04 = #{checkpntTag04},</if>
+            <if test="checkpntTag05 != null  and checkpntTag05 != ''">checkpnt_tag_05 = #{checkpntTag05},</if>
+            <if test="checkpntTag06 != null  and checkpntTag06 != ''">checkpnt_tag_06 = #{checkpntTag06},</if>
+            <if test="checkpntTag07 != null  and checkpntTag07 != ''">checkpnt_tag_07 = #{checkpntTag07},</if>
+            <if test="checkpntTag08 != null  and checkpntTag08 != ''">checkpnt_tag_08 = #{checkpntTag08},</if>
+            <if test="checkpntTag09 != null  and checkpntTag09 != ''">checkpnt_tag_09 = #{checkpntTag09},</if>
+            <if test="checkpntTag10 != null  and checkpntTag10 != ''">checkpnt_tag_10 = #{checkpntTag10},</if>
+            <if test="checkpntTag11 != null  and checkpntTag11 != ''">checkpnt_tag_11 = #{checkpntTag11},</if>
+            <if test="checkpntTag12 != null  and checkpntTag12 != ''">checkpnt_tag_12 = #{checkpntTag12},</if>
+            <if test="checkpntTag13 != null  and checkpntTag13 != ''">checkpnt_tag_13 = #{checkpntTag13},</if>
+            <if test="checkpntTag14 != null  and checkpntTag14 != ''">checkpnt_tag_14 = #{checkpntTag14},</if>
+            <if test="checkpntTag15 != null  and checkpntTag15 != ''">checkpnt_tag_15 = #{checkpntTag15},</if>
+            <if test="checkpntRulCndesc != null  and checkpntRulCndesc != ''">checkpnt_rul_cndesc = #{checkpntRulCndesc},</if>
+            <if test="checkpntRulEndesc != null  and checkpntRulEndesc != ''">checkpnt_rul_endesc = #{checkpntRulEndesc},</if>
+            <if test="checkpntChkEntityCnname != null  and checkpntChkEntityCnname != ''">checkpnt_chk_entity_cnname = #{checkpntChkEntityCnname},</if>
+            <if test="checkpntChkEntityEnname != null  and checkpntChkEntityEnname != ''">checkpnt_chk_entity_enname = #{checkpntChkEntityEnname},</if>
+            <if test="createBy != null  and createBy != ''">create_by = #{createBy},</if>
+            <if test="createTime != null ">create_time = #{createTime},</if>
+            <if test="updateBy != null  and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="remark != null  and remark != ''">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+	<!-- 按主键删除数据库中一条数据 -->
+    <delete id="deleteCdmKfpDataqualifyById" parameterType="String">
+        delete from cdm_kfp_dataqualify where id = #{id}
+    </delete>
+    	<!-- 删除表中所有数据 -->
+    <delete id="deleteCdmKfpDataqualifyAll">
+        delete from cdm_kfp_dataqualify 
+    </delete>
+	<!-- 按主键列表字符串用逗号分隔， 删除数据库中多条数据 -->
+    <delete id="deleteCdmKfpDataqualifyByIds" parameterType="String">
+        delete from cdm_kfp_dataqualify where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+       <!-- 根据不同条件删除数据，条件可组合 -->
+	<delete id="deleteByParams" parameterType="java.util.Map">
+		delete from cdm_kfp_dataqualify 
+		<where>
+		        
+            <if test="checkpntTag01 != null  and checkpntTag01 != ''"> and checkpnt_tag_01 = #{checkpntTag01}</if>
+            <if test="checkpntTag02 != null  and checkpntTag02 != ''"> and checkpnt_tag_02 = #{checkpntTag02}</if>
+            <if test="checkpntTag03 != null  and checkpntTag03 != ''"> and checkpnt_tag_03 = #{checkpntTag03}</if>
+            <if test="checkpntTag04 != null  and checkpntTag04 != ''"> and checkpnt_tag_04 = #{checkpntTag04}</if>
+            <if test="checkpntTag05 != null  and checkpntTag05 != ''"> and checkpnt_tag_05 = #{checkpntTag05}</if>
+            <if test="checkpntTag06 != null  and checkpntTag06 != ''"> and checkpnt_tag_06 = #{checkpntTag06}</if>
+            <if test="checkpntTag07 != null  and checkpntTag07 != ''"> and checkpnt_tag_07 = #{checkpntTag07}</if>
+            <if test="checkpntTag08 != null  and checkpntTag08 != ''"> and checkpnt_tag_08 = #{checkpntTag08}</if>
+            <if test="checkpntTag09 != null  and checkpntTag09 != ''"> and checkpnt_tag_09 = #{checkpntTag09}</if>
+            <if test="checkpntTag10 != null  and checkpntTag10 != ''"> and checkpnt_tag_10 = #{checkpntTag10}</if>
+            <if test="checkpntTag11 != null  and checkpntTag11 != ''"> and checkpnt_tag_11 = #{checkpntTag11}</if>
+            <if test="checkpntTag12 != null  and checkpntTag12 != ''"> and checkpnt_tag_12 = #{checkpntTag12}</if>
+            <if test="checkpntTag13 != null  and checkpntTag13 != ''"> and checkpnt_tag_13 = #{checkpntTag13}</if>
+            <if test="checkpntTag14 != null  and checkpntTag14 != ''"> and checkpnt_tag_14 = #{checkpntTag14}</if>
+            <if test="checkpntTag15 != null  and checkpntTag15 != ''"> and checkpnt_tag_15 = #{checkpntTag15}</if>
+            <if test="checkpntRulCndesc != null  and checkpntRulCndesc != ''"> and checkpnt_rul_cndesc = #{checkpntRulCndesc}</if>
+            <if test="checkpntRulEndesc != null  and checkpntRulEndesc != ''"> and checkpnt_rul_endesc = #{checkpntRulEndesc}</if>
+            <if test="checkpntChkEntityCnname != null  and checkpntChkEntityCnname != ''"> and checkpnt_chk_entity_cnname like concat('%', #{checkpntChkEntityCnname}, '%')</if>
+            <if test="checkpntChkEntityEnname != null  and checkpntChkEntityEnname != ''"> and checkpnt_chk_entity_enname like concat('%', #{checkpntChkEntityEnname}, '%')</if>
+			</where>
+	</delete>
+	
+    <!-- 列表查询,返回的是通用实体，不受实体属性限制，相当于map 传入参数可以是map形式的 -->
+    <select id="entityList" resultMap="CdmKfpDataqualifyResult">
+        select
+       	<include refid="CdmKfpDataqualifyColumns" /> 
+        from cdm_kfp_dataqualify t
+        <where>  
+        1=1
+            <if test="checkpntTag01 != null  and checkpntTag01 != ''"> and t.checkpnt_tag_01 = #{checkpntTag01}</if>
+            <if test="checkpntTag02 != null  and checkpntTag02 != ''"> and t.checkpnt_tag_02 = #{checkpntTag02}</if>
+            <if test="checkpntTag03 != null  and checkpntTag03 != ''"> and t.checkpnt_tag_03 = #{checkpntTag03}</if>
+            <if test="checkpntTag04 != null  and checkpntTag04 != ''"> and t.checkpnt_tag_04 = #{checkpntTag04}</if>
+            <if test="checkpntTag05 != null  and checkpntTag05 != ''"> and t.checkpnt_tag_05 = #{checkpntTag05}</if>
+            <if test="checkpntTag06 != null  and checkpntTag06 != ''"> and t.checkpnt_tag_06 = #{checkpntTag06}</if>
+            <if test="checkpntTag07 != null  and checkpntTag07 != ''"> and t.checkpnt_tag_07 = #{checkpntTag07}</if>
+            <if test="checkpntTag08 != null  and checkpntTag08 != ''"> and t.checkpnt_tag_08 = #{checkpntTag08}</if>
+            <if test="checkpntTag09 != null  and checkpntTag09 != ''"> and t.checkpnt_tag_09 = #{checkpntTag09}</if>
+            <if test="checkpntTag10 != null  and checkpntTag10 != ''"> and t.checkpnt_tag_10 = #{checkpntTag10}</if>
+            <if test="checkpntTag11 != null  and checkpntTag11 != ''"> and t.checkpnt_tag_11 = #{checkpntTag11}</if>
+            <if test="checkpntTag12 != null  and checkpntTag12 != ''"> and t.checkpnt_tag_12 = #{checkpntTag12}</if>
+            <if test="checkpntTag13 != null  and checkpntTag13 != ''"> and t.checkpnt_tag_13 = #{checkpntTag13}</if>
+            <if test="checkpntTag14 != null  and checkpntTag14 != ''"> and t.checkpnt_tag_14 = #{checkpntTag14}</if>
+            <if test="checkpntTag15 != null  and checkpntTag15 != ''"> and t.checkpnt_tag_15 = #{checkpntTag15}</if>
+            <if test="checkpntRulCndesc != null  and checkpntRulCndesc != ''"> and t.checkpnt_rul_cndesc = #{checkpntRulCndesc}</if>
+            <if test="checkpntRulEndesc != null  and checkpntRulEndesc != ''"> and t.checkpnt_rul_endesc = #{checkpntRulEndesc}</if>
+            <if test="checkpntChkEntityCnname != null  and checkpntChkEntityCnname != ''"> and t.checkpnt_chk_entity_cnname like concat('%', #{checkpntChkEntityCnname}, '%')</if>
+            <if test="checkpntChkEntityEnname != null  and checkpntChkEntityEnname != ''"> and t.checkpnt_chk_entity_enname like concat('%', #{checkpntChkEntityEnname}, '%')</if>
+        <if test="dynamicSQL != null  and dynamicSQL != ''"> and ${dynamicSQL} </if>
+        </where>
+
+		<if
+			test="sortC != null  and sortC != '' and order != null  and order != ''">
+			ORDER BY t.${sortC} ${order}
+		</if>
+    </select>     
+    <!-- 批量插入数据 -->
+	<insert id="insertBatch">
+		insert into cdm_kfp_dataqualify(<include refid="CdmKfpDataqualifyColumns" />) values 
+		<foreach collection="list" item="item" separator="," >
+		(
+            #{item.id} ,
+            #{item.checkpntTag01} ,
+            #{item.checkpntTag02} ,
+            #{item.checkpntTag03} ,
+            #{item.checkpntTag04} ,
+            #{item.checkpntTag05} ,
+            #{item.checkpntTag06} ,
+            #{item.checkpntTag07} ,
+            #{item.checkpntTag08} ,
+            #{item.checkpntTag09} ,
+            #{item.checkpntTag10} ,
+            #{item.checkpntTag11} ,
+            #{item.checkpntTag12} ,
+            #{item.checkpntTag13} ,
+            #{item.checkpntTag14} ,
+            #{item.checkpntTag15} ,
+            #{item.checkpntRulCndesc} ,
+            #{item.checkpntRulEndesc} ,
+            #{item.checkpntChkEntityCnname} ,
+            #{item.checkpntChkEntityEnname} ,
+            #{item.createBy} ,
+            #{item.createTime} ,
+            #{item.updateBy} ,
+            #{item.updateTime} ,
+            #{item.remark} 		)
+		</foreach>
+	</insert>  
+  	<!-- 根据不同条件删除数据，条件可组合 -->
+	<update id="updateBatchEntity" >
+		<foreach collection="list" item="item" separator=",">
+        update cdm_kfp_dataqualify
+        set
+            id = #{id} ,
+            checkpnt_tag_01 = #{checkpntTag01} ,
+            checkpnt_tag_02 = #{checkpntTag02} ,
+            checkpnt_tag_03 = #{checkpntTag03} ,
+            checkpnt_tag_04 = #{checkpntTag04} ,
+            checkpnt_tag_05 = #{checkpntTag05} ,
+            checkpnt_tag_06 = #{checkpntTag06} ,
+            checkpnt_tag_07 = #{checkpntTag07} ,
+            checkpnt_tag_08 = #{checkpntTag08} ,
+            checkpnt_tag_09 = #{checkpntTag09} ,
+            checkpnt_tag_10 = #{checkpntTag10} ,
+            checkpnt_tag_11 = #{checkpntTag11} ,
+            checkpnt_tag_12 = #{checkpntTag12} ,
+            checkpnt_tag_13 = #{checkpntTag13} ,
+            checkpnt_tag_14 = #{checkpntTag14} ,
+            checkpnt_tag_15 = #{checkpntTag15} ,
+            checkpnt_rul_cndesc = #{checkpntRulCndesc} ,
+            checkpnt_rul_endesc = #{checkpntRulEndesc} ,
+            checkpnt_chk_entity_cnname = #{checkpntChkEntityCnname} ,
+            checkpnt_chk_entity_enname = #{checkpntChkEntityEnname} ,
+            create_by = #{createBy} ,
+            create_time = #{createTime} ,
+            update_by = #{updateBy} ,
+            update_time = #{updateTime} ,
+            remark = #{remark}     <where>
+			id = #{id}
+        </where>
+		</foreach>
+	</update>
+    
+</mapper>

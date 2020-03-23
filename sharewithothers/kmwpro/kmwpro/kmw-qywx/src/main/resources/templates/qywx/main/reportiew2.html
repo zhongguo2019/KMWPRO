@@ -84,24 +84,27 @@
 
                             <li>
                                 <p>项目组：</p>
-                                <select name="projectGroupId" th:with="type=${@dict.getType('qywx_dept_team')}">
+                                <select name="groupCode" th:with="type=${@dict.getType('qywx_dept_team')}">
                                     <option value="">所有</option>
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
                             </li>
+
                             <li>
                                 <p>姓名：</p>
-                                <input type="text" name="remarks"/>
+                                <input type="text" name="createBy"/>
                             </li>
+
                             <li class="select-time">
                                 <p>报告日期：</p>
                                 <input type="text" class="time-input" id="startTime" placeholder="开始时间" name="beginReportDate"/>
                                 <span>-</span>
                                 <input type="text" class="time-input" id="endTime" placeholder="结束时间" name="endReportDate"/>
                             </li>
-<li>
+
+                            <li>
 								<p>提交状态：</p> 
-							 <select name="isAfter" th:with="type=${@dict.getType('qywx_report_status')}">
+							 <select name="reportType" th:with="type=${@dict.getType('qywx_report_status')}">
                                     <option value="">所有</option>
                                     <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
                                 </select>
@@ -139,158 +142,37 @@
     </div>
     <th:block th:include="include :: footer" />
 <script th:inline="javascript">
-    var prefix = ctx + "qywx/work";
+    var prefix = ctx + "qywx/operatelog";
     $(function() {
         var options = {
-            url: prefix + "/qywxlist",
-            modalName: "工作记录信息",
-            sortable: true,                     //是否启用排序
-            sortOrder: "asc",                   //排序方式
+            url: prefix + "/queryInfoList",
+            modalName: "用户提交的日报浏览",
             columns: [{
                 checkbox: true
             },
                 {
-                    field : 'remarks',
-                    title : '姓名',
-                    sortable:true
-                },
-                {
-                    field : 'reportDate',
-                    title : '报告日期',
-                    sortable:true
-                },
-                {
-                    field : 'productName',
-                    title : '项目名称',
-                    visible:false
-                },
-                {
-                    field : 'projectGroupId',
-                    title : '所在项目组名称',
-                    visible:false
-
-                },
-                {
-                    field : 'projectId',
-                    title : '项目ID',
-                    visible:false
-                },
-                {
-                    field : 'productId',
-                    title : '对应产品',
-                    visible:false
-                },
-                {
-                    field : 'workContents',
-                    title : '工作内容简写',
-                    formatter: function(value, row, index) {
-                        return $.table.tooltip(value);
-                    }
-                },
-                {
-                    field : 'workDetail',
-                    title : '工作内容详细描述',
-                    formatter: function(value, row, index) {
-                        return $.table.tooltip(value);
-                    }
-                },
-                {
-                    field : 'finishPercent',
-                    title : '完成比例'
-                },
-                {
-                    field : 'delayReason',
-                    title : '延迟原因',
-                    visible:false
-                },
-                {
-                    field : 'accordYesterday',
-                    title : '对应计划',
-                    visible:false
-                },
-                {
-                    field : 'isImportant',
-                    title : '是否重要',
-                    visible:false
-                },
-                {
-                    field : 'isEmergency',
-                    title : '是否紧急',
-                    visible:false
-                },
-                {
-                    field : 'impoLevel',
-                    title : '重要级别',
-                    visible:false
-                },
-                {
                     field : 'id',
-                    title : '主键',
+                    title : '序号',
                     visible: false
                 },
                 {
-                    field : 'delFlag',
-                    title : '逻辑删除标记(0.正常，1.删除)',
-                    visible:false
-                },
-                {
-                    field : 'status',
-                    title : '状态',
-                    visible:false
-                },
-                {
-                    field : 'instId',
-                    title : '机构ID',
-                    visible:false
-                },
-                {
-                    field : 'loginIp',
-                    title : '登录IP',
-                    visible:false
-                },
-                {
-                    field : 'loginDate',
-                    title : '登录日期',
-                    visible:false
+                    field : 'reportDate',
+                    title : '报告日期'
                 },
                 {
                     field : 'createBy',
-                    title : '创建人',
-                    visible:false
-                },
-                {
-                    field : 'createDate',
-                    title : '创建时间',
-                    visible:false
-                },
-                {
-                    field : 'updateBy',
-                    title : '最近修改人',
-                    visible:false
-                },
-                {
-                    field : 'updateDate',
-                    title : '最近修改时间',
-                    visible:false
+                    title : '姓名'
                 },
 
                 {
-                    field : 'reporterId',
-                    title : '报告人ID',
-                    visible:false
+                    field : 'submitText',
+                    title : '日报内容',
+                    formatter: function(value, row, index) {
+                        return $.table.tooltip(value);
+                    }
                 },
                 {
-                    field : 'reporterName',
-                    title : '报告人名称',
-                    visible:false
-                },
-                {
-                    field : 'inputOrder',
-                    title : '录入内容序号',
-                    visible:false
-                },
-                {
-                    field : 'isAfter',
+                    field : 'reportType',
                     title : '提交状态',
                     formatter: function(value,row,index) {
                         //通过判断单元格的值，来格式化单元格，返回的值即为格式化后包含的元素
@@ -306,19 +188,41 @@
                         }
                         return a;
                     }
-                }/*,
+                },                {
+                    field : 'groupCode',
+                    title : '所在项目组',
+                    visible: false
+                },
                 {
-                    title: '操作',
-                    align: 'center',
-                    formatter: function(value, row, index) {
-                        var actions = [];
-                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
-                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
-                        return actions.join('');
-                    }
-                }
-                */
-                ]
+                    field : 'updateTime',
+                    title : '提交时间'
+                },
+                {
+                    field : 'operType',
+                    title : '报告状态',
+                    visible: false
+                },
+
+                {
+                    field : 'messFromIp',
+                    title : '消息来源IP',
+                    visible: false
+                },
+                {
+                    field : 'messType',
+                    title : '消息分类',
+                    visible: false
+                },
+                {
+                    field : 'remark',
+                    title : '备注',
+                    visible: false
+                },
+               {
+                    field : 'userAccount',
+                    title : '用户账号',
+                    visible: false
+                }]
         };
         $.table.init(options);
     });
@@ -326,20 +230,22 @@
 
 
 
-
     $(document).ready(function (){
 
-      if(judgeIEType()== false)        return;
+     if(judgeIEType()== false)        return;
         //获取当前用户用户userId
         //以下两行代码调试时注掉
-        var urlCode = location.href.split("code=")[1].split('&')[0];
-        var userCode = getcookie("userId");
+       var urlCode = location.href.split("code=")[1].split('&')[0];
+       var userCode = getcookie("userId");
+
+
        // console.log("地址ID"+urlCode);
        // console.log("用户ID"+userCode);
         //以下代码调试时打开
        // userCode = 'Zhaozulong';  //置上默认的用户名
       // var urlCode ='P1iJnyb-09zdfDiAVt6LOAP24DQJOQViJ873bAJIWEQ'; //置上默认的微信传来的参数code=P1iJnyb-09zdfDiAVt6LOAP24DQJOQViJ873bAJIWEQ&state=STATE
-        if (userCode == "") {
+
+       if (userCode == "") {
             $.ajax({
                 url: "http://krmsoft.natapp1.cc/qywx/main/wxgetJSSUser",
                 data: {
@@ -358,11 +264,11 @@
                 }
             });
         }
-        var userCodeLog = getcookie("userId");
-        console.log(userCodeLog);
+ //        var userCodeLog = getcookie("userId");
+ //       console.log(userCodeLog);
     });
 
-/*function judgeIEType() {
+function judgeIEType() {
     var ua = window.navigator.userAgent.toLowerCase();
     if ((ua.match(/MicroMessenger/i) == 'micromessenger') && (ua.match(/wxwork/i) == 'wxwork')) {
     // 企业微信客户端
@@ -377,7 +283,7 @@
       window.location.replace('../error.html')
         return false;
     }
-}*/
+}
     //存Cookie的值 仅同级文件可用
     function addcookie(name, value, expireHours) {
         var exp = new Date();

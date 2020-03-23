@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('数据质量检核配置列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <p>检查点分类01对应的业务源系统名称：</p>
+                                <input type="text" name="checkpntTag01"/>
+                            </li>
+                            <li>
+                                <p>检查点分类02对应的业务源系统主题分类：</p>
+                                <input type="text" name="checkpntTag02"/>
+                            </li>
+                            <li>
+                                <p>检查点分类03是针对表的检查点，还是针对字段的检查点：</p>
+                                <input type="text" name="checkpntTag03"/>
+                            </li>
+                            <li>
+                                <p>检查点分类04中文名称：</p>
+                                <input type="text" name="checkpntTag04"/>
+                            </li>
+                            <li>
+                                <p>检查点分类05英文名称：</p>
+                                <input type="text" name="checkpntTag05"/>
+                            </li>
+                            <li>
+                                <p>检查点分类06规则中文描述：</p>
+                                <input type="text" name="checkpntTag06"/>
+                            </li>
+                            <li>
+                                <p>检查点分类07规则对应的效果检查部门银监，人民银行，行内经营：</p>
+                                <input type="text" name="checkpntTag07"/>
+                            </li>
+                            <li>
+                                <p>检查点分类08版本号：</p>
+                                <input type="text" name="checkpntTag08"/>
+                            </li>
+                            <li>
+                                <p>检查点分类09：</p>
+                                <input type="text" name="checkpntTag09"/>
+                            </li>
+                            <li>
+                                <p>检查点分类10：</p>
+                                <input type="text" name="checkpntTag10"/>
+                            </li>
+                            <li>
+                                <p>检查点分类11：</p>
+                                <input type="text" name="checkpntTag11"/>
+                            </li>
+                            <li>
+                                <p>检查点分类12：</p>
+                                <input type="text" name="checkpntTag12"/>
+                            </li>
+                            <li>
+                                <p>检查点分类13：</p>
+                                <input type="text" name="checkpntTag13"/>
+                            </li>
+                            <li>
+                                <p>检查点分类14：</p>
+                                <input type="text" name="checkpntTag14"/>
+                            </li>
+                            <li>
+                                <p>检查点分类15：</p>
+                                <input type="text" name="checkpntTag15"/>
+                            </li>
+                            <li>
+                                <p>检查的实体中文名称：</p>
+                                <input type="text" name="checkpntChkEntityCnname"/>
+                            </li>
+                            <li>
+                                <p>检查的实体英文名称：</p>
+                                <input type="text" name="checkpntChkEntityEnname"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="metadata:dataqualify:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="metadata:dataqualify:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="metadata:dataqualify:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="metadata:dataqualify:export">
+                    <i class="fa fa-download"></i> 导出
+                 </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('metadata:dataqualify:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('metadata:dataqualify:remove')}]];
+        var prefix = ctx + "metadata/dataqualify";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "数据质量检核配置",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field : 'id', 
+                    title : '序号',
+                    visible: false
+                },
+                {
+                    field : 'checkpntTag01', 
+                    title : '检查点分类01对应的业务源系统名称'
+                },
+                {
+                    field : 'checkpntTag02', 
+                    title : '检查点分类02对应的业务源系统主题分类'
+                },
+                {
+                    field : 'checkpntTag03', 
+                    title : '检查点分类03是针对表的检查点，还是针对字段的检查点'
+                },
+                {
+                    field : 'checkpntTag04', 
+                    title : '检查点分类04中文名称'
+                },
+                {
+                    field : 'checkpntTag05', 
+                    title : '检查点分类05英文名称'
+                },
+                {
+                    field : 'checkpntTag06', 
+                    title : '检查点分类06规则中文描述'
+                },
+                {
+                    field : 'checkpntTag07', 
+                    title : '检查点分类07规则对应的效果检查部门银监，人民银行，行内经营'
+                },
+                {
+                    field : 'checkpntTag08', 
+                    title : '检查点分类08版本号'
+                },
+                {
+                    field : 'checkpntTag09', 
+                    title : '检查点分类09'
+                },
+                {
+                    field : 'checkpntTag10', 
+                    title : '检查点分类10'
+                },
+                {
+                    field : 'checkpntTag11', 
+                    title : '检查点分类11'
+                },
+                {
+                    field : 'checkpntTag12', 
+                    title : '检查点分类12'
+                },
+                {
+                    field : 'checkpntTag13', 
+                    title : '检查点分类13'
+                },
+                {
+                    field : 'checkpntTag14', 
+                    title : '检查点分类14'
+                },
+                {
+                    field : 'checkpntTag15', 
+                    title : '检查点分类15'
+                },
+                {
+                    field : 'checkpntRulCndesc', 
+                    title : '检查规则英文表达SQL'
+                },
+                {
+                    field : 'checkpntRulEndesc', 
+                    title : '检查规则中文表达'
+                },
+                {
+                    field : 'checkpntChkEntityCnname', 
+                    title : '检查的实体中文名称'
+                },
+                {
+                    field : 'checkpntChkEntityEnname', 
+                    title : '检查的实体英文名称'
+                },
+                {
+                    field : 'remark', 
+                    title : '备注'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+        
+        
+        /* 通过map带参调用后台的方法Demo       
+          function openDemo(){
+        	  var url1 =  prefix+"/tableDataInfo";
+        	  var url2 =  prefix+"/queryPageInfo";
+        	  var url3 =  prefix+"/queryOneEntity";
+              var	data = $('#formId').serialize();
+          	  var config = {
+        	        url: url3,
+        	        type: "post",
+        	        dataType: "json",
+        	        data: data,
+        	        beforeSend: function () {
+        	        //	$.modal.loading("正在处理中，请稍后...");
+        	        },
+        	        success: function(result) {
+        	        }
+        	    };
+        	    $.ajax(config)
+        } */
+    </script>
+</body>
+</html>

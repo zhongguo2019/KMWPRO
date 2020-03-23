@@ -3,6 +3,7 @@ package com.kmw.qywx.controller;
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -681,7 +683,10 @@ public class DoufuTodayWorkController extends BaseController {
 			strLastCommitString = strLastCommitString + lstReptList.get(j);
 		}
 		logger.info("提交的内容转为报文后:\n" + strLastCommitString);
-		doufuTodayWorkService.saveOperReportLog("text", strLastCommitString, request);
+		
+		if( doufuTodayWorkService.saveOperReportLog("text", strLastCommitString, request)==null) {
+			
+		}
 		result.setMsg(doufuTodayWorkService.dealDayReportInsert(request, strLastCommitString, strUserCode));
 		result.setCode(0);
 		return result;
@@ -801,17 +806,30 @@ public class DoufuTodayWorkController extends BaseController {
 			
 			
 		} else {
-			List ListRptDateList = new ArrayList<>();
+			List<Object> ListRptDateList = new ArrayList<>();
 			jsonValue.put("reporterId", 0);
 			jsonValue.put("date", "今天");
 			ListRptDateList.add(jsonValue.toString());
 			int i = 1;
+			Set<String> setDateStrings = new HashSet<>();
 			for (Iterator<QywxUserOperatelog> iterator = lstRptDList.iterator(); iterator.hasNext();) {
 
-				jsonValue.put("reporterId", i++);
-				jsonValue.put("date", iterator.next().getReportDate());
-				ListRptDateList.add(jsonValue.toString());
+				setDateStrings.add(iterator.next().getReportDate());
 			}
+//			setDateStrings.stream().sorted(Comparator.reverseOrder());
+			
+			
+			 
+	        Set<String> sortSet = new TreeSet<String>(Comparator.reverseOrder());
+	        sortSet.addAll(setDateStrings);
+			 Iterator<String> itSet = sortSet.iterator();
+		        while (itSet.hasNext()) {
+		        	
+		        	jsonValue.put("reporterId", i++);
+					jsonValue.put("date", itSet.next() );
+					ListRptDateList.add(jsonValue.toString());
+		        }
+		
 			jsonValueRtn.put("lists", JSON.toJSON(ListRptDateList));
 
 		}

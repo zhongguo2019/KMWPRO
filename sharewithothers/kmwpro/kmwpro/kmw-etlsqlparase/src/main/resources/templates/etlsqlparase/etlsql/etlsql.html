@@ -119,65 +119,99 @@
                 },
                 {
                     field : 'targetTblenname', 
-                    title : '目标表'
+                    title : '目标表',
+                       formatter: function(value, row, index) {
+                        return $.table.tooltip(value,20);
+                    }
                 },
                 {
                     field : 'targetTblcnname', 
-                    title : '目标表'
+                    title : '目标表',
+                       formatter: function(value, row, index) {
+                        return $.table.tooltip(value,20);
+                    }
                 },
                 {
                     field : 'sourceTblenname', 
-                    title : '来源表'
+                    title : '来源表',
+                       formatter: function(value, row, index) {
+                        return $.table.tooltip(value,20);
+                    }
                 },
                 {
                     field : 'sourceTblcnname', 
-                    title : '来源表'
+                    title : '来源表',
+                       formatter: function(value, row, index) {
+                        return $.table.tooltip(value,20);
+                    }
                 },
                 {
                     field : 'targetColenname', 
-                    title : '目标字段'
+                    title : '目标字段',
+                       formatter: function(value, row, index) {
+                        return $.table.tooltip(value,20);
+                    }
                 },
                 {
                     field : 'targetColcnname', 
-                    title : '目标字段'
+                    title : '目标字段',
+                       formatter: function(value, row, index) {
+                        return $.table.tooltip(value,20);
+                    }
                 },
                 {
                     field : 'sourceColenname', 
-                    title : '来源字段'
+                    title : '来源字段',
+                       formatter: function(value, row, index) {
+                        return $.table.tooltip(value,20);
+                    }
                 },
                 {
                     field : 'sourceColcnname', 
-                    title : '来源字段'
+                    title : '来源字段',
+                       formatter: function(value, row, index) {
+                        return $.table.tooltip(value,20);
+                    }
                 },
                 {
                     field : 'columEnrelations', 
-                    title : '英文关系'
+                    title : '英文关系',
+                       formatter: function(value, row, index) {
+                        return $.table.tooltip(value,20);
+                    }
                 },
                 {
                     field : 'columCnrelations', 
-                    title : '中文关系'
+                    title : '中文关系',
+                       formatter: function(value, row, index) {
+                        return $.table.tooltip(value,20);
+                    }
                 },
                 {
                     field : 'etlSqlType', 
-                    title : 'SQL类型'
+                    title : 'SQL类型',
+                    visible: false
                 },
                 {
                     field : 'etlDbType', 
-                    title : '数据库类型'
+                    title : '数据库类型',
+                    visible: false
                 },
                 {
                     field : 'remark', 
-                    title : '备注'
+                    title : '备注',
+                    visible: false
                 },
                 {
                     field : 'etlWildcards', 
-                    title : 'SQL中的通配符'
+                    title : 'SQL中的通配符',
+                    visible: false
                 },
                 {
                     field : 'etlSql', 
                     title : '解析的SQL',
                        formatter: function(value, row, index) {
-                        return $.table.tooltip(value);
+                        return $.table.tooltip(value,20);
                     }
                 },
                 {

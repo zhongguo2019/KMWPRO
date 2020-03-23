@@ -12,7 +12,7 @@ kmw:
 #  profile: /home/kmw/uploadPath
   profile: D:/kmw/uploadPath
   addressEnabled: true
-  redistoken: true
+  redistoken: false
 
 # 开发环境配置
 server:

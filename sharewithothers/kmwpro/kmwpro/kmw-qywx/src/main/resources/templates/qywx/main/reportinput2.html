@@ -9,9 +9,9 @@
 </head>
 <body class="gray-bg">
 
-	<div class="wrapper wrapper-content animated fadeIn">
-		<div class="row">
-			<div class="col-sm-6">
+	<div class="">
+		<div class="row" style="top: 0px">
+			<div class="col-sm-6" >
 				<div class="tabs-container">
 					<ul class="nav nav-tabs">
 						<li class="active"><a data-toggle="tab" href="#tab-1"
@@ -24,10 +24,10 @@
 					</ul>
 					<div class="tab-content">
 						<div id="tab-1" class="tab-pane active">
-							<div class="panel-body" style="height: 550px">
+							<div class="panel-body" style="height: 500px">
 
-								<div class="ibox">
-									<div class="ibox-content">
+								<div class="ibox" style="height: 460px">
+									<div class="ibox-content" style="height: 440px">
 										<div class="form-group">
 											<textarea class="form-control" rows="3"
 												placeholder="录入今天完成的工作内容" id="workContent"></textarea>
@@ -54,7 +54,7 @@
 											</span>
 										</div>
 
-										<div class="row pre-scrollable">
+										<div class="row pre-scrollable" style="height: 300px;">
 											<hr class="simple" color="#6f5499">
 											</hr>
 											<ul class="sortable-list connectList agile-list"
@@ -69,10 +69,10 @@
 							</div>
 						</div>
 						<div id="tab-2" class="tab-pane">
-							<div class="panel-body" style="height: 550px">
+							<div class="panel-body" style="height: 500px">
 
-								<div class="ibox">
-									<div class="ibox-content">
+								<div class="ibox" style="height: 460px">
+									<div class="ibox-content" style="height: 440px">
 										<div class="form-group">
 											<textarea class="form-control" rows="3"
 												placeholder="录入明天工作计划" id="tomorrow_workContent"></textarea>
@@ -117,10 +117,10 @@
 							</div>
 						</div>
 						<div id="tab-3" class="tab-pane">
-							<div class="panel-body" style="height: 550px">
+							<div class="panel-body" style="height: 500px">
 
-								<div class="ibox">
-									<div class="ibox-content">
+								<div class="ibox" style="height: 460px">
+									<div class="ibox-content" style="height: 440px">
 										<div class="form-group">
 											<div class="input-group">
 												<select id="submit_workState"
@@ -137,7 +137,7 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<textarea class="form-control" rows="20"
+											<textarea class="form-control" rows="18" style="height:350px;"
 												placeholder="当天的工作总结思考内容" id="submit_WorkContent"></textarea>
 										</div>
 									</div>
@@ -165,6 +165,7 @@
 /* 			$(".sortable-list").sortable({
 				connectWith : ".connectList"
 			}).disableSelection(); */
+
 			// 获取当前用户用户userId
 			 var urlCode = location.href.split("code=")[1].split('&')[0];
 			var userId = "";
@@ -192,12 +193,15 @@
 			//把值放在span里面，显示
 			alert(v);
 			}); */
+
 		$('#todayWork').on('click','li a',function(){
 			$(this).parent().remove();
 		})
+		
 		$('#tomorrowWork').on('click','li a',function(){
 			$(this).parent().remove();
 		})
+		
 		$("#btnResetForm").on('click', function() {
 			$("#workContent").reset();
 			$("#projectGroupId").reset();
@@ -216,31 +220,19 @@
 
 							if ($.isEmptyObject(workContent)) {
 								var error_msg = "工作内容没有录入！";
-								layer.msg("<em style='color:red'>" + error_msg
-										+ "</em>", {
-									time : 1200,
-									icon : 5
-								});
+								$.modal.alert(error_msg, modal_status.FAIL);
 								return;
 							}
 							;
 							if ($.isEmptyObject(finishPercent)) {
 								var error_msg = "完成比例录入！";
-								layer.msg("<em style='color:red'>" + error_msg
-										+ "</em>", {
-									time : 1200,
-									icon : 5
-								});
+								$.modal.alert(error_msg, modal_status.FAIL);
 								return;
 							}
 							;
 							if ($.isEmptyObject(projectName)) {
 								var error_msg = "项目名称没有录入！";
-								layer.msg("<em style='color:red'>" + error_msg
-										+ "</em>", {
-									time : 1200,
-									icon : 5
-								});
+								$.modal.alert(error_msg, modal_status.FAIL);
 								return;
 							}
 							;
@@ -271,31 +263,19 @@
 									.val();
 							if ($.isEmptyObject(workContent)) {
 								var error_msg = "工作内容没有录入！";
-								layer.msg("<em style='color:red'>" + error_msg
-										+ "</em>", {
-									time : 1200,
-									icon : 5
-								});
+								$.modal.alert(error_msg, modal_status.FAIL);
 								return;
 							}
 							;
 							if ($.isEmptyObject(finishPercent)) {
 								var error_msg = "完成比例录入！";
-								layer.msg("<em style='color:red'>" + error_msg
-										+ "</em>", {
-									time : 1200,
-									icon : 5
-								});
+								$.modal.alert(error_msg, modal_status.FAIL);
 								return;
 							}
 							;
 							if ($.isEmptyObject(projectName)) {
 								var error_msg = "项目名称没有录入！";
-								layer.msg("<em style='color:red'>" + error_msg
-										+ "</em>", {
-									time : 1200,
-									icon : 5
-								});
+								$.modal.alert(error_msg, modal_status.FAIL);
 								return;
 							};
 			
@@ -308,8 +288,7 @@
 									+ '<span id="tomorrow_workcontent"  style="max-width: 100%;display: inline-block;overflow-wrap: break-word;    text-align: left;">'+workContent+'</span>'
 							    	+ ' </li>'
 							$("#tomorrowWork").append(tomorrowOptionItem);
-									
-									
+
 									$("#tomorrow_workContent").val("");
 							tomorrowAddNum++;
 						});
@@ -327,31 +306,20 @@
 									.val();
 							if ($.isEmptyObject(workstate)) {
 								var error_msg = "工作状态没有录入！";
-								layer.msg("<em style='color:red'>" + error_msg
-										+ "</em>", {
-									time : 1200,
-									icon : 5
-								});
+								$.modal.alert(error_msg, modal_status.FAIL);
 								return;
 							}
 							;
 							if ($.isEmptyObject(worktype)) {
 								var error_msg = "工作性质没有录入！";
-								layer.msg("<em style='color:red'>" + error_msg
-										+ "</em>", {
-									time : 1200,
-									icon : 5
-								});
+ 								$.modal.alert(error_msg, modal_status.FAIL);
 								return;
 							}
 							;
 							if ($.isEmptyObject(submitWorkContent)) {
+
 								var error_msg = "工作总结没有录入！";
-								layer.msg("<em style='color:red'>" + error_msg
-										+ "</em>", {
-									time : 1200,
-									icon : 5
-								});
+								$.modal.alert(error_msg, modal_status.FAIL);
 								return;
 							}
 							;
@@ -404,14 +372,24 @@
 										
 										
 										
-									});					
-							
-							
-							
+									});
+
+
+							if(todayArray.length==0){
+								$.modal.alert("当天工作内容没有录入！", modal_status.FAIL);
+								return;
+							}
+							if(tomorrowArray.length==0){
+								$.modal.alert("明天的工作计划没有录入！", modal_status.FAIL);
+								return;
+							}
+
      						jsonData01.todaywork = todayArray;
 							jsonData01.tomorrowwork = tomorrowArray;
 							jsonData01.submitwork = submitconteng;
-								jsonData01.userCode = getcookie("userId");
+							jsonData01.userCode = getcookie("userId");
+
+
 							//jsonData01.userCode = "ZhaoZuLong";
 							var saveUrl = "http://krmsoft.natapp1.cc/qywx/work/wxworksaveV2";
 
@@ -429,6 +407,8 @@
 									$("#workContent").val("");
 									$("#todayWork").reset();
 									$("#tomorrowWork").reset();
+
+									$('ul').empty();
 								}
 							};
 
