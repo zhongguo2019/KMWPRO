@@ -35,26 +35,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.apache.poi.ss.formula.functions.Now;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-import com.kmw.qywx.utils.Result;
-import com.kmw.qywx.utils.SpringContextHolder;
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
-import com.kmw.qywx.domain.DoufuTodayWork;
 import com.kmw.qywx.domain.WxUser;
 import com.kmw.qywx.service.IDoufuTodayWorkService;
 import com.kmw.qywx.service.IQywxUserOperatelogService;
 import com.kmw.qywx.service.IRedisUtilService;
 import com.kmw.qywx.service.IWxUserService;
-import com.google.common.collect.Maps;
 import com.kmw.common.Constant;
 import com.kmw.common.utils.DateUtils;
 

@@ -12,7 +12,8 @@
 					<div class="select-list">
 						<ul>
 							<li>
-								<p>项目组：</p> <select name="groupCode"
+								<p>项目组：</p> 
+								<select name="projectGroupId"
 								th:with="type=${@dict.getType('qywx_dept_team')}">
 									<option value="">所有</option>
 									<option th:each="dict : ${type}" th:text="${dict.dictLabel}"

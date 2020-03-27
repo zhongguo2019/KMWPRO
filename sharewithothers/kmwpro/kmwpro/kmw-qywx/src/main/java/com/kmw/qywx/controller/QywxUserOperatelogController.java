@@ -110,6 +110,16 @@ public class QywxUserOperatelogController extends BaseController
         mmap.put("qywxUserOperatelog", qywxUserOperatelog);
         return prefix + "/edit";
     }
+    /**
+    *@function 修改保留用户每次提交的消息内容
+    */
+        @GetMapping("/detail/{id}")
+        public String detail(@PathVariable("id") String id, ModelMap mmap)
+        {
+            QywxUserOperatelog qywxUserOperatelog = qywxUserOperatelogService.selectQywxUserOperatelogById(id);
+            mmap.put("qywxUserOperatelog", qywxUserOperatelog);
+            return prefix + "/detail";
+        }
 
 /**
 *@function 修改保存保留用户每次提交的消息内容

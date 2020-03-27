@@ -2,6 +2,8 @@ package com.kmw.qywx.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -101,6 +103,7 @@ public class WxUserGroupController extends BaseController
     @ResponseBody
     public AjaxResult addSave(WxUserGroup wxUserGroup)
     {
+    	wxUserGroup.setId(UUID.randomUUID().toString());
         return toAjax(wxUserGroupService.insertWxUserGroup(wxUserGroup));
     }
 

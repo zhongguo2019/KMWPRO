@@ -9,13 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
  
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
  
 
 import com.kmw.common.Constant;
 import com.kmw.common.core.controller.BaseController;
+import com.kmw.qywx.domain.QywxUserOperatelog;
+import com.kmw.qywx.service.IQywxUserOperatelogService;
 import com.kmw.qywx.utils.HttpUtil;
 import com.kmw.qywx.utils.WXBizMsgCrypt;
 import com.kmw.qywx.utils.WeiXinParamesUtil;
@@ -44,6 +48,9 @@ public class QywxBaseController  extends BaseController{
   
     @Autowired
     WeiXinUtil weiXinUtil;
+
+    @Autowired
+    private IQywxUserOperatelogService qywxUserOperatelogService;
     
 	@RequestMapping("/wxconnect")
 	@ResponseBody
@@ -141,7 +148,7 @@ public class QywxBaseController  extends BaseController{
     @GetMapping("/reportview")
     public String reportview()
     {
-        return prefix + "/reportiew2";
+        return prefix + "/reportview";
     }
     /**
      *录入界面
@@ -149,7 +156,7 @@ public class QywxBaseController  extends BaseController{
     @GetMapping("/reportinput")
     public String reportinput()
     {
-        return prefix + "/reportinput2";
+        return prefix + "/reportinput";
     }
     /**
      *查看自己录入日报
@@ -159,4 +166,16 @@ public class QywxBaseController  extends BaseController{
     {
         return prefix + "/reportviewself";
     }
+    
+    /**
+    *@function 修改保留用户每次提交的消息内容
+    */
+        @GetMapping("/detail/{id}")
+        public String detail(@PathVariable("id") String id, ModelMap mmap)
+        {
+            QywxUserOperatelog qywxUserOperatelog = qywxUserOperatelogService.selectQywxUserOperatelogById(id);
+            mmap.put("qywxUserOperatelog", qywxUserOperatelog);
+            return prefix + "/report-detail";
+        }
+
 }

@@ -875,6 +875,32 @@ var table = {
             	$.operate.submit(url, "get", "json", "", callback);
             },
             // 详细信息
+            detailOptions: function(id, width, height) {
+            	table.set();
+            	var _url = $.operate.detailUrl(id);
+                var _width = $.common.isEmpty( table.options.detailWindow.width) ? "800" : table.options.detailWindow.width; 
+                var _height = $.common.isEmpty(table.options.detailWindow.height) ? ($(window).height() - 50) : table.options.detailWindow.height;
+				var _title =table.options.modalName + "详细";
+            	//如果是移动端，就使用自适应大小弹窗
+            	if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) {
+            	    _width = 'auto';
+            	    _height = 'auto';
+            	}
+            	var options = {
+       				title: _title,
+       				width: _width,
+       				height: _height,
+       				url: _url,
+       				skin: 'layui-layer-gray', 
+       				btn: ['关闭'],
+       				yes: function (index, layero) {
+       	                layer.close(index);
+                    }
+       			};			
+            	$.modal.openOptions(options);
+            },				
+				
+            // 详细信息
             detail: function(id, width, height) {
             	table.set();
             	var _url = $.operate.detailUrl(id);
@@ -954,6 +980,24 @@ var table = {
             	table.set();
             	$.modal.open("添加" + table.options.modalName, $.operate.addUrl(id));
             },
+            // 添加信息带参数
+            addOptions: function(id) {
+            	table.set();
+            	
+            	var _url = $.operate.addUrl(id); 
+            	var _title ="添加" + table.options.modalName; 
+                var _width = $.common.isEmpty( table.options.addWindow.width) ? "800" : table.options.addWindow.width; 
+                var _height = $.common.isEmpty(table.options.addWindow.height) ? ($(window).height() - 50) : table.options.addWindow.height;
+               var  _callback = function(index, layero) {
+                    var iframeWin = layero.find('iframe')[0];
+                    iframeWin.contentWindow.submitHandler(index, layero);
+                }
+                
+            	var options = {title:_title,url:_url,width:_width,height:_height,yes:_callback};
+           	$.modal.openOptions(options);
+            },
+            
+            
             // 添加信息，以tab页展现
             addTab: function (id) {
             	table.set();
@@ -970,9 +1014,20 @@ var table = {
             	var url = $.common.isEmpty(id) ? table.options.createUrl.replace("{id}", "") : table.options.createUrl.replace("{id}", id);
                 return url;
             },
+            
             // 修改信息
             edit: function(id) {
             	table.set();
+                var selectRow=$("#" + table.options.id).bootstrapTable('getAllSelections');
+            
+        		if ($.common.isEmpty(id)&&selectRow.length>1 ) {
+        			$.modal.alertWarning("请只选择一条记录进行修改！");
+        			return;
+        		}
+        		if($.common.isEmpty(id)&&selectRow.length==1 ){
+        			id=selectRow[0].id
+        		}
+        		
             	if($.common.isEmpty(id) && table.options.type == table_type.bootstrapTreeTable) {
             		var row = $("#" + table.options.id).bootstrapTreeTable('getSelections')[0];
                 	if ($.common.isEmpty(row)) {
@@ -982,9 +1037,58 @@ var table = {
                     var url = table.options.updateUrl.replace("{id}", row[table.options.uniqueId]);
                     $.modal.open("修改" + table.options.modalName, url);
             	} else {
+            		
             	    $.modal.open("修改" + table.options.modalName, $.operate.editUrl(id));
             	}
             },
+            // 修改信息
+            editOptions: function(id) {
+            	table.set();
+                var selectRow=$("#" + table.options.id).bootstrapTable('getAllSelections');
+            
+        		if ($.common.isEmpty(id)&&selectRow.length>1 ) {
+        			$.modal.alertWarning("请只选择一条记录进行修改！");
+        			return;
+        		}
+        		if($.common.isEmpty(id)&&selectRow.length==1 ){
+        			id=selectRow[0].id
+        		}
+        		
+            	if($.common.isEmpty(id) && table.options.type == table_type.bootstrapTreeTable) {
+            		var row = $("#" + table.options.id).bootstrapTreeTable('getSelections')[0];
+                	if ($.common.isEmpty(row)) {
+            			$.modal.alertWarning("请至少选择一条记录");
+            			return;
+            		}
+                    var url = table.options.updateUrl.replace("{id}", row[table.options.uniqueId]);
+                    
+                    var _url = url; 
+                	var _title ="修改" + table.options.modalName; 
+                    var _width = $.common.isEmpty( table.options.editWindow.width) ? "800" : table.options.editWindow.width; 
+                    var _height = $.common.isEmpty(table.options.editWindow.height) ? ($(window).height() - 50) : table.options.editWindow.height;
+                    var  _callback = function(index, layero) {
+                        var iframeWin = layero.find('iframe')[0];
+                        iframeWin.contentWindow.submitHandler(index, layero);
+                    }
+                    var options = {title:_title,url:_url,width:_width,height:_height,yes:_callback};
+    					
+                    $.modal.openOptions(options);
+                    
+
+            	} else {
+                    var _url = $.operate.editUrl(id); 
+                	var _title ="修改" + table.options.modalName; 
+                    var _width = $.common.isEmpty( table.options.editWindow.width) ? "800" : table.options.editWindow.width; 
+                    var _height = $.common.isEmpty(table.options.editWindow.height) ? ($(window).height() - 50) : table.options.editWindow.height;
+                    var  _callback = function(index, layero) {
+                        var iframeWin = layero.find('iframe')[0];
+                        iframeWin.contentWindow.submitHandler(index, layero);
+                    }
+                    var options = {title:_title,url:_url,width:_width,height:_height,yes:_callback};
+                    $.modal.openOptions(options);
+            	}
+            },
+            
             // 修改信息，以tab页展现
             editTab: function(id) {
             	table.set();

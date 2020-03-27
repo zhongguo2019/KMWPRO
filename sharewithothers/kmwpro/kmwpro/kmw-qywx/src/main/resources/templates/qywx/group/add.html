@@ -1,142 +1,118 @@
 <!DOCTYPE html>
-<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:include="include :: header('新增微信用户分组信息')" />
-    <th:block th:include="include :: datetimepicker-css" />
+<th:block th:include="include :: header('新增微信用户分组信息')" />
+<th:block th:include="include :: datetimepicker-css" />
+	<th:block th:include="include :: select2-css" />
+	<th:block th:include="include :: bootstrap-select-css" />
 </head>
 <body class="white-bg">
-    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
-        <form class="form-horizontal m" id="form-group-add">
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">小组负责人：</label>
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-group-add">
+			<!--             <div class="form-group">    
+                <label class="col-sm-3 control-label">接 收人：</label>
                 <div class="col-sm-8">
                     <input name="userId" class="form-control" type="text" required>
                 </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">用户编码：</label>
-                <div class="col-sm-8">
-                    <input name="userCode" class="form-control" type="text" required>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">用户名称：</label>
-                <div class="col-sm-8">
-                    <input name="username" class="form-control" type="text" required>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">用户分组编码：</label>
-                <div class="col-sm-8">
-                    <input name="groupCode" class="form-control" type="text" required>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">负责小组名称 广东农信;南京银行MAST;：</label>
-                <div class="col-sm-8">
-                    <input name="groupCname" class="form-control" type="text" required>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">是否要通知微信消息：</label>
-                <div class="col-sm-8">
-                    <input name="isMsg" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">逻辑删除标记(0.正常，1.删除)：</label>
-                <div class="col-sm-8">
-                    <input name="delFlag" class="form-control" type="text" required>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">状态：</label>
-                <div class="col-sm-8">
-                    <div class="radio-box">
-                        <input type="radio" name="status" value="" required>
-                        <label th:for="status" th:text="未知"></label>
-                    </div>
-                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">机构ID：</label>
-                <div class="col-sm-8">
-                    <input name="instId" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">登录IP：</label>
-                <div class="col-sm-8">
-                    <input name="loginIp" class="form-control" type="text">
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">登录日期：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        <input name="loginDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">创建时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        <input name="createDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">    
-                <label class="col-sm-3 control-label">最近修改时间：</label>
-                <div class="col-sm-8">
-                    <div class="input-group date">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        <input name="updateDate" class="form-control" placeholder="yyyy-MM-dd" type="text">
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label">描述：</label>
-                <div class="col-sm-8">
-                    <textarea name="remarks" class="form-control"></textarea>
-                </div>
-            </div>
-        </form>
-    </div>
-    <th:block th:include="include :: footer" />
-    <th:block th:include="include :: datetimepicker-js" />
-    <script type="text/javascript">
-        var prefix = ctx + "qywx/group"
-        $("#form-group-add").validate({
-            focusCleanup: true
-        });
+            </div> -->
+			<input name="username" id="username"  type="hidden" >
+			<input name="groupCname" id="groupCname"  type="hidden">
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label">接收人：</label>
+				<div class="col-sm-8">
+					<select class="form-control"  id="userCode"  style="width: 100%;" name="userCode"
+						th:with="type=${@qywxdict.getWxUserName('')}" required>
+						<option th:each="dict : ${type}" th:text="${dict.name}"
+							th:value="${dict.account}"></option>
+					</select>
+				</div>
+			</div>
 
-        function submitHandler() {
-            if ($.validate.form()) {
-                $.operate.save(prefix + "/add", $('#form-group-add').serialize());
-            }
-        }
+			<div class="form-group">
+				<label class="col-sm-3 control-label">项目组：</label>
+				<div class="col-sm-8">
+					<select class="form-control" style="width: 100%;" name="groupCode" id="groupCode"
+						th:with="type=${@dict.getType('qywx_dept_team')}">
+						<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+							th:value="${dict.dictValue}" required></option>
+					</select>
+				</div>
+			</div>
+			
+			
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label">接收消息：</label>
+				<div class="col-sm-8">
+					<div class="radio-box" th:each="dict : ${@dict.getType('sys_normal_disable')}">
+						<input type="radio" th:id="${dict.dictCode}" name="isMsg" th:value="${dict.dictValue}" th:field="*{status}">
+						<label th:for="${dict.dictCode}" th:text="${dict.dictLabel}"></label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">描述：</label>
+				<div class="col-sm-8">
+					<textarea name="remarks" class="form-control"></textarea>
+				</div>
+			</div>
+		</form>
+	</div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: datetimepicker-js" />
+	<th:block th:include="include :: select2-js" />
+    <th:block th:include="include :: bootstrap-select-js" />
+	<script type="text/javascript">
+		var prefix = ctx + "qywx/group"
+		$("#form-group-add").validate({
+			focusCleanup : true
+		});
 
-        $("input[name='loginDate']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
+		function submitHandler() {
+			if ($.validate.form()) {
+				$.operate.save(prefix + "/add", $('#form-group-add')
+						.serialize());
+			}
+		}
 
-        $("input[name='createDate']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
+		$("input[name='loginDate']").datetimepicker({
+			format : "yyyy-mm-dd",
+			minView : "month",
+			autoclose : true
+		});
 
-        $("input[name='updateDate']").datetimepicker({
-            format: "yyyy-mm-dd",
-            minView: "month",
-            autoclose: true
-        });
-    </script>
+		$("input[name='createDate']").datetimepicker({
+			format : "yyyy-mm-dd",
+			minView : "month",
+			autoclose : true
+		});
+
+		$("input[name='updateDate']").datetimepicker({
+			format : "yyyy-mm-dd",
+			minView : "month",
+			autoclose : true
+		});
+		
+        //选择类型事件
+        $("#userCode").change(function(){
+            //获得选中的值
+            var username =  this.options[this.selectedIndex].text;
+           
+            $("#username").val(username);
+            
+        });		
+		
+        //选择类型事件
+        $("#groupCode").change(function(){
+            //获得选中的值
+            var selectText = this.options[this.selectedIndex].text;
+            $("#groupCname").val(selectText);
+            
+        });			
+		
+		
+		
+	</script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 jQuery(function () {
   layui.use(['jquery', 'layer'], function () {
+		if(judgeIEType()== false)        return;
     var $ = layui.jquery;
     var layer = layui.layer;
    // 显示时间轴列表
@@ -17,7 +18,7 @@ jQuery(function () {
     // 以下两行代码调试时打开
     // var urlCode ='P1iJnyb-09zdfDiAVt6LOAP24DQJOQViJ873bAJIWEQ';
 	// //置上默认的微信传来的参数code=P1iJnyb-09zdfDiAVt6LOAP24DQJOQViJ873bAJIWEQ&state=STATE
-    var userCode = 'KeDaduck'; //置上默认的用户名
+    //  var userCode = 'KeDaduck'; //置上默认的用户名
     
     
     
@@ -204,6 +205,24 @@ jQuery(function () {
   });
 })
 
+		
+		function judgeIEType() {
+			var ua = window.navigator.userAgent.toLowerCase();
+			if ((ua.match(/MicroMessenger/i) == 'micromessenger')
+					&& (ua.match(/wxwork/i) == 'wxwork')) {
+				// 企业微信客户端
+				return true;
+			} else if (ua.match(/micromessenger/i) == 'micromessenger') {
+				// 微信客户端
+				// window.location.replace('../pages/error.html')
+				return true
+			} else {
+				// 浏览器
+				alert("请用企业微信客户端来打开网页！");
+				window.location.replace('../error.html')
+				return false;
+			}
+		}
 
 // 存Cookie的值 仅同级文件可用
 function addcookie(name, value, expireHours) {

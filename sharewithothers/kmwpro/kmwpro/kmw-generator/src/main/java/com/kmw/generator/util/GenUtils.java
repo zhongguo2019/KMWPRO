@@ -147,7 +147,22 @@ public class GenUtils
      */
     public static String getBusinessName(String tableName)
     {
-        int lastIndex = tableName.lastIndexOf("_");
+        String strBusNameString;
+    	if(tableName.contains("_")) {
+    		String[] strSplitStrings = tableName.split("\\_");
+    		if(strSplitStrings.length>=2) {
+    			strBusNameString = strSplitStrings[strSplitStrings.length-2]+strSplitStrings[strSplitStrings.length-1];
+    		}else {
+    			strBusNameString=tableName;
+    		}
+    		
+    		return strBusNameString;
+        }
+        
+        
+        
+    	int lastIndex = tableName.lastIndexOf("_");
+        
         int nameLength = tableName.length();
         String businessName = StringUtils.substring(tableName, lastIndex + 1, nameLength);
         return businessName;
@@ -165,7 +180,7 @@ public class GenUtils
         String tablePrefix = GenConfig.getTablePrefix();
         if (autoRemovePre && StringUtils.isNotEmpty(tablePrefix))
         {
-            String[] searchList = StringUtils.split(tablePrefix, ",");
+            String[] searchList = StringUtils.split(tablePrefix, "\\,");
             String[] replacementList = emptyList(searchList.length);
             tableName = StringUtils.replaceEach(tableName, searchList, replacementList);
         }
